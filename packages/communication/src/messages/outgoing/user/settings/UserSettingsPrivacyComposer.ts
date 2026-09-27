@@ -4,9 +4,11 @@ export class UserSettingsPrivacyComposer implements IMessageComposer<Constructor
 {
     private _data: ConstructorParameters<typeof UserSettingsPrivacyComposer>;
 
-    constructor(onlineStatusVisible: boolean, friendsCanFollow: boolean, friendRequestsAllowed: boolean)
+    // profileVisible is the optional fourth flag: whether other users see the full extended
+    // profile. A server that reads three flags ignores it.
+    constructor(onlineStatusVisible: boolean, friendsCanFollow: boolean, friendRequestsAllowed: boolean, profileVisible: boolean = true)
     {
-        this._data = [ onlineStatusVisible, friendsCanFollow, friendRequestsAllowed ];
+        this._data = [ onlineStatusVisible, friendsCanFollow, friendRequestsAllowed, profileVisible ];
     }
 
     public getMessageArray()
