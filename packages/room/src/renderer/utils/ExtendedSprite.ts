@@ -66,13 +66,6 @@ export class ExtendedSprite extends Sprite
         this.watchTexture(texture);
     }
 
-    public destroy(options?: Parameters<Sprite['destroy']>[0]): void
-    {
-        this.watchTexture(null);
-
-        super.destroy(options);
-    }
-
     // A texture destroyed while a sprite still shows it would leave the sprite pointing at
     // released GPU memory: the sprite listens for that and falls back to the empty texture.
     // Texture.EMPTY is shared and never destroyed, so it is never subscribed to.
@@ -128,8 +121,11 @@ export class ExtendedSprite extends Sprite
         this.setTexture(null);
     }
 
+    // Both texture listeners are released: the watched one (setTexture) and the one the
+    // texture setter adds.
     public override destroy(options?: DestroyOptions): void
     {
+        this.watchTexture(null);
         super.texture?.off('destroy', this.onTextureDestroyed, this);
 
         super.destroy(options);
