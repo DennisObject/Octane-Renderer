@@ -19,13 +19,10 @@ export class ExtendedSprite extends Sprite
     private _updateId1: number = -1;
     private _updateId2: number = -1;
     private _filterSource: Filter[] = null;
-    private _watchedTexture: Texture = null;
 
     constructor(options?: ConstructorParameters<typeof Sprite>[0])
     {
         super(options);
-
-        this.watchTexture(this.texture);
     }
 
     public needsUpdate(updateId1: number, updateId2: number): boolean
@@ -62,36 +59,6 @@ export class ExtendedSprite extends Sprite
 
             this.texture = texture;
         }
-
-        this.watchTexture(texture);
-    }
-
-    // A texture destroyed while a sprite still shows it would leave the sprite pointing at
-    // released GPU memory: the sprite listens for that and falls back to the empty texture.
-    // Texture.EMPTY is shared and never destroyed, so it is never subscribed to.
-    private watchTexture(texture: Texture): void
-    {
-        const watched = ((texture && (texture !== Texture.EMPTY)) ? texture : null);
-
-        if(watched === this._watchedTexture) return;
-
-        if(this._watchedTexture) this._watchedTexture.off('destroy', this.onWatchedTextureDestroyed, this);
-
-        this._watchedTexture = watched;
-
-        if(this._watchedTexture) this._watchedTexture.on('destroy', this.onWatchedTextureDestroyed, this);
-    }
-
-    private onWatchedTextureDestroyed(texture: Texture): void
-    {
-        if(texture === this.texture)
-        {
-            this.setTexture(Texture.EMPTY);
-
-            return;
-        }
-
-        this.watchTexture(this.texture);
     }
 
     // A pooled or asset texture can be destroyed while this sprite still sits in the
@@ -121,11 +88,8 @@ export class ExtendedSprite extends Sprite
         this.setTexture(null);
     }
 
-    // Both texture listeners are released: the watched one (setTexture) and the one the
-    // texture setter adds.
     public override destroy(options?: DestroyOptions): void
     {
-        this.watchTexture(null);
         super.texture?.off('destroy', this.onTextureDestroyed, this);
 
         super.destroy(options);
