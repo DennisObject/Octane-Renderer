@@ -28,6 +28,10 @@ export class UserProfileParser implements IMessageParser
     private _prefixEffect: string;
     private _prefixFont: string;
     private _displayOrder: string;
+    private _onlineStatus: number;
+    private _level: number;
+    private _nextLevelStart: number;
+    private _isHidden: boolean;
 
     public flush(): boolean
     {
@@ -56,6 +60,10 @@ export class UserProfileParser implements IMessageParser
         this._prefixEffect = '';
         this._prefixFont = '';
         this._displayOrder = 'icon-prefix-name';
+        this._onlineStatus = -1;
+        this._level = 0;
+        this._nextLevelStart = 0;
+        this._isHidden = false;
 
         return true;
     }
@@ -118,6 +126,19 @@ export class UserProfileParser implements IMessageParser
         if(!wrapper.bytesAvailable) return true;
 
         this._totalBadges = wrapper.readInt();
+
+        // Presence and level block: 1 online, 0 offline, 2 hidden (sent only to the user themself),
+        // then the account level and the score the next level starts at. -1 / 0 when absent.
+        if(!wrapper.bytesAvailable) return true;
+
+        this._onlineStatus = wrapper.readInt();
+        this._level = wrapper.readInt();
+        this._nextLevelStart = wrapper.readInt();
+
+        // Official isHidden: the owner hides the full profile from everybody else.
+        if(!wrapper.bytesAvailable) return true;
+
+        this._isHidden = wrapper.readBoolean();
 
         return true;
     }
@@ -245,5 +266,29 @@ export class UserProfileParser implements IMessageParser
     public get displayOrder(): string
     {
         return this._displayOrder;
+    }
+
+    /** 1 online, 0 offline, 2 hidden (own profile only); -1 when the server does not send it. */
+    public get onlineStatus(): number
+    {
+        return this._onlineStatus;
+    }
+
+    /** The account level; 0 when the server does not send it. */
+    public get level(): number
+    {
+        return this._level;
+    }
+
+    /** The achievement score the next level starts at; 0 when the server does not send it. */
+    public get nextLevelStart(): number
+    {
+        return this._nextLevelStart;
+    }
+
+    /** The owner hides the full profile from other users; false when the server does not send it. */
+    public get isHidden(): boolean
+    {
+        return this._isHidden;
     }
 }

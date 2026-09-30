@@ -20,6 +20,11 @@ export class ExtendedSprite extends Sprite
     private _updateId2: number = -1;
     private _filterSource: Filter[] = null;
 
+    constructor(options?: ConstructorParameters<typeof Sprite>[0])
+    {
+        super(options);
+    }
+
     public needsUpdate(updateId1: number, updateId2: number): boolean
     {
         if((this._updateId1 === updateId1) && (this._updateId2 === updateId2)) return false;
@@ -44,15 +49,16 @@ export class ExtendedSprite extends Sprite
     {
         if(!texture || texture.destroyed || !texture.source) texture = Texture.EMPTY;
 
-        if(texture === this.texture) return;
-
-        if(texture === Texture.EMPTY)
+        if(texture !== this.texture)
         {
-            this._updateId1 = -1;
-            this._updateId2 = -1;
-        }
+            if(texture === Texture.EMPTY)
+            {
+                this._updateId1 = -1;
+                this._updateId2 = -1;
+            }
 
-        this.texture = texture;
+            this.texture = texture;
+        }
     }
 
     // A pooled or asset texture can be destroyed while this sprite still sits in the
