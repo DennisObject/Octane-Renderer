@@ -38,8 +38,9 @@ export class OctaneBundle
             {
                 this._jsonFile = JSON.parse(OctaneBundle.TEXT_DECODER.decode(inflatedBuffer));
             }
-            else
+            else if(!fileName.endsWith('.atlas'))
             {
+                // An .atlas entry is a text description of the sheet, not an image; the json already carries the frames.
                 this._texture = await textureDecoder(exactBuffer(inflatedBuffer), fileName);
             }
 
