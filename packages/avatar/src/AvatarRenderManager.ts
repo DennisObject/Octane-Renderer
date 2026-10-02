@@ -11,6 +11,7 @@ import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
 import { FigureDataContainer } from './FigureDataContainer';
 import { PlaceHolderAvatarImage } from './PlaceHolderAvatarImage';
 import { AssetAliasCollection } from './alias';
+import { AvatarFrameTextureCache } from './cache/AvatarFrameTextureCache';
 import { HabboAvatarAnimations } from './data/HabboAvatarAnimations';
 import { HabboAvatarGeometry } from './data/HabboAvatarGeometry';
 import { HabboAvatarPartSets } from './data/HabboAvatarPartSets';
@@ -26,6 +27,7 @@ export class AvatarRenderManager implements IAvatarRenderManager
 
     private _placeHolderFigure: AvatarFigureContainer = new AvatarFigureContainer(AvatarRenderManager.DEFAULT_FIGURE);
     private _aliasResetCallback: () => void = null;
+    private _frameTextures: AvatarFrameTextureCache = new AvatarFrameTextureCache();
 
     public async init(): Promise<void>
     {
@@ -61,6 +63,7 @@ export class AvatarRenderManager implements IAvatarRenderManager
         // Dispose download managers
         this._avatarAssetDownloadManager?.dispose();
         this._effectAssetDownloadManager?.dispose();
+        this._frameTextures.dispose();
     }
 
     private async loadActions(): Promise<void>
@@ -127,7 +130,7 @@ export class AvatarRenderManager implements IAvatarRenderManager
 
         if(this._avatarAssetDownloadManager.isAvatarFigureContainerReady(figureContainer))
         {
-            return new AvatarImage(this._structure, this._aliasCollection, figureContainer, size, this._effectAssetDownloadManager, effectListener);
+            return new AvatarImage(this._structure, this._aliasCollection, figureContainer, size, this._effectAssetDownloadManager, effectListener, this._frameTextures);
         }
 
         this._avatarAssetDownloadManager.downloadAvatarFigure(figureContainer, listener);
