@@ -15,7 +15,7 @@ export class EffectAssetDownloadManager
     private _effectListeners: Map<string, IAvatarEffectListener[]> = new Map();
     private _incompleteEffects: Map<string, EffectAssetDownloadLibrary[]> = new Map();
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
-    private _libraryNames: string[] = [];
+    private _libraries: Map<string, EffectAssetDownloadLibrary> = new Map();
     private _libraryLoadedCallback: (event: AvatarRenderEffectLibraryEvent) => void = null;
 
     constructor(assets: IAssetManager, structure: AvatarStructure)
@@ -61,6 +61,7 @@ export class EffectAssetDownloadManager
         }
 
         this._effectMap.clear();
+        this._libraries.clear();
         this._effectListeners.clear();
         this._incompleteEffects.clear();
         this._currentDownloads = [];
@@ -80,17 +81,19 @@ export class EffectAssetDownloadManager
             const libraryName = (effect.lib as string);
             const revision = (effect.revision || '');
 
-            if(this._libraryNames.indexOf(libraryName) >= 0) continue;
+            let downloadLibrary = this._libraries.get(libraryName);
 
-            this._libraryNames.push(libraryName);
-
-            const downloadLibrary = new EffectAssetDownloadLibrary(libraryName, revision, downloadUrl, this._assets);
+            if(!downloadLibrary)
+            {
+                downloadLibrary = new EffectAssetDownloadLibrary(libraryName, revision, downloadUrl, this._assets);
+                this._libraries.set(libraryName, downloadLibrary);
+            }
 
             let existing = this._effectMap.get(id);
 
             if(!existing) existing = [];
 
-            existing.push(downloadLibrary);
+            if(!existing.includes(downloadLibrary)) existing.push(downloadLibrary);
 
             this._effectMap.set(id, existing);
         }

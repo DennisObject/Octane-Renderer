@@ -9,9 +9,6 @@ export class PlaneMaskFilter extends Filter
     public static readonly DEFAULT_OPTIONS: PlaneMaskFilterOptions = {
     };
 
-    public uniforms: {
-    };
-
     constructor(options: PlaneMaskFilterOptions)
     {
         options = { ...PlaneMaskFilter.DEFAULT_OPTIONS, ...options };
@@ -66,13 +63,8 @@ export class PlaneMaskFilter extends Filter
         super({
             gpuProgram: null,
             glProgram,
-            resources: {
-                planeMaskUniforms: {
-                },
-            },
+            resources: {},
         });
-
-        this.uniforms = this.resources.planeMaskUniforms.uniforms;
 
         Object.assign(this, options);
     }

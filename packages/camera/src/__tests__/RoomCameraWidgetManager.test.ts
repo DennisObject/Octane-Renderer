@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ColorMatrix } from 'pixi.js';
-import { composeCameraColorMatrices, normalizeCameraColorMatrix } from '../RoomCameraWidgetManager';
+import { composeCameraColorMatrices, isCameraEffectName, normalizeCameraColorMatrix } from '../RoomCameraWidgetManager';
 
 describe('normalizeCameraColorMatrix', () =>
 {
@@ -84,5 +84,18 @@ describe('composeCameraColorMatrices', () =>
 
         expect(composeCameraColorMatrices(identity, tint)).toEqual(tint);
         expect(composeCameraColorMatrices(tint, identity)).toEqual(tint);
+    });
+});
+
+describe('isCameraEffectName', () =>
+{
+    it('accepts a catalogue effect name and rejects a trusted asset filename', () =>
+    {
+        expect(isCameraEffectName('frame_gold')).toBe(true);
+        expect(isCameraEffectName('Yellow')).toBe(true);
+        expect(isCameraEffectName('frame_gold.png')).toBe(false);
+        expect(isCameraEffectName('Habbo-Stories/frame_gold')).toBe(false);
+        expect(isCameraEffectName('hh_human_body.nitro')).toBe(false);
+        expect(isCameraEffectName('../badge')).toBe(false);
     });
 });

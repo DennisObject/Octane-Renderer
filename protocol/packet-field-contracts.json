@@ -4143,7 +4143,19 @@
         "className": "PublishPhotoMessageComposer",
         "path": "packages/communication/src/messages/outgoing/camera/PublishPhotoMessageComposer.ts"
       },
-      "fields": []
+      "fields": [
+        {
+          "kind": "optional",
+          "controller": "checkoutId",
+          "fields": [
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "checkoutId"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "SET_YOUTUBE_DISPLAY_PLAYLIST",
@@ -8239,7 +8251,19 @@
         "className": "PhotoCompetitionMessageComposer",
         "path": "packages/communication/src/messages/outgoing/camera/PhotoCompetitionMessageComposer.ts"
       },
-      "fields": []
+      "fields": [
+        {
+          "kind": "optional",
+          "controller": "checkoutId",
+          "fields": [
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "checkoutId"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "CHAT_REVIEW_GUIDE_VOTE",

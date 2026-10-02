@@ -10,6 +10,11 @@ import { RoomCameraWidgetEffect } from './RoomCameraWidgetEffect';
 
 const COLOR_MATRIX_OFFSET_INDICES = [4, 9, 14, 19] as const;
 const CAMERA_FRAME_EFFECT_NAMES = new Set(['frame_gold', 'frame_gray_4', 'frame_black_2', 'frame_wood_2', 'finger_nrm']);
+const CAMERA_EFFECT_NAME = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+// Catalogue names only. A trusted asset filename or path is not an effect.
+export const isCameraEffectName = (name: string): boolean =>
+    typeof name === 'string' && CAMERA_EFFECT_NAME.test(name);
 
 type CameraEffectType = 'colormatrix' | 'composite' | 'frame';
 
@@ -126,7 +131,7 @@ export class RoomCameraWidgetManager implements IRoomCameraWidgetManager
 
         for(const effect of effects)
         {
-            if(!effect.enabled) continue;
+            if(!effect.enabled || !isCameraEffectName(effect.name)) continue;
 
             const cameraEffect = new RoomCameraWidgetEffect(effect.name, effect.minLevel, resolveCameraEffectType(effect));
 

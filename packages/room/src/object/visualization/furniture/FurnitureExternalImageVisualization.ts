@@ -1,18 +1,66 @@
 import { IGraphicAsset, RoomObjectVariable } from '@octane/api';
+import { GetConfiguration } from '@octane/configuration';
 import { Matrix, RenderTexture, Texture } from 'pixi.js';
 import { FurnitureDynamicThumbnailVisualization } from './FurnitureDynamicThumbnailVisualization';
+
+// Server-minted camera files only. The host is the configured image root, never a value from furni data.
+const CAMERA_MEDIA_PATH = /^\/camera\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:_small)?\.png$/i;
+
+const cameraMediaPath = (value: unknown): string =>
+{
+    if(typeof value !== 'string' || !CAMERA_MEDIA_PATH.test(value)) return null;
+
+    return value;
+};
+
+const thumbnailPath = (value: string): string =>
+{
+    if(/_small\.png$/i.test(value)) return value;
+
+    return value.replace(/\.png$/i, '_small.png');
+};
+
+const configuredImageRoot = (): string =>
+{
+    const images = GetConfiguration().getValue<string>('images.url');
+    const library = GetConfiguration().getValue<string>('image.library.url');
+
+    if(typeof images === 'string' && images.length) return images;
+
+    if(typeof library === 'string' && library.length) return library;
+
+    return '';
+};
+
+const trustedCameraUrl = (path: string): string =>
+{
+    const configured = configuredImageRoot();
+
+    if(!configured || (configured.startsWith('/') && !configured.startsWith('//'))) return path;
+
+    try
+    {
+        const base = new URL(configured);
+
+        if((base.protocol !== 'http:' && base.protocol !== 'https:') || base.username || base.password) return null;
+
+        return base.origin + path;
+    }
+    catch
+    {
+        return null;
+    }
+};
 
 export class FurnitureExternalImageVisualization extends FurnitureDynamicThumbnailVisualization
 {
     private _url: string;
-    private _typePrefix: string;
 
     constructor()
     {
         super();
 
         this._url = null;
-        this._typePrefix = null;
     }
 
     protected generateTransformedThumbnail(texture: Texture, asset: IGraphicAsset): Texture
@@ -68,28 +116,27 @@ export class FurnitureExternalImageVisualization extends FurnitureDynamicThumbna
 
         if(!jsonString || jsonString === '') return null;
 
-        if(this.object.type.indexOf('') >= 0)
+        let parsed: { w?: unknown } = null;
+
+        try
         {
-            this._typePrefix = (this.object.type.indexOf('') >= 0) ? '' : 'postcards/selfie/';
+            parsed = JSON.parse(jsonString);
+        }
+        catch
+        {
+            return null;
         }
 
-        const json = JSON.parse(jsonString);
+        if(!parsed || (typeof parsed !== 'object')) return null;
 
-        let url = (json.w || '');
+        const photo = cameraMediaPath(parsed.w);
+        const thumbnail = photo && cameraMediaPath(thumbnailPath(photo));
+        const url = thumbnail && trustedCameraUrl(thumbnail);
 
-        url = this.buildThumbnailUrl(url);
+        if(!url) return null;
 
         this._url = url;
 
         return this._url;
-    }
-
-    private buildThumbnailUrl(url: string): string
-    {
-        url = url.replace('.png', '_small.png');
-
-        if(url.indexOf('.png') === -1) url = (url + '_small.png');
-
-        return url;
     }
 }
