@@ -151,22 +151,23 @@ export class ExtendedSprite extends Sprite
             pixels = new Uint8ClampedArray(BYTES_PER_PIXEL * width * height);
 
             const webglRenderer = renderer;
-            const renderTarget = webglRenderer.renderTarget.getRenderTarget(textureSource);
-            const glRenderTarget = webglRenderer.renderTarget.getGpuRenderTarget(renderTarget);
-
             const gl = webglRenderer.gl;
+            const framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING) as WebGLFramebuffer | null;
+            const adaptor = webglRenderer.renderTarget.adaptor;
 
-            gl.bindFramebuffer(gl.FRAMEBUFFER, glRenderTarget.resolveTargetFramebuffer);
+            try
+            {
+                const renderTarget = webglRenderer.renderTarget.getRenderTarget(textureSource);
+                const glRenderTarget = webglRenderer.renderTarget.getGpuRenderTarget(renderTarget);
 
-            gl.readPixels(
-                0,
-                0,
-                width,
-                height,
-                gl.RGBA,
-                gl.UNSIGNED_BYTE,
-                pixels
-            );
+                adaptor.bindFramebuffer(glRenderTarget.resolveTargetFramebuffer);
+
+                gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+            }
+            finally
+            {
+                adaptor.bindFramebuffer(framebuffer);
+            }
         }
 
         if(!pixels) return false;
