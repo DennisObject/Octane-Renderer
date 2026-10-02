@@ -1,15 +1,19 @@
 import { IMessageComposer } from '@octane/api';
 
-export class PublishPhotoMessageComposer implements IMessageComposer<ConstructorParameters<typeof PublishPhotoMessageComposer>>
+export class PublishPhotoMessageComposer implements IMessageComposer<string[]>
 {
-    private _data: ConstructorParameters<typeof PublishPhotoMessageComposer>;
+    private _data: string[];
 
-    constructor()
+    constructor(checkoutId?: string)
     {
+        if(checkoutId === null || checkoutId === '') checkoutId = undefined;
+
         this._data = [];
+
+        if(checkoutId !== undefined) this._data.push(checkoutId);
     }
 
-    public getMessageArray()
+    public getMessageArray(): string[]
     {
         return this._data;
     }
