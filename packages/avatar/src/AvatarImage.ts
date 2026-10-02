@@ -8,6 +8,7 @@ import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
 import { ActiveActionData } from './actions';
 import { AssetAliasCollection } from './alias';
 import { AvatarImageCache } from './cache';
+import { AvatarFrameTexture, AvatarFrameTextureCache } from './cache/AvatarFrameTextureCache';
 import { AvatarCanvas } from './structure';
 
 export class AvatarImage implements IAvatarImage, IAvatarEffectListener
@@ -54,6 +55,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
     private _paletteMapFilter: PaletteMapFilter = null;
     private _paletteMapFilterSource: IAvatarDataContainer = null;
     private _transientBodyParts: AvatarImageBodyPartContainer[] = [];
+    private _sharedFrame: AvatarFrameTexture = null;
+    private _activeSetType: string = null;
 
     constructor(
         private _structure: AvatarStructure,
@@ -61,7 +64,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
         private _figure: AvatarFigureContainer,
         private _scale: string,
         private _effectManager: EffectAssetDownloadManager,
-        private _effectListener: IAvatarEffectListener = null)
+        private _effectListener: IAvatarEffectListener = null,
+        private _frameTextures: AvatarFrameTextureCache = null)
     {
         if(!this._figure) this._figure = new AvatarFigureContainer('hr-893-45.hd-180-2.ch-210-66.lg-270-82.sh-300-91.wa-2007-.ri-1-');
         if(!this._scale) this._scale = AvatarScaleType.LARGE;
@@ -85,12 +89,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
         this._avatarSpriteData = null;
         this._actions = null;
 
-        if(this._activeTexture)
-        {
-            GetTexturePool().putTexture(this._activeTexture);
-
-            this._activeTexture = null;
-        }
+        this.releaseActiveTexture();
+        this._frameTextures = null;
 
         if(this._cache)
         {
@@ -275,7 +275,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
 
     public processAsTexture(setType: string, hightlight: boolean): Texture
     {
-        if(!this._changes) return this._activeTexture;
+        if(!this._changes && this._activeSetType === setType && (!this._sharedFrame || this._sharedFrame.cached)) return this._activeTexture;
 
         if(!this._mainAction) return null;
 
@@ -289,46 +289,52 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
 
         if(!container) return null;
 
-        let previousTexture: Texture = null;
-
-        if(this._activeTexture && ((this._activeTexture.width !== avatarCanvas.width) || (this._activeTexture.height !== avatarCanvas.height)))
+        try
         {
-            previousTexture = this._activeTexture;
+            const sharedFrame = !this._transientBodyParts.length ? this._frameTextures?.acquire(container, avatarCanvas.width, avatarCanvas.height) : null;
 
-            this._activeTexture = null;
+            if(sharedFrame)
+            {
+                this.releaseActiveTexture();
+                this._sharedFrame = sharedFrame;
+                this._activeTexture = sharedFrame.texture;
+            }
+            else
+            {
+                const reuse = this._activeTexture && !this._sharedFrame &&
+                    this._activeTexture.width === avatarCanvas.width && this._activeTexture.height === avatarCanvas.height;
+                const texture = reuse ? this._activeTexture : GetTexturePool().getTexture(avatarCanvas.width, avatarCanvas.height);
+
+                if(!texture) return null;
+
+                try
+                {
+                    GetRenderer().render({ target: texture, container, clear: true });
+                }
+                catch (error)
+                {
+                    if(!reuse) GetTexturePool().putTexture(texture);
+                    throw error;
+                }
+
+                if(!reuse) this.releaseActiveTexture();
+
+                this._activeTexture = texture;
+                texture.source.hitMapDirty = true;
+            }
+
+            this._changes = false;
+            this._activeSetType = setType;
+
+            return this._activeTexture;
         }
-
-        if(!this._activeTexture) this._activeTexture = GetTexturePool().getTexture(avatarCanvas.width, avatarCanvas.height);
-
-        if(!this._activeTexture)
+        finally
         {
-            this._activeTexture = previousTexture;
+            for(const child of container.children) child.removeChildren();
 
-            return null;
+            container.destroy({ children: true });
+            this.disposeTransientBodyParts();
         }
-
-        GetRenderer().render({
-            target: this._activeTexture,
-            container: container,
-            clear: true
-        });
-
-        if(previousTexture) GetTexturePool().putTexture(previousTexture);
-
-        for(const child of container.children)
-        {
-            child.removeChildren();
-        }
-
-        container.destroy({ children: true });
-
-        this.disposeTransientBodyParts();
-
-        this._activeTexture.source.hitMapDirty = true;
-
-        this._changes = false;
-
-        return this._activeTexture;
     }
 
     public processAsImageUrl(setType: string, scale: number = 1): string
@@ -840,6 +846,15 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
         for(const part of this._transientBodyParts) part && part.dispose();
 
         this._transientBodyParts.length = 0;
+    }
+
+    private releaseActiveTexture(): void
+    {
+        if(this._sharedFrame) this._frameTextures.release(this._sharedFrame);
+        else if(this._activeTexture) GetTexturePool().putTexture(this._activeTexture);
+
+        this._sharedFrame = null;
+        this._activeTexture = null;
     }
 
     private getPaletteMapFilter(spriteData: IAvatarDataContainer): PaletteMapFilter
