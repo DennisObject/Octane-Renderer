@@ -1,5 +1,5 @@
 import { ClientDeviceCategoryEnum, ClientPlatformEnum, IMessageComposer } from '@octane/api';
-import { OctaneVersion } from '@octane/utils';
+import { FloorPlanRevisionName, FloorPlanWireProfile } from '../../floorplan/FloorPlanProtocol';
 
 export class ClientHelloMessageComposer implements IMessageComposer<ConstructorParameters<typeof ClientHelloMessageComposer>>
 {
@@ -7,7 +7,12 @@ export class ClientHelloMessageComposer implements IMessageComposer<ConstructorP
 
     constructor(releaseVersion: string, type: string, platform: number, category: number)
     {
-        this._data = [`NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll('.', '-')}`, 'HTML5', ClientPlatformEnum.HTML5, ClientDeviceCategoryEnum.BROWSER];
+        this._data = [
+            releaseVersion || FloorPlanRevisionName[FloorPlanWireProfile.Hybrid],
+            type || 'HTML5',
+            platform ?? ClientPlatformEnum.HTML5,
+            category ?? ClientDeviceCategoryEnum.BROWSER
+        ];
     }
 
     public getMessageArray()

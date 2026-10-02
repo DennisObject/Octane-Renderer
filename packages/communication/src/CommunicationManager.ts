@@ -2,6 +2,7 @@ import { ICommunicationManager, IConnection, IMessageConfiguration, IMessageEven
 import { GetConfiguration } from '@octane/configuration';
 import { GetEventDispatcher, OctaneEventType, SocketReauthenticatedEvent } from '@octane/events';
 import { GetTickerTime, OctaneLogger } from '@octane/utils';
+import { applyFloorPlanWireProfile, configuredFloorPlanWireProfile, FLOOR_PLAN_WIRE_PROFILE_KEY, floorPlanRevisionName, FloorPlanWireProfile } from './messages/floorplan/FloorPlanProtocol';
 import { OctaneMessages } from './OctaneMessages';
 import { SocketConnection } from './SocketConnection';
 import { AuthenticatedEvent, ClientHelloMessageComposer, ClientPingEvent, DisconnectReasonEvent, InfoRetrieveMessageComposer, PongMessageComposer, SSOTicketMessageComposer, UniqueIDMessageComposer } from './messages';
@@ -10,7 +11,8 @@ import { Thumbmark } from '@thumbmarkjs/thumbmarkjs';
 export class CommunicationManager implements ICommunicationManager
 {
     private _connection: IConnection = new SocketConnection();
-    private _messages: IMessageConfiguration = new OctaneMessages();
+    private _messages: IMessageConfiguration;
+    private _floorPlanRevision: string;
 
     private _pongInterval: any = null;
     private _messageEvents: IMessageEvent[] = [];
@@ -21,6 +23,7 @@ export class CommunicationManager implements ICommunicationManager
 
     private _machineIdPromise: Promise<string> | null = null;
     private _initResolved: boolean = false;
+    private _floorPlanProfileSelected: boolean = false;
     private _recoveryToken: string = '';
 
     private async generateMachineID(): Promise<string>
@@ -45,7 +48,7 @@ export class CommunicationManager implements ICommunicationManager
 
         const machineId = await this._machineIdPromise;
 
-        this._connection.send(new ClientHelloMessageComposer(null, null, null, null));
+        this._connection.send(new ClientHelloMessageComposer(this._floorPlanRevision, null, null, null));
         // Send the machine fingerprint (UniqueID) BEFORE the SSO ticket so the server
         // has the machineId available when it processes the login in Habbo.connect().
         this._connection.send(new UniqueIDMessageComposer(machineId, '', ''));
@@ -57,11 +60,15 @@ export class CommunicationManager implements ICommunicationManager
 
     constructor()
     {
+        // Source headers until init. This singleton is created at import, before configuration loads.
+        this._messages = new OctaneMessages(FloorPlanWireProfile.Legacy);
         this._connection.registerMessages(this._messages);
     }
 
     public async init(): Promise<void>
     {
+        this.selectFloorPlanWireProfile();
+
         // Store callback for cleanup
         this._socketClosedCallback = () =>
         {
@@ -210,6 +217,19 @@ export class CommunicationManager implements ICommunicationManager
     protected sendPong(): void
     {
         this._connection?.send(new PongMessageComposer());
+    }
+
+    private selectFloorPlanWireProfile(): void
+    {
+        if(this._floorPlanProfileSelected) return;
+
+        const profile = configuredFloorPlanWireProfile(GetConfiguration().getValue<string>(FLOOR_PLAN_WIRE_PROFILE_KEY));
+
+        this._floorPlanProfileSelected = true;
+        this._floorPlanRevision = floorPlanRevisionName(profile);
+        applyFloorPlanWireProfile(this._messages.events, this._messages.composers, profile);
+        this._connection.registerMessages(this._messages);
+        (this._connection as SocketConnection).rebindMessageEvents();
     }
 
     public registerMessageEvent(event: IMessageEvent): IMessageEvent

@@ -1,5 +1,16 @@
 import { IMessageDataWrapper, IMessageParser } from '@octane/api';
 
+export interface FloorHeightMapAreaHide
+{
+    furniId: number;
+    on: boolean;
+    rootX: number;
+    rootY: number;
+    width: number;
+    length: number;
+    invert: boolean;
+}
+
 export class FloorHeightMapMessageParser implements IMessageParser
 {
     public static TILE_BLOCKED: number = -110;
@@ -10,6 +21,10 @@ export class FloorHeightMapMessageParser implements IMessageParser
     private _heightMap: number[][];
     private _wallHeight: number;
     private _scale: number;
+    private _areaHides: FloorHeightMapAreaHide[];
+    private _cameraX: number;
+    private _cameraY: number;
+    private _cameraZ: number;
 
     public flush(): boolean
     {
@@ -20,6 +35,10 @@ export class FloorHeightMapMessageParser implements IMessageParser
         this._heightMap = [];
         this._scale = 64;
         this._model = null;
+        this._areaHides = [];
+        this._cameraX = 0;
+        this._cameraY = 0;
+        this._cameraZ = 0;
 
         return true;
     }
@@ -32,7 +51,35 @@ export class FloorHeightMapMessageParser implements IMessageParser
         const wallHeight = wrapper.readInt();
         const model = wrapper.readString();
 
-        return this.parseExplicitly(model, wallHeight, scale);
+        if(!this.parseExplicitly(model, wallHeight, scale)) return false;
+
+        this._areaHides = [];
+        this._cameraX = 0;
+        this._cameraY = 0;
+        this._cameraZ = 0;
+
+        if(!wrapper.bytesAvailable) return true;
+
+        const count = wrapper.readInt();
+
+        for(let index = 0; index < count; index++)
+        {
+            this._areaHides.push({
+                furniId: wrapper.readInt(),
+                on: wrapper.readBoolean(),
+                rootX: wrapper.readInt(),
+                rootY: wrapper.readInt(),
+                width: wrapper.readInt(),
+                length: wrapper.readInt(),
+                invert: wrapper.readBoolean()
+            });
+        }
+
+        this._cameraX = wrapper.readInt();
+        this._cameraY = wrapper.readInt();
+        this._cameraZ = wrapper.readFloat();
+
+        return true;
     }
 
     public parseModel(modelString: string, wallHeight: number, scale: boolean = true): boolean
@@ -47,7 +94,10 @@ export class FloorHeightMapMessageParser implements IMessageParser
         this._model = modelString;
 
         const model = this._model.split('\r');
-        const modelRows = model.length;
+        let modelRows = model.length;
+
+        // Official class_3819 drops one terminal empty piece produced by a trailing \r.
+        if((modelRows > 0) && (model[modelRows - 1] === '')) modelRows--;
 
         let width = 0;
         const height = 0;
@@ -163,5 +213,25 @@ export class FloorHeightMapMessageParser implements IMessageParser
     public get scale(): number
     {
         return this._scale;
+    }
+
+    public get areaHides(): FloorHeightMapAreaHide[]
+    {
+        return this._areaHides;
+    }
+
+    public get cameraX(): number
+    {
+        return this._cameraX;
+    }
+
+    public get cameraY(): number
+    {
+        return this._cameraY;
+    }
+
+    public get cameraZ(): number
+    {
+        return this._cameraZ;
     }
 }

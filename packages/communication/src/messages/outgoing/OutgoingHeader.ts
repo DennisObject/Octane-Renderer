@@ -233,6 +233,7 @@ export class OutgoingHeader
     public static ROOM_KICK = 1320;
     public static ROOM_LIKE = 3582;
     public static ROOM_MODEL = 2300;
+    // Nitro literals. The active floor-plan profile remaps these to 2597, 2735 and 234.
     public static GET_OCCUPIED_TILES = 1687;
     public static GET_ROOM_ENTRY_TILE = 3559;
     public static ROOM_MODEL_SAVE = 875;

@@ -731,6 +731,11 @@ export class SocketConnection implements IConnection
         this._messages.registerMessages(configuration);
     }
 
+    public rebindMessageEvents(): void
+    {
+        this._messages.rebindMessageEvents();
+    }
+
     public addMessageEvent(event: IMessageEvent): void
     {
         if(!event || !this._messages) return;
