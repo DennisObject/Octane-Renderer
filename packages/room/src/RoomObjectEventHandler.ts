@@ -108,6 +108,10 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
 
     public processRoomObjectPlacement(placementSource: string, roomId: number, id: number, category: number, typeId: number, extra: string = null, stuffData: IObjectData = null, state: number = -1, frameNumber: number = -1, posture: string = null): boolean
     {
+        // Inventory units use negative preview IDs; nonnegative IDs belong to room occupants.
+        if((placementSource === RoomObjectPlacementSource.INVENTORY) && (category === RoomObjectCategory.UNIT) &&
+            (!Number.isSafeInteger(id) || (id >= 0))) return false;
+
         this._objectPlacementSource = placementSource;
 
         const location = new Vector3d(-100, -100);
