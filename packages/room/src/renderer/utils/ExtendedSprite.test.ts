@@ -1,9 +1,11 @@
-import { Texture, TextureSource } from 'pixi.js';
-import { describe, expect, it, vi } from 'vitest';
+import { GlRenderTargetAdaptor, Texture, TextureSource, WebGLRenderer } from 'pixi.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ExtendedSprite } from './ExtendedSprite';
 
+const { rendererState } = vi.hoisted(() => ({ rendererState: { value: null } }));
+
 vi.mock('@octane/utils', () => ({
-    GetRenderer: () => null,
+    GetRenderer: () => rendererState.value,
     TextureUtils: {}
 }));
 
@@ -55,5 +57,68 @@ describe('ExtendedSprite texture lifecycle', () =>
 
         expect(sprite.texture).toBe(Texture.EMPTY);
         expect(Texture.EMPTY.listenerCount('destroy')).toBe(before);
+    });
+});
+
+
+describe('ExtendedSprite hit testing', () =>
+{
+    afterEach(() =>
+    {
+        rendererState.value = null;
+    });
+
+    it.each([false, true])('preserves the draw framebuffer when pixel reads fail: %s', (failRead) =>
+    {
+        const drawFramebuffer = {};
+        const textureFramebuffer = {};
+        let boundFramebuffer = drawFramebuffer;
+        const gl = {
+            FRAMEBUFFER: 1,
+            FRAMEBUFFER_BINDING: 2,
+            RGBA: 3,
+            UNSIGNED_BYTE: 4,
+            getParameter: () => boundFramebuffer,
+            bindFramebuffer: (_target: number, framebuffer: object) =>
+            {
+                boundFramebuffer = framebuffer;
+            },
+            readPixels: (_x: number, _y: number, _width: number, _height: number, _format: number, _type: number, pixels: Uint8ClampedArray) =>
+            {
+                if(failRead) throw new Error('read failed');
+                pixels.fill(255);
+            }
+        };
+        const renderer = Object.create(WebGLRenderer.prototype);
+        Object.defineProperty(renderer, 'gl', { value: gl });
+        renderer.runners = { contextChange: { add: vi.fn() } };
+        const adaptor = new GlRenderTargetAdaptor();
+        renderer.renderTarget = {
+            adaptor,
+            getRenderTarget: vi.fn(),
+            getGpuRenderTarget: () =>
+            {
+                // Allocating a Pixi render target can change the native binding.
+                gl.bindFramebuffer(gl.FRAMEBUFFER, textureFramebuffer);
+                return { resolveTargetFramebuffer: textureFramebuffer };
+            }
+        };
+        adaptor.init(renderer, renderer.renderTarget);
+        adaptor.bindFramebuffer(drawFramebuffer);
+        rendererState.value = renderer;
+        const source = new TextureSource({ width: 4, height: 4 });
+        const readHitMap = () => (ExtendedSprite as any).generateHitMapForTextureSource(source);
+
+        if(failRead) expect(readHitMap).toThrow('read failed');
+        else
+        {
+            expect(readHitMap()).toBe(true);
+            expect(source.hitMap?.every(value => value === 255)).toBe(true);
+        }
+
+        // Pixi may skip this bind if it believes the draw target is already active.
+        adaptor.bindFramebuffer(drawFramebuffer);
+        expect(boundFramebuffer).toBe(drawFramebuffer);
+        source.destroy();
     });
 });
