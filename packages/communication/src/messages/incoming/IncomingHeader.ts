@@ -189,6 +189,7 @@ export class IncomingHeader
     public static ROOM_HEIGHT_MAP_UPDATE = 558;
     public static ROOM_INFO = 687;
     public static ROOM_INFO_OWNER = 749;
+    // Nitro literals. The active floor-plan profile remaps these to 1589, 2757 and 2959.
     public static ROOM_MODEL = 1301;
     public static ROOM_MODEL_BLOCKED_TILES = 3990;
     public static ROOM_MODEL_DOOR = 1664;
@@ -213,6 +214,7 @@ export class IncomingHeader
     public static ROOM_SETTINGS_SAVE_ERROR = 1555;
     public static ROOM_INFO_UPDATED = 3297;
     public static ROOM_SPECTATOR = 1033;
+    // Nitro literal. The active floor-plan profile remaps this to 1392.
     public static ROOM_THICKNESS = 3547;
     public static ROOM_GET_FILTER_WORDS = 2937;
     public static CUSTOM_FILTER_RESULT = 3883;

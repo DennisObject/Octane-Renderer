@@ -42,6 +42,22 @@ export class MessageClassManager
         this._messageIdByComposer.set(handler, header);
     }
 
+    public rebindMessageEvents(): void
+    {
+        const instances: IMessageEvent[] = [];
+
+        for(const events of this._messageInstancesById.values())
+        {
+            if(!events) continue;
+
+            for(const event of events) if(event) instances.push(event);
+        }
+
+        this._messageInstancesById.clear();
+
+        for(const event of instances) this.registerMessageEvent(event);
+    }
+
     public registerMessageEvent(event: IMessageEvent): void
     {
         if(!event) return;
