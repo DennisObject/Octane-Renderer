@@ -4,9 +4,11 @@ export class FurnitureStackHeightComposer implements IMessageComposer<Constructo
 {
     private _data: ConstructorParameters<typeof FurnitureStackHeightComposer>;
 
-    constructor(itemId: number, height: number = -100)
+    constructor(itemId: number, height: number = -100, multiWalk?: boolean)
     {
         this._data = [itemId, height];
+
+        if(multiWalk !== undefined) this._data.push(multiWalk);
     }
 
     public getMessageArray()
