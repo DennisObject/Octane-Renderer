@@ -3,11 +3,6 @@ export class OutgoingHeader
     public static CLICK_FURNI = 6002;
     public static CLICK_USER = 10020;
 
-    // MENTIONS
-    public static REQUEST_MENTIONS = 4803;
-    public static MARK_MENTIONS_READ = 4804;
-    public static DELETE_MENTION = 4805;
-
     public static ACHIEVEMENT_LIST = 219;
     public static BOT_CONFIGURATION = 1986;
     public static BOT_PICKUP = 3323;
@@ -620,16 +615,9 @@ export class OutgoingHeader
     public static DELETE_PET = 10030;
     public static DELETE_BADGE = 10031;
 
-    // Custom Prefixes
-    public static REQUEST_PREFIXES = 7011;
-    public static SET_ACTIVE_PREFIX = 7012;
-    public static DELETE_PREFIX = 7013;
-    public static PURCHASE_PREFIX = 7014;
     public static REQUEST_NICK_ICONS = 7015;
     public static PURCHASE_NICK_ICON = 7016;
     public static SET_ACTIVE_NICK_ICON = 7017;
-    public static PURCHASE_CATALOG_PREFIX = 7018;
-    public static SET_DISPLAY_ORDER = 7019;
     public static ROOM_REMOVE_BACKGROUND = 7020;
     public static ROOM_REMOVE_PAINT = 7021;
 
@@ -666,11 +654,6 @@ export class OutgoingHeader
 
     // Custom features — IDs 9300+ reserved
     public static REQUEST_RARE_VALUES = 9300;
-    public static WHEEL_OPEN = 9301;
-    public static WHEEL_SPIN = 9302;
-    public static WHEEL_BUY_SPIN = 9303;
-    public static WHEEL_ADMIN_GET_PRIZES = 9304;
-    public static WHEEL_ADMIN_SAVE_PRIZES = 9305;
     public static SOUNDBOARD_PLAY = 9306;
     public static SOUNDBOARD_SET_ENABLED = 9307;
     public static EARNINGS_REQUEST = 9308;

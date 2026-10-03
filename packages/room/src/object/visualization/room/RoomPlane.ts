@@ -1,21 +1,13 @@
 import { IAssetPlaneVisualizationAnimatedLayer, IAssetPlaneVisualizationLayer, IAssetRoomVisualizationData, IRoomGeometry, IRoomPlane, IVector3D } from '@octane/api';
 import { GetAssetManager } from '@octane/assets';
-import { GetRenderer, GetTexturePool, OctaneLogger, PlaneMaskFilter, Vector3d } from '@octane/utils';
+import { GetRenderer, GetTexturePool, PlaneMaskFilter, Vector3d } from '@octane/utils';
 import { Container, Filter, Graphics, Matrix, Point, RenderTexture, Sprite, Texture, TilingSprite } from 'pixi.js';
 import { RoomGeometry } from '../../../utils';
-import { IWindowReflectionAvatarState, IWindowReflectionUnitState, RoomWindowReflectionState } from '../RoomWindowReflectionState';
 import { PlaneVisualizationAnimationLayer } from './animated';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
 import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';
 import { PlaneMaskManager } from './mask';
 import { Randomizer } from './utils';
-
-interface IWindowReflectionSnapshot
-{
-    avatar?: IWindowReflectionAvatarState;
-    unit?: IWindowReflectionUnitState;
-    location: IVector3D;
-}
 
 export class RoomPlane implements IRoomPlane
 {
@@ -55,11 +47,6 @@ export class RoomPlane implements IRoomPlane
     private _cornerB: IVector3D = new Vector3d();
     private _cornerC: IVector3D = new Vector3d();
     private _cornerD: IVector3D = new Vector3d();
-    private _screenLocation: Point = new Point();
-    private _screenAxisX: Point = new Point();
-    private _screenAxisY: Point = new Point();
-    private _screenAxisZ: Point = new Point();
-    private _screenScale: number = 64;
     private _textureOffsetX: number;
     private _textureOffsetY: number;
     private _textureMaxX: number;
@@ -102,15 +89,6 @@ export class RoomPlane implements IRoomPlane
     private _landscapeBackgroundColor: number = null;
     private _lastLandscapeDebugSignature: string = null;
     private _hasWindowMask: boolean = false;
-    private _windowMasks: { leftSideLoc: number; rightSideLoc: number }[] = [];
-    private _lastWindowReflectionUpdateId: number = -1;
-    private _lastWindowReflectionSignature: string = '';
-    private _windowReflectionFirstSeenAt: Map<string, number> = new Map();
-    private _windowReflectionLastVisible: Map<string, IWindowReflectionSnapshot> = new Map();
-    private _windowReflectionFadeOut: Map<string, IWindowReflectionSnapshot & { startedAt: number }> = new Map();
-    private _planeBaseTexture: Texture = null;
-    private _reflectionFadeAnimating: boolean = false;
-    private _reflectionZoneRegistered: boolean = false;
     private _roomId: string = null;
     private _animationCanvas: RenderTexture = null;
 
@@ -169,13 +147,6 @@ export class RoomPlane implements IRoomPlane
             this._planeTexture = null;
         }
 
-        if(this._planeBaseTexture)
-        {
-            GetTexturePool().putTexture(this._planeBaseTexture);
-
-            this._planeBaseTexture = null;
-        }
-
         if(this._animationLayers)
         {
             for(const layer of this._animationLayers)
@@ -191,13 +162,6 @@ export class RoomPlane implements IRoomPlane
 
             this._animationCanvas = null;
         }
-
-        this._windowReflectionLastVisible.clear();
-        this._windowReflectionFadeOut.clear();
-        this._windowReflectionFirstSeenAt.clear();
-        this._lastWindowReflectionSignature = '';
-
-        RoomWindowReflectionState.unregisterZone(this);
 
         if(this._maskFilter)
         {
@@ -674,31 +638,6 @@ export class RoomPlane implements IRoomPlane
 
         this._planeTexture.source.label = `room_plane_${ this._uniqueId.toString() }`;
 
-        let reflectionUpdate = false;
-
-        if(this._type === RoomPlane.TYPE_LANDSCAPE && this._windowMasks.length)
-        {
-            if(!this._reflectionZoneRegistered)
-            {
-                RoomWindowReflectionState.registerZone(this, this._location, this._normal, this._roomId);
-
-                this._reflectionZoneRegistered = true;
-            }
-
-            const reflectionUpdateId = RoomWindowReflectionState.updateId;
-
-            if(reflectionUpdateId !== this._lastWindowReflectionUpdateId)
-            {
-                this._lastWindowReflectionUpdateId = reflectionUpdateId;
-
-                reflectionUpdate = this.hasWindowReflectionWork();
-            }
-
-            if(!reflectionUpdate && this._reflectionFadeAnimating) reflectionUpdate = true;
-
-            if(!reflectionUpdate && this._windowReflectionLastVisible.size && this.hasDriftedReflection()) reflectionUpdate = true;
-        }
-
         let animationUpdate = false;
         if(this._isAnimated && this._type === RoomPlane.TYPE_LANDSCAPE)
         {
@@ -709,28 +648,15 @@ export class RoomPlane implements IRoomPlane
                 this._lastAnimationUpdate = timeSinceStartMs;
                 this._animationRenderTime = timeSinceStartMs;
             }
-            else if(needsUpdate || reflectionUpdate)
+            else if(needsUpdate)
             {
                 animationUpdate = true;
             }
         }
 
-        const hasReflections = ((this._type === RoomPlane.TYPE_LANDSCAPE) && (this._windowMasks.length > 0));
+        if(needsUpdate || animationUpdate) this.renderPlaneBase(geometry, timeSinceStartMs);
 
-        let renderBase = (needsUpdate || animationUpdate);
-
-        if(!renderBase && reflectionUpdate && !this.restoreReflectionBase()) renderBase = true;
-
-        if(renderBase)
-        {
-            this.renderPlaneBase(geometry, timeSinceStartMs);
-
-            if(hasReflections) this.captureReflectionBase();
-        }
-
-        if((renderBase || reflectionUpdate) && hasReflections) this.renderWindowReflections();
-
-        return needsUpdate || animationUpdate || reflectionUpdate;
+        return needsUpdate || animationUpdate;
     }
 
     private renderPlaneBase(geometry: IRoomGeometry, timeSinceStartMs: number): void
@@ -773,49 +699,6 @@ export class RoomPlane implements IRoomPlane
         {
             this.renderLandscapeLayer(this._landscapeForegroundTexture, this._landscapeForegroundTint, this._landscapeForegroundAlignBottom);
         }
-    }
-
-    private captureReflectionBase(): void
-    {
-        if(!this._planeTexture) return;
-
-        if(this._planeBaseTexture && ((this._planeBaseTexture.width !== this._planeTexture.width) || (this._planeBaseTexture.height !== this._planeTexture.height)))
-        {
-            GetTexturePool().putTexture(this._planeBaseTexture);
-
-            this._planeBaseTexture = null;
-        }
-
-        if(!this._planeBaseTexture) this._planeBaseTexture = GetTexturePool().getTexture(this._planeTexture.width, this._planeTexture.height);
-
-        const copy = new Sprite(this._planeTexture);
-
-        GetRenderer().render({
-            target: this._planeBaseTexture,
-            container: copy,
-            clear: true
-        });
-
-        copy.destroy();
-    }
-
-    private restoreReflectionBase(): boolean
-    {
-        if(!this._planeTexture || !this._planeBaseTexture) return false;
-
-        if((this._planeBaseTexture.width !== this._planeTexture.width) || (this._planeBaseTexture.height !== this._planeTexture.height)) return false;
-
-        const copy = new Sprite(this._planeBaseTexture);
-
-        GetRenderer().render({
-            target: this._planeTexture,
-            container: copy,
-            clear: true
-        });
-
-        copy.destroy();
-
-        return true;
     }
 
     private renderAnimationLayers(timeSinceStartMs: number, geometry: IRoomGeometry): void
@@ -1047,403 +930,6 @@ export class RoomPlane implements IRoomPlane
         colorContainer.destroy({ children: true });
     }
 
-    private hasWindowReflectionWork(): boolean
-    {
-        if(!this._leftSide || !this._rightSide || !this._normal) return false;
-
-        const signature = RoomWindowReflectionState.getSignatureNear(this._location, this._normal, this._roomId, 1.1);
-
-        if(signature === this._lastWindowReflectionSignature) return false;
-
-        this._lastWindowReflectionSignature = signature;
-
-        return true;
-    }
-
-    private hasDriftedReflection(): boolean
-    {
-        for(const [key, last] of this._windowReflectionLastVisible)
-        {
-            const id = parseInt(key.substring(1));
-
-            const live = (key.charCodeAt(0) === 117) // 'u'
-                ? RoomWindowReflectionState.getUnit(id, this._roomId)?.location
-                : RoomWindowReflectionState.getAvatarLocation(id, this._roomId);
-
-            if(!live) return true;
-
-            if((live.x !== last.location.x) || (live.y !== last.location.y) || (live.z !== last.location.z)) return true;
-        }
-
-        return false;
-    }
-
-    private renderWindowReflections(): void
-    {
-        this._reflectionFadeAnimating = false;
-
-        if(!this._planeTexture || !this._leftSide || !this._rightSide || !this._normal) return;
-
-        if(this._leftSide.length <= 0 || this._rightSide.length <= 0) return;
-
-        const now = Date.now();
-        const fadeDurationMs = 150;
-        const avatars = RoomWindowReflectionState.getAvatars(this._roomId);
-        const units = RoomWindowReflectionState.getUnits(this._roomId);
-        const canvasWidth = this._landscapeRenderWidth;
-        const canvasHeight = this._landscapeRenderHeight;
-
-        if(canvasWidth <= 0 || canvasHeight <= 0) return;
-
-        const projection = this.getMatrixForDimensions(canvasWidth, canvasHeight);
-        const projectionInverse = projection.clone().invert();
-        const debugEnabled = (typeof window !== 'undefined' && (window as unknown as { OctaneReflectionDebug?: boolean }).OctaneReflectionDebug === true);
-
-        const normal2DLength = Math.hypot(this._normal.x, this._normal.y);
-        const normalX = ((normal2DLength > 0.0001) ? (this._normal.x / normal2DLength) : 0);
-        const normalY = ((normal2DLength > 0.0001) ? (this._normal.y / normal2DLength) : 0);
-
-        const holeRects: { x: number; y: number; w: number; h: number }[] = [];
-
-        if(this._planeSprite?.children)
-        {
-            for(const child of this._planeSprite.children)
-            {
-                if(!(child instanceof Sprite) || !child.texture) continue;
-
-                const scaleX = (child.scale?.x ?? 1);
-                const scaleY = (child.scale?.y ?? 1);
-                const w = Math.abs(child.texture.width * scaleX);
-                const h = Math.abs(child.texture.height * scaleY);
-
-                if((w <= 0) || (h <= 0)) continue;
-
-                holeRects.push({
-                    x: ((scaleX < 0) ? (child.position.x - w) : child.position.x),
-                    y: ((scaleY < 0) ? (child.position.y - h) : child.position.y),
-                    w,
-                    h
-                });
-            }
-        }
-
-        const subtractHole = (rects: { x: number; y: number; w: number; h: number }[], hole: { x: number; y: number; w: number; h: number }) =>
-        {
-            const out: { x: number; y: number; w: number; h: number }[] = [];
-
-            for(const r of rects)
-            {
-                const ix1 = Math.max(r.x, hole.x);
-                const iy1 = Math.max(r.y, hole.y);
-                const ix2 = Math.min((r.x + r.w), (hole.x + hole.w));
-                const iy2 = Math.min((r.y + r.h), (hole.y + hole.h));
-
-                if((ix1 >= ix2) || (iy1 >= iy2))
-                {
-                    out.push(r);
-                    continue;
-                }
-
-                if(iy1 > r.y) out.push({ x: r.x, y: r.y, w: r.w, h: (iy1 - r.y) });
-                if(iy2 < (r.y + r.h)) out.push({ x: r.x, y: iy2, w: r.w, h: ((r.y + r.h) - iy2) });
-                if(ix1 > r.x) out.push({ x: r.x, y: iy1, w: (ix1 - r.x), h: (iy2 - iy1) });
-                if(ix2 < (r.x + r.w)) out.push({ x: ix2, y: iy1, w: ((r.x + r.w) - ix2), h: (iy2 - iy1) });
-            }
-
-            return out;
-        };
-
-        const container = new Container();
-        let subjectParent: Container = container;
-
-        if(holeRects.length)
-        {
-            let rects = [{ x: 0, y: 0, w: canvasWidth, h: canvasHeight }];
-
-            for(const hole of holeRects)
-            {
-                rects = subtractHole(rects, hole);
-
-                if(!rects.length) break;
-            }
-
-            if(!rects.length)
-            {
-                container.destroy({ children: true });
-
-                return;
-            }
-
-            const clip = new Graphics();
-
-            for(const rect of rects) clip.rect(rect.x, rect.y, rect.w, rect.h);
-
-            clip.fill(0xFFFFFF);
-
-            const wrap = new Container();
-
-            wrap.addChild(clip);
-            wrap.mask = clip;
-            container.addChild(wrap);
-
-            subjectParent = wrap;
-        }
-
-        const place = (location: IVector3D, maxDistance: number, verticalOffset: number, attenuate: boolean, label: string, positionLocation: IVector3D = null, depthTiles: number = 0): { screenSpot: Point; planeDistance: number; edgeAlpha: number } =>
-        {
-            const relative = Vector3d.dif(location, this._location);
-            const signedDistance = Vector3d.scalarProjection(relative, this._normal);
-            const planeDistance = Math.abs(signedDistance);
-
-            if(planeDistance > maxDistance)
-            {
-                if(debugEnabled) OctaneLogger.log(`[Reflection] plane ${this._uniqueId}: ${label} at (${location.x}, ${location.y}) rejected — planeDist ${planeDistance.toFixed(2)} > ${maxDistance}`);
-
-                return null;
-            }
-
-            const leftSideLoc = Vector3d.scalarProjection(relative, this._leftSide);
-            const rightSideLoc = Vector3d.scalarProjection(relative, this._rightSide);
-
-            let closestMask: { leftSideLoc: number; rightSideLoc: number } = null;
-            let closestScore = Number.POSITIVE_INFINITY;
-
-            for(const mask of this._windowMasks)
-            {
-                const score = (Math.abs(mask.leftSideLoc - leftSideLoc) + Math.abs(mask.rightSideLoc - rightSideLoc));
-
-                if(score < closestScore)
-                {
-                    closestScore = score;
-                    closestMask = mask;
-                }
-            }
-
-            if(!closestMask || (closestScore > 3))
-            {
-                if(debugEnabled) OctaneLogger.log(`[Reflection] plane ${this._uniqueId}: ${label} at (${location.x}, ${location.y}) rejected — mask score ${closestScore.toFixed(2)} (masks ${JSON.stringify(this._windowMasks)})`);
-
-                return null;
-            }
-
-            const normalLength = this._normal.length;
-            const unitNormalX = ((normalLength > 0) ? (this._normal.x / normalLength) : 0);
-            const unitNormalY = ((normalLength > 0) ? (this._normal.y / normalLength) : 0);
-            const unitNormalZ = ((normalLength > 0) ? (this._normal.z / normalLength) : 0);
-            const positionRelative = (positionLocation ? Vector3d.dif(positionLocation, this._location) : relative);
-            const positionDistance = Vector3d.scalarProjection(positionRelative, this._normal);
-            const inward = ((signedDistance >= 0) ? 1 : -1);
-            const shift = ((2 * positionDistance) + (inward * depthTiles));
-            const mirroredX = (positionRelative.x - (shift * unitNormalX));
-            const mirroredY = (positionRelative.y - (shift * unitNormalY));
-            const mirroredZ = (positionRelative.z - (shift * unitNormalZ));
-            const screenSpot = new Point(
-                (this._screenLocation.x + (mirroredX * this._screenAxisX.x) + (mirroredY * this._screenAxisY.x) + (mirroredZ * this._screenAxisZ.x)),
-                (this._screenLocation.y + (mirroredX * this._screenAxisX.y) + (mirroredY * this._screenAxisY.y) + (mirroredZ * this._screenAxisZ.y) + verticalOffset));
-
-            const edgeAlpha = (attenuate ? Math.max(0, Math.min(1, ((maxDistance - planeDistance) / 0.25))) : 1);
-
-            if(debugEnabled) OctaneLogger.log(`[Reflection] plane ${this._uniqueId}: ${label} at (${location.x}, ${location.y}) DRAWN — planeDist ${planeDistance.toFixed(2)}, maskScore ${closestScore.toFixed(2)}, leftSideLoc ${leftSideLoc.toFixed(2)}, mirrored to (${(this._location.x + mirroredX).toFixed(2)}, ${(this._location.y + mirroredY).toFixed(2)}, ${(this._location.z + mirroredZ).toFixed(2)}) screen (${screenSpot.x.toFixed(1)}, ${screenSpot.y.toFixed(1)}), edgeAlpha ${edgeAlpha.toFixed(2)}`);
-
-            return { screenSpot, planeDistance, edgeAlpha };
-        };
-
-        const drawAvatar = (avatar: IWindowReflectionAvatarState, alpha: number): boolean =>
-        {
-            if(!avatar?.location || (alpha < 0)) return false;
-
-            const placement = place(avatar.location, 0.8, (avatar.verticalOffset || 0), true, `avatar ${avatar.id}`);
-
-            if(!placement) return false;
-
-            const mirrorDirection = RoomWindowReflectionState.reflectDirection(avatar.direction, normalX, normalY);
-            const texture = (avatar.mirrors?.get(mirrorDirection) || avatar.texture);
-
-            if(debugEnabled) OctaneLogger.log(`[Reflection] plane ${this._uniqueId}: avatar ${avatar.id} facing ${avatar.direction}° -> mirror ${mirrorDirection}° ${avatar.mirrors?.has(mirrorDirection) ? 'HIT' : 'MISS (live texture)'} available=[${Array.from(avatar.mirrors?.keys() || []).join(',')}]`);
-
-            if(!texture?.source || texture.source.destroyed || !texture.source.style) return false;
-
-            const footY = (placement.screenSpot.y + (this._screenScale / 4));
-            const sprite = new Sprite(texture);
-
-            sprite.anchor.set(0.5, 1);
-            sprite.setFromMatrix(projectionInverse.clone().append(new Matrix(1, 0, 0, 1, Math.trunc(placement.screenSpot.x), Math.trunc(footY))));
-            sprite.tint = 0xCFE3FF;
-            sprite.alpha = (alpha * placement.edgeAlpha);
-
-            subjectParent.addChild(sprite);
-
-            return true;
-        };
-
-        const drawUnit = (unit: IWindowReflectionUnitState, alpha: number): boolean =>
-        {
-            if(!unit?.location || (alpha < 0)) return false;
-
-            const mirrorDirection = RoomWindowReflectionState.reflectDirection(unit.direction, normalX, normalY);
-            const layers = (unit.layersByDirection?.get(mirrorDirection) || unit.layers);
-
-            if(debugEnabled) OctaneLogger.log(`[Reflection] plane ${this._uniqueId}: unit ${unit.id} facing ${unit.direction}° -> mirror ${mirrorDirection}° ${unit.layersByDirection?.has(mirrorDirection) ? 'HIT' : 'MISS (live layers)'} available=[${Array.from(unit.layersByDirection?.keys() || []).join(',')}]`);
-
-            if(!layers?.length) return false;
-
-            const sizeAlongNormal = ((Math.abs(normalX) * (unit.sizeX || 1)) + (Math.abs(normalY) * (unit.sizeY || 1)));
-            const depthTiles = Math.max(0, (sizeAlongNormal - 1));
-            const placement = place(unit.location, 1.1, 0, false, `unit ${unit.id}`, unit.origin, depthTiles);
-
-            if(!placement) return false;
-
-            const originX = placement.screenSpot.x;
-            const originY = placement.screenSpot.y;
-
-            let added = false;
-
-            for(const layer of layers)
-            {
-                if(!layer?.texture?.source || layer.texture.source.destroyed || !layer.texture.source.style) continue;
-
-                const width = layer.texture.width;
-                const screenX = (layer.flipH ? (originX + layer.offsetX + width) : (originX + layer.offsetX));
-                const screenY = (originY + layer.offsetY);
-                const screenMatrix = new Matrix((layer.flipH ? -1 : 1), 0, 0, 1, Math.trunc(screenX), Math.trunc(screenY));
-                const sprite = new Sprite(layer.texture);
-
-                sprite.setFromMatrix(projectionInverse.clone().append(screenMatrix));
-                sprite.tint = 0xCFE3FF;
-                sprite.alpha = (alpha * layer.alpha * placement.edgeAlpha);
-
-                subjectParent.addChild(sprite);
-
-                added = true;
-            }
-
-            return added;
-        };
-
-        const planeDistanceOf = (location: IVector3D): number =>
-        {
-            const relative = Vector3d.dif(location, this._location);
-
-            return Math.abs(Vector3d.scalarProjection(relative, this._normal));
-        };
-
-        const freeze = (location: IVector3D): IVector3D =>
-        {
-            const stored = new Vector3d();
-
-            stored.assign(location);
-
-            return stored;
-        };
-
-        const drawOrder: { unit?: IWindowReflectionUnitState; avatar?: IWindowReflectionAvatarState; distance: number }[] = [];
-
-        for(const unit of units)
-        {
-            if(!unit?.location || !unit.layers?.length) continue;
-
-            drawOrder.push({ unit, distance: planeDistanceOf(unit.location) });
-        }
-
-        for(const avatar of avatars)
-        {
-            if(!avatar?.texture?.source || avatar.texture.source.destroyed || !avatar.texture.source.style || !avatar.location) continue;
-
-            drawOrder.push({ avatar, distance: planeDistanceOf(avatar.location) });
-        }
-
-        drawOrder.sort((a, b) =>
-        {
-            const byDistance = (b.distance - a.distance);
-
-            if(Math.abs(byDistance) > 0.25) return byDistance;
-
-            return ((a.avatar ? 1 : -1) - (b.avatar ? 1 : -1));
-        });
-
-        const visibleIds = new Set<string>();
-
-        for(const entry of drawOrder)
-        {
-            const key = (entry.unit ? ('u' + entry.unit.id) : ('a' + entry.avatar.id));
-            const isAvatar = !!entry.avatar;
-
-            let firstSeenAt = this._windowReflectionFirstSeenAt.get(key);
-
-            if(firstSeenAt === undefined)
-            {
-                firstSeenAt = ((isAvatar || this._windowReflectionFadeOut.has(key)) ? (now - fadeDurationMs) : now);
-            }
-
-            const elapsed = Math.min(fadeDurationMs, Math.max(0, (now - firstSeenAt)));
-            const alpha = (0.4 * (elapsed / fadeDurationMs));
-            const drawn = (entry.unit ? drawUnit(entry.unit, alpha) : drawAvatar(entry.avatar, alpha));
-
-            if(!drawn) continue;
-
-            if(!this._windowReflectionFirstSeenAt.has(key)) this._windowReflectionFirstSeenAt.set(key, firstSeenAt);
-
-            if(elapsed < fadeDurationMs) this._reflectionFadeAnimating = true;
-
-            visibleIds.add(key);
-            this._windowReflectionFadeOut.delete(key);
-
-            const location = freeze(entry.unit ? entry.unit.location : entry.avatar.location);
-
-            this._windowReflectionLastVisible.set(key, entry.unit
-                ? { unit: { ...entry.unit, location }, location }
-                : { avatar: { ...entry.avatar, location }, location });
-        }
-
-        for(const [id, lastVisible] of this._windowReflectionLastVisible)
-        {
-            if(visibleIds.has(id) || this._windowReflectionFadeOut.has(id)) continue;
-
-            this._windowReflectionFadeOut.set(id, { ...lastVisible, startedAt: now });
-            this._windowReflectionLastVisible.delete(id);
-            this._windowReflectionFirstSeenAt.delete(id);
-        }
-
-        for(const [id, fadeOut] of this._windowReflectionFadeOut)
-        {
-            const elapsed = (now - fadeOut.startedAt);
-
-            if(elapsed >= fadeDurationMs)
-            {
-                this._windowReflectionFadeOut.delete(id);
-                continue;
-            }
-
-            const alpha = (0.4 * (1 - (elapsed / fadeDurationMs)));
-            const rendered = (fadeOut.unit ? drawUnit(fadeOut.unit, alpha) : drawAvatar(fadeOut.avatar, alpha));
-
-            if(!rendered) this._windowReflectionFadeOut.delete(id);
-            else this._reflectionFadeAnimating = true;
-        }
-
-        if(!container.children.length || (subjectParent !== container && subjectParent.children.length <= 1))
-        {
-            container.destroy({ children: true });
-
-            if(!avatars.length && !units.length)
-            {
-                this._windowReflectionFirstSeenAt.clear();
-                this._windowReflectionLastVisible.clear();
-            }
-
-            return;
-        }
-
-        GetRenderer().render({
-            target: this._planeTexture,
-            container,
-            transform: projection,
-            clear: false
-        });
-
-        container.destroy({ children: true });
-    }
-
     private updateCorners(geometry: IRoomGeometry): void
     {
         this._cornerA.assign(geometry.getScreenPosition(this._location));
@@ -1452,20 +938,6 @@ export class RoomPlane implements IRoomPlane
         this._cornerD.assign(geometry.getScreenPosition(Vector3d.sum(this._location, this._leftSide)));
 
         this._offset = geometry.getScreenPoint(this._origin);
-
-        const axisOrigin = geometry.getScreenPoint(this._location);
-        const axisX = geometry.getScreenPoint(Vector3d.sum(this._location, new Vector3d(1, 0, 0)));
-        const axisY = geometry.getScreenPoint(Vector3d.sum(this._location, new Vector3d(0, 1, 0)));
-        const axisZ = geometry.getScreenPoint(Vector3d.sum(this._location, new Vector3d(0, 0, 1)));
-
-        if(axisOrigin && axisX && axisY && axisZ)
-        {
-            this._screenAxisX.set((axisX.x - axisOrigin.x), (axisX.y - axisOrigin.y));
-            this._screenAxisY.set((axisY.x - axisOrigin.x), (axisY.y - axisOrigin.y));
-            this._screenAxisZ.set((axisZ.x - axisOrigin.x), (axisZ.y - axisOrigin.y));
-        }
-
-        this._screenScale = geometry.scale;
 
         this._cornerA.x = Math.round(this._cornerA.x);
         this._cornerA.y = Math.round(this._cornerA.y);
@@ -1498,7 +970,6 @@ export class RoomPlane implements IRoomPlane
         this._width = maxX;
         this._height = maxY;
 
-        this._screenLocation.set(this._cornerA.x, this._cornerA.y);
     }
 
     private getMatrixForDimensions(width: number, height: number): Matrix
@@ -1534,7 +1005,6 @@ export class RoomPlane implements IRoomPlane
     public resetBitmapMasks(): void
     {
         this._hasWindowMask = false;
-        this._windowMasks = [];
 
         if(this._disposed || !this._useMask || !this._bitmapMasks.length) return;
 
@@ -1563,7 +1033,6 @@ export class RoomPlane implements IRoomPlane
 
     public addWindowMask(leftSideLoc: number, rightSideLoc: number): void
     {
-        this._windowMasks.push({ leftSideLoc, rightSideLoc });
         this._hasWindowMask = true;
     }
 
