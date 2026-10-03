@@ -30,6 +30,4 @@ export interface IUserDataSnapshot
     rankId: number;
     rankName: string;
     rankBadge: string;
-    rankPrefix: string;
-    rankPrefixColor: string;
 }

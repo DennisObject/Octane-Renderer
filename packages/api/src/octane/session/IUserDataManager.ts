@@ -16,8 +16,6 @@ export interface IUserDataManager
     updateFigure(roomIndex: number, figure: string, sex: string, hasSaddle: boolean, isRiding: boolean): void;
     updateName(roomIndex: number, name: string): void;
     updateMotto(roomIndex: number, custom: string): void;
-    updateNickIcon(roomIndex: number, nickIcon: string): void;
-    updateBackground(roomIndex: number, background: number, stand: number, overlay: number, cardBackground?: number, borderId?: number): void;
     updateAchievementScore(roomIndex: number, score: number): void;
     updatePetLevel(roomIndex: number, level: number): void;
     updatePetBreedingStatus(roomIndex: number, canBreed: boolean, canHarvest: boolean, canRevive: boolean, hasBreedingPermission: boolean): void;
@@ -27,8 +25,7 @@ export interface IUserDataManager
      * Returns the current room's user list as a referentially-stable
      * ReadonlyArray. The same array reference is returned across reads
      * until any user is added, removed, or has a tracked field updated
-     * (figure / name / motto / nick icon / customization / background /
-     * achievement score / pet level / breeding status). Mutations
+     * (figure / name / motto / achievement score / pet level / breeding status). Mutations
      * dispatch `OctaneEventType.ROOM_USER_LIST_UPDATED` to signal
      * invalidation.
      *

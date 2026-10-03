@@ -8,13 +8,7 @@ export class RoomUserData implements IRoomUserData
     private _sex: string = '';
     private _figure: string = '';
     private _custom: string = '';
-    private _nickIcon: string = '';
     private _activityPoints: number;
-    private _background: number;
-    private _stand: number;
-    private _overlay: number;
-    private _cardBackground: number;
-    private _borderId: number = 0;
     private _webID: number = 0;
     private _groupID: number = 0;
     private _groupStatus: number = 0;
@@ -52,56 +46,6 @@ export class RoomUserData implements IRoomUserData
     public set activityPoints(value: number)
     {
         this._activityPoints = value;
-    }
-
-    public get background(): number
-    {
-        return this._background;
-    }
-
-    public set background(value: number)
-    {
-        this._background = value;
-    }
-
-    public get stand(): number
-    {
-        return this._stand;
-    }
-
-    public set stand(value: number)
-    {
-        this._stand = value;
-    }
-
-    public get overlay(): number
-    {
-        return this._overlay;
-    }
-
-    public set overlay(value: number)
-    {
-        this._overlay = value;
-    }
-
-    public get cardBackground(): number
-    {
-        return this._cardBackground;
-    }
-
-    public set cardBackground(value: number)
-    {
-        this._cardBackground = value;
-    }
-
-    public get borderId(): number
-    {
-        return this._borderId;
-    }
-
-    public set borderId(value: number)
-    {
-        this._borderId = value;
     }
 
     public get name(): string
@@ -307,16 +251,6 @@ export class RoomUserData implements IRoomUserData
     public get isModerator(): boolean
     {
         return this._isModerator;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
-    }
-
-    public set nickIcon(value: string)
-    {
-        this._nickIcon = value;
     }
 
     public set isModerator(value: boolean)

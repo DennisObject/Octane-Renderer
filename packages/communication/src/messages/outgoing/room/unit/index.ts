@@ -1,6 +1,5 @@
 export * from './chat';
 export * from './RoomUnitActionComposer';
-export * from './RoomUnitBackgroundComposer';
 export * from './RoomUnitDanceComposer';
 export * from './RoomUnitDropHandItemComposer';
 export * from './RoomUnitGiveHandItemComposer';

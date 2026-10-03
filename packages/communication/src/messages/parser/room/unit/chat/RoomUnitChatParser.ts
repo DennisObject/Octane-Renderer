@@ -7,9 +7,7 @@ export class RoomUnitChatParser implements IMessageParser
     private _gesture: number;
     private _bubble: number;
     private _urls: string[];
-    private _chatColours: string;
     private _messageLength: number;
-    private _nickIcon: string;
     private _bubbleWidthOverride: number;
 
     public flush(): boolean
@@ -19,9 +17,7 @@ export class RoomUnitChatParser implements IMessageParser
         this._gesture = 0;
         this._bubble = 0;
         this._urls = [];
-        this._chatColours = null;
         this._messageLength = 0;
-        this._nickIcon = '';
         this._bubbleWidthOverride = -1;
 
         return true;
@@ -38,9 +34,7 @@ export class RoomUnitChatParser implements IMessageParser
 
         this.parseUrls(wrapper);
 
-        this._chatColours = wrapper.readString();
         this._messageLength = wrapper.readInt();
-        this._nickIcon = wrapper.readString();
         // A wired message may carry a bubble width of its own; -1 leaves the room setting in charge.
         this._bubbleWidthOverride = (wrapper.bytesAvailable ? wrapper.readInt() : -1);
 
@@ -90,19 +84,9 @@ export class RoomUnitChatParser implements IMessageParser
         return this._urls;
     }
 
-    public get chatColours(): string
-    {
-        return this._chatColours;
-    }
-
     public get messageLength(): number
     {
         return this._messageLength;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
     }
 
     public get bubbleWidthOverride(): number

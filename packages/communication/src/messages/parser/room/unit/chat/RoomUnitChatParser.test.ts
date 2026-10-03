@@ -44,8 +44,7 @@ const chatPacket = () =>
 {
     const writer = new BinaryWriter();
     writer.writeInt(7); writer.writeString('hello'); writer.writeInt(0); writer.writeInt(34);
-    writer.writeInt(0); writer.writeString(''); writer.writeInt(5);
-    writer.writeString('');
+    writer.writeInt(0); writer.writeInt(5);
     return writer;
 };
 

@@ -8,8 +8,6 @@ export class UserPermissionsParser implements IMessageParser
     private _rankId: number;
     private _rankName: string;
     private _rankBadge: string;
-    private _rankPrefix: string;
-    private _rankPrefixColor: string;
     private _permissions: Map<string, number> = new Map();
 
     public flush(): boolean
@@ -20,8 +18,6 @@ export class UserPermissionsParser implements IMessageParser
         this._rankId = 0;
         this._rankName = '';
         this._rankBadge = '';
-        this._rankPrefix = '';
-        this._rankPrefixColor = '';
         this._permissions = new Map();
 
         return true;
@@ -44,8 +40,6 @@ export class UserPermissionsParser implements IMessageParser
         this._rankId = wrapper.readInt();
         this._rankName = wrapper.readString();
         this._rankBadge = wrapper.readString();
-        this._rankPrefix = wrapper.readString();
-        this._rankPrefixColor = wrapper.readString();
 
         if(!wrapper.bytesAvailable) return true;
 
@@ -97,16 +91,6 @@ export class UserPermissionsParser implements IMessageParser
     public get rankBadge(): string
     {
         return this._rankBadge;
-    }
-
-    public get rankPrefix(): string
-    {
-        return this._rankPrefix;
-    }
-
-    public get rankPrefixColor(): string
-    {
-        return this._rankPrefixColor;
     }
 
     public get permissions(): ReadonlyMap<string, number>

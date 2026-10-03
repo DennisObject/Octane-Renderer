@@ -24,25 +24,21 @@ export class RoomSessionChatEvent extends RoomSessionEvent
     private _objectId: number;
     private _message: string;
     private _chatType: number;
-    private _chatColours: string;
     private _links: string[];
     private _extraParam: number;
     private _style: number;
-    private _nickIcon: string;
     private _bubbleWidthOverride: number;
 
-    constructor(type: string, session: IRoomSession, objectId: number, message: string, chatType: number, style: number = 0, chatColours: string = '', links: string[] = null, extraParam: number = -1, nickIcon: string = '', bubbleWidthOverride: number = -1)
+    constructor(type: string, session: IRoomSession, objectId: number, message: string, chatType: number, style: number = 0, links: string[] = null, extraParam: number = -1, bubbleWidthOverride: number = -1)
     {
         super(type, session);
 
         this._objectId = objectId;
         this._message = message;
         this._chatType = chatType;
-        this._chatColours = chatColours;
         this._links = links;
         this._extraParam = extraParam;
         this._style = style;
-        this._nickIcon = nickIcon;
         this._bubbleWidthOverride = bubbleWidthOverride;
     }
 
@@ -74,16 +70,6 @@ export class RoomSessionChatEvent extends RoomSessionEvent
     public get style(): number
     {
         return this._style;
-    }
-
-    public get chatColours(): string
-    {
-        return this._chatColours;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
     }
 
     /** -1 when the message follows the room setting; otherwise 0 wide, 1 normal, 2 thin. */

@@ -177,32 +177,6 @@ export class UserDataManager implements IUserDataManager
         this.invalidateRoomUserListSnapshot();
     }
 
-    public updateNickIcon(roomIndex: number, nickIcon: string): void
-    {
-        const userData = this.getUserDataByIndex(roomIndex);
-
-        if(!userData) return;
-
-        userData.nickIcon = nickIcon;
-
-        this.invalidateRoomUserListSnapshot();
-    }
-
-    public updateBackground(roomIndex: number, background: number, stand: number, overlay: number, cardBackground: number = 0, borderId: number = 0): void
-    {
-        const userData = this.getUserDataByIndex(roomIndex);
-
-        if(!userData) return;
-
-        userData.background = background;
-        userData.stand = stand;
-        userData.overlay = overlay;
-        userData.cardBackground = cardBackground;
-        userData.borderId = borderId;
-
-        this.invalidateRoomUserListSnapshot();
-    }
-
     public updateAchievementScore(roomIndex: number, score: number): void
     {
         const userData = this.getUserDataByIndex(roomIndex);

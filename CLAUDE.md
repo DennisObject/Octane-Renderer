@@ -113,35 +113,6 @@ accepts an optional `allowUnderpass` arg at the end of its parameter
 list; the server-side `RoomSettingsSaveEvent` reads it under
 `packet.bytesAvailable() > 0`.
 
-### `RoomUnitParser` per-user `borderId` (Infostand Borders wire contract)
-
-`RoomUsersComposer` on Arcturus (post `54259f8` / fork commit `8f8f568`
-"Infostand Borders") appends `appendInt(getInfostandBorder())` at the
-end of EVERY user record — habbo, bot, rentable bot — using `0` as the
-constant for records without a real border. To stay wire-aligned with
-that, `RoomUnitParser` reads `user.borderId = wrapper.readInt();`
-unconditionally inside the per-user loop, after
-`roomEntryMethod` / `roomEntryTeleportId`.
-
-DO NOT wrap this in a `wrapper.bytesAvailable ? readInt() : 0` guard.
-`bytesAvailable` is a boolean meaning "any bytes left in the WHOLE
-packet?" — not "any bytes left for THIS user". For any non-last user
-the guard evaluates `true` (next user's bytes follow) and reads, which
-is fine ONLY by coincidence when the server emits borderId per user.
-On a server that doesn't emit it, the guard steals 4 bytes from the
-next record and cascade-corrupts the whole roster (symptom: users not
-seeing each other on room enter). On a server that DOES emit it,
-skipping the read leaves 4 unconsumed bytes per record and produces
-the same corruption. Both shapes are wrong in a loop; unconditional
-read paired with a server contract that always emits is the only
-correct combination.
-
-If you ever need to pair this parser with an older Arcturus that
-doesn't emit per-user borderId, the fix is on the server side (add
-the cherry-pick), not the parser side. Document any future
-trailing-int extension in this same place so the next reader doesn't
-re-introduce a bytesAvailable guard "for safety".
-
 ### Dropped dead code: `sendWhisperGroupMessage`
 
 `IRoomSession.sendWhisperGroupMessage(userId)` referenced a
