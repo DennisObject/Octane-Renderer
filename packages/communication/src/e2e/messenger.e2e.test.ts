@@ -176,13 +176,14 @@ const waitForClients = async (
     }
 };
 
-// The server refuses a second console message from the same user inside this window (reported as
-// error code 7), and the session probe can answer before it has passed.
-const CONSOLE_FLOOD_WINDOW_MS = 750;
+// The server refuses a second console message from the same user within 750 ms of the last one
+// (reported as error code 7), measured on arrival, and the session probe can answer before that
+// has passed. Twice the window, so network jitter and timer rounding cannot land a send inside it.
+const CONSOLE_SEND_SPACING_MS = 1500;
 
 const waitForFloodWindow = async (sentAt: number): Promise<void> =>
 {
-    const remaining = CONSOLE_FLOOD_WINDOW_MS - (Date.now() - sentAt);
+    const remaining = CONSOLE_SEND_SPACING_MS - (Date.now() - sentAt);
 
     if(remaining > 0) await new Promise(resolve => setTimeout(resolve, remaining));
 };
