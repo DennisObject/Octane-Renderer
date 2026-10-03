@@ -1,9 +1,8 @@
 import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
 import { GetAssetManager } from '@octane/assets';
-import { AdvancedMap, GetRenderer, Vector3d } from '@octane/utils';
-import { Container, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { AdvancedMap } from '@octane/utils';
+import { Sprite, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
-import { RoomWindowReflectionState } from '../RoomWindowReflectionState';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 import { ExpressionAdditionFactory, FloatingIdleZAddition, GameClickTargetAddition, GuideStatusBubbleAddition, HabbiconBubbleAddition, IAvatarAddition, MutedBubbleAddition, NumberBubbleAddition, TypingBubbleAddition } from './additions';
 
@@ -83,16 +82,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     private _isAvatarReady: boolean;
     private _needsUpdate: boolean;
     private _geometryUpdateCounter: number;
-    private _reflectionVerticalOffset: number;
-    private _reflectionMirrorTextures: Map<number, RenderTexture>;
-    private _reflectionMirrors: Map<number, Texture>;
-
-    private _avatarTextureRenderVersion: number;
-    private _windowReflectionPushed: boolean;
-    private _lastReflectionPushedTexture: Texture;
-    private _lastReflectionPushedDirection: number;
-    private _lastReflectionPushedLocation: Vector3d;
-
     private _additions: Map<number, IAvatarAddition>;
 
     constructor()
@@ -147,15 +136,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         this._isAvatarReady = false;
         this._needsUpdate = false;
         this._geometryUpdateCounter = -1;
-        this._reflectionVerticalOffset = 0;
-        this._reflectionMirrorTextures = new Map();
-        this._reflectionMirrors = new Map();
-        this._avatarTextureRenderVersion = 0;
-        this._windowReflectionPushed = false;
-        this._lastReflectionPushedTexture = null;
-        this._lastReflectionPushedDirection = -1;
-        this._lastReflectionPushedLocation = new Vector3d();
-
         this._additions = new Map();
     }
 
@@ -191,10 +171,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
             for(const avatar of this._cachedAvatarEffects.getValues()) avatar && avatar.dispose();
             this._cachedAvatarEffects.reset();
         }
-
-        this.destroyMirrorTextures();
-
-        if(this.object) RoomWindowReflectionState.removeAvatar(this.object.id, this.object.model?.getValue<string>(RoomObjectVariable.OBJECT_ROOM_ID));
 
         if(this._additions)
         {
@@ -315,12 +291,7 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
 
                 this._updatesUntilFrameUpdate = AvatarVisualization.ANIMATION_FRAME_UPDATE_INTERVAL;
             }
-            else
-            {
-                this.updateWindowReflectionSource(true);
-
-                return;
-            }
+            else return;
 
             let canvasOffsets = this._avatarImage.getCanvasOffsets();
 
@@ -331,8 +302,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
             {
                 const highlightEnabled = ((this.object.model.getValue<number>(RoomObjectVariable.FIGURE_HIGHLIGHT_ENABLE) === 1) && (this.object.model.getValue<number>(RoomObjectVariable.FIGURE_HIGHLIGHT) === 1));
 
-                this.renderMirrorTextures(highlightEnabled);
-
                 const avatarImage = this._avatarImage.processAsTexture(AvatarSetType.FULL, highlightEnabled);
 
                 if(!this._isAnimating && this._avatarImage.isAnimating()) this._isAnimating = true;
@@ -340,8 +309,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
                 if(avatarImage)
                 {
                     sprite.texture = avatarImage;
-                    this._avatarTextureRenderVersion++;
-
                     if(highlightEnabled)
                     {
                         // sprite.filters  = [
@@ -515,16 +482,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
                 }
             }
 
-            const avatarSprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
-
-            if(avatarSprite?.texture)
-            {
-                const baseOffsetY = (-(avatarSprite.texture.height) + (scale / 4));
-
-                this._reflectionVerticalOffset = avatarSprite.offsetY - baseOffsetY;
-            }
-
-            this.updateWindowReflectionSource();
         }
     }
 
@@ -1135,160 +1092,6 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         this.clearAvatar();
     }
 
-    private cloneTexture(texture: Texture, reuse: Texture = null): Texture
-    {
-        if(!texture) return null;
-
-        const width = Math.max(1, Math.ceil(texture.width));
-        const height = Math.max(1, Math.ceil(texture.height));
-
-        let target = reuse;
-
-        if(!(target instanceof RenderTexture) || target.destroyed || (target.width !== width) || (target.height !== height))
-        {
-            if(reuse && !reuse.destroyed) reuse.destroy(true);
-
-            target = RenderTexture.create({ width, height });
-        }
-
-        const sprite = new Sprite(texture);
-        const container = new Container();
-
-        container.addChild(sprite);
-
-        GetRenderer().render({
-            target,
-            container,
-            clear: true
-        });
-
-        container.destroy({ children: true });
-
-        return target;
-    }
-
-    private destroyMirrorTextures(): void
-    {
-        for(const texture of this._reflectionMirrorTextures.values())
-        {
-            if(texture && !texture.destroyed) texture.destroy(true);
-        }
-
-        this._reflectionMirrorTextures.clear();
-        this._reflectionMirrors = new Map();
-    }
-
-    private renderMirrorTextures(highlightEnabled: boolean): void
-    {
-        if(!this.object || !this._avatarImage || (this._angle < 0) || !Number.isFinite(this._angleCameraDirection) || !RoomWindowReflectionState.hasZones) return;
-
-        const roomId = this.object.model?.getValue<string>(RoomObjectVariable.OBJECT_ROOM_ID);
-        const normals = RoomWindowReflectionState.getZoneNormalsNear(this.object.getLocation(), roomId, 0.8);
-
-        if(!normals.length)
-        {
-            if(this._reflectionMirrorTextures.size) this.destroyMirrorTextures();
-
-            return;
-        }
-
-        const normalize = (degrees: number) => (((degrees % 360) + 360) % 360);
-        const cameraDirection = this._angleCameraDirection;
-        const toImageAngle = (cameraRelativeDegrees: number) => normalize(cameraRelativeDegrees - (135 - 22.5));
-        const worldFacing = normalize(this._angle + cameraDirection);
-        const headDiffers = (Number.isFinite(this._headAngle) && (this._headAngle >= 0) && (this._headAngle !== this._angle));
-        const worldHead = normalize(this._headAngle + cameraDirection);
-        const keyDirection = this.object.getDirection().x;
-        const liveKey = RoomWindowReflectionState.reflectDirection(keyDirection, 0, 0);
-        const mirrors = new Map<number, Texture>();
-
-        for(const normal of normals)
-        {
-            const key = RoomWindowReflectionState.reflectDirection(keyDirection, normal.x, normal.y);
-
-            if((key === liveKey) || mirrors.has(key)) continue;
-
-            const renderWorld = RoomWindowReflectionState.reflectDirection(worldFacing, normal.x, normal.y);
-
-            this._avatarImage.setDirectionAngle(AvatarSetType.FULL, toImageAngle(normalize(renderWorld - cameraDirection)));
-
-            if(headDiffers)
-            {
-                const renderHead = RoomWindowReflectionState.reflectDirection(worldHead, normal.x, normal.y);
-
-                this._avatarImage.setDirectionAngle(AvatarSetType.HEAD, toImageAngle(normalize(renderHead - cameraDirection)));
-            }
-
-            const rendered = this._avatarImage.processAsTexture(AvatarSetType.FULL, highlightEnabled);
-
-            if(!rendered) continue;
-
-            const stored = this.cloneTexture(rendered, this._reflectionMirrorTextures.get(key) || null);
-
-            if(!stored) continue;
-
-            this._reflectionMirrorTextures.set(key, stored as RenderTexture);
-            mirrors.set(key, stored);
-        }
-
-        this._avatarImage.setDirectionAngle(AvatarSetType.FULL, toImageAngle(this._angle));
-
-        if(headDiffers) this._avatarImage.setDirectionAngle(AvatarSetType.HEAD, toImageAngle(this._headAngle));
-
-        this._reflectionMirrors = mirrors;
-    }
-
-    private updateWindowReflectionSource(skipIfUnchanged: boolean = false): void
-    {
-        if(!this.object) return;
-
-        const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
-
-        if(sprite?.texture)
-        {
-            const location = this.object.getLocation();
-            const direction = this.object.getDirection().x;
-
-            if(skipIfUnchanged && this._windowReflectionPushed)
-            {
-                if((sprite.texture === this._lastReflectionPushedTexture) &&
-                    (direction === this._lastReflectionPushedDirection) &&
-                    (location.x === this._lastReflectionPushedLocation.x) &&
-                    (location.y === this._lastReflectionPushedLocation.y) &&
-                    (location.z === this._lastReflectionPushedLocation.z)) return;
-            }
-
-            const roomId = this.object.model?.getValue<string>(RoomObjectVariable.OBJECT_ROOM_ID);
-
-            if(!RoomWindowReflectionState.hasZones || !RoomWindowReflectionState.isNearAnyZone(location, roomId))
-            {
-                if(this._windowReflectionPushed)
-                {
-                    RoomWindowReflectionState.removeAvatar(this.object.id, roomId);
-
-                    this._windowReflectionPushed = false;
-                    this._lastReflectionPushedTexture = null;
-                }
-
-                return;
-            }
-
-            RoomWindowReflectionState.setAvatar(this.object.id, sprite.texture, this._reflectionMirrors, direction, location, this._reflectionVerticalOffset, roomId);
-
-            this._windowReflectionPushed = true;
-            this._lastReflectionPushedTexture = sprite.texture;
-            this._lastReflectionPushedDirection = direction;
-            this._lastReflectionPushedLocation.assign(location);
-
-            return;
-        }
-
-        RoomWindowReflectionState.removeAvatar(this.object.id, this.object.model?.getValue<string>(RoomObjectVariable.OBJECT_ROOM_ID));
-
-        this._windowReflectionPushed = false;
-        this._lastReflectionPushedTexture = null;
-    }
-
     private clearAvatar(): void
     {
         const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
@@ -1307,16 +1110,7 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         this._cachedAvatars.reset();
         this._cachedAvatarEffects.reset();
 
-        this.destroyMirrorTextures();
-
-
         this._avatarImage = null;
-
-        if(this.object) RoomWindowReflectionState.removeAvatar(this.object.id, this.object.model?.getValue<string>(RoomObjectVariable.OBJECT_ROOM_ID));
-
-        this._windowReflectionPushed = false;
-        this._lastReflectionPushedTexture = null;
-        this._lastReflectionPushedDirection = -1;
     }
 
     private getAddition(id: number): IAvatarAddition
