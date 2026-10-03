@@ -3,7 +3,6 @@ export * from './avatareffect';
 export * from './badges';
 export * from './clothing';
 export * from './furniture';
-export * from './nickicons';
 export * from './pets';
 export * from './purse';
 export * from './trading';

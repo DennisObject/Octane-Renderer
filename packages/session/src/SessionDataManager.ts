@@ -42,8 +42,6 @@ export class SessionDataManager implements ISessionDataManager
     private _rankId: number = 0;
     private _rankName: string = '';
     private _rankBadge: string = '';
-    private _rankPrefix: string = '';
-    private _rankPrefixColor: string = '';
     private _noobnessLevel: number = -1;
     private _isEmailVerified: boolean = false;
 
@@ -139,9 +137,7 @@ export class SessionDataManager implements ISessionDataManager
             tags: Object.freeze<string[]>([...this._tags]),
             rankId: this._rankId,
             rankName: this._rankName,
-            rankBadge: this._rankBadge,
-            rankPrefix: this._rankPrefix,
-            rankPrefixColor: this._rankPrefixColor
+            rankBadge: this._rankBadge
         });
 
         return this._userDataSnapshot;
@@ -345,8 +341,6 @@ export class SessionDataManager implements ISessionDataManager
         this._rankId = parser.rankId;
         this._rankName = parser.rankName;
         this._rankBadge = parser.rankBadge;
-        this._rankPrefix = parser.rankPrefix;
-        this._rankPrefixColor = parser.rankPrefixColor;
         // Copy into our local mutable Map so the parser's reference
         // (which is overwritten on every parse() call) can't leak back
         // to consumers.

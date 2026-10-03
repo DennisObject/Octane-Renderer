@@ -13,12 +13,7 @@ export class UserMessageData
     private _sex: string = '';
     private _figure: string = '';
     private _custom: string = '';
-    private _nickIcon: string = '';
     private _activityPoints: number = 0;
-    private _background: number = 0;
-    private _stand: number = 0;
-    private _overlay: number = 0;
-    private _cardBackground: number = 0;
     private _webID: number = 0;
     private _groupID: number = 0;
     private _groupStatus: number = 0;
@@ -39,7 +34,6 @@ export class UserMessageData
     private _isModerator: boolean = false;
     private _roomEntryMethod: string = 'unknown';
     private _roomEntryTeleportId: number = 0;
-    private _borderId: number = 0;
     private _isReadOnly: boolean = false;
 
     constructor(roomIndex: number)
@@ -185,46 +179,6 @@ export class UserMessageData
         {
             this._activityPoints = value;
         }
-    }
-
-    public get background(): number
-    {
-        return this._background;
-    }
-
-    public set background(value: number)
-    {
-        this._background = value;
-    }
-
-    public get stand(): number
-    {
-        return this._stand;
-    }
-
-    public set stand(value: number)
-    {
-        this._stand = value;
-    }
-
-    public get overlay(): number
-    {
-        return this._overlay;
-    }
-
-    public set overlay(value: number)
-    {
-        this._overlay = value;
-    }
-
-    public get cardBackground(): number
-    {
-        return this._cardBackground;
-    }
-
-    public set cardBackground(value: number)
-    {
-        this._cardBackground = value;
     }
 
     public get webID(): number
@@ -450,19 +404,6 @@ export class UserMessageData
         return this._isModerator;
     }
 
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
-    }
-
-    public set nickIcon(value: string)
-    {
-        if(!this._isReadOnly)
-        {
-            this._nickIcon = value;
-        }
-    }
-
     public set isModerator(value: boolean)
     {
         if(!this._isReadOnly)
@@ -494,19 +435,6 @@ export class UserMessageData
         if(!this._isReadOnly)
         {
             this._roomEntryTeleportId = value;
-        }
-    }
-
-    public get borderId(): number
-    {
-        return this._borderId;
-    }
-
-    public set borderId(value: number)
-    {
-        if(!this._isReadOnly)
-        {
-            this._borderId = value;
         }
     }
 }

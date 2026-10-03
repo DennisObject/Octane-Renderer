@@ -578,8 +578,6 @@ export class IncomingHeader
     public static CATALOG_PRODUCT_METADATA = 10081;
     public static CATALOG_RUNTIME_CONFIGURATION = 10082;
 
-    public static USER_NICK_ICONS = 7004;
-
     // YouTube Room Broadcast
     public static YOUTUBE_ROOM_BROADCAST = 8001;
     public static YOUTUBE_ROOM_WATCHERS = 8002;

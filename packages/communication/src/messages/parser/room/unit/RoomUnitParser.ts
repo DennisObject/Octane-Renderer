@@ -34,10 +34,6 @@ export class RoomUnitParser implements IMessageParser
             const id = wrapper.readInt();
             const username = wrapper.readString();
             const custom = wrapper.readString();
-            const background = wrapper.readInt();
-            const stand = wrapper.readInt();
-            const overlay = wrapper.readInt();
-            const cardBackground = wrapper.readInt();
             let figure = wrapper.readString();
             const roomIndex = wrapper.readInt();
             const x = wrapper.readInt();
@@ -51,10 +47,6 @@ export class RoomUnitParser implements IMessageParser
             user.dir = direction;
             user.name = username;
             user.custom = custom;
-            user.background = background;
-            user.stand = stand;
-            user.overlay = overlay;
-            user.cardBackground = cardBackground;
             user.x = x;
             user.y = y;
             user.z = z;
@@ -77,7 +69,6 @@ export class RoomUnitParser implements IMessageParser
                 user.figure = figure;
                 user.activityPoints = wrapper.readInt();
                 user.isModerator = wrapper.readBoolean();
-                user.nickIcon = wrapper.readString();
             }
 
             else if(type === 2)
@@ -140,17 +131,6 @@ export class RoomUnitParser implements IMessageParser
 
             user.roomEntryMethod = wrapper.readString();
             user.roomEntryTeleportId = wrapper.readInt();
-            // Arcturus appends a trailing borderId int per user
-            // (RoomUsersComposer, after the Infostand Borders feature)
-            // for every record — habbo, bot, rentable bot — using 0 as
-            // the constant for the records that have no border. The
-            // read MUST be unconditional: a bytesAvailable guard would
-            // be semantically wrong here (the guard answers "any byte
-            // left in the whole packet?" not "any byte left for THIS
-            // user"), and skipping the read would leave 4 bytes per
-            // record and cascade-corrupt every subsequent user in the
-            // roster.
-            user.borderId = wrapper.readInt();
 
             i++;
         }

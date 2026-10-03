@@ -16,16 +16,6 @@ export class UserProfileParser implements IMessageParser
     private _groups: HabboGroupEntryData[];
     private _secondsSinceLastVisit: number;
     private _openProfileWindow: boolean;
-    private _backgroundId: number;
-    private _standId: number;
-    private _overlayId: number;
-    private _cardBackgroundId: number;
-    private _totalBadges: number;
-    private _nickIcon: string;
-    private _onlineStatus: number;
-    private _level: number;
-    private _nextLevelStart: number;
-    private _isHidden: boolean;
 
     public flush(): boolean
     {
@@ -42,16 +32,6 @@ export class UserProfileParser implements IMessageParser
         this._groups = [];
         this._secondsSinceLastVisit = 0;
         this._openProfileWindow = false;
-        this._backgroundId = 0;
-        this._standId = 0;
-        this._overlayId = 0;
-        this._cardBackgroundId = 0;
-        this._totalBadges = 0;
-        this._nickIcon = '';
-        this._onlineStatus = -1;
-        this._level = 0;
-        this._nextLevelStart = 0;
-        this._isHidden = false;
 
         return true;
     }
@@ -79,44 +59,6 @@ export class UserProfileParser implements IMessageParser
 
         this._secondsSinceLastVisit = wrapper.readInt();
         this._openProfileWindow = wrapper.readBoolean();
-
-        // Optional trailing blocks, one tier per emulator release:
-        //   block 1: background / stand / overlay (3 ints)
-        //   block 2: card background (1 int)
-        //   block 3: nick icon (1 string)
-        //   block 4: total badge count (1 int)
-        // Each tier early-returns to keep the parser tolerant of older
-        // servers that don't ship the later blocks. Defaults set by flush().
-        if(!wrapper.bytesAvailable) return true;
-
-        this._backgroundId = wrapper.readInt();
-        this._standId = wrapper.readInt();
-        this._overlayId = wrapper.readInt();
-
-        if(!wrapper.bytesAvailable) return true;
-
-        this._cardBackgroundId = wrapper.readInt();
-
-        if(!wrapper.bytesAvailable) return true;
-
-        this._nickIcon = wrapper.readString();
-
-        if(!wrapper.bytesAvailable) return true;
-
-        this._totalBadges = wrapper.readInt();
-
-        // Presence and level block: 1 online, 0 offline, 2 hidden (sent only to the user themself),
-        // then the account level and the score the next level starts at. -1 / 0 when absent.
-        if(!wrapper.bytesAvailable) return true;
-
-        this._onlineStatus = wrapper.readInt();
-        this._level = wrapper.readInt();
-        this._nextLevelStart = wrapper.readInt();
-
-        // Official isHidden: the owner hides the full profile from everybody else.
-        if(!wrapper.bytesAvailable) return true;
-
-        this._isHidden = wrapper.readBoolean();
 
         return true;
     }
@@ -184,59 +126,5 @@ export class UserProfileParser implements IMessageParser
     public get openProfileWindow(): boolean
     {
         return this._openProfileWindow;
-    }
-
-    public get backgroundId(): number
-    {
-        return this._backgroundId;
-    }
-
-    public get standId(): number
-    {
-        return this._standId;
-    }
-
-    public get overlayId(): number
-    {
-        return this._overlayId;
-    }
-
-    public get cardBackgroundId(): number
-    {
-        return this._cardBackgroundId;
-    }
-
-    public get totalBadges(): number
-    {
-        return this._totalBadges;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
-    }
-
-    /** 1 online, 0 offline, 2 hidden (own profile only); -1 when the server does not send it. */
-    public get onlineStatus(): number
-    {
-        return this._onlineStatus;
-    }
-
-    /** The account level; 0 when the server does not send it. */
-    public get level(): number
-    {
-        return this._level;
-    }
-
-    /** The achievement score the next level starts at; 0 when the server does not send it. */
-    public get nextLevelStart(): number
-    {
-        return this._nextLevelStart;
-    }
-
-    /** The owner hides the full profile from other users; false when the server does not send it. */
-    public get isHidden(): boolean
-    {
-        return this._isHidden;
     }
 }

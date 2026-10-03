@@ -7,12 +7,6 @@ export class RoomUnitInfoParser implements IMessageParser
     private _gender: string;
     private _motto: string;
     private _achievementScore: number;
-    private _backgroundId: number;
-    private _standId: number;
-    private _overlayId: number;
-    private _cardBackgroundId: number;
-    private _borderId: number;
-    private _nickIcon: string;
 
     public flush(): boolean
     {
@@ -21,12 +15,6 @@ export class RoomUnitInfoParser implements IMessageParser
         this._gender = 'M';
         this._motto = null;
         this._achievementScore = 0;
-        this._backgroundId = 0;
-        this._standId = 0;
-        this._overlayId = 0;
-        this._cardBackgroundId = 0;
-        this._borderId = 0;
-        this._nickIcon = '';
 
         return true;
     }
@@ -40,12 +28,6 @@ export class RoomUnitInfoParser implements IMessageParser
         this._gender = wrapper.readString().toLocaleUpperCase();
         this._motto = wrapper.readString();
         this._achievementScore = wrapper.readInt();
-        this._backgroundId = wrapper.readInt();
-        this._standId = wrapper.readInt();
-        this._overlayId = wrapper.readInt();
-        this._cardBackgroundId = (wrapper.bytesAvailable ? wrapper.readInt() : 0);
-        this._nickIcon = (wrapper.bytesAvailable ? wrapper.readString() : '');
-        this._borderId = (wrapper.bytesAvailable ? wrapper.readInt() : 0);
 
         return true;
     }
@@ -73,36 +55,6 @@ export class RoomUnitInfoParser implements IMessageParser
     public get achievementScore(): number
     {
         return this._achievementScore;
-    }
-
-    public get backgroundId(): number
-    {
-        return this._backgroundId;
-    }
-
-    public get standId(): number
-    {
-        return this._standId;
-    }
-
-    public get overlayId(): number
-    {
-        return this._overlayId;
-    }
-
-    public get cardBackgroundId(): number
-    {
-        return this._cardBackgroundId;
-    }
-
-    public get borderId(): number
-    {
-        return this._borderId;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
     }
 
 }

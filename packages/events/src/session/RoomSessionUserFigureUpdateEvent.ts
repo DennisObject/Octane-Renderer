@@ -10,12 +10,6 @@ export class RoomSessionUserFigureUpdateEvent extends RoomSessionEvent
     private _gender: string = '';
     private _customInfo: string = '';
     private _achievementScore: number;
-    private _backgroundId: number | null;
-    private _standId: number | null;
-    private _overlayId: number | null;
-    private _cardBackgroundId: number | null;
-    private _nickIcon: string;
-    private _borderId: number | null;
 
     constructor(
         session: IRoomSession,
@@ -23,13 +17,7 @@ export class RoomSessionUserFigureUpdateEvent extends RoomSessionEvent
         figure: string,
         gender: string,
         customInfo: string,
-        achievementScore: number,
-        backgroundId: number | null,
-        standId: number | null,
-        overlayId: number | null,
-        cardBackgroundId: number | null = 0,
-        nickIcon: string = '',
-        borderId: number | null = 0
+        achievementScore: number
     )
     {
         super(RoomSessionUserFigureUpdateEvent.USER_FIGURE, session);
@@ -39,12 +27,6 @@ export class RoomSessionUserFigureUpdateEvent extends RoomSessionEvent
         this._gender = gender;
         this._customInfo = customInfo;
         this._achievementScore = achievementScore;
-        this._backgroundId = backgroundId;
-        this._standId = standId;
-        this._overlayId = overlayId;
-        this._cardBackgroundId = cardBackgroundId;
-        this._nickIcon = nickIcon;
-        this._borderId = borderId;
     }
 
     public get roomIndex(): number
@@ -70,35 +52,5 @@ export class RoomSessionUserFigureUpdateEvent extends RoomSessionEvent
     public get activityPoints(): number
     {
         return this._achievementScore;
-    }
-
-    public get backgroundId(): number | null
-    {
-        return this._backgroundId;
-    }
-
-    public get standId(): number | null
-    {
-        return this._standId;
-    }
-
-    public get overlayId(): number | null
-    {
-        return this._overlayId;
-    }
-
-    public get cardBackgroundId(): number | null
-    {
-        return this._cardBackgroundId;
-    }
-
-    public get nickIcon(): string
-    {
-        return this._nickIcon;
-    }
-
-    public get borderId(): number | null
-    {
-        return this._borderId;
     }
 }

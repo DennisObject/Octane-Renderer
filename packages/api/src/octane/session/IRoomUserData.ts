@@ -2,17 +2,11 @@ export interface IRoomUserData
 {
     readonly roomIndex: number;
     activityPoints: number;
-    background: number;
-    stand: number;
-    overlay: number;
-    cardBackground: number;
-    borderId: number;
     name: string;
     type: number;
     sex: string;
     figure: string;
     custom: string;
-    nickIcon: string;
     webID: number;
     groupId: number;
     groupName: string;
