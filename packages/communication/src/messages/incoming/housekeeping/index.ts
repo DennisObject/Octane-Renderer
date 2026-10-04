@@ -4,3 +4,7 @@ export * from './HousekeepingDashboardEvent';
 export * from './HousekeepingRoomDetailEvent';
 export * from './HousekeepingRoomListEvent';
 export * from './HousekeepingUserDetailEvent';
+export * from './HousekeepingRolesEvent';
+export * from './HousekeepingRoleMembersEvent';
+export * from './HousekeepingUserOverridesEvent';
+export * from './HousekeepingRolesAuditEvent';

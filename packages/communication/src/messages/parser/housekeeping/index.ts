@@ -7,3 +7,8 @@ export * from './HousekeepingRoomDetailParser';
 export * from './HousekeepingRoomListParser';
 export * from './HousekeepingUserDetailData';
 export * from './HousekeepingUserDetailParser';
+export * from './HousekeepingAccessData';
+export * from './HousekeepingRolesParser';
+export * from './HousekeepingRoleMembersParser';
+export * from './HousekeepingUserOverridesParser';
+export * from './HousekeepingRolesAuditParser';
