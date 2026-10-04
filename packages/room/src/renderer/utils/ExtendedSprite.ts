@@ -139,9 +139,14 @@ export class ExtendedSprite extends Sprite
         const width = Math.max(Math.round(textureSource.width * textureSource.resolution), 1);
         const height = Math.max(Math.round(textureSource.height * textureSource.resolution), 1);
 
-        let pixels: Uint8ClampedArray = null;
+        let pixels: Uint8ClampedArray = ExtendedSprite.getImagePixels(textureSource, width, height);
 
-        if(renderer instanceof WebGPURenderer)
+        if(pixels)
+        {
+            // Read from the image itself.
+        }
+
+        else if(renderer instanceof WebGPURenderer)
         {
             pixels = TextureUtils.getPixels(new Texture(textureSource))?.pixels ?? null;
         }
@@ -177,6 +182,53 @@ export class ExtendedSprite extends Sprite
         textureSource.hitMapTime = Date.now();
 
         return true;
+    }
+
+    // A loaded image still holds its pixels on the CPU. Reading them from there spares a GPU
+    // read back, which waits for every frame still queued. Render textures (avatars) and other
+    // sources go through the GPU as before.
+    private static getImagePixels(textureSource: TextureSource, width: number, height: number): Uint8ClampedArray
+    {
+        const resource = textureSource.resource;
+
+        let image: ImageBitmap | HTMLImageElement = null;
+        let imageWidth = 0;
+        let imageHeight = 0;
+
+        if((typeof ImageBitmap !== 'undefined') && (resource instanceof ImageBitmap))
+        {
+            image = resource;
+            imageWidth = resource.width;
+            imageHeight = resource.height;
+        }
+
+        else if((typeof HTMLImageElement !== 'undefined') && (resource instanceof HTMLImageElement))
+        {
+            image = resource;
+            imageWidth = resource.naturalWidth;
+            imageHeight = resource.naturalHeight;
+        }
+
+        if(!image || (typeof OffscreenCanvas === 'undefined')) return null;
+
+        // The hit map is indexed in the texture's pixels; an image of another size would not line up.
+        if((imageWidth !== width) || (imageHeight !== height)) return null;
+
+        try
+        {
+            const context = new OffscreenCanvas(width, height).getContext('2d', { willReadFrequently: true });
+
+            if(!context) return null;
+
+            context.drawImage(image, 0, 0);
+
+            return context.getImageData(0, 0, width, height).data;
+        }
+        catch
+        {
+            // A closed bitmap or a cross-origin image: let the GPU path try.
+            return null;
+        }
     }
 
     public get offsetX(): number
