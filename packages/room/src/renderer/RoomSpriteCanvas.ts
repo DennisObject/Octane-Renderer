@@ -722,13 +722,17 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas
 
             const objectTexture = ((objectSprite.texture && !objectSprite.texture.destroyed && objectSprite.texture.source) ? objectSprite.texture : Texture.EMPTY);
 
-            if(extendedSprite.texture !== objectTexture) extendedSprite.setTexture(objectTexture);
+            if(extendedSprite.sourceTexture !== objectTexture) extendedSprite.setTexture(objectTexture);
 
             const magnitude = (objectSprite.scale && (objectSprite.scale > 0)) ? objectSprite.scale : 1;
 
             extendedSprite.scale.x = objectSprite.flipH ? -magnitude : magnitude;
             extendedSprite.scale.y = objectSprite.flipV ? -magnitude : magnitude;
+
+            extendedSprite.updateHighlight();
         }
+
+        extendedSprite.validateHighlight();
 
         extendedSprite.x = Math.round(sprite.x);
         extendedSprite.y = Math.round(sprite.y);
@@ -794,6 +798,9 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas
         {
             this._display.addChildAt(extendedSprite, index);
         }
+
+        // After attaching, so the display's zoom and flip are known.
+        extendedSprite.updateHighlight();
 
         this._activeSpriteCount++;
     }

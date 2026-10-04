@@ -44,6 +44,32 @@ const patchGlTextureSystem = (r: Renderer): void =>
     }
 };
 
+// Pixi's filter push looks up a resolution in the stack slot it has just taken, before giving that slot
+// its new input texture. The slot still holds the input of whatever pass used it last, which the texture
+// pool may have destroyed since (it drops idle screen-sized textures on every resize), and the read then
+// throws and leaves the filter stack unbalanced for the rest of the page. A slot handed out empty gets
+// what a never-used slot gets.
+const patchFilterStackSlots = (r: Renderer): void =>
+{
+    const filterSystem = (r as any).filter;
+    const proto = filterSystem && Object.getPrototypeOf(filterSystem);
+
+    if(!proto || !proto._pushFilterData || proto.__patchedPushFilterData) return;
+
+    const origPushFilterData = proto._pushFilterData;
+
+    proto._pushFilterData = function()
+    {
+        const filterData = origPushFilterData.call(this);
+
+        filterData.inputTexture = null;
+
+        return filterData;
+    };
+
+    proto.__patchedPushFilterData = true;
+};
+
 const patchResizeSkip = (r: Renderer): void =>
 {
     const origResize = r.resize.bind(r);
@@ -75,6 +101,7 @@ export const PrepareRenderer = async (options: Partial<AutoDetectOptions>): Prom
     renderer.events?.destroy();
 
     patchGlTextureSystem(renderer);
+    patchFilterStackSlots(renderer);
     patchResizeSkip(renderer);
 
     return renderer;

@@ -1,5 +1,5 @@
 import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite, RoomObjectVariable, RoomObjectVisualizationType } from '@octane/api';
-import { ChooserSelectionFilter, OctaneLogger } from '@octane/utils';
+import { ChooserSelectionFilter, OctaneLogger, WiredFilter } from '@octane/utils';
 import { BLEND_MODES, Filter, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import { ColorData, LayerData } from '../data';
@@ -372,9 +372,11 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization
 
                 if((currentFilters && currentFilters.length) || this._filters.length)
                 {
-                    const chooserFilters = (currentFilters || []).filter(f => f instanceof ChooserSelectionFilter);
+                    // Chooser and wired selection highlights belong to the sprite, not to the furni's own filters.
+                    const overlayFilters = (currentFilters || []).filter(f => (f instanceof ChooserSelectionFilter) || (f instanceof WiredFilter));
 
-                    sprite.filters = chooserFilters.length > 0 ? [...this._filters, ...chooserFilters] : this._filters;
+                    if(!overlayFilters.length) sprite.filters = this._filters;
+                    else if(!this.hasFilters(currentFilters, overlayFilters)) sprite.filters = [...this._filters, ...overlayFilters];
                 }
             }
             else
@@ -401,6 +403,15 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization
     protected getPostureForAssetFile(scale: number, assetName: string): string
     {
         return null;
+    }
+
+    // Whether `filters` already is the furni's own filters followed by the overlays, so an animated
+    // furni keeps one array instead of a new one every frame.
+    private hasFilters(filters: Filter[], overlayFilters: Filter[]): boolean
+    {
+        if(filters.length !== (this._filters.length + overlayFilters.length)) return false;
+
+        return this._filters.every((filter, index) => (filters[index] === filter));
     }
 
     private resetSprite(sprite: IRoomObjectSprite): void
