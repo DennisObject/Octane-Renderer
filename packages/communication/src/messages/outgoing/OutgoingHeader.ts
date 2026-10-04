@@ -650,8 +650,6 @@ export class OutgoingHeader
 
     // Custom features — IDs 9300+ reserved
     public static REQUEST_RARE_VALUES = 9300;
-    public static SOUNDBOARD_PLAY = 9306;
-    public static SOUNDBOARD_SET_ENABLED = 9307;
     public static EARNINGS_REQUEST = 9308;
     public static EARNINGS_CLAIM = 9309;
     public static EARNINGS_CLAIM_ALL = 9310;
@@ -660,11 +658,6 @@ export class OutgoingHeader
     public static TRAX_EDITOR_BUY_SONG = 9331;
     public static TRAX_EDITOR_SAVE_SONG = 9332;
     public static TRAX_EDITOR_DELETE_SONG = 9333;
-    public static SOUNDBOARD_REQUEST_SETTINGS = 9340;
-    public static SOUNDBOARD_SAVE_VOLUME = 9341;
-    public static SOUNDBOARD_CATALOG_REQUEST = 9342;
-    public static SOUNDBOARD_CATALOG_UPSERT = 9343;
-    public static SOUNDBOARD_CATALOG_REORDER = 9344;
     public static REQUEST_MESSENGER_CONVERSATIONS = 4900;
     public static REQUEST_MESSENGER_HISTORY = 4901;
     public static SEND_MESSENGER_MESSAGE = 4902;

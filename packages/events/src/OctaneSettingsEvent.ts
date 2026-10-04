@@ -7,7 +7,6 @@ export class OctaneSettingsEvent extends OctaneEvent
     private _volumeSystem: number;
     private _volumeFurni: number;
     private _volumeTrax: number;
-    private _volumeSoundboard: number = 80;
     private _oldChat: boolean;
     private _roomInvites: boolean;
     private _cameraFollow: boolean;
@@ -30,7 +29,6 @@ export class OctaneSettingsEvent extends OctaneEvent
         clone._volumeSystem = this._volumeSystem;
         clone._volumeFurni = this._volumeFurni;
         clone._volumeTrax = this._volumeTrax;
-        clone._volumeSoundboard = this._volumeSoundboard;
         clone._oldChat = this._oldChat;
         clone._roomInvites = this._roomInvites;
         clone._cameraFollow = this._cameraFollow;
@@ -72,16 +70,6 @@ export class OctaneSettingsEvent extends OctaneEvent
     public set volumeTrax(volume: number)
     {
         this._volumeTrax = volume;
-    }
-
-    public get volumeSoundboard(): number
-    {
-        return this._volumeSoundboard;
-    }
-
-    public set volumeSoundboard(volume: number)
-    {
-        this._volumeSoundboard = volume;
     }
 
     public get oldChat(): boolean

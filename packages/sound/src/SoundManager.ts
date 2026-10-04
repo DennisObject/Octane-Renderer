@@ -3,14 +3,12 @@ import { GetConfiguration } from '@octane/configuration';
 import { GetEventDispatcher, OctaneEvent, OctaneEventType, OctaneSettingsEvent, OctaneSoundEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomEngineSamplePlaybackEvent } from '@octane/events';
 import { AdvancedMap, OctaneLogger } from '@octane/utils';
 import { MusicController } from './music/MusicController';
-import { SoundboardChannel } from './SoundboardChannel';
 
 export class SoundManager implements ISoundManager
 {
     private _volumeSystem: number = 0.5;
     private _volumeFurni: number = 0.5;
     private _volumeTrax: number = 0.5;
-    private _volumeSoundboard: number = 0.8;
     private _volumesSnapshot: Readonly<ISoundVolumesSnapshot> | null = null;
 
     private _internalSamples: IAdvancedMap<string, HTMLAudioElement> = new AdvancedMap();
@@ -18,7 +16,6 @@ export class SoundManager implements ISoundManager
     private _furnitureBeingPlayed: IAdvancedMap<number, number> = new AdvancedMap();
 
     private _musicController: IMusicController = new MusicController();
-    private _soundboardChannel = new SoundboardChannel();
     private _eventCallback: (event: IOctaneEvent) => void = null;
 
     public async init(): Promise<void>
@@ -57,7 +54,6 @@ export class SoundManager implements ISoundManager
         this._internalSamples.dispose();
         this._furniSamples.dispose();
         this._furnitureBeingPlayed.dispose();
-        this.stopSoundboard();
     }
 
     private onEvent(event: IOctaneEvent)
@@ -81,7 +77,6 @@ export class SoundManager implements ISoundManager
                 {
                     this.stopFurniSample(objectId);
                 });
-                this.stopSoundboard();
                 return;
             }
             case OctaneSettingsEvent.SETTINGS_UPDATED: {
@@ -90,27 +85,20 @@ export class SoundManager implements ISoundManager
                 const nextSystem = (castedEvent.volumeSystem / 100);
                 const nextFurni = (castedEvent.volumeFurni / 100);
                 const nextTrax = (castedEvent.volumeTrax / 100);
-                const nextSoundboard = Number.isFinite(castedEvent.volumeSoundboard)
-                    ? (castedEvent.volumeSoundboard / 100)
-                    : this._volumeSoundboard;
 
                 const volumeSystemUpdated = nextSystem !== this._volumeSystem;
                 const volumeFurniUpdated = nextFurni !== this._volumeFurni;
                 const volumeTraxUpdated = nextTrax !== this._volumeTrax;
-                const volumeSoundboardUpdated = nextSoundboard !== this._volumeSoundboard;
 
                 this._volumeSystem = nextSystem;
                 this._volumeFurni = nextFurni;
                 this._volumeTrax = nextTrax;
-                this._volumeSoundboard = nextSoundboard;
 
                 if(volumeFurniUpdated) this.updateFurniSamplesVolume(this._volumeFurni);
 
                 if(volumeTraxUpdated) this._musicController?.updateVolume(this._volumeTrax);
 
-                if(volumeSoundboardUpdated) this._soundboardChannel.setVolume(this._volumeSoundboard);
-
-                if(volumeSystemUpdated || volumeFurniUpdated || volumeTraxUpdated || volumeSoundboardUpdated) this.invalidateVolumesSnapshot();
+                if(volumeSystemUpdated || volumeFurniUpdated || volumeTraxUpdated) this.invalidateVolumesSnapshot();
 
                 return;
             }
@@ -245,21 +233,6 @@ export class SoundManager implements ISoundManager
         return this._volumeFurni;
     }
 
-    public get soundboardVolume(): number
-    {
-        return this._volumeSoundboard;
-    }
-
-    public playSoundboard(url: string): Promise<boolean>
-    {
-        return this._soundboardChannel.play(url, this._volumeSoundboard);
-    }
-
-    public stopSoundboard(): void
-    {
-        this._soundboardChannel.stop();
-    }
-
     public get musicController(): IMusicController
     {
         return this._musicController;
@@ -279,8 +252,7 @@ export class SoundManager implements ISoundManager
         this._volumesSnapshot = Object.freeze<ISoundVolumesSnapshot>({
             system: this._volumeSystem,
             furni: this._volumeFurni,
-            trax: this._volumeTrax,
-            soundboard: this._volumeSoundboard
+            trax: this._volumeTrax
         });
 
         return this._volumesSnapshot;

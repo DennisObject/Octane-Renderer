@@ -9714,28 +9714,6 @@
       "fields": []
     },
     {
-      "name": "SOUNDBOARD_PLAY",
-      "direction": "client_to_server",
-      "header": 9306,
-      "java": {
-        "symbol": "SoundboardPlayEvent",
-        "className": "SoundboardPlayEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardPlayEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_PLAY",
-        "className": "SoundboardPlayComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardPlayComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "soundId"
-        }
-      ]
-    },
-    {
       "name": "EARNINGS_REQUEST",
       "direction": "client_to_server",
       "header": 9308,
@@ -10472,85 +10450,6 @@
           "kind": "scalar",
           "type": "int",
           "name": "item"
-        }
-      ]
-    },
-    {
-      "name": "SOUNDBOARD_REQUEST_SETTINGS",
-      "direction": "client_to_server",
-      "header": 9340,
-      "java": {
-        "symbol": "SoundboardRequestSettingsEvent",
-        "className": "SoundboardRequestSettingsEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardRequestSettingsEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_REQUEST_SETTINGS",
-        "className": "SoundboardRequestSettingsComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardRequestSettingsComposer.ts"
-      },
-      "fields": []
-    },
-    {
-      "name": "SOUNDBOARD_CATALOG_REQUEST",
-      "direction": "client_to_server",
-      "header": 9342,
-      "java": {
-        "symbol": "SoundboardCatalogRequestEvent",
-        "className": "SoundboardCatalogRequestEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardCatalogRequestEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_CATALOG_REQUEST",
-        "className": "SoundboardCatalogRequestComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardCatalogRequestComposer.ts"
-      },
-      "fields": []
-    },
-    {
-      "name": "SOUNDBOARD_CATALOG_UPSERT",
-      "direction": "client_to_server",
-      "header": 9343,
-      "java": {
-        "symbol": "SoundboardCatalogUpsertEvent",
-        "className": "SoundboardCatalogUpsertEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardCatalogUpsertEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_CATALOG_UPSERT",
-        "className": "SoundboardCatalogUpsertComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardCatalogUpsertComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "id"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "name"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "url"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "minRank"
-        },
-        {
-          "kind": "scalar",
-          "type": "boolean",
-          "name": "enabled"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "classname"
         }
       ]
     },
@@ -19763,65 +19662,6 @@
       ]
     },
     {
-      "name": "SOUNDBOARD_PLAY_DENIED",
-      "direction": "server_to_client",
-      "header": 9440,
-      "java": {
-        "symbol": "SoundboardPlayDeniedComposer",
-        "className": "SoundboardPlayDeniedComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/soundboard/SoundboardPlayDeniedComposer.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_PLAY_DENIED",
-        "className": "SoundboardPlayDeniedParser",
-        "path": "packages/communication/src/messages/parser/soundboard/SoundboardPlayDeniedParser.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        }
-      ]
-    },
-    {
-      "name": "SOUNDBOARD_CATALOG_RESULT",
-      "direction": "server_to_client",
-      "header": 9442,
-      "java": {
-        "symbol": "SoundboardCatalogResultComposer",
-        "className": "SoundboardCatalogResultComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/soundboard/SoundboardCatalogResultComposer.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_CATALOG_RESULT",
-        "className": "SoundboardCatalogResultParser",
-        "path": "packages/communication/src/messages/parser/soundboard/SoundboardCatalogResultParser.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        }
-      ]
-    },
-    {
       "name": "REWARD_TRACK_CLAIM_RESULT",
       "direction": "server_to_client",
       "header": 9451,
@@ -22910,22 +22750,6 @@
       "reason": "TypeScript analyzer: Outgoing value enabled ? 1 : 0 has no statically resolvable wire type"
     },
     {
-      "name": "SOUNDBOARD_SET_ENABLED",
-      "direction": "client_to_server",
-      "header": 9307,
-      "java": {
-        "symbol": "SoundboardSetEnabledEvent",
-        "className": "SoundboardSetEnabledEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardSetEnabledEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_SET_ENABLED",
-        "className": "SoundboardSetEnabledComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardSetEnabledComposer.ts"
-      },
-      "reason": "TypeScript analyzer: Outgoing value enabled ? 1 : 0 has no statically resolvable wire type"
-    },
-    {
       "name": "WIRED_TRADE_OFFER_ITEMS",
       "direction": "client_to_server",
       "header": 9335,
@@ -22940,38 +22764,6 @@
         "path": "packages/communication/src/messages/outgoing/room/furniture/chest/WiredTradeOfferItemsComposer.ts"
       },
       "reason": "Java analyzer: Data-dependent packet operations in ForStmt inside handle; TypeScript analyzer: Outgoing value itemIds.length has no statically resolvable wire type"
-    },
-    {
-      "name": "SOUNDBOARD_SAVE_VOLUME",
-      "direction": "client_to_server",
-      "header": 9341,
-      "java": {
-        "symbol": "SoundboardSaveVolumeEvent",
-        "className": "SoundboardSaveVolumeEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardSaveVolumeEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_SAVE_VOLUME",
-        "className": "SoundboardSaveVolumeComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardSaveVolumeComposer.ts"
-      },
-      "reason": "TypeScript analyzer: Outgoing value Math.max(0, Math.min(100, Math.round(volume))) has no statically resolvable wire type"
-    },
-    {
-      "name": "SOUNDBOARD_CATALOG_REORDER",
-      "direction": "client_to_server",
-      "header": 9344,
-      "java": {
-        "symbol": "SoundboardCatalogReorderEvent",
-        "className": "SoundboardCatalogReorderEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/soundboard/SoundboardCatalogReorderEvent.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_CATALOG_REORDER",
-        "className": "SoundboardCatalogReorderComposer",
-        "path": "packages/communication/src/messages/outgoing/soundboard/SoundboardCatalogReorderComposer.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForStmt inside handle; TypeScript analyzer: Outgoing value orderedIds.length has no statically resolvable wire type"
     },
     {
       "name": "HOTEL_VIEW_LANDING_SAVE",
@@ -27246,38 +27038,6 @@
       "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in ForStatement inside parse"
     },
     {
-      "name": "SOUNDBOARD_SETTINGS",
-      "direction": "server_to_client",
-      "header": 9405,
-      "java": {
-        "symbol": "SoundboardSettingsComposer",
-        "className": "SoundboardSettingsComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/soundboard/SoundboardSettingsComposer.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_SETTINGS",
-        "className": "SoundboardSettingsParser",
-        "path": "packages/communication/src/messages/parser/soundboard/SoundboardSettingsParser.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in ForStatement inside parse"
-    },
-    {
-      "name": "SOUNDBOARD_PLAY",
-      "direction": "server_to_client",
-      "header": 9406,
-      "java": {
-        "symbol": "SoundboardPlayComposer",
-        "className": "SoundboardPlayComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/soundboard/SoundboardPlayComposer.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_PLAY",
-        "className": "SoundboardPlayParser",
-        "path": "packages/communication/src/messages/parser/soundboard/SoundboardPlayParser.ts"
-      },
-      "reason": "Pre-existing wire mismatch requires runtime protocol decision: Java [int, string, string, int, int, string, string] versus TypeScript [int, string, string, int, int, string, {\"type\":\"optional\",\"controller\":\"bytesAvailable\",\"fields\":[{\"type\":\"string\",}]}]"
-    },
-    {
       "name": "EARNINGS_CENTER",
       "direction": "server_to_client",
       "header": 9407,
@@ -27338,22 +27098,6 @@
         "symbol": "TRAX_EDITOR_SONGS",
         "className": "TraxEditorSongsParser",
         "path": "packages/communication/src/messages/parser/traxeditor/TraxEditorSongsParser.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in ForStatement inside parse"
-    },
-    {
-      "name": "SOUNDBOARD_CATALOG",
-      "direction": "server_to_client",
-      "header": 9441,
-      "java": {
-        "symbol": "SoundboardCatalogComposer",
-        "className": "SoundboardCatalogComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/soundboard/SoundboardCatalogComposer.java"
-      },
-      "typescript": {
-        "symbol": "SOUNDBOARD_CATALOG",
-        "className": "SoundboardCatalogParser",
-        "path": "packages/communication/src/messages/parser/soundboard/SoundboardCatalogParser.ts"
       },
       "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in ForStatement inside parse"
     },

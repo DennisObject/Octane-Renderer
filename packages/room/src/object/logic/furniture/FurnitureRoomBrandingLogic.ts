@@ -176,7 +176,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic
             }
             catch (error)
             {
-                console.error(`[Soundboard/Branding] failed to load branding image "${ imageUrl }":`, error);
+                console.error(`[Branding] failed to load branding image "${ imageUrl }":`, error);
 
                 this.processUpdateMessage(new ObjectAdUpdateMessage(ObjectAdUpdateMessage.IMAGE_LOADING_FAILED));
 
