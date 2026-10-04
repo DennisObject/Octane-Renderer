@@ -20379,6 +20379,38 @@
       "reason": "Header is registered only by the Polaris Emulator packet registry"
     },
     {
+      "direction": "client_to_server",
+      "side": "java",
+      "header": 10073,
+      "symbol": "CatalogStudioValidateEvent",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioValidateEvent.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
+      "direction": "client_to_server",
+      "side": "java",
+      "header": 10078,
+      "symbol": "CatalogStudioExportEvent",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioExportEvent.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
+      "direction": "client_to_server",
+      "side": "java",
+      "header": 10079,
+      "symbol": "CatalogStudioDocumentDryRunEvent",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioDocumentDryRunEvent.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
+      "direction": "client_to_server",
+      "side": "java",
+      "header": 10080,
+      "symbol": "CatalogStudioDocumentApplyEvent",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioDocumentApplyEvent.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
       "direction": "server_to_client",
       "side": "java",
       "header": 690,
@@ -20424,6 +20456,22 @@
       "header": 3786,
       "symbol": "RoomFloorThicknessUpdatedComposer",
       "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/rooms/RoomFloorThicknessUpdatedComposer.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
+      "direction": "server_to_client",
+      "side": "java",
+      "header": 10073,
+      "symbol": "CatalogStudioValidationComposer",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/catalog/catalogadmin/studio/CatalogStudioValidationComposer.java",
+      "reason": "Header is registered only by the Polaris Emulator packet registry"
+    },
+    {
+      "direction": "server_to_client",
+      "side": "java",
+      "header": 10078,
+      "symbol": "CatalogStudioDocumentResultComposer",
+      "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/catalog/catalogadmin/studio/CatalogStudioDocumentResultComposer.java",
       "reason": "Header is registered only by the Polaris Emulator packet registry"
     },
     {
@@ -21709,7 +21757,7 @@
         "className": "RoomUnitChatWhisperComposer",
         "path": "packages/communication/src/messages/outgoing/room/unit/chat/RoomUnitChatWhisperComposer.ts"
       },
-      "reason": "Java analyzer: Packet fields delegated to external constructor RoomChatMessage inside handle; TypeScript analyzer: Outgoing value recipientName + \u0027 \u0027 + message has no statically resolvable wire type"
+      "reason": "Java analyzer: Packet fields delegated to external constructor RoomChatMessage inside handle; TypeScript analyzer: Outgoing value recipientName + ' ' + message has no statically resolvable wire type"
     },
     {
       "name": "MARKETPLACE_SELL_MULTIPLE_ITEMS",
@@ -22701,7 +22749,7 @@
         "className": "ClientHelloMessageComposer",
         "path": "packages/communication/src/messages/outgoing/handshake/ClientHelloMessageComposer.ts"
       },
-      "reason": "TypeScript analyzer: Outgoing value `NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll(\u0027.\u0027, \u0027-\u0027)}` has no statically resolvable wire type"
+      "reason": "TypeScript analyzer: Outgoing value `NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll('.', '-')}` has no statically resolvable wire type"
     },
     {
       "name": "SNOWWAR_LOAD_STAGE_READY",
@@ -23461,70 +23509,6 @@
         "path": "packages/communication/src/messages/outgoing/catalog/studio/CatalogStudioUndoComposer.ts"
       },
       "reason": "Java analyzer: Packet fields delegated to external reader parseUndo inside handle"
-    },
-    {
-      "name": "CATALOG_STUDIO_VALIDATE",
-      "direction": "client_to_server",
-      "header": 10073,
-      "java": {
-        "symbol": "CatalogStudioValidateEvent",
-        "className": "CatalogStudioValidateEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioValidateEvent.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_VALIDATE",
-        "className": "CatalogStudioValidateComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/studio/CatalogStudioValidateComposer.ts"
-      },
-      "reason": "Java analyzer: Packet fields delegated to external reader parseRevision inside handle"
-    },
-    {
-      "name": "CATALOG_STUDIO_EXPORT",
-      "direction": "client_to_server",
-      "header": 10078,
-      "java": {
-        "symbol": "CatalogStudioExportEvent",
-        "className": "CatalogStudioExportEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioExportEvent.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_EXPORT",
-        "className": "CatalogStudioExportComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/studio/CatalogStudioExportComposer.ts"
-      },
-      "reason": "TypeScript analyzer: Outgoing value format has no statically resolvable wire type"
-    },
-    {
-      "name": "CATALOG_STUDIO_DOCUMENT_DRY_RUN",
-      "direction": "client_to_server",
-      "header": 10079,
-      "java": {
-        "symbol": "CatalogStudioDocumentDryRunEvent",
-        "className": "CatalogStudioDocumentDryRunEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioDocumentDryRunEvent.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_DOCUMENT_DRY_RUN",
-        "className": "CatalogStudioDocumentDryRunComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/studio/CatalogStudioDocumentDryRunComposer.ts"
-      },
-      "reason": "Java analyzer: Packet fields delegated to external reader parseDocument inside handle; TypeScript analyzer: Outgoing value format has no statically resolvable wire type"
-    },
-    {
-      "name": "CATALOG_STUDIO_DOCUMENT_APPLY",
-      "direction": "client_to_server",
-      "header": 10080,
-      "java": {
-        "symbol": "CatalogStudioDocumentApplyEvent",
-        "className": "CatalogStudioDocumentApplyEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/catalogadmin/studio/CatalogStudioDocumentApplyEvent.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_DOCUMENT_APPLY",
-        "className": "CatalogStudioDocumentApplyComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/studio/CatalogStudioDocumentApplyComposer.ts"
-      },
-      "reason": "Java analyzer: Packet fields delegated to external reader parseDocument inside handle; TypeScript analyzer: Outgoing value format has no statically resolvable wire type"
     },
     {
       "name": "SAVE_REWARD_TRACK_TASK",
@@ -27813,38 +27797,6 @@
         "path": "packages/communication/src/messages/parser/catalog/studio/CatalogStudioOperationMessageParser.ts"
       },
       "reason": "Pre-existing wire mismatch requires runtime protocol decision: Java [] versus TypeScript [string, boolean, string, string, int, int, string, int, {\"type\":\"optional\",\"controller\":\"bytesAvailable\",\"fields\":[{\"type\":\"int\",},{\"type\":\"int\",},{\"type\":\"string\",},{\"type\":\"string\",},{\"type\":\"int\",},{\"type\":\"string\",}]}]"
-    },
-    {
-      "name": "CATALOG_STUDIO_VALIDATE",
-      "direction": "server_to_client",
-      "header": 10073,
-      "java": {
-        "symbol": "CatalogStudioValidationComposer",
-        "className": "CatalogStudioValidationComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/catalog/catalogadmin/studio/CatalogStudioValidationComposer.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_VALIDATE",
-        "className": "CatalogStudioValidationMessageParser",
-        "path": "packages/communication/src/messages/parser/catalog/studio/CatalogStudioValidationMessageParser.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal"
-    },
-    {
-      "name": "CATALOG_STUDIO_DOCUMENT_RESULT",
-      "direction": "server_to_client",
-      "header": 10078,
-      "java": {
-        "symbol": "CatalogStudioDocumentResultComposer",
-        "className": "CatalogStudioDocumentResultComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/catalog/catalogadmin/studio/CatalogStudioDocumentResultComposer.java"
-      },
-      "typescript": {
-        "symbol": "CATALOG_STUDIO_DOCUMENT_RESULT",
-        "className": "CatalogStudioDocumentResultMessageParser",
-        "path": "packages/communication/src/messages/parser/catalog/studio/CatalogStudioDocumentResultMessageParser.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in IfStatement inside parse"
     },
     {
       "name": "CATALOG_PRODUCT_METADATA",

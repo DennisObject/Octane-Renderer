@@ -26,8 +26,8 @@ import { TranslationLanguagesEvent, TranslationLanguagesRequestComposer, Transla
 import { YouTubeRoomBroadcastEvent, YouTubeRoomPlayComposer, YouTubeRoomSettingsComposer, YouTubeRoomSettingsEvent, YouTubeRoomWatchersEvent, YouTubeRoomWatchingComposer } from './messages';
 import { HousekeepingActionLogEvent, HousekeepingActionResultEvent, HousekeepingBanUserComposer, HousekeepingDashboardEvent, HousekeepingDeleteRoomComposer, HousekeepingFindRoomByIdComposer, HousekeepingFindUserByIdComposer, HousekeepingFindUserByNameComposer, HousekeepingForceDisconnectUserComposer, HousekeepingGetDashboardComposer, HousekeepingGiveCreditsComposer, HousekeepingGiveCurrencyComposer, HousekeepingGrantItemComposer, HousekeepingKickAllFromRoomComposer, HousekeepingKickUserComposer, HousekeepingListActionLogComposer, HousekeepingMuteRoomComposer, HousekeepingMuteUserComposer, HousekeepingResetUserPasswordComposer, HousekeepingRoomDetailEvent, HousekeepingRoomListEvent, HousekeepingRoomStateComposer, HousekeepingSearchRoomsComposer, HousekeepingSendHotelAlertComposer, HousekeepingSetHcSubscriptionComposer, HousekeepingSetUserRankComposer, HousekeepingTradeLockUserComposer, HousekeepingTransferRoomOwnershipComposer, HousekeepingUnbanUserComposer, HousekeepingUserDetailEvent } from './messages';
 import { CatalogAdminReorderOffersComposer, CatalogAdminSavePageIconComposer, CatalogAdminSavePageImagesComposer, CatalogAdminSetPageEnabledComposer, CatalogAdminSetPageVisibleComposer } from './messages/outgoing/catalog';
-import { CatalogStudioDocumentApplyComposer, CatalogStudioDocumentDryRunComposer, CatalogStudioExportComposer, CatalogStudioHistoryComposer, CatalogStudioOpenSessionComposer, CatalogStudioUndoComposer, CatalogStudioValidateComposer } from './messages/outgoing/catalog/studio';
-import { CatalogStudioDocumentResultEvent, CatalogStudioHistoryEvent, CatalogStudioSessionEvent, CatalogStudioUndoEvent, CatalogStudioValidationEvent } from './messages/incoming/catalog/studio';
+import { CatalogStudioHistoryComposer, CatalogStudioOpenSessionComposer, CatalogStudioUndoComposer } from './messages/outgoing/catalog/studio';
+import { CatalogStudioHistoryEvent, CatalogStudioSessionEvent, CatalogStudioUndoEvent } from './messages/incoming/catalog/studio';
 import { CatalogProductMetadataEvent } from './messages/incoming/catalog/metadata';
 import { CatalogProductMetadataComposer } from './messages/outgoing/catalog/metadata';
 import { CatalogRuntimeConfigurationEvent } from './messages/incoming/catalog/configuration';
@@ -115,8 +115,6 @@ export class OctaneMessages implements IMessageConfiguration
         this._events.set(IncomingHeader.CATALOG_STUDIO_OPEN_SESSION, CatalogStudioSessionEvent);
         this._events.set(IncomingHeader.CATALOG_STUDIO_LOAD_HISTORY, CatalogStudioHistoryEvent);
         this._events.set(IncomingHeader.CATALOG_STUDIO_UNDO, CatalogStudioUndoEvent);
-        this._events.set(IncomingHeader.CATALOG_STUDIO_VALIDATE, CatalogStudioValidationEvent);
-        this._events.set(IncomingHeader.CATALOG_STUDIO_DOCUMENT_RESULT, CatalogStudioDocumentResultEvent);
         this._events.set(IncomingHeader.CATALOG_PRODUCT_METADATA, CatalogProductMetadataEvent);
         this._events.set(IncomingHeader.CATALOG_RUNTIME_CONFIGURATION, CatalogRuntimeConfigurationEvent);
 
@@ -846,10 +844,6 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.CATALOG_STUDIO_OPEN_SESSION, CatalogStudioOpenSessionComposer);
         this._composers.set(OutgoingHeader.CATALOG_STUDIO_LOAD_HISTORY, CatalogStudioHistoryComposer);
         this._composers.set(OutgoingHeader.CATALOG_STUDIO_UNDO, CatalogStudioUndoComposer);
-        this._composers.set(OutgoingHeader.CATALOG_STUDIO_VALIDATE, CatalogStudioValidateComposer);
-        this._composers.set(OutgoingHeader.CATALOG_STUDIO_EXPORT, CatalogStudioExportComposer);
-        this._composers.set(OutgoingHeader.CATALOG_STUDIO_DOCUMENT_DRY_RUN, CatalogStudioDocumentDryRunComposer);
-        this._composers.set(OutgoingHeader.CATALOG_STUDIO_DOCUMENT_APPLY, CatalogStudioDocumentApplyComposer);
         this._composers.set(OutgoingHeader.CATALOG_PRODUCT_METADATA, CatalogProductMetadataComposer);
         this._composers.set(OutgoingHeader.CATALOG_RUNTIME_CONFIGURATION, CatalogRuntimeConfigurationComposer);
 
