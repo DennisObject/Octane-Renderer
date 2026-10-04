@@ -599,14 +599,10 @@ export class OutgoingHeader
     public static CATALOG_STUDIO_RELEASE_LOCK = 10070;
     public static CATALOG_STUDIO_LOAD_HISTORY = 10071;
     public static CATALOG_STUDIO_UNDO = 10072;
-    public static CATALOG_STUDIO_VALIDATE = 10073;
     public static CATALOG_STUDIO_PUBLISH = 10074;
     public static CATALOG_STUDIO_DISCARD = 10075;
     public static CATALOG_STUDIO_RESTORE = 10076;
     public static CATALOG_STUDIO_PREVIEW = 10077;
-    public static CATALOG_STUDIO_EXPORT = 10078;
-    public static CATALOG_STUDIO_DOCUMENT_DRY_RUN = 10079;
-    public static CATALOG_STUDIO_DOCUMENT_APPLY = 10080;
     public static CATALOG_PRODUCT_METADATA = 10081;
     public static CATALOG_RUNTIME_CONFIGURATION = 10082;
 
