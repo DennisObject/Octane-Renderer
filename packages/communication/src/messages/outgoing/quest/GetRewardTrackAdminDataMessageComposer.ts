@@ -1,6 +1,6 @@
 import { IMessageComposer } from '@octane/api';
 
-/** Asks for every stored reward track, disabled ones included (staff editor, needs acc_rewardtrack). */
+/** Asks for every stored reward track, disabled ones included (staff editor, needs rewardtrack.manage). */
 export class GetRewardTrackAdminDataMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetRewardTrackAdminDataMessageComposer>>
 {
     private _data: ConstructorParameters<typeof GetRewardTrackAdminDataMessageComposer>;
