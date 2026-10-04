@@ -1,9 +1,9 @@
 import { IGraphicAsset, RoomObjectVariable } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
 import { Matrix, RenderTexture, Texture } from 'pixi.js';
 import { FurnitureDynamicThumbnailVisualization } from './FurnitureDynamicThumbnailVisualization';
 
-// Server-minted camera files only. The host is the configured image root, never a value from furni data.
+// Server-minted camera files only, loaded from the hotel origin like the photo viewer. The asset
+// host in images.url does not serve camera media, and furni data never chooses the host.
 const CAMERA_MEDIA_PATH = /^\/camera\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:_small)?\.png$/i;
 
 const cameraMediaPath = (value: unknown): string =>
@@ -18,38 +18,6 @@ const thumbnailPath = (value: string): string =>
     if(/_small\.png$/i.test(value)) return value;
 
     return value.replace(/\.png$/i, '_small.png');
-};
-
-const configuredImageRoot = (): string =>
-{
-    const images = GetConfiguration().getValue<string>('images.url');
-    const library = GetConfiguration().getValue<string>('image.library.url');
-
-    if(typeof images === 'string' && images.length) return images;
-
-    if(typeof library === 'string' && library.length) return library;
-
-    return '';
-};
-
-const trustedCameraUrl = (path: string): string =>
-{
-    const configured = configuredImageRoot();
-
-    if(!configured || (configured.startsWith('/') && !configured.startsWith('//'))) return path;
-
-    try
-    {
-        const base = new URL(configured);
-
-        if((base.protocol !== 'http:' && base.protocol !== 'https:') || base.username || base.password) return null;
-
-        return base.origin + path;
-    }
-    catch
-    {
-        return null;
-    }
 };
 
 export class FurnitureExternalImageVisualization extends FurnitureDynamicThumbnailVisualization
@@ -131,11 +99,10 @@ export class FurnitureExternalImageVisualization extends FurnitureDynamicThumbna
 
         const photo = cameraMediaPath(parsed.w);
         const thumbnail = photo && cameraMediaPath(thumbnailPath(photo));
-        const url = thumbnail && trustedCameraUrl(thumbnail);
 
-        if(!url) return null;
+        if(!thumbnail) return null;
 
-        this._url = url;
+        this._url = thumbnail;
 
         return this._url;
     }
