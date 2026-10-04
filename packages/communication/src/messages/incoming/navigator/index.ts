@@ -27,3 +27,4 @@ export * from './RoomThumbnailUpdateResultEvent';
 export * from './UserEventCatsEvent';
 export * from './UserFlatCatsEvent';
 export * from './OfficialRoomsEvent';
+export * from './CreatableRoomModelsMessageEvent';

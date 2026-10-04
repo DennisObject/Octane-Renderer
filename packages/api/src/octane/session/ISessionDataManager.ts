@@ -5,10 +5,12 @@ import { IBlockedUsersManager } from './IBlockedUsersManager';
 import { IIgnoredUsersManager } from './IIgnoredUsersManager';
 import { IProductData } from './IProductData';
 import { IUserDataSnapshot } from './IUserDataSnapshot';
+import { IClientAccessListsSnapshot } from './IClientAccessListsSnapshot';
 
 export interface ISessionDataManager
 {
     init(): Promise<void>;
+    getClientAccessListsSnapshot(): IClientAccessListsSnapshot;
     getAllFurnitureData(): IFurnitureData[];
     mergeFurnitureDataFromUrl(url: string): Promise<IFurnitureData[]>;
     applyFurnitureDataOverrides(url: string): Promise<void>;

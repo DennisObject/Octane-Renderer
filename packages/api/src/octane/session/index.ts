@@ -26,3 +26,4 @@ export * from './PetCustomPart';
 export * from './PetFigureData';
 export * from './RarityCategoryData';
 export * from './enum';
+export * from './IClientAccessListsSnapshot';
