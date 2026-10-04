@@ -19,6 +19,7 @@ interface Entry extends IWiredHighlight
     uniforms: Float32Array;
     refs: number;
     dirty: boolean;
+    pixels: number;
 }
 
 // A WiredFilter only reads the texel it writes, so a frame drawn through it once looks the same as
@@ -60,7 +61,7 @@ export class WiredHighlightCache
 
         if(!entry)
         {
-            const pixels = this.texturePixels(texture);
+            const pixels = this.targetSize(texture).pixels;
 
             while((this._totalPixels + pixels) > TOTAL_PIXEL_BUDGET)
             {
@@ -71,7 +72,7 @@ export class WiredHighlightCache
                 this.remove(oldest);
             }
 
-            entry = { texture: null, sourceTexture: texture, filter, uniforms: new Float32Array(6), refs: 0, dirty: false };
+            entry = { texture: null, sourceTexture: texture, filter, uniforms: new Float32Array(6), refs: 0, dirty: false, pixels: 0 };
 
             if(!this.draw(renderer, entry)) return null;
 
@@ -87,6 +88,13 @@ export class WiredHighlightCache
             }
 
             filters.set(filter, entry);
+        }
+
+        else if(!this.isEligibleSource(texture.source))
+        {
+            this.remove(entry);
+
+            return null;
         }
 
         else if(entry.dirty && !this.draw(renderer, entry)) return null;
@@ -127,6 +135,15 @@ export class WiredHighlightCache
         const entry = highlight as Entry;
 
         if(!entry || !entry.texture || entry.texture.destroyed) return;
+
+        // The source can stop qualifying in place (scale mode, resource): then the drawing goes and
+        // its sprites draw through the filter again.
+        if(!this.isEligibleSource(entry.sourceTexture.source))
+        {
+            this.remove(entry);
+
+            return;
+        }
 
         // Drawn for another renderer: drop them all (the sprites showing them go back to the filter).
         const renderer = GetRenderer();
@@ -203,11 +220,15 @@ export class WiredHighlightCache
         }
     }
 
-    private static texturePixels(texture: Texture): number
+    // The drawing's size: whole logical pixels at the source's resolution. Its pixel count is what the
+    // budget counts, rounded up so it never falls short of what the render texture holds.
+    private static targetSize(texture: Texture): { width: number; height: number; resolution: number; pixels: number }
     {
+        const width = Math.max(1, Math.round(texture.width));
+        const height = Math.max(1, Math.round(texture.height));
         const resolution = texture.source.resolution;
 
-        return (Math.max(1, Math.round(texture.width * resolution)) * Math.max(1, Math.round(texture.height * resolution)));
+        return { width, height, resolution, pixels: (Math.ceil(width * resolution) * Math.ceil(height * resolution)) };
     }
 
     private static draw(renderer: Renderer, entry: Entry): boolean
@@ -215,12 +236,17 @@ export class WiredHighlightCache
         if(!renderer) return false;
 
         const texture = entry.sourceTexture;
-        const width = Math.max(1, Math.round(texture.width));
-        const height = Math.max(1, Math.round(texture.height));
-        const resolution = texture.source.resolution;
 
-        const before = this.pixels(entry);
-        const growth = ((Math.max(1, Math.round(width * resolution)) * Math.max(1, Math.round(height * resolution))) - before);
+        if(!this.isEligibleSource(texture.source))
+        {
+            this.remove(entry);
+
+            return false;
+        }
+
+        const { width, height, resolution, pixels } = this.targetSize(texture);
+        const before = entry.pixels;
+        const growth = (pixels - before);
 
         // A redraw may grow the drawing (its frame changed). Make room in the budget first, or give it
         // up: the sprites showing it go back to the filter from their destroy listener.
@@ -251,11 +277,11 @@ export class WiredHighlightCache
             entry.texture.source.resize(width, height, resolution);
         }
 
-        const after = this.pixels(entry);
+        entry.pixels = pixels;
 
-        this._totalPixels += (after - before);
+        this._totalPixels += (pixels - before);
 
-        if(this._unused.has(entry)) this._unusedPixels += (after - before);
+        if(this._unused.has(entry)) this._unusedPixels += (pixels - before);
 
         const sprite = new Sprite(texture);
 
@@ -277,7 +303,7 @@ export class WiredHighlightCache
 
     private static pixels(entry: Entry): number
     {
-        return (entry.texture ? (entry.texture.source.pixelWidth * entry.texture.source.pixelHeight) : 0);
+        return entry.pixels;
     }
 
     private static remove(entry: Entry): void
@@ -299,6 +325,7 @@ export class WiredHighlightCache
         }
 
         this._totalPixels -= this.pixels(entry);
+        entry.pixels = 0;
 
         // Sprites still showing it (its source is going away) fall back from their destroy listener.
         if(entry.texture && !entry.texture.destroyed) entry.texture.destroy(true);
