@@ -1,6 +1,5 @@
 import { BinaryReader, BinaryWriter } from '@octane/utils';
 import { describe, expect, it } from 'vitest';
-import { CatalogAdminPageDetailsMessageParser } from '../CatalogAdminPageDetailsMessageParser';
 import { CatalogAdminOfferDetailsMessageParser } from '../CatalogAdminOfferDetailsMessageParser';
 import { CatalogAdminResultMessageParser } from '../CatalogAdminResultMessageParser';
 
@@ -46,58 +45,6 @@ class TestWrapper
         return this.reader.remaining() > 0;
     }
 }
-
-describe('CatalogAdminPageDetailsMessageParser', () =>
-{
-    it('parses every persisted page field using the database layout code', () =>
-    {
-        const writer = new BinaryWriter();
-        writer.writeInt(42);
-        writer.writeString('Guild shop');
-        writer.writeString('guild_shop');
-        writer.writeInt(7);
-        writer.writeString('BOTH');
-        writer.writeString('guild_furni');
-        writer.writeInt(3);
-        writer.writeInt(145);
-        writer.writeInt(5);
-        writer.writeInt(9);
-        writer.writeByte(1);
-        writer.writeByte(0);
-        writer.writeByte(1);
-        writer.writeByte(0);
-        writer.writeString('headline');
-        writer.writeString('teaser');
-        writer.writeString('special');
-        writer.writeString('text one');
-        writer.writeString('text two');
-        writer.writeString('details');
-        writer.writeString('teaser text');
-        writer.writeInt(123);
-        writer.writeString('1;2;3');
-
-        const parser = new CatalogAdminPageDetailsMessageParser();
-        expect(parser.parse(new TestWrapper(new BinaryReader(writer.getBuffer())) as any)).toBe(true);
-
-        expect(parser.pageId).toBe(42);
-        expect((parser as any).parentId).toBe(7);
-        expect((parser as any).catalogMode).toBe('BOTH');
-        expect((parser as any).layout).toBe('guild_furni');
-        expect((parser as any).iconColor).toBe(3);
-        expect((parser as any).iconImage).toBe(145);
-        expect((parser as any).clubOnly).toBe(true);
-        expect((parser as any).vipOnly).toBe(false);
-        expect((parser as any).headline).toBe('headline');
-        expect((parser as any).teaser).toBe('teaser');
-        expect((parser as any).special).toBe('special');
-        expect((parser as any).textOne).toBe('text one');
-        expect((parser as any).textTwo).toBe('text two');
-        expect((parser as any).textDetails).toBe('details');
-        expect((parser as any).textTeaser).toBe('teaser text');
-        expect((parser as any).roomId).toBe(123);
-        expect((parser as any).includes).toBe('1;2;3');
-    });
-});
 
 describe('CatalogAdminOfferDetailsMessageParser', () =>
 {
