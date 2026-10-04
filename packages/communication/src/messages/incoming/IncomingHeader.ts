@@ -675,4 +675,8 @@ export class IncomingHeader
     public static TREASURE_HUNT_UPDATE = 3368;
     // AIR 13 self donation tool result (server -> client), official id.
     public static SELF_DONATION_RESULT = 2920;
+    public static HOUSEKEEPING_ROLES = 9210;
+    public static HOUSEKEEPING_ROLE_MEMBERS = 9211;
+    public static HOUSEKEEPING_USER_OVERRIDES = 9212;
+    public static HOUSEKEEPING_ROLES_AUDIT = 9213;
 }

@@ -9260,33 +9260,6 @@
       ]
     },
     {
-      "name": "HOUSEKEEPING_SET_USER_RANK",
-      "direction": "client_to_server",
-      "header": 9107,
-      "java": {
-        "symbol": "HousekeepingSetUserRankEvent",
-        "className": "HousekeepingSetUserRankEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/housekeeping/HousekeepingSetUserRankEvent.java"
-      },
-      "typescript": {
-        "symbol": "HOUSEKEEPING_SET_USER_RANK",
-        "className": "HousekeepingSetUserRankComposer",
-        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingSetUserRankComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "userId"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "rankId"
-        }
-      ]
-    },
-    {
       "name": "HOUSEKEEPING_TRADE_LOCK_USER",
       "direction": "client_to_server",
       "header": 9108,
@@ -20248,6 +20221,791 @@
           "name": ""
         }
       ]
+    },
+    {
+      "name": "HOUSEKEEPING_GET_ROLES",
+      "direction": "client_to_server",
+      "header": 9130,
+      "java": {
+        "symbol": "HousekeepingGetRolesEvent",
+        "className": "HousekeepingGetRolesEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingGetRolesEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_GET_ROLES",
+        "className": "HousekeepingGetRolesComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingGetRolesComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_GET_ROLE_MEMBERS",
+      "direction": "client_to_server",
+      "header": 9131,
+      "java": {
+        "symbol": "HousekeepingGetRoleMembersEvent",
+        "className": "HousekeepingGetRoleMembersEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingGetRoleMembersEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_GET_ROLE_MEMBERS",
+        "className": "HousekeepingGetRoleMembersComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingGetRoleMembersComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "offset"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_GET_USER_OVERRIDES",
+      "direction": "client_to_server",
+      "header": 9132,
+      "java": {
+        "symbol": "HousekeepingGetUserOverridesEvent",
+        "className": "HousekeepingGetUserOverridesEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingGetUserOverridesEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_GET_USER_OVERRIDES",
+        "className": "HousekeepingGetUserOverridesComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingGetUserOverridesComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "username"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_GET_ROLES_AUDIT",
+      "direction": "client_to_server",
+      "header": 9133,
+      "java": {
+        "symbol": "HousekeepingGetRolesAuditEvent",
+        "className": "HousekeepingGetRolesAuditEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingGetRolesAuditEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_GET_ROLES_AUDIT",
+        "className": "HousekeepingGetRolesAuditComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingGetRolesAuditComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "offset"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_SAVE_ROLE",
+      "direction": "client_to_server",
+      "header": 9134,
+      "java": {
+        "symbol": "HousekeepingSaveRoleEvent",
+        "className": "HousekeepingSaveRoleEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingSaveRoleEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_SAVE_ROLE",
+        "className": "HousekeepingSaveRoleComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingSaveRoleComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "id"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "slug"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "description"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "weight"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "securityLevel"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "badgeCode"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "isStaff"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "isHidden"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_DELETE_ROLE",
+      "direction": "client_to_server",
+      "header": 9135,
+      "java": {
+        "symbol": "HousekeepingDeleteRoleEvent",
+        "className": "HousekeepingDeleteRoleEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingDeleteRoleEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_DELETE_ROLE",
+        "className": "HousekeepingDeleteRoleComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingDeleteRoleComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_SET_ROLE_PERMISSION",
+      "direction": "client_to_server",
+      "header": 9136,
+      "java": {
+        "symbol": "HousekeepingSetRolePermissionEvent",
+        "className": "HousekeepingSetRolePermissionEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingSetRolePermissionEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_SET_ROLE_PERMISSION",
+        "className": "HousekeepingSetRolePermissionComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingSetRolePermissionComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "key"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "grant"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_SET_ROLE_LIMIT",
+      "direction": "client_to_server",
+      "header": 9137,
+      "java": {
+        "symbol": "HousekeepingSetRoleLimitEvent",
+        "className": "HousekeepingSetRoleLimitEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingSetRoleLimitEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_SET_ROLE_LIMIT",
+        "className": "HousekeepingSetRoleLimitComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingSetRoleLimitComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "key"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "value"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "remove"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_ASSIGN_ROLE",
+      "direction": "client_to_server",
+      "header": 9138,
+      "java": {
+        "symbol": "HousekeepingAssignRoleEvent",
+        "className": "HousekeepingAssignRoleEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingAssignRoleEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_ASSIGN_ROLE",
+        "className": "HousekeepingAssignRoleComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingAssignRoleComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "username"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "expiresAt"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_REVOKE_ROLE",
+      "direction": "client_to_server",
+      "header": 9139,
+      "java": {
+        "symbol": "HousekeepingRevokeRoleEvent",
+        "className": "HousekeepingRevokeRoleEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingRevokeRoleEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_REVOKE_ROLE",
+        "className": "HousekeepingRevokeRoleComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingRevokeRoleComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "userId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_SET_USER_OVERRIDE",
+      "direction": "client_to_server",
+      "header": 9140,
+      "java": {
+        "symbol": "HousekeepingSetUserOverrideEvent",
+        "className": "HousekeepingSetUserOverrideEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingSetUserOverrideEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_SET_USER_OVERRIDE",
+        "className": "HousekeepingSetUserOverrideComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingSetUserOverrideComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "username"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "key"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "deny"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "reason"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "expiresAt"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_REMOVE_USER_OVERRIDE",
+      "direction": "client_to_server",
+      "header": 9141,
+      "java": {
+        "symbol": "HousekeepingRemoveUserOverrideEvent",
+        "className": "HousekeepingRemoveUserOverrideEvent",
+        "path": "Communication/Packets/Incoming/Housekeeping/HousekeepingRemoveUserOverrideEvent.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_REMOVE_USER_OVERRIDE",
+        "className": "HousekeepingRemoveUserOverrideComposer",
+        "path": "packages/communication/src/messages/outgoing/housekeeping/HousekeepingRemoveUserOverrideComposer.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "userId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "key"
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_ROLES",
+      "direction": "server_to_client",
+      "header": 9210,
+      "java": {
+        "symbol": "HousekeepingRolesComposer",
+        "className": "HousekeepingRolesComposer",
+        "path": "Communication/Packets/Outgoing/Housekeeping/HousekeepingRolesComposer.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_ROLES",
+        "className": "HousekeepingRolesParser",
+        "path": "packages/communication/src/messages/parser/housekeeping/HousekeepingRolesParser.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "revision"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "actorWeight"
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "id"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "slug"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "name"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "description"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "weight"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "securityLevel"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "badgeCode"
+            },
+            {
+              "kind": "scalar",
+              "type": "boolean",
+              "name": "isStaff"
+            },
+            {
+              "kind": "scalar",
+              "type": "boolean",
+              "name": "isHidden"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "memberCount"
+            },
+            {
+              "kind": "list",
+              "countType": "int",
+              "item": [
+                {
+                  "kind": "scalar",
+                  "type": "string",
+                  "name": "key"
+                }
+              ]
+            },
+            {
+              "kind": "list",
+              "countType": "int",
+              "item": [
+                {
+                  "kind": "scalar",
+                  "type": "string",
+                  "name": "key"
+                },
+                {
+                  "kind": "scalar",
+                  "type": "int",
+                  "name": "value"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "key"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "category"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "description"
+            },
+            {
+              "kind": "scalar",
+              "type": "boolean",
+              "name": "isOrphan"
+            },
+            {
+              "kind": "scalar",
+              "type": "boolean",
+              "name": "canGrant"
+            }
+          ]
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "key"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "value"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_ROLE_MEMBERS",
+      "direction": "server_to_client",
+      "header": 9211,
+      "java": {
+        "symbol": "HousekeepingRoleMembersComposer",
+        "className": "HousekeepingRoleMembersComposer",
+        "path": "Communication/Packets/Outgoing/Housekeeping/HousekeepingRoleMembersComposer.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_ROLE_MEMBERS",
+        "className": "HousekeepingRoleMembersParser",
+        "path": "packages/communication/src/messages/parser/housekeeping/HousekeepingRoleMembersParser.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roleId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "offset"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "total"
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "id"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "username"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "expiresAt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_USER_OVERRIDES",
+      "direction": "server_to_client",
+      "header": 9212,
+      "java": {
+        "symbol": "HousekeepingUserOverridesComposer",
+        "className": "HousekeepingUserOverridesComposer",
+        "path": "Communication/Packets/Outgoing/Housekeeping/HousekeepingUserOverridesComposer.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_USER_OVERRIDES",
+        "className": "HousekeepingUserOverridesParser",
+        "path": "packages/communication/src/messages/parser/housekeeping/HousekeepingUserOverridesParser.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "userId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "username"
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "key"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "effect"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "reason"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "expiresAt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HOUSEKEEPING_ROLES_AUDIT",
+      "direction": "server_to_client",
+      "header": 9213,
+      "java": {
+        "symbol": "HousekeepingRolesAuditComposer",
+        "className": "HousekeepingRolesAuditComposer",
+        "path": "Communication/Packets/Outgoing/Housekeeping/HousekeepingRolesAuditComposer.cs"
+      },
+      "typescript": {
+        "symbol": "HOUSEKEEPING_ROLES_AUDIT",
+        "className": "HousekeepingRolesAuditParser",
+        "path": "packages/communication/src/messages/parser/housekeeping/HousekeepingRolesAuditParser.ts"
+      },
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "requestId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "offset"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "total"
+        },
+        {
+          "kind": "list",
+          "countType": "int",
+          "item": [
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "id"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "actorName"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "action"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "targetType"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "targetId"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "targetName"
+            },
+            {
+              "kind": "scalar",
+              "type": "string",
+              "name": "payload"
+            },
+            {
+              "kind": "scalar",
+              "type": "int",
+              "name": "createdAt"
+            }
+          ]
+        }
+      ]
     }
   ],
   "unpaired": [
@@ -21611,7 +22369,7 @@
         "className": "RoomUnitChatWhisperComposer",
         "path": "packages/communication/src/messages/outgoing/room/unit/chat/RoomUnitChatWhisperComposer.ts"
       },
-      "reason": "Java analyzer: Packet fields delegated to external constructor RoomChatMessage inside handle; TypeScript analyzer: Outgoing value recipientName + \u0027 \u0027 + message has no statically resolvable wire type"
+      "reason": "Java analyzer: Packet fields delegated to external constructor RoomChatMessage inside handle; TypeScript analyzer: Outgoing value recipientName + ' ' + message has no statically resolvable wire type"
     },
     {
       "name": "MARKETPLACE_SELL_MULTIPLE_ITEMS",
@@ -22603,7 +23361,7 @@
         "className": "ClientHelloMessageComposer",
         "path": "packages/communication/src/messages/outgoing/handshake/ClientHelloMessageComposer.ts"
       },
-      "reason": "TypeScript analyzer: Outgoing value `NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll(\u0027.\u0027, \u0027-\u0027)}` has no statically resolvable wire type"
+      "reason": "TypeScript analyzer: Outgoing value `NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll('.', '-')}` has no statically resolvable wire type"
     },
     {
       "name": "SNOWWAR_LOAD_STAGE_READY",

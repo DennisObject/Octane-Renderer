@@ -630,7 +630,6 @@ export class OutgoingHeader
     public static HOUSEKEEPING_MUTE_USER = 9104;
     public static HOUSEKEEPING_KICK_USER = 9105;
     public static HOUSEKEEPING_FORCE_DISCONNECT_USER = 9106;
-    public static HOUSEKEEPING_SET_USER_RANK = 9107;
     public static HOUSEKEEPING_TRADE_LOCK_USER = 9108;
     public static HOUSEKEEPING_RESET_USER_PASSWORD = 9109;
     public static HOUSEKEEPING_FIND_ROOM_BY_ID = 9110;
@@ -719,4 +718,16 @@ export class OutgoingHeader
     public static DISCORD_UPDATE_PREFERENCES = 2774;
     // AIR 13 self donation tool (client -> server), official id.
     public static SELF_DONATION = 2499;
+    public static HOUSEKEEPING_GET_ROLES = 9130;
+    public static HOUSEKEEPING_GET_ROLE_MEMBERS = 9131;
+    public static HOUSEKEEPING_GET_USER_OVERRIDES = 9132;
+    public static HOUSEKEEPING_GET_ROLES_AUDIT = 9133;
+    public static HOUSEKEEPING_SAVE_ROLE = 9134;
+    public static HOUSEKEEPING_DELETE_ROLE = 9135;
+    public static HOUSEKEEPING_SET_ROLE_PERMISSION = 9136;
+    public static HOUSEKEEPING_SET_ROLE_LIMIT = 9137;
+    public static HOUSEKEEPING_ASSIGN_ROLE = 9138;
+    public static HOUSEKEEPING_REVOKE_ROLE = 9139;
+    public static HOUSEKEEPING_SET_USER_OVERRIDE = 9140;
+    public static HOUSEKEEPING_REMOVE_USER_OVERRIDE = 9141;
 }

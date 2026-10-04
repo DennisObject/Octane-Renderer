@@ -23,7 +23,9 @@ import { ConfInvisStateMessageEvent } from './messages';
 import { HanditemBlockStateMessageEvent } from './messages';
 import { TranslationLanguagesEvent, TranslationLanguagesRequestComposer, TranslationResultEvent, TranslationTextRequestComposer } from './messages';
 import { YouTubeRoomBroadcastEvent, YouTubeRoomPlayComposer, YouTubeRoomSettingsComposer, YouTubeRoomSettingsEvent, YouTubeRoomWatchersEvent, YouTubeRoomWatchingComposer } from './messages';
-import { HousekeepingActionLogEvent, HousekeepingActionResultEvent, HousekeepingBanUserComposer, HousekeepingDashboardEvent, HousekeepingDeleteRoomComposer, HousekeepingFindRoomByIdComposer, HousekeepingFindUserByIdComposer, HousekeepingFindUserByNameComposer, HousekeepingForceDisconnectUserComposer, HousekeepingGetDashboardComposer, HousekeepingGiveCreditsComposer, HousekeepingGiveCurrencyComposer, HousekeepingGrantItemComposer, HousekeepingKickAllFromRoomComposer, HousekeepingKickUserComposer, HousekeepingListActionLogComposer, HousekeepingMuteRoomComposer, HousekeepingMuteUserComposer, HousekeepingResetUserPasswordComposer, HousekeepingRoomDetailEvent, HousekeepingRoomListEvent, HousekeepingRoomStateComposer, HousekeepingSearchRoomsComposer, HousekeepingSendHotelAlertComposer, HousekeepingSetHcSubscriptionComposer, HousekeepingSetUserRankComposer, HousekeepingTradeLockUserComposer, HousekeepingTransferRoomOwnershipComposer, HousekeepingUnbanUserComposer, HousekeepingUserDetailEvent } from './messages';
+import { HousekeepingRolesEvent, HousekeepingRoleMembersEvent, HousekeepingUserOverridesEvent, HousekeepingRolesAuditEvent } from './messages';
+import { HousekeepingGetRolesComposer, HousekeepingGetRoleMembersComposer, HousekeepingGetUserOverridesComposer, HousekeepingGetRolesAuditComposer, HousekeepingSaveRoleComposer, HousekeepingDeleteRoleComposer, HousekeepingSetRolePermissionComposer, HousekeepingSetRoleLimitComposer, HousekeepingAssignRoleComposer, HousekeepingRevokeRoleComposer, HousekeepingSetUserOverrideComposer, HousekeepingRemoveUserOverrideComposer } from './messages';
+import { HousekeepingActionLogEvent, HousekeepingActionResultEvent, HousekeepingBanUserComposer, HousekeepingDashboardEvent, HousekeepingDeleteRoomComposer, HousekeepingFindRoomByIdComposer, HousekeepingFindUserByIdComposer, HousekeepingFindUserByNameComposer, HousekeepingForceDisconnectUserComposer, HousekeepingGetDashboardComposer, HousekeepingGiveCreditsComposer, HousekeepingGiveCurrencyComposer, HousekeepingGrantItemComposer, HousekeepingKickAllFromRoomComposer, HousekeepingKickUserComposer, HousekeepingListActionLogComposer, HousekeepingMuteRoomComposer, HousekeepingMuteUserComposer, HousekeepingResetUserPasswordComposer, HousekeepingRoomDetailEvent, HousekeepingRoomListEvent, HousekeepingRoomStateComposer, HousekeepingSearchRoomsComposer, HousekeepingSendHotelAlertComposer, HousekeepingSetHcSubscriptionComposer, HousekeepingTradeLockUserComposer, HousekeepingTransferRoomOwnershipComposer, HousekeepingUnbanUserComposer, HousekeepingUserDetailEvent } from './messages';
 import { CatalogAdminReorderOffersComposer, CatalogAdminSavePageIconComposer, CatalogAdminSavePageImagesComposer, CatalogAdminSetPageEnabledComposer, CatalogAdminSetPageVisibleComposer } from './messages/outgoing/catalog';
 import { CatalogStudioDocumentApplyComposer, CatalogStudioDocumentDryRunComposer, CatalogStudioExportComposer, CatalogStudioHistoryComposer, CatalogStudioOpenSessionComposer, CatalogStudioUndoComposer, CatalogStudioValidateComposer } from './messages/outgoing/catalog/studio';
 import { CatalogStudioDocumentResultEvent, CatalogStudioHistoryEvent, CatalogStudioSessionEvent, CatalogStudioUndoEvent, CatalogStudioValidationEvent } from './messages/incoming/catalog/studio';
@@ -785,6 +787,10 @@ export class OctaneMessages implements IMessageConfiguration
         this._events.set(IncomingHeader.USER_HABBICON_STATUS_CHANGED, UserHabbiconStatusChangedEvent);
         this._events.set(IncomingHeader.HABBICON_SHOP_DATA, HabbiconShopDataEvent);
         this._events.set(IncomingHeader.HABBICON_INFO, HabbiconInfoEvent);
+        this._events.set(IncomingHeader.HOUSEKEEPING_ROLES, HousekeepingRolesEvent);
+        this._events.set(IncomingHeader.HOUSEKEEPING_ROLE_MEMBERS, HousekeepingRoleMembersEvent);
+        this._events.set(IncomingHeader.HOUSEKEEPING_USER_OVERRIDES, HousekeepingUserOverridesEvent);
+        this._events.set(IncomingHeader.HOUSEKEEPING_ROLES_AUDIT, HousekeepingRolesAuditEvent);
         this._events.set(IncomingHeader.HOTEL_VIEW_LANDING, HotelViewLandingEvent);
     }
 
@@ -1581,7 +1587,6 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.HOUSEKEEPING_MUTE_USER, HousekeepingMuteUserComposer);
         this._composers.set(OutgoingHeader.HOUSEKEEPING_KICK_USER, HousekeepingKickUserComposer);
         this._composers.set(OutgoingHeader.HOUSEKEEPING_FORCE_DISCONNECT_USER, HousekeepingForceDisconnectUserComposer);
-        this._composers.set(OutgoingHeader.HOUSEKEEPING_SET_USER_RANK, HousekeepingSetUserRankComposer);
         this._composers.set(OutgoingHeader.HOUSEKEEPING_TRADE_LOCK_USER, HousekeepingTradeLockUserComposer);
         this._composers.set(OutgoingHeader.HOUSEKEEPING_RESET_USER_PASSWORD, HousekeepingResetUserPasswordComposer);
         this._composers.set(OutgoingHeader.HOUSEKEEPING_FIND_ROOM_BY_ID, HousekeepingFindRoomByIdComposer);
@@ -1609,6 +1614,18 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.PRESS_KEYBIND, PressKeybindComposer);
         this._composers.set(OutgoingHeader.EARNINGS_REQUEST, RequestEarningsCenterComposer);
         this._composers.set(OutgoingHeader.EARNINGS_CLAIM, ClaimEarningsRewardComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_GET_ROLES, HousekeepingGetRolesComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_GET_ROLE_MEMBERS, HousekeepingGetRoleMembersComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_GET_USER_OVERRIDES, HousekeepingGetUserOverridesComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_GET_ROLES_AUDIT, HousekeepingGetRolesAuditComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_SAVE_ROLE, HousekeepingSaveRoleComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_DELETE_ROLE, HousekeepingDeleteRoleComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_SET_ROLE_PERMISSION, HousekeepingSetRolePermissionComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_SET_ROLE_LIMIT, HousekeepingSetRoleLimitComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_ASSIGN_ROLE, HousekeepingAssignRoleComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_REVOKE_ROLE, HousekeepingRevokeRoleComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_SET_USER_OVERRIDE, HousekeepingSetUserOverrideComposer);
+        this._composers.set(OutgoingHeader.HOUSEKEEPING_REMOVE_USER_OVERRIDE, HousekeepingRemoveUserOverrideComposer);
         this._composers.set(OutgoingHeader.EARNINGS_CLAIM_ALL, ClaimAllEarningsRewardsComposer);
     }
 
