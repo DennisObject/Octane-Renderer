@@ -33,3 +33,4 @@ export * from './UserEventCatsMessageParser';
 export * from './UserFlatCatsMessageParser';
 export * from './utils';
 export * from './OfficialRoomsParser';
+export * from './CreatableRoomModelsMessageParser';

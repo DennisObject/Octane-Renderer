@@ -48,15 +48,17 @@ export const LegacyFloorPlanHeaders = {
 } as const;
 
 /**
- * Reserved aliases in the unused high half of the unsigned 16-bit header space.
- * Nothing in either registry currently uses a header >= 32768.
- * Marketplace is mirrored by the matching PlusEMU revision. The membership and
- * guide composers have no PlusEMU handler; the alias keeps them registered.
+ * Resolve collisions with the September floor-plan and membership headers.
+ * Unsupported composers retain registration at unused high header aliases.
+ * Marketplace is mirrored by the matching PlusEMU revision. Guide and SnowWar
+ * composers have no PlusEMU handler; their aliases keep them registered.
+ * Basic membership extension uses PlusEMU's reserved custom header 6001.
  */
 export const FloorPlanCollisionAlias = {
     marketplaceConfig: 65001,
-    purchaseBasicMembershipExtension: 65002,
-    guideSessionInviteRequester: 65003
+    purchaseBasicMembershipExtension: 6001,
+    guideSessionInviteRequester: 65003,
+    snowWarExitGame: 65004
 } as const;
 
 export function configuredFloorPlanWireProfile(configured?: string | null): FloorPlanWireProfileName
@@ -77,6 +79,7 @@ export function applyFloorPlanWireProfile(events: Map<number, Function>, compose
     if(profile === FloorPlanWireProfile.Legacy) return;
 
     moveHeader(composers, OutgoingHeader.MARKETPLACE_CONFIG, FloorPlanCollisionAlias.marketplaceConfig);
+    moveHeader(composers, OutgoingHeader.SNOWWAR_EXIT_GAME, FloorPlanCollisionAlias.snowWarExitGame);
     moveHeader(composers, OutgoingHeader.PURCHASE_BASIC_MEMBERSHIP_EXTENSION, FloorPlanCollisionAlias.purchaseBasicMembershipExtension);
     moveHeader(composers, OutgoingHeader.GUIDE_SESSION_INVITE_REQUESTER, FloorPlanCollisionAlias.guideSessionInviteRequester);
     moveHeader(composers, OutgoingHeader.GET_OCCUPIED_TILES, SeptemberFloorPlanHeaders.getOccupiedTiles);

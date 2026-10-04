@@ -1,4 +1,5 @@
 import { IMessageConfiguration } from '@octane/api';
+import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent } from './messages';
 import { GoToBreedingNestFailureEvent, GroupMemberUpdateEvent, GroupMembersRefreshEvent } from './messages';
 import { UnsupportedOutgoingHeader } from './messages/outgoing/UnsupportedOutgoingHeader';
 import { UserSettingsPrivacyComposer } from './messages/outgoing/user/settings/UserSettingsPrivacyComposer';
@@ -788,6 +789,9 @@ export class OctaneMessages implements IMessageConfiguration
 
     private registerComposers(): void
     {
+        this._events.set(IncomingHeader.ALLOWED_CHAT_STYLES, AllowedChatStylesMessageEvent);
+        this._events.set(IncomingHeader.CREATABLE_ROOM_MODELS, CreatableRoomModelsMessageEvent);
+
         // CUSTOM PACKETS
         this._composers.set(OutgoingHeader.CLICK_FURNI, ClickFurniMessageComposer);
         this._composers.set(OutgoingHeader.CLICK_USER, ClickUserMessageComposer);

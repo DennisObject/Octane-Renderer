@@ -581,6 +581,9 @@ export class IncomingHeader
     public static YOUTUBE_ROOM_WATCHERS = 8002;
     public static YOUTUBE_ROOM_SETTINGS = 8003;
 
+    public static ALLOWED_CHAT_STYLES = 9340;
+    public static CREATABLE_ROOM_MODELS = 9341;
+
     // Housekeeping (in-client admin panel) — IDs 9200..9299 reserved
     public static HOUSEKEEPING_USER_DETAIL = 9200;
     public static HOUSEKEEPING_ACTION_RESULT = 9201;
