@@ -34,7 +34,6 @@ import { CatalogRuntimeConfigurationComposer } from './messages/outgoing/catalog
 import { RareValuesEvent, RequestRareValuesComposer } from './messages';
 import { GetHotLooksComposer, HotLooksEvent } from './messages';
 import { ChestDataEvent, ChestDepositComposer, ChestDepositFurniComposer, ChestDepositInventoryItemComposer, ChestFurniChunkEvent, ChestFurniDeltaEvent, ChestOpenComposer, ChestOpenEvent, ChestStartDepositComposer, ChestWithdrawAllFurniComposer, ChestWithdrawComposer, ChestWithdrawFurniComposer, ChestLogEvent, ChestCloseComposer, ChestEnableWiredComposer, ChestSaveOptionsComposer, ChestSaveSettingsComposer, ChestSaveNotificationsComposer, ChestUpgradeCapacityComposer, ChestNotificationEvent, ChestUpgradeResultEvent, ChestRequestLogComposer, WiredChestRoomLogsComposer, WiredChestLockComposer, WiredChestTransactionDetailsComposer, WiredChestRoomLogsEvent, WiredChestLockStateEvent, WiredChestTransactionDetailsEvent, WiredTradeOpenEvent, WiredTradeItemsEvent, WiredTradeCancelledEvent, WiredTradeCompletedEvent, WiredTradeOfferItemsComposer, WiredTradeAcceptComposer, WiredTradeCancelComposer } from './messages';
-import { SoundboardCatalogEvent, SoundboardCatalogReorderComposer, SoundboardCatalogRequestComposer, SoundboardCatalogResultEvent, SoundboardCatalogUpsertComposer, SoundboardPlayComposer, SoundboardPlayDeniedEvent, SoundboardPlayEvent, SoundboardRequestSettingsComposer, SoundboardSaveVolumeComposer, SoundboardSetEnabledComposer, SoundboardSettingsEvent } from './messages';
 import { PressKeybindComposer } from './messages';
 import { EarningsCenterEvent, EarningsClaimResultEvent, IncomeRewardNotificationEvent, RequestEarningsCenterComposer, ClaimEarningsRewardComposer, ClaimAllEarningsRewardsComposer } from './messages';
 import { ActiveDailyTasksMessageEvent, ClaimDailyTaskMessageComposer, ClaimRewardTrackPrizeMessageComposer, DailyTaskUpdatedMessageEvent, DailyTasksAddedMessageEvent, DeleteRewardTrackEntityMessageComposer, GetDailyTasksMessageComposer, GetRewardTrackAdminDataMessageComposer, GetRewardTracksMessageComposer, PurchaseRewardTrackPremiumMessageComposer, RewardTrackAdminDataMessageEvent, RewardTrackAdminResultMessageEvent, RewardTrackClaimResultMessageEvent, RewardTrackFurniSearchResultMessageEvent, RewardTrackTextsMessageEvent, RewardTrackPremiumPurchaseResultMessageEvent, RewardTrackProgressMessageEvent, RewardTracksMessageEvent, SaveRewardTrackMessageComposer, SaveRewardTrackPrizeMessageComposer, SaveRewardTrackTaskMessageComposer, SaveRewardTrackTextsMessageComposer, SearchRewardTrackFurniMessageComposer } from './messages';
@@ -666,11 +665,6 @@ export class OctaneMessages implements IMessageConfiguration
         // Custom features
         this._events.set(IncomingHeader.RARE_VALUES, RareValuesEvent);
         this._events.set(IncomingHeader.HOT_LOOKS, HotLooksEvent);
-        this._events.set(IncomingHeader.SOUNDBOARD_SETTINGS, SoundboardSettingsEvent);
-        this._events.set(IncomingHeader.SOUNDBOARD_PLAY, SoundboardPlayEvent);
-        this._events.set(IncomingHeader.SOUNDBOARD_PLAY_DENIED, SoundboardPlayDeniedEvent);
-        this._events.set(IncomingHeader.SOUNDBOARD_CATALOG, SoundboardCatalogEvent);
-        this._events.set(IncomingHeader.SOUNDBOARD_CATALOG_RESULT, SoundboardCatalogResultEvent);
         this._events.set(IncomingHeader.TRAX_EDITOR_SONGS, TraxEditorSongsEvent);
         this._events.set(IncomingHeader.TRAX_EDITOR_ERROR, TraxEditorErrorEvent);
         this._events.set(IncomingHeader.EARNINGS_CENTER, EarningsCenterEvent);
@@ -1602,13 +1596,6 @@ export class OctaneMessages implements IMessageConfiguration
         // Custom features
         this._composers.set(OutgoingHeader.REQUEST_RARE_VALUES, RequestRareValuesComposer);
         this._composers.set(OutgoingHeader.GET_HOT_LOOKS, GetHotLooksComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_PLAY, SoundboardPlayComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_SET_ENABLED, SoundboardSetEnabledComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_REQUEST_SETTINGS, SoundboardRequestSettingsComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_SAVE_VOLUME, SoundboardSaveVolumeComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_CATALOG_REQUEST, SoundboardCatalogRequestComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_CATALOG_UPSERT, SoundboardCatalogUpsertComposer);
-        this._composers.set(OutgoingHeader.SOUNDBOARD_CATALOG_REORDER, SoundboardCatalogReorderComposer);
         this._composers.set(OutgoingHeader.GET_TRAX_EDITOR_SONGS, GetTraxEditorSongsComposer);
         this._composers.set(OutgoingHeader.TRAX_EDITOR_BUY_SONG, TraxEditorBuySongComposer);
         this._composers.set(OutgoingHeader.TRAX_EDITOR_SAVE_SONG, TraxEditorSaveSongComposer);

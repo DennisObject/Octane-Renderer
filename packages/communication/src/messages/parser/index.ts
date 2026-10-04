@@ -30,7 +30,6 @@ export * from './help';
 export * from './housekeeping';
 export * from './rarevalues';
 export * from './hotlooks';
-export * from './soundboard';
 export * from './traxeditor';
 export * from './inventory';
 export * from './inventory/achievements';
