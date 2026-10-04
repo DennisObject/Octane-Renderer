@@ -1,6 +1,6 @@
 import { IMessageComposer } from '@octane/api';
 
-/** Looks up furni by name for a reward track prize (staff editor, needs acc_rewardtrack). */
+/** Looks up furni by name for a reward track prize (staff editor, needs rewardtrack.manage). */
 export class SearchRewardTrackFurniMessageComposer implements IMessageComposer<ConstructorParameters<typeof SearchRewardTrackFurniMessageComposer>>
 {
     private _data: ConstructorParameters<typeof SearchRewardTrackFurniMessageComposer>;
