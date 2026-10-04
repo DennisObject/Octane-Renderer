@@ -22859,7 +22859,149 @@
         "className": "CatalogAdminSavePageComposer",
         "path": "packages/communication/src/messages/outgoing/catalog/CatalogAdminSavePageComposer.ts"
       },
-      "reason": "Java analyzer: Packet fields delegated to external reader parseMutationEnvelope inside handle"
+      "reason": "Java analyzer: Packet fields delegated to external reader parseMutationEnvelope inside handle",
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "pageId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "caption"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "captionSave"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageLayout"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconImage"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "requiredPermission"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "visible"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "enabled"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "orderNum"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "parentId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageHeadline"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextDetails"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "targetType"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "catalogMode"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText1"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconColor"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "clubOnly"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageSpecial"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText2"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roomId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "includes"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "draftVersionId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "expectedRevision"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "lockToken"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "summary"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "operationId"
+        }
+      ]
     },
     {
       "name": "CATALOG_ADMIN_CREATE_PAGE",
@@ -22875,7 +23017,144 @@
         "className": "CatalogAdminCreatePageComposer",
         "path": "packages/communication/src/messages/outgoing/catalog/CatalogAdminCreatePageComposer.ts"
       },
-      "reason": "Java analyzer: Packet fields delegated to external reader parseMutationEnvelope inside handle"
+      "reason": "Java analyzer: Packet fields delegated to external reader parseMutationEnvelope inside handle",
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "caption"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "captionSave"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageLayout"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconImage"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "requiredPermission"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "visible"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "enabled"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "orderNum"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "parentId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "targetType"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "catalogMode"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconColor"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "clubOnly"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageHeadline"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageSpecial"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText1"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText2"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextDetails"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roomId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "includes"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "draftVersionId"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "expectedRevision"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "lockToken"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "summary"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "operationId"
+        }
+      ]
     },
     {
       "name": "CATALOG_ADMIN_DELETE_PAGE",
@@ -27275,7 +27554,119 @@
         "className": "CatalogAdminPageDetailsMessageParser",
         "path": "packages/communication/src/messages/parser/catalog/CatalogAdminPageDetailsMessageParser.ts"
       },
-      "reason": "Java analyzer: Data-dependent packet operations in IfStmt inside composeInternal"
+      "reason": "Java analyzer: Data-dependent packet operations in IfStmt inside composeInternal",
+      "fields": [
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "pageId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "caption"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "captionSave"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "parentId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "catalogMode"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageLayout"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconColor"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "iconImage"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "requiredPermission"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "orderNum"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "visible"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "enabled"
+        },
+        {
+          "kind": "scalar",
+          "type": "boolean",
+          "name": "clubOnly"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageHeadline"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageSpecial"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText1"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageText2"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextDetails"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "pageTextTeaser"
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": "roomId"
+        },
+        {
+          "kind": "scalar",
+          "type": "string",
+          "name": "includes"
+        }
+      ]
     },
     {
       "name": "CATALOG_STUDIO_OPEN_SESSION",
