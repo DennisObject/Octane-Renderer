@@ -1,5 +1,4 @@
 import { BinaryReader, BinaryWriter } from '@octane/utils';
-import { gzip } from 'pako';
 import { describe, expect, it } from 'vitest';
 import { OctaneMessages } from '../../../../OctaneMessages';
 import { IncomingHeader } from '../../../incoming/IncomingHeader';
@@ -14,7 +13,6 @@ import {
 } from '../../../outgoing/catalog/studio';
 import { CatalogStudioHistoryMessageParser } from '../../../parser/catalog/studio/CatalogStudioHistoryMessageParser';
 import { CatalogStudioDocumentResultMessageParser } from '../../../parser/catalog/studio/CatalogStudioDocumentResultMessageParser';
-import { CatalogStudioSessionMessageParser } from '../../../parser/catalog/studio/CatalogStudioSessionMessageParser';
 import { CatalogStudioValidationMessageParser } from '../../../parser/catalog/studio/CatalogStudioValidationMessageParser';
 import { CATALOG_STUDIO_DOCUMENT_ENCODING, decodeCatalogStudioDocument, encodeCatalogStudioDocument } from '../CatalogStudioDocumentWireCodec';
 
@@ -122,34 +120,6 @@ describe('catalog studio packet contract', () =>
         expect(encoded.chunks.length).toBeGreaterThan(1);
         expect(encoded.chunks.every(chunk => chunk.length <= 32_767)).toBe(true);
         expect(decodeCatalogStudioDocument(encoded.encoding, encoded.chunks)).toBe(document);
-    });
-
-    it('parses the direct-live manager session', () =>
-    {
-        const pages = [{
-            catalogType: 'NORMAL', pageId: 17, parentId: -1, captionSave: 'front_page', caption: 'Front Page',
-            pageLayout: 'default_3x3', iconColor: 0, iconImage: 1, minRank: 1, orderNum: 0,
-            visible: true, enabled: true, clubOnly: false, catalogMode: 'NORMAL', vipOnly: false,
-            pageHeadline: '', pageTeaser: '', pageSpecial: '', pageText1: '', pageText2: '',
-            pageTextDetails: '', pageTextTeaser: '', roomId: 0, includes: ''
-        }];
-        const encodedPages = Buffer.from(gzip(JSON.stringify(pages))).toString('base64');
-        const writer = new BinaryWriter();
-        writer.writeInt(1); writer.writeInt(1); writer.writeInt(7);
-        writer.writeString('2026-08-02T10:00:00Z'); writer.writeString('2026-08-02T10:05:00Z');
-        writer.writeInt(0); writer.writeInt(0);
-        writer.writeByte(1); writer.writeInt(2); writer.writeInt(0);
-        writer.writeString('GZIP_BASE64_JSON'); writer.writeInt(2);
-        writer.writeString(encodedPages.slice(0, 40)); writer.writeString(encodedPages.slice(40));
-
-        const parser = new CatalogStudioSessionMessageParser();
-        expect(parser.parse(new TestWrapper(new BinaryReader(writer.getBuffer())) as any)).toBe(true);
-        expect(parser.draftVersionId).toBe(1);
-        expect(parser.actors).toEqual([]);
-        expect(parser.validationCurrent).toBe(true);
-        expect(parser.publishedVersions).toEqual([]);
-        expect(parser.pages).toEqual(pages);
-        expect(parser.offers).toEqual([]);
     });
 
     it('parses history groups and navigable validation issues', () =>

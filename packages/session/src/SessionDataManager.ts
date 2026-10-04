@@ -1,5 +1,5 @@
-import { IFurnitureData, IGroupInformationManager, IMessageComposer, IMessageEvent, IProductData, ISessionDataManager, IUserDataSnapshot, NoobnessLevelEnum, SecurityLevel } from '@octane/api';
-import { AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, FurnitureDataReloadEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@octane/communication';
+import { IClientAccessListsSnapshot, IFurnitureData, IGroupInformationManager, IMessageComposer, IMessageEvent, IProductData, ISessionDataManager, IUserDataSnapshot, NoobnessLevelEnum, SecurityLevel } from '@octane/api';
+import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent, AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, FurnitureDataReloadEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@octane/communication';
 import type { FurnidataDeltaEntry } from '@octane/communication';
 import { applyFurnidataDeltaTo } from './furniture/applyFurnidataDelta';
 import { GetConfiguration } from '@octane/configuration';
@@ -64,6 +64,8 @@ export class SessionDataManager implements ISessionDataManager
 
     private _userDataSnapshot: Readonly<IUserDataSnapshot> | null = null;
 
+    private _clientAccessLists: IClientAccessListsSnapshot = Object.freeze({ chatStyleIds: Object.freeze<number[]>([]), roomModels: Object.freeze([]) });
+
     private _permissions: Map<string, number> = new Map();
     private _permissionsSnapshot: ReadonlyMap<string, number> | null = null;
 
@@ -107,6 +109,11 @@ export class SessionDataManager implements ISessionDataManager
         this._permissionsSnapshot = new Map(this._permissions);
 
         return this._permissionsSnapshot;
+    }
+
+    public getClientAccessListsSnapshot(): IClientAccessListsSnapshot
+    {
+        return this._clientAccessLists;
     }
 
     public getUserDataSnapshot(): Readonly<IUserDataSnapshot>
@@ -167,6 +174,16 @@ export class SessionDataManager implements ISessionDataManager
             })),
             GetCommunication().registerMessageEvent(new UserInfoEvent(this.onUserInfoEvent.bind(this))),
             GetCommunication().registerMessageEvent(new UserPermissionsEvent(this.onUserPermissionsEvent.bind(this))),
+            GetCommunication().registerMessageEvent(new AllowedChatStylesMessageEvent((event: AllowedChatStylesMessageEvent) =>
+            {
+                this._clientAccessLists = Object.freeze({ ...this._clientAccessLists, chatStyleIds: Object.freeze([...event.getParser().chatStyleIds]) });
+                GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.CLIENT_ACCESS_LISTS_UPDATED));
+            })),
+            GetCommunication().registerMessageEvent(new CreatableRoomModelsMessageEvent((event: CreatableRoomModelsMessageEvent) =>
+            {
+                this._clientAccessLists = Object.freeze({ ...this._clientAccessLists, roomModels: Object.freeze(event.getParser().models.map(model => Object.freeze({ ...model }))) });
+                GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.CLIENT_ACCESS_LISTS_UPDATED));
+            })),
             GetCommunication().registerMessageEvent(new AvailabilityStatusMessageEvent(this.onAvailabilityStatusMessageEvent.bind(this))),
             GetCommunication().registerMessageEvent(new PetScratchFailedMessageEvent(this.onPetRespectFailed.bind(this))),
             GetCommunication().registerMessageEvent(new PetRespectFailedEvent(this.onPetRespectFailedByAge.bind(this))),

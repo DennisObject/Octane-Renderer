@@ -10,12 +10,11 @@ export class CatalogAdminPageDetailsMessageParser implements IMessageParser
     private _layout: string;
     private _iconColor: number;
     private _iconImage: number;
-    private _minRank: number;
+    private _requiredPermission: string;
     private _orderNum: number;
     private _visible: boolean;
     private _enabled: boolean;
     private _clubOnly: boolean;
-    private _vipOnly: boolean;
     private _headline: string;
     private _teaser: string;
     private _special: string;
@@ -36,12 +35,11 @@ export class CatalogAdminPageDetailsMessageParser implements IMessageParser
         this._layout = 'default_3x3';
         this._iconColor = 1;
         this._iconImage = 0;
-        this._minRank = 1;
+        this._requiredPermission = '';
         this._orderNum = 0;
         this._visible = true;
         this._enabled = true;
         this._clubOnly = false;
-        this._vipOnly = false;
         this._headline = '';
         this._teaser = '';
         this._special = '';
@@ -67,12 +65,11 @@ export class CatalogAdminPageDetailsMessageParser implements IMessageParser
         this._layout = wrapper.readString();
         this._iconColor = wrapper.readInt();
         this._iconImage = wrapper.readInt();
-        this._minRank = wrapper.readInt();
+        this._requiredPermission = wrapper.readString();
         this._orderNum = wrapper.readInt();
         this._visible = wrapper.readBoolean();
         this._enabled = wrapper.readBoolean();
         this._clubOnly = wrapper.readBoolean();
-        this._vipOnly = wrapper.readBoolean();
         this._headline = wrapper.readString();
         this._teaser = wrapper.readString();
         this._special = wrapper.readString();
@@ -118,9 +115,9 @@ export class CatalogAdminPageDetailsMessageParser implements IMessageParser
     {
         return this._iconImage;
     }
-    public get minRank(): number
+    public get requiredPermission(): string
     {
-        return this._minRank;
+        return this._requiredPermission;
     }
     public get orderNum(): number
     {
@@ -137,10 +134,6 @@ export class CatalogAdminPageDetailsMessageParser implements IMessageParser
     public get clubOnly(): boolean
     {
         return this._clubOnly;
-    }
-    public get vipOnly(): boolean
-    {
-        return this._vipOnly;
     }
     public get headline(): string
     {

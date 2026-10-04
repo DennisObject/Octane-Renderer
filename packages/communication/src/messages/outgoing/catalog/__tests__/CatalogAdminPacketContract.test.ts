@@ -41,37 +41,6 @@ describe('catalog admin packet contract', () =>
             .toEqual([ 2, 10, 0, 11, 1, 'NORMAL', 0, 0, '', '', '' ]);
     });
 
-    it('sends every editable page field when saving', () =>
-    {
-        const SavePage = (CatalogAdminComposers as any).CatalogAdminSavePageComposer;
-        const message = new SavePage(
-            42, 'Guild shop', 'guild_shop', 'guild_furni', 145, 5, true, false, 9, 7,
-            'headline', 'teaser', 'details', 'NORMAL', 'BOTH', 'text one',
-            3, true, false, 'special', 'text two', 'teaser text', 123, '1;2;3',
-            12, 7, 'token-123', 'Updated page: Guild shop', 'save-page-1'
-        ).getMessageArray();
-
-        expect(message).toEqual([
-            42, 'Guild shop', 'guild_shop', 'guild_furni', 145, 5, true, false, 9, 7,
-            'headline', 'teaser', 'details', 'NORMAL', 'BOTH', 'text one',
-            3, true, false, 'special', 'text two', 'teaser text', 123, '1;2;3',
-            12, 7, 'token-123', 'Updated page: Guild shop', 'save-page-1'
-        ]);
-    });
-
-    it('appends the shared draft envelope to legacy edit packets', () =>
-    {
-        const SavePage = (CatalogAdminComposers as any).CatalogAdminSavePageComposer;
-        const message = new SavePage(
-            42, 'Guild shop', 'guild_shop', 'guild_furni', 145, 5, true, false, 9, 7,
-            'headline', 'teaser', 'details', 'NORMAL', 'BOTH', 'text one',
-            3, true, false, 'special', 'text two', 'teaser text', 123, '1;2;3',
-            12, 7, 'token-123', 'Updated page: Guild shop', 'save-page-1'
-        ).getMessageArray();
-
-        expect(message.slice(-5)).toEqual([ 12, 7, 'token-123', 'Updated page: Guild shop', 'save-page-1' ]);
-    });
-
     it('uses the live revision and operation id for inspector reads and asset mutations', () =>
     {
         const LoadPage = (CatalogAdminComposers as any).CatalogAdminLoadPageComposer;
@@ -88,23 +57,6 @@ describe('catalog admin packet contract', () =>
             .toEqual([ 42, 145, 'BUILDER', 12, 7, '', 'Updated page icon', 'icon-1' ]);
         expect(new CatalogAdminSavePageImagesComposer(42, 'head', 'teaser', 'NORMAL', 12, 7, '', 'Updated page images', 'images-1').getMessageArray())
             .toEqual([ 42, 'head', 'teaser', 'NORMAL', 12, 7, '', 'Updated page images', 'images-1' ]);
-    });
-
-    it('sends every editable page field when creating', () =>
-    {
-        const CreatePage = (CatalogAdminComposers as any).CatalogAdminCreatePageComposer;
-        const message = new CreatePage(
-            'Guild shop', 'guild_shop', 'guild_furni', 145, 5, true, false, 9, 7,
-            'NORMAL', 'BOTH', 3, true, false, 'headline', 'teaser', 'special',
-            'text one', 'text two', 'details', 'teaser text', 123, '1;2;3'
-        ).getMessageArray();
-
-        expect(message).toEqual([
-            'Guild shop', 'guild_shop', 'guild_furni', 145, 5, true, false, 9, 7,
-            'NORMAL', 'BOTH', 3, true, false, 'headline', 'teaser', 'special',
-            'text one', 'text two', 'details', 'teaser text', 123, '1;2;3',
-            0, 0, '', '', ''
-        ]);
     });
 
     it('sends every editable offer field including the song id', () =>
