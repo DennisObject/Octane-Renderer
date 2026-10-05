@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import type { IMessageDataWrapper, IMessageParser } from '@octane/api';
 
 export class UserSettingsParser implements IMessageParser
 {
@@ -19,6 +19,10 @@ export class UserSettingsParser implements IMessageParser
     private _chatScrollSpeed: number;
     private _onlineIndicatorPreference: number;
     private _profileVisible: boolean;
+    private _fontScale: number;
+    private _wiredStylePreference: string;
+    private _showAllWiredErrors: boolean;
+    private _hasNativeSettingsFields: boolean;
 
     public flush(): boolean
     {
@@ -39,13 +43,19 @@ export class UserSettingsParser implements IMessageParser
         this._chatScrollSpeed = 1;
         this._onlineIndicatorPreference = 0;
         this._profileVisible = true;
+        this._fontScale = 0;
+        this._wiredStylePreference = '';
+        this._showAllWiredErrors = false;
+        this._hasNativeSettingsFields = false;
 
         return true;
     }
 
     public parse(wrapper: IMessageDataWrapper): boolean
     {
-        if(!wrapper) return false;
+        this.flush();
+
+        if(!wrapper || wrapper.remainingBytes === undefined || wrapper.remainingBytes < 26) return false;
 
         this._volumeSystem = wrapper.readInt();
         this._volumeFurni = wrapper.readInt();
@@ -58,15 +68,67 @@ export class UserSettingsParser implements IMessageParser
         this._onlineStatusVisible = wrapper.readBoolean();
         this._friendsCanFollow = wrapper.readBoolean();
         this._friendRequestsAllowed = wrapper.readBoolean();
-        // Trailing per-user preferences (official UserSettings 3574 layout, each optional so an older
-        // emulator that omits the tail keeps the official defaults).
-        this._wiredWhisperDisabled = wrapper.bytesAvailable ? wrapper.readBoolean() : false;
-        this._chatMode = wrapper.bytesAvailable ? wrapper.readInt() : 0;
-        this._chatBubbleWidth = wrapper.bytesAvailable ? wrapper.readInt() : 1;
-        this._chatScrollSpeed = wrapper.bytesAvailable ? wrapper.readInt() : 1;
-        this._onlineIndicatorPreference = wrapper.bytesAvailable ? wrapper.readInt() : 0;
-        // Whether other users see the full extended profile; visible when the server does not say.
-        this._profileVisible = wrapper.bytesAvailable ? wrapper.readBoolean() : true;
+
+        // The verified QA serializer ends at this 26-byte prefix. Every nonempty tail follows
+        // v75 Th's native field order; the older custom preference tail is not a supported format.
+        if(wrapper.remainingBytes === 0) return true;
+        if(wrapper.remainingBytes < 5) return false;
+
+        wrapper.readInt();
+        this._wiredWhisperDisabled = wrapper.readBoolean();
+
+        if(wrapper.remainingBytes > 0) this._showAllWiredErrors = wrapper.readBoolean();
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 2) return false;
+
+            const length = wrapper.readShort();
+
+            if(length < 0 || wrapper.remainingBytes < length) return false;
+
+            this._wiredStylePreference = wrapper.readBytes(length).toString('utf8');
+        }
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 4) return false;
+
+            this._fontScale = wrapper.readInt();
+        }
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 4) return false;
+
+            this._chatMode = wrapper.readInt();
+            this._oldChat = (this._chatMode !== 0);
+        }
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 4) return false;
+
+            this._chatBubbleWidth = wrapper.readInt();
+        }
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 4) return false;
+
+            this._chatScrollSpeed = wrapper.readInt();
+        }
+
+        if(wrapper.remainingBytes > 0)
+        {
+            if(wrapper.remainingBytes < 4) return false;
+
+            this._onlineIndicatorPreference = wrapper.readInt();
+        }
+
+        if(wrapper.remainingBytes !== 0) return false;
+
+        this._hasNativeSettingsFields = true;
 
         return true;
     }
@@ -153,6 +215,27 @@ export class UserSettingsParser implements IMessageParser
 
     public get profileVisible(): boolean
     {
+        // Compatibility only: v75 UserSettings has no profile visibility field.
         return this._profileVisible;
+    }
+
+    public get fontScale(): number
+    {
+        return this._fontScale;
+    }
+
+    public get wiredStylePreference(): string
+    {
+        return this._wiredStylePreference;
+    }
+
+    public get showAllWiredErrors(): boolean
+    {
+        return this._showAllWiredErrors;
+    }
+
+    public get hasNativeSettingsFields(): boolean
+    {
+        return this._hasNativeSettingsFields;
     }
 }
