@@ -5,11 +5,13 @@ export class MessageClassManager
 {
     private _messageIdByEvent: Map<Function, number>;
     private _messageIdByComposer: Map<Function, number>;
+    private _eventAliases: Map<number, number>;
     private _messageInstancesById: Map<number, IMessageEvent[]>;
 
     constructor()
     {
         this._messageIdByEvent = new Map();
+        this._eventAliases = new Map();
         this._messageIdByComposer = new Map();
         this._messageInstancesById = new Map();
     }
@@ -17,12 +19,15 @@ export class MessageClassManager
     public dispose(): void
     {
         this._messageIdByEvent.clear();
+        this._eventAliases.clear();
         this._messageIdByComposer.clear();
         this._messageInstancesById.clear();
     }
 
     public registerMessages(configuration: IMessageConfiguration): void
     {
+        this._eventAliases = new Map(configuration.eventAliases);
+
         for(const [header, handler] of configuration.events) this.registerMessageEventClass(header, handler);
 
         for(const [header, handler] of configuration.composers) this.registerMessageComposerClass(header, handler);
@@ -110,11 +115,7 @@ export class MessageClassManager
     {
         if(!header) return;
 
-        const existing = this._messageInstancesById.get(header);
-
-        if(!existing) return;
-
-        return existing;
+        return this._messageInstancesById.get(this._eventAliases.get(header) ?? header);
     }
 
     public getEventId(event: IMessageEvent): number

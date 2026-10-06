@@ -1627,6 +1627,11 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.EARNINGS_CLAIM_ALL, ClaimAllEarningsRewardsComposer);
     }
 
+    public get eventAliases(): ReadonlyMap<number, number>
+    {
+        return new Map([[IncomingHeader.LEGACY_USER_FIGURE, IncomingHeader.USER_FIGURE]]);
+    }
+
     public get events(): Map<number, Function>
     {
         return this._events;

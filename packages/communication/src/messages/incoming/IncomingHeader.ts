@@ -265,6 +265,7 @@ export class IncomingHeader
     public static USER_FAVORITE_ROOM = 2524;
     public static USER_FAVORITE_ROOM_COUNT = 151;
     public static USER_FIGURE = 2429;
+    public static LEGACY_USER_FIGURE = 884;
     public static USER_FURNITURE = 994;
     public static USER_FURNITURE_ADD = 104;
     public static USER_FURNITURE_POSTIT_PLACED = 1501;
