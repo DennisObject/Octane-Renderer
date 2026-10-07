@@ -1,12 +1,12 @@
-import { IMessageComposer } from '@octane/api';
+import type { IMessageComposer } from '@octane/api';
 
 export class RoomUnitChatStyleComposer implements IMessageComposer<ConstructorParameters<typeof RoomUnitChatStyleComposer>>
 {
     private _data: ConstructorParameters<typeof RoomUnitChatStyleComposer>;
 
-    constructor(styleId: number)
+    constructor(styleId: number, fontScale: number = 0)
     {
-        this._data = [styleId];
+        this._data = [styleId, fontScale];
     }
 
     public getMessageArray()

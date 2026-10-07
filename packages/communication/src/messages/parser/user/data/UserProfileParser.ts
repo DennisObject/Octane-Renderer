@@ -12,10 +12,18 @@ export class UserProfileParser implements IMessageParser
     private _friendsCount: number;
     private _isMyFriend: boolean;
     private _requestSent: boolean;
-    private _isOnline: boolean;
+    private _onlineStatus: number;
     private _groups: HabboGroupEntryData[];
     private _secondsSinceLastVisit: number;
     private _openProfileWindow: boolean;
+    private _nativeProfile: {
+        isHidden: boolean;
+        level: number;
+        starGemCount: number;
+        banned: boolean;
+        totalBadges: number;
+        badgeRank: number;
+    } = null;
 
     public flush(): boolean
     {
@@ -28,10 +36,11 @@ export class UserProfileParser implements IMessageParser
         this._friendsCount = 0;
         this._isMyFriend = false;
         this._requestSent = false;
-        this._isOnline = false;
+        this._onlineStatus = 0;
         this._groups = [];
         this._secondsSinceLastVisit = 0;
         this._openProfileWindow = false;
+        this._nativeProfile = null;
 
         return true;
     }
@@ -39,6 +48,8 @@ export class UserProfileParser implements IMessageParser
     public parse(wrapper: IMessageDataWrapper): boolean
     {
         if(!wrapper) return false;
+
+        this._nativeProfile = null;
 
         this._id = wrapper.readInt();
         this._username = wrapper.readString();
@@ -49,7 +60,8 @@ export class UserProfileParser implements IMessageParser
         this._friendsCount = wrapper.readInt();
         this._isMyFriend = wrapper.readBoolean();
         this._requestSent = wrapper.readBoolean();
-        this._isOnline = wrapper.readBoolean();
+        this._onlineStatus = wrapper.readByte();
+        if(this._onlineStatus < 0 || this._onlineStatus > 2) return false;
         const groupsCount = wrapper.readInt();
 
         for(let i = 0; i < groupsCount; i++)
@@ -59,6 +71,31 @@ export class UserProfileParser implements IMessageParser
 
         this._secondsSinceLastVisit = wrapper.readInt();
         this._openProfileWindow = wrapper.readBoolean();
+
+        // Legacy packets stop here. v75 D8 reads a 31 + 5 * tupleCount byte tail.
+        if(!wrapper.bytesAvailable) return true;
+        if(!Number.isInteger(wrapper.remainingBytes) || wrapper.remainingBytes < 31) return false;
+
+        const isHidden = wrapper.readBoolean();
+        const level = wrapper.readInt();
+        wrapper.readInt(); // D8._rb51c3e4aea75e8: meaning unconfirmed.
+        const starGemCount = wrapper.readInt();
+        wrapper.readBoolean(); // D8._r20b06e83c96f6d: meaning unconfirmed.
+        const banned = wrapper.readBoolean();
+        const totalBadges = wrapper.readInt();
+        wrapper.readInt(); // D8._rc7f7fd60014cd7: meaning unconfirmed.
+        const tupleCount = wrapper.readInt();
+
+        if(tupleCount < 0 || wrapper.remainingBytes !== 4 + (5 * tupleCount)) return false;
+
+        for(let i = 0; i < tupleCount; i++)
+        {
+            wrapper.readByte();
+            wrapper.readInt();
+        }
+
+        const badgeRank = wrapper.readInt();
+        this._nativeProfile = { isHidden, level, starGemCount, banned, totalBadges, badgeRank };
 
         return true;
     }
@@ -110,7 +147,47 @@ export class UserProfileParser implements IMessageParser
 
     public get isOnline(): boolean
     {
-        return this._isOnline;
+        return this._onlineStatus === 1;
+    }
+
+    public get onlineStatus(): number
+    {
+        return this._onlineStatus;
+    }
+
+    public get hasNativeProfileFields(): boolean
+    {
+        return this._nativeProfile !== null;
+    }
+
+    public get isHidden(): boolean | null
+    {
+        return this._nativeProfile?.isHidden ?? null;
+    }
+
+    public get level(): number | null
+    {
+        return this._nativeProfile?.level ?? null;
+    }
+
+    public get starGemCount(): number | null
+    {
+        return this._nativeProfile?.starGemCount ?? null;
+    }
+
+    public get banned(): boolean | null
+    {
+        return this._nativeProfile?.banned ?? null;
+    }
+
+    public get totalBadges(): number | null
+    {
+        return this._nativeProfile?.totalBadges ?? null;
+    }
+
+    public get badgeRank(): number | null
+    {
+        return this._nativeProfile?.badgeRank ?? null;
     }
 
     public get groups(): HabboGroupEntryData[]
