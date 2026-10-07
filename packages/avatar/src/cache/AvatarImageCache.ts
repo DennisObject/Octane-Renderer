@@ -514,9 +514,30 @@ export class AvatarImageCache
 
     private createUnionImage(images: ImageData[], isFlipped: boolean): ImageData
     {
-        const bounds = new Rectangle();
+        // The part bitmap is the union of its layer rectangles (AvatarImageCache.createUnionImage, Flash Rectangle.union), and Flash's union
+        // ignores an empty rectangle. Pixi's enlarge() has no such rule: starting from an empty rectangle at (0,0) it pulls the union to the origin,
+        // which adds the empty margin before the first layer to every part bound (and to processAsCroppedImageUrl). Start from the first
+        // non-empty layer instead; only when there is none does the old origin-anchored result stay.
+        let bounds: Rectangle = null;
 
-        for(const data of images) data && bounds.enlarge(data.offsetRect);
+        for(const data of images)
+        {
+            if(!data) continue;
+
+            const rect = data.offsetRect;
+
+            if(rect.width <= 0 || rect.height <= 0) continue;
+
+            if(bounds) bounds.enlarge(rect);
+            else bounds = rect;
+        }
+
+        if(!bounds)
+        {
+            bounds = new Rectangle();
+
+            for(const data of images) data && bounds.enlarge(data.offsetRect);
+        }
 
         const point = new Point(-(bounds.x), -(bounds.y));
         const container = new Container();
