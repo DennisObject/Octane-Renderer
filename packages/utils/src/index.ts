@@ -11,6 +11,7 @@ export * from './GetTexturePool';
 export * from './GetTicker';
 export * from './GetTickerFPS';
 export * from './GetTickerTime';
+export * from './HabBundle';
 export * from './HabboWebTools';
 export * from './Int32';
 export * from './JsonParser';

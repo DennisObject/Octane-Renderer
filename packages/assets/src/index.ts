@@ -1,3 +1,4 @@
+export * from './AssetBundleFormat';
 export * from './AssetManager';
 export * from './GetAssetManager';
 export * from './GraphicAsset';

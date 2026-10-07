@@ -15,6 +15,8 @@ const createManager = (overrides: Record<string, unknown> = {}) =>
         parseAssetData: vi.fn(),
         loadImageResource: vi.fn(),
         loadOctaneBundle: vi.fn(),
+        loadHabBundle: vi.fn(),
+        bundleFormat: () => 'nitro' as const,
         ...overrides
     };
     const manager = new AssetManager(dependencies);
