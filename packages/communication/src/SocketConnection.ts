@@ -305,10 +305,11 @@ export class SocketConnection implements IConnection
     {
         if(this._isReconnecting)
         {
-            this._reconnectAttempt = 0;
+            // The attempt count only resets once authenticated, so a server that keeps closing the
+            // socket during login cannot keep the client reconnecting forever.
             this._isReconnecting = false;
 
-            this.setConnectionState({ phase: 'reauthenticating', reconnectAttempt: 0, authenticated: false });
+            this.setConnectionState({ phase: 'reauthenticating', authenticated: false });
 
             GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_RECONNECTED));
         }
@@ -523,6 +524,30 @@ export class SocketConnection implements IConnection
         GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
     }
 
+    /** No new login could be made after a reconnect: the session ends for good, as after too many attempts. */
+    public reauthenticationFailed(): void
+    {
+        this._intentionalClose = true;
+
+        if(this._reconnectTimer)
+        {
+            clearTimeout(this._reconnectTimer);
+            this._reconnectTimer = null;
+        }
+
+        this._isReconnecting = false;
+        this._isAuthenticated = false;
+        this._isReady = false;
+        this._wasAuthenticated = false;
+
+        // Without its listeners the closing socket cannot report 'disconnected' over 'failed'.
+        this.cleanupSocket();
+
+        this.setConnectionState({ phase: 'failed', reconnectAttempt: 0, authenticated: false });
+
+        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
+    }
+
     public ready(): void
     {
         if(this._isReady) return;
@@ -541,6 +566,7 @@ export class SocketConnection implements IConnection
     public authenticated(): void
     {
         this._isAuthenticated = true;
+        this._reconnectAttempt = 0;
         this.setConnectionState({
             phase: 'connected',
             reconnectAttempt: 0,

@@ -7,5 +7,7 @@ export interface ICommunicationManager
     registerMessageEvent(event: IMessageEvent): IMessageEvent;
     removeMessageEvent(event: IMessageEvent): void;
     subscribeMessage<T extends IMessageEvent>(eventCtor: new (callback: (event: T) => void) => T, handler: (event: T) => void): () => void;
+    /** Where a reconnect gets a new SSO ticket ('' when there is none); without one it reuses `sso.ticket`. */
+    setReconnectTicketProvider(provider: (() => Promise<string>) | null): void;
     connection: IConnection;
 }
