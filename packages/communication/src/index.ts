@@ -107,7 +107,6 @@ export * from './messages/outgoing/game/directory';
 export * from './messages/outgoing/game/ingame';
 export * from './messages/outgoing/game/lobby';
 export * from './messages/outgoing/game/score';
-export * from './messages/outgoing/game/snowwar';
 export * from './messages/outgoing/gifts';
 export * from './messages/outgoing/group';
 export * from './messages/outgoing/groupforums';
