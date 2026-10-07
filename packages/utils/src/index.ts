@@ -4,7 +4,6 @@ export * from './BinaryReader';
 export * from './BinaryWriter';
 export * from './ColorConverter';
 export * from './DprRenderingMode';
-export * from './FurniId';
 export * from './GamedataLoader';
 export * from './GetRenderer';
 export * from './GetStage';

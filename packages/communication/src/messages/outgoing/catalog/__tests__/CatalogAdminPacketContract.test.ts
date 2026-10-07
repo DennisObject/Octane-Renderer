@@ -53,8 +53,6 @@ describe('catalog admin packet contract', () =>
             .toEqual([ 99, 'NORMAL', 12, 7 ]);
         expect(new MoveOffer(99, 3, 'NORMAL', 12, 7, '', 'Moved offer #99', 'move-offer-1').getMessageArray())
             .toEqual([ 99, 3, 'NORMAL', 12, 7, '', 'Moved offer #99', 'move-offer-1' ]);
-        expect(new CatalogAdminSavePageIconComposer(42, 145, 'BUILDER', 12, 7, '', 'Updated page icon', 'icon-1').getMessageArray())
-            .toEqual([ 42, 145, 'BUILDER', 12, 7, '', 'Updated page icon', 'icon-1' ]);
         expect(new CatalogAdminSavePageImagesComposer(42, 'head', 'teaser', 'NORMAL', 12, 7, '', 'Updated page images', 'images-1').getMessageArray())
             .toEqual([ 42, 'head', 'teaser', 'NORMAL', 12, 7, '', 'Updated page images', 'images-1' ]);
     });

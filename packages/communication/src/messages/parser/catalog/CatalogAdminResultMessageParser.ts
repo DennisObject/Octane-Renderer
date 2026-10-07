@@ -46,7 +46,7 @@ export class CatalogAdminResultMessageParser implements IMessageParser
 
             if(!operationId || !isCatalogAdminSmartSaveAction(action) || !code || draftVersionId <= 0 || revision < 0 ||
                 ((entityType !== 'PAGE') && (entityType !== 'OFFER')) ||
-                ((catalogType !== 'NORMAL') && (catalogType !== 'BUILDER')) || entityId < 0 || serverDurationMs < 0)
+                (catalogType !== 'NORMAL') || entityId < 0 || serverDurationMs < 0)
                 return true;
 
             this._smartSaveResult = {
