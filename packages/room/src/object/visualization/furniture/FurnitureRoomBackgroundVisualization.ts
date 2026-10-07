@@ -1,22 +1,27 @@
 import { Texture } from 'pixi.js';
 import { DirectionalOffsetData } from '../data';
+import { CreateHalfSizeTexture } from '../HalfSizeTexture';
 import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';
 
 export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageVisualization
 {
     private static readonly BRANDED_IMAGE_LAYER_DEPTH_BIAS: number = 0.01;
 
-    private _imageOffset: DirectionalOffsetData;
+    private _imageOffsets: Map<number, DirectionalOffsetData> = null;
+    private _halfSizeImage: Texture = null;
+    private _halfSizeImageUrl: string = null;
+
     protected imageReady(texture: Texture, imageUrl: string): void
     {
         super.imageReady(texture, imageUrl);
 
         if(!texture) return;
 
-        this.setImageOffset(texture.width, texture.height);
+        // AIR FurnitureRoomBackgroundVisualization: offsets for the full image and for its size 32 half.
+        this._imageOffsets = new Map([ [ 1, this.createImageOffset(texture.width, texture.height) ], [ 0.5, this.createImageOffset((texture.width / 2), (texture.height / 2)) ] ]);
     }
 
-    private setImageOffset(width: number, height: number): void
+    private createImageOffset(width: number, height: number): DirectionalOffsetData
     {
         const offsetData = new DirectionalOffsetData();
 
@@ -26,31 +31,101 @@ export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageV
         offsetData.setDirection(7, -width, -height);
         offsetData.setDirection(4, (-width / 2), (-height / 2));
 
-        this._imageOffset = offsetData;
+        return offsetData;
+    }
+
+    /** AIR FurnitureRoomBrandingVisualization: a size 32 visualization draws the image at half size unless its url says noscale. */
+    private getImageFactor(scale: number): number
+    {
+        const imageUrl = (this._imageUrl ?? '');
+
+        if(imageUrl.indexOf('noscale') >= 0) return 1;
+
+        return ((this.getValidSize(scale) === 32) || (imageUrl.indexOf('force32') >= 0)) ? 0.5 : 1;
+    }
+
+    private getScaledOffset(offset: number, scale: number): number
+    {
+        return ((offset * scale) / 64);
     }
 
     protected getLayerXOffset(scale: number, direction: number, layerId: number): number
     {
-        if(this._imageOffset)
-        {
-            const offset = this._imageOffset.getXOffset(direction, 0);
+        const offset = this._imageOffsets?.get(this.getImageFactor(scale))?.getXOffset(direction, 0);
 
-            if(offset !== undefined) return offset + this._offsetX;
-        }
+        if(offset !== undefined) return offset + this.getScaledOffset(this._offsetX, scale);
 
-        return super.getLayerXOffset(scale, direction, layerId) + this._offsetX;
+        return super.getLayerXOffset(scale, direction, layerId) + this.getScaledOffset(this._offsetX, scale);
     }
 
     protected getLayerYOffset(scale: number, direction: number, layerId: number): number
     {
-        if(this._imageOffset)
+        const offset = this._imageOffsets?.get(this.getImageFactor(scale))?.getYOffset(direction, 0);
+
+        if(offset !== undefined) return offset + this.getScaledOffset(this._offsetY, scale);
+
+        return super.getLayerYOffset(scale, direction, layerId) + this.getScaledOffset(this._offsetY, scale);
+    }
+
+    protected updateSprite(scale: number, layerId: number): void
+    {
+        super.updateSprite(scale, layerId);
+
+        if(!this._imageUrl || (this.getLayerTag(scale, this._direction, layerId) !== FurnitureBrandedImageVisualization.BRANDED_IMAGE)) return;
+
+        const sprite = this.getSprite(layerId);
+
+        if(!sprite || !sprite.texture || (this.getImageFactor(scale) === 1)) return;
+
+        const halfSizeImage = this.getHalfSizeImage(sprite.texture, layerId);
+
+        // Until the resample is ready (or when the image cannot be read) the GPU draws it at half size.
+        if(halfSizeImage) sprite.texture = halfSizeImage;
+        else sprite.scale = (sprite.scale * 0.5);
+    }
+
+    /** AIR draws the image into a half-size bitmap once; built from the loaded image outside the render path. */
+    private getHalfSizeImage(texture: Texture, layerId: number): Texture
+    {
+        if(this._halfSizeImageUrl === this._imageUrl) return this._halfSizeImage;
+
+        this.disposeHalfSizeImage();
+
+        const imageUrl = this._imageUrl;
+
+        this._halfSizeImageUrl = imageUrl;
+
+        setTimeout(() =>
         {
-            const offset = this._imageOffset.getYOffset(direction, 0);
+            if(this._halfSizeImageUrl !== imageUrl) return;
 
-            if(offset !== undefined) return offset + this._offsetY;
-        }
+            this._halfSizeImage = CreateHalfSizeTexture(texture);
 
-        return super.getLayerYOffset(scale, direction, layerId) + this._offsetY;
+            const sprite = this.getSprite(layerId);
+
+            if(!this._halfSizeImage || !sprite || (sprite.texture !== texture)) return;
+
+            sprite.texture = this._halfSizeImage;
+            sprite.scale = (sprite.scale * 2);
+            this.updateSpriteCounter++;
+        }, 0);
+
+        return null;
+    }
+
+    private disposeHalfSizeImage(): void
+    {
+        if(this._halfSizeImage) this._halfSizeImage.destroy(true);
+
+        this._halfSizeImage = null;
+        this._halfSizeImageUrl = null;
+    }
+
+    public dispose(): void
+    {
+        this.disposeHalfSizeImage();
+
+        super.dispose();
     }
 
 

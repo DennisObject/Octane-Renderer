@@ -4,6 +4,7 @@ import { GetConfiguration } from '@octane/configuration';
 import { GetEventDispatcher, RoomEngineDimmerStateEvent, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomEngineObjectPlaySoundEvent, RoomEngineRoomAdEvent, RoomEngineSamplePlaybackEvent, RoomEngineTriggerWidgetEvent, RoomEngineUseProductEvent, RoomObjectBadgeAssetEvent, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFloorHoleEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectHSLColorEnabledEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectPlaySoundIdEvent, RoomObjectRoomAdEvent, RoomObjectSamplePlaybackEvent, RoomObjectSoundMachineEvent, RoomObjectStateChangedEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@octane/events';
 import { GetRoomSessionManager, GetSessionDataManager } from '@octane/session';
 import { CreateLinkEvent, OctaneLogger, RoomId, Vector3d } from '@octane/utils';
+import { IRoomGameInputHandler } from './IRoomGameInputHandler';
 import { isWiredChestFloorItem } from './utils/isWiredChestFloorItem';
 import { RoomEnterEffect, RoomObjectUpdateMessage } from '../../room';
 import { ObjectAvatarSelectedMessage, ObjectDataUpdateMessage, ObjectSelectedMessage, ObjectTileCursorUpdateMessage, ObjectVisibilityUpdateMessage } from './messages';
@@ -23,6 +24,8 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
     private _whereYouClickIsWhereYouGo: boolean = true;
     private _objectPlacementSource: string = null;
     private _pendingAvatarLookTimeout: ReturnType<typeof setTimeout> = null;
+    private _gameInputHandlers: Map<number, IRoomGameInputHandler> = new Map();
+    private _gameClickEventId: string = null;
 
     constructor(
         private readonly _roomEngine: IRoomEngineServices)
@@ -319,6 +322,15 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
     {
         if(!event || !event.type) return;
 
+        const gameInput = this._gameInputHandlers.get(roomId);
+
+        if(gameInput)
+        {
+            this.handleGameRoomMouseEvent(event, roomId, gameInput);
+
+            return;
+        }
+
         if(event instanceof RoomObjectTileMouseEvent)
         {
             this._roomEngine.areaSelectionManager.handleTileMouseEvent(event);
@@ -426,6 +438,53 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
         if(!this._roomEngine.moveBlocked) this.sendWalkUpdate(behind.x, behind.y);
 
         return false;
+    }
+
+    public setGameInputHandler(roomId: number, handler: IRoomGameInputHandler): void
+    {
+        if(handler) this._gameInputHandlers.set(roomId, handler);
+        else this._gameInputHandlers.delete(roomId);
+    }
+
+    public getGameInputHandler(roomId: number): IRoomGameInputHandler
+    {
+        return this._gameInputHandlers.get(roomId) ?? null;
+    }
+
+    /** AIR game mode: clicks and avatar hovers go to the game, never to selection, walking or click packets. */
+    private handleGameRoomMouseEvent(event: RoomObjectMouseEvent, roomId: number, gameInput: IRoomGameInputHandler): void
+    {
+        const category = this._roomEngine.getRoomObjectCategoryForType(event.objectType);
+
+        switch(event.type)
+        {
+            case RoomObjectMouseEvent.CLICK:
+                if(event.eventId && (event.eventId === this._gameClickEventId)) return;
+
+                if(category === RoomObjectCategory.UNIT)
+                {
+                    this._gameClickEventId = event.eventId;
+
+                    gameInput.handleClickOnHuman(event.objectId, event.altKey, event.shiftKey);
+                }
+
+                else if(event instanceof RoomObjectTileMouseEvent)
+                {
+                    this._gameClickEventId = event.eventId;
+
+                    gameInput.handleClickOnTile(event.tileXAsInt, event.tileYAsInt, event.altKey, event.shiftKey);
+                }
+                return;
+            case RoomObjectMouseEvent.MOUSE_MOVE:
+                this.handleRoomObjectMouseMoveEvent(event, roomId);
+                return;
+            case RoomObjectMouseEvent.MOUSE_ENTER:
+                if(category === RoomObjectCategory.UNIT) gameInput.handleMouseOverOnHuman(event.objectId, event.altKey, event.shiftKey);
+                return;
+            case RoomObjectMouseEvent.MOUSE_LEAVE:
+                if(category === RoomObjectCategory.UNIT) gameInput.handleMouseOutOnHuman(event.objectId);
+                return;
+        }
     }
 
     private handleRoomObjectMouseClickEvent(event: RoomObjectMouseEvent, roomId: number): void

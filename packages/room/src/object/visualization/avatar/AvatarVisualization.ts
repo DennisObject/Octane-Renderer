@@ -1,8 +1,9 @@
-import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
+import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarScaleType, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
 import { GetAssetManager } from '@octane/assets';
 import { AdvancedMap } from '@octane/utils';
 import { Sprite, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
+import { HalfSizeTextureCache } from '../HalfSizeTexture';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 import { ExpressionAdditionFactory, FloatingIdleZAddition, GameClickTargetAddition, GuideStatusBubbleAddition, HabbiconBubbleAddition, IAvatarAddition, MutedBubbleAddition, NumberBubbleAddition, TypingBubbleAddition } from './additions';
 
@@ -20,6 +21,8 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     private static OWN_USER_ID: number = 4;
     private static UPDATE_TIME_INCREASER: number = 41;
     private static AVATAR_LAYER_ID: number = 0;
+    /** Small avatars draw h_-only effect art resampled to half size (AIR); bounded so a session cannot grow it forever. */
+    private static HALF_SIZE_EFFECT_TEXTURES: HalfSizeTextureCache = new HalfSizeTextureCache(512);
     private static SHADOW_LAYER_ID: number = 1;
     private static SNOWBOARDING_EFFECT: number = 97;
     private static INITIAL_RESERVED_SPRITES: number = 2;
@@ -444,15 +447,33 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
                             if(dd > 7) dd -= 8;
                         }
 
-                        const assetName = ((((((this._avatarImage.getScale() + '_') + spriteData.member) + '_') + dd) + '_') + frameNumber);
+                        const assetSuffix = ((((('_' + spriteData.member) + '_') + dd) + '_') + frameNumber);
 
-                        const asset = GetAssetManager().getAsset(assetName);
+                        let asset = GetAssetManager().getAsset(this._avatarImage.getScale() + assetSuffix);
+                        let resampled = false;
+
+                        // AIR: a small avatar whose effect has no sh_ art draws the h_ art resampled to half size.
+                        if(!asset && (this._avatarImage.getScale() === AvatarScaleType.SMALL))
+                        {
+                            asset = GetAssetManager().getAsset(AvatarScaleType.LARGE + assetSuffix);
+                            resampled = true;
+                        }
 
                         if(!asset) continue;
 
-                        sprite.texture = asset.texture;
-                        sprite.offsetX = ((asset.offsetX - (scale / 2)) + offsetX);
-                        sprite.offsetY = (asset.offsetY + offsetY);
+                        const texture = resampled ? AvatarVisualization.HALF_SIZE_EFFECT_TEXTURES.getTexture((AvatarScaleType.LARGE + assetSuffix), asset.texture) : asset.texture;
+
+                        if(!texture)
+                        {
+                            // The half-size art is resampled off the render path; redraw until it is ready.
+                            this._forcedAnimFrames = AvatarVisualization.ANIMATION_FRAME_UPDATE_INTERVAL;
+
+                            continue;
+                        }
+
+                        sprite.texture = texture;
+                        sprite.offsetX = (((resampled ? (asset.offsetX / 2) : asset.offsetX) - (scale / 2)) + offsetX);
+                        sprite.offsetY = ((resampled ? (asset.offsetY / 2) : asset.offsetY) + offsetY);
                         sprite.flipH = asset.flipH;
 
                         if(spriteData.hasStaticY)

@@ -783,8 +783,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas
 
         if(!textureSet) extendedSprite.setTexture(sprite.texture);
 
-        if(sprite.flipH) extendedSprite.scale.x = -1;
-        if(sprite.flipV) extendedSprite.scale.y = -1;
+        // A pooled sprite keeps its previous scale, so set it like the update path does.
+        const magnitude = (sprite.scale && (sprite.scale > 0)) ? sprite.scale : 1;
+
+        extendedSprite.scale.x = sprite.flipH ? -magnitude : magnitude;
+        extendedSprite.scale.y = sprite.flipV ? -magnitude : magnitude;
 
         this.updateEnterRoomEffect(extendedSprite, sprite);
 

@@ -6,3 +6,4 @@ export * from './RoomObjectLogicBase';
 export * from './SelectionArrowLogic';
 export * from './TileCursorLogic';
 export * from './furniture';
+export * from './game';

@@ -51,13 +51,6 @@ export class OutgoingHeader
     public static GETWEEKLYGAMEREWARDWINNERS = 1054;
     public static GAME2GETACCOUNTGAMESTATUSMESSAGE = 11;
     public static GAME2CHECKGAMEDIRECTORYSTATUSMESSAGE = 3259;
-    public static GAME2EXITGAMEMESSAGE = 1445;
-    public static GAME2GAMECHATMESSAGE = 2502;
-    public static GAME2LOADSTAGEREADYMESSAGE = 2415;
-    public static GAME2PLAYAGAINMESSAGE = 3196;
-    public static GAME2REQUESTFULLSTATUSUPDATEMESSAGE = 1598;
-    public static GAME2GETWEEKLYFRIENDSLEADERBOARD = 1232;
-    public static GAME2GETWEEKLYLEADERBOARD = 2565;
     public static GAME2GETTOTALGROUPLEADERBOARD = 1776;
     public static GAME2GETWEEKLYGROUPLEADERBOARD = 2691;
     public static GET_SNOWWAR_GAME_TOKENS_OFFER = 980;
@@ -654,25 +647,22 @@ export class OutgoingHeader
     public static REQUEST_MESSENGER_HISTORY = 4901;
     public static SEND_MESSENGER_MESSAGE = 4902;
     public static MARK_MESSENGER_READ = 4903;
-    public static SNOWWAR_LOAD_STAGE_READY = 6000;
-    public static SNOWWAR_EXIT_GAME = 6001;
-    public static SNOWWAR_WALK = 6003;
-    public static SNOWWAR_THROW_AT_LOCATION = 6004;
-    public static SNOWWAR_THROW_AT_PLAYER = 6005;
-    public static SNOWWAR_CREATE_SNOWBALL = 6006;
-    public static SNOWWAR_REQUEST_FULL_GAME_STATUS = 6007;
-    public static SNOWWAR_PLAY_AGAIN = 6008;
-    public static SNOWWAR_GAME_CHAT = 6009;
-    public static SNOWWAR_EDIT_ROOM = 6010;
-    public static SNOWWAR_SAVE_EDITOR = 6011;
-    public static SNOWWAR_JOIN_QUEUE = 6012;
-    public static SNOWWAR_LEAVE_QUEUE = 6013;
-    public static SNOWWAR_EXIT_EDITOR = 6014;
-    public static SNOWWAR_SELECT_ARENA = 6015;
-    public static SNOWWAR_GET_ALL_TIME_LEADERBOARD = 6027;
-    public static SNOWWAR_GET_ALL_TIME_FRIENDS_LEADERBOARD = 6028;
-    public static SNOWWAR_GET_WEEKLY_LEADERBOARD = 6029;
-    public static SNOWWAR_GET_WEEKLY_FRIENDS_LEADERBOARD = 6030;
+    // SnowStorm (AIR Game2 payloads on the Octane 6000 range; 6001, 6002, 6010, 6011, 6014, 6015 are retired).
+    public static GAME2LOADSTAGEREADYMESSAGE = 6000;
+    public static GAME2SETUSERMOVETARGETMESSAGE = 6003;
+    public static GAME2THROWSNOWBALLATPOSITIONMESSAGE = 6004;
+    public static GAME2THROWSNOWBALLATHUMANMESSAGE = 6005;
+    public static GAME2MAKESNOWBALLMESSAGE = 6006;
+    public static GAME2REQUESTFULLSTATUSUPDATEMESSAGE = 6007;
+    public static GAME2PLAYAGAINMESSAGE = 6008;
+    public static GAME2GAMECHATMESSAGE = 6009;
+    public static GAME2QUICKJOINMESSAGE = 6012;
+    public static GAME2LEAVELOBBYMESSAGE = 6013;
+    public static GAME2EXITGAMEMESSAGE = 6016;
+    public static GAME2GETTOTALLEADERBOARD = 6027;
+    public static GAME2GETFRIENDSLEADERBOARD = 6028;
+    public static GAME2GETWEEKLYLEADERBOARD = 6029;
+    public static GAME2GETWEEKLYFRIENDSLEADERBOARD = 6030;
 
     // Hotel view landing scene (client -> server)
     public static HOTEL_VIEW_LANDING_REQUEST = 9410;

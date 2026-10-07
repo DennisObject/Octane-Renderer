@@ -1,6 +1,6 @@
 import { IAssetData, IObjectVisualizationData, IRoomObjectGraphicVisualization, IRoomObjectVisualizationFactory, RoomObjectVisualizationType } from '@octane/api';
 import { OctaneLogger } from '@octane/utils';
-import { AvatarVisualization, AvatarVisualizationData, FurnitureAnimatedVisualization, FurnitureAnimatedVisualizationData, FurnitureBBVisualization, FurnitureBadgeDisplayVisualization, FurnitureBottleVisualization, FurnitureBrandedImageVisualization, FurnitureChestVisualization, FurnitureCounterClockVisualization, FurnitureCuboidVisualization, FurnitureExternalImageVisualization, FurnitureFireworksVisualization, FurnitureGiftWrappedFireworksVisualization, FurnitureGiftWrappedVisualization, FurnitureGuildCustomizedVisualization, FurnitureGuildIsometricBadgeVisualization, FurnitureHabboWheelVisualization, FurnitureIsometricBBVisualization, FurnitureMannequinVisualization, FurnitureMannequinVisualizationData, FurniturePartyBeamerVisualization, FurniturePlanetSystemVisualization, FurniturePosterVisualization, FurnitureQueueTileVisualization, FurnitureResettingAnimatedVisualization, FurnitureRoomBackgroundVisualization, FurnitureScoreBoardVisualization, FurnitureSoundBlockVisualization, FurnitureStickieVisualization, FurnitureValRandomizerVisualization, FurnitureVisualization, FurnitureVisualizationData, FurnitureVoteCounterVisualization, FurnitureVoteMajorityVisualization, FurnitureWaterAreaVisualization, FurnitureYoutubeVisualization, PetVisualization, PetVisualizationData, RoomObjectSpriteVisualization, RoomVisualization, RoomVisualizationData, TileCursorVisualization } from './object';
+import { AvatarVisualization, AvatarVisualizationData, FurnitureAnimatedVisualization, FurnitureAnimatedVisualizationData, FurnitureBBVisualization, FurnitureBadgeDisplayVisualization, FurnitureBottleVisualization, FurnitureBrandedImageVisualization, FurnitureChestVisualization, FurnitureCounterClockVisualization, FurnitureCuboidVisualization, FurnitureExternalImageVisualization, FurnitureFireworksVisualization, FurnitureGiftWrappedFireworksVisualization, FurnitureGiftWrappedVisualization, FurnitureGuildCustomizedVisualization, FurnitureGuildIsometricBadgeVisualization, FurnitureHabboWheelVisualization, FurnitureIsometricBBVisualization, FurnitureMannequinVisualization, FurnitureMannequinVisualizationData, FurniturePartyBeamerVisualization, FurniturePlanetSystemVisualization, FurniturePosterVisualization, FurnitureQueueTileVisualization, FurnitureResettingAnimatedVisualization, FurnitureRoomBackgroundVisualization, FurnitureScoreBoardVisualization, FurnitureSoundBlockVisualization, FurnitureStickieVisualization, FurnitureValRandomizerVisualization, FurnitureVisualization, FurnitureVisualizationData, FurnitureVoteCounterVisualization, FurnitureVoteMajorityVisualization, FurnitureWaterAreaVisualization, FurnitureYoutubeVisualization, PetVisualization, PetVisualizationData, RoomObjectSpriteVisualization, RoomVisualization, RoomVisualizationData, SnowSplashVisualization, SnowWarVisualizationData, SnowballVisualization, TileCursorVisualization } from './object';
 
 export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory
 {
@@ -35,6 +35,12 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 break;
             case RoomObjectVisualizationType.TILE_CURSOR:
                 visualization = TileCursorVisualization;
+                break;
+            case RoomObjectVisualizationType.GAME_SNOWBALL:
+                visualization = SnowballVisualization;
+                break;
+            case RoomObjectVisualizationType.GAME_SNOWSPLASH:
+                visualization = SnowSplashVisualization;
                 break;
             case RoomObjectVisualizationType.USER:
             case RoomObjectVisualizationType.BOT:
@@ -215,6 +221,10 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 break;
             case RoomObjectVisualizationType.PET_ANIMATED:
                 visualizationData = new PetVisualizationData();
+                break;
+            case RoomObjectVisualizationType.GAME_SNOWBALL:
+            case RoomObjectVisualizationType.GAME_SNOWSPLASH:
+                visualizationData = new SnowWarVisualizationData();
                 break;
         }
 
