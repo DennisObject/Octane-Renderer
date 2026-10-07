@@ -8,7 +8,6 @@ export class IncomingHeader
     public static AUTHENTICATED = 2491;
     public static AVAILABLE_COMMANDS = 4050;
     public static AVAILABILITY_STATUS = 2033;
-    public static BUILDERS_CLUB_EXPIRED = 1452;
     public static CLUB_OFFERS = 2405;
     public static CATALOG_PAGE = 804;
     public static CATALOG_PAGE_LIST = 1032;
@@ -439,8 +438,6 @@ export class IncomingHeader
     public static CFH_SANCTION_STATUS = 2221;
     public static CAMPAIGN_CALENDAR_DATA = 2531;
     public static CAMPAIGN_CALENDAR_DOOR_OPENED = 2551;
-    public static BUILDERS_CLUB_FURNI_COUNT = 3828;
-    public static BUILDERS_CLUB_SUBSCRIPTION = IncomingHeader.BUILDERS_CLUB_EXPIRED;
     public static CATALOG_PAGE_EXPIRATION = 2668;
     public static CATALOG_EARLIEST_EXPIRY = 2515;
     public static CLUB_GIFT_SELECTED = 659;

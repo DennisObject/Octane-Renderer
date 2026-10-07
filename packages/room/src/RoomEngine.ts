@@ -3,7 +3,7 @@ import { GetCommunication, RenderRoomMessageComposer, RenderRoomThumbnailMessage
 import { GetConfiguration } from '@octane/configuration';
 import { BadgeImageReadyEvent, GetEventDispatcher, OctaneToolbarAnimateIconEvent, RoomBackgroundColorEvent, RoomDragEvent, RoomEngineAreaHideStateEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomSessionEvent, RoomToObjectOwnAvatarMoveEvent } from '@octane/events';
 import { GetRoomSessionManager, GetSessionDataManager } from '@octane/session';
-import { FurniId, GetTexturePool, GetTickerTime, OctaneLogger, NumberBank, TextureUtils, Vector3d } from '@octane/utils';
+import { GetTexturePool, GetTickerTime, OctaneLogger, NumberBank, TextureUtils, Vector3d } from '@octane/utils';
 import { Container, Matrix, Point, PointData, Rectangle, RenderTexture, Sprite, Texture, Ticker } from 'pixi.js';
 import { DEFAULT_WIRED_CLICK_SETTINGS, normalizeWiredClickSettings, WiredClickSettings } from './utils/WiredClickSettings';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
@@ -1804,7 +1804,7 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
         if(roomInstanceData) roomInstanceData.removePendingFunitureFloor(objectId);
 
-        if((this._sessionDataManager.userId === userId) && !FurniId.isBuilderClubId(objectId))
+        if(this._sessionDataManager.userId === userId)
         {
             const roomObject = this.getRoomObject(roomId, objectId, RoomObjectCategory.FLOOR);
 
@@ -1854,7 +1854,7 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
     public removeRoomObjectWall(roomId: number, objectId: number, userId: number = -1): void
     {
-        if((this._sessionDataManager.userId === userId) && !FurniId.isBuilderClubId(objectId))
+        if(this._sessionDataManager.userId === userId)
         {
             const roomObject = this.getRoomObject(roomId, objectId, RoomObjectCategory.WALL);
 

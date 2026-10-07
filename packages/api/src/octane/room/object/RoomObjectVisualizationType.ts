@@ -31,7 +31,6 @@ export class RoomObjectVisualizationType
     public static FURNITURE_SOUNDBLOCK = 'furniture_soundblock';
     public static FURNITURE_BADGE_DISPLAY = 'furniture_badge_display';
     public static FURNITURE_YOUTUBE = 'furniture_youtube';
-    public static FURNITURE_BUILDER_PLACEHOLDER = 'furniture_builder_placeholder';
     public static ROOM = 'room';
     public static USER = 'user';
     public static PET_ANIMATED = 'pet_animated';

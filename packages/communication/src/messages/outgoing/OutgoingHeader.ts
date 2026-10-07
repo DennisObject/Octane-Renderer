@@ -457,9 +457,6 @@ export class OutgoingHeader
     public static CHECK_USERNAME = 3950;
     public static OPEN_CAMPAIGN_CALENDAR_DOOR_STAFF= 3889;
     public static OPEN_CAMPAIGN_CALENDAR_DOOR = 2257;
-    public static BUILDERS_CLUB_PLACE_ROOM_ITEM = 1051;
-    public static BUILDERS_CLUB_PLACE_WALL_ITEM = 462;
-    public static BUILDERS_CLUB_QUERY_FURNI_COUNT = 2529;
     public static GET_CATALOG_PAGE_EXPIRATION = 742;
     public static GET_CATALOG_PAGE_WITH_EARLIEST_EXP = 3135;
     public static GET_DIRECT_CLUB_BUY_AVAILABLE = 801;

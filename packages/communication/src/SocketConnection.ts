@@ -19,6 +19,7 @@ export class SocketConnection implements IConnection
     private _pendingChunks: Uint8Array[] = [];
     private _pendingBytes: number = 0;
     private _isReady: boolean = false;
+    private _hasBeenReady: boolean = false;
     private _pendingClientMessages: IMessageComposer<unknown[]>[] = [];
     private _pendingServerMessages: IMessageDataWrapper[] = [];
     private _isAuthenticated: boolean = false;
@@ -527,6 +528,7 @@ export class SocketConnection implements IConnection
         if(this._isReady) return;
 
         this._isReady = true;
+        this._hasBeenReady = true;
 
         if(this._pendingServerMessages && this._pendingServerMessages.length) this.processWrappers(...this._pendingServerMessages);
 
@@ -657,17 +659,30 @@ export class SocketConnection implements IConnection
     {
         if(!wrappers || !wrappers.length) return;
 
-        for(const wrapper of wrappers)
+        for(let index = 0; index < wrappers.length; index++)
         {
+            const wrapper = wrappers[index];
+
             if(!wrapper) continue;
 
             const messages = this.getMessagesForWrapper(wrapper);
 
-            if(!messages || !messages.length) continue;
+            if(messages && messages.length)
+            {
+                OctaneLogger.packets('IncomingMessage', wrapper.header, messages[0].constructor.name, messages[0].parser);
 
-            OctaneLogger.packets('IncomingMessage', wrapper.header, messages[0].constructor.name, messages[0].parser);
+                this.handleMessages(...messages);
+            }
 
-            this.handleMessages(...messages);
+            // Authentication can complete mid-batch: hold the rest until ready(), as processData does.
+            if(this._isAuthenticated && !this._isReady)
+            {
+                if(!this._pendingServerMessages) this._pendingServerMessages = [];
+
+                this._pendingServerMessages.push(...wrappers.slice(index + 1));
+
+                return;
+            }
         }
     }
 
@@ -763,6 +778,12 @@ export class SocketConnection implements IConnection
     public get isReconnecting(): boolean
     {
         return this._isReconnecting;
+    }
+
+    /** Whether the client has released messages at least once, i.e. its handlers are registered. */
+    public get hasBeenReady(): boolean
+    {
+        return this._hasBeenReady;
     }
 
     public get wasAuthenticated(): boolean

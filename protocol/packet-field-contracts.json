@@ -282,16 +282,6 @@
       {
         "side": "typescript",
         "direction": "server_to_client",
-        "header": 1452,
-        "canonical": "BUILDERS_CLUB_EXPIRED",
-        "aliases": [
-          "BUILDERS_CLUB_SUBSCRIPTION"
-        ],
-        "reason": "Legacy semantic name retained for renderer source compatibility"
-      },
-      {
-        "side": "typescript",
-        "direction": "server_to_client",
         "header": 1651,
         "canonical": "MODERATION_REPORT_DISABLED",
         "aliases": [
@@ -1445,43 +1435,6 @@
       ]
     },
     {
-      "name": "BUILDERS_CLUB_PLACE_WALL_ITEM",
-      "direction": "client_to_server",
-      "header": 462,
-      "java": {
-        "symbol": "BuildersClubPlaceWallItemEvent",
-        "className": "BuildersClubPlaceWallItemEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/BuildersClubPlaceWallItemEvent.java"
-      },
-      "typescript": {
-        "symbol": "BUILDERS_CLUB_PLACE_WALL_ITEM",
-        "className": "BuildersClubPlaceWallItemMessageComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/BuildersClubPlaceWallItemMessageComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "pageId"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "offerId"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "extraData"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "wallPosition"
-        }
-      ]
-    },
-    {
       "name": "GUIDE_SESSION_FEEDBACK",
       "direction": "client_to_server",
       "header": 477,
@@ -2395,53 +2348,6 @@
           "kind": "scalar",
           "type": "boolean",
           "name": ""
-        }
-      ]
-    },
-    {
-      "name": "BUILDERS_CLUB_PLACE_ROOM_ITEM",
-      "direction": "client_to_server",
-      "header": 1051,
-      "java": {
-        "symbol": "BuildersClubPlaceRoomItemEvent",
-        "className": "BuildersClubPlaceRoomItemEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/BuildersClubPlaceRoomItemEvent.java"
-      },
-      "typescript": {
-        "symbol": "BUILDERS_CLUB_PLACE_ROOM_ITEM",
-        "className": "BuildersClubPlaceRoomItemMessageComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/BuildersClubPlaceRoomItemMessageComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "pageId"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "offerId"
-        },
-        {
-          "kind": "scalar",
-          "type": "string",
-          "name": "extraData"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "x"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "y"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "rotation"
         }
       ]
     },
@@ -5088,22 +4994,6 @@
           "name": "buyout"
         }
       ]
-    },
-    {
-      "name": "BUILDERS_CLUB_QUERY_FURNI_COUNT",
-      "direction": "client_to_server",
-      "header": 2529,
-      "java": {
-        "symbol": "BuildersClubQueryFurniCountEvent",
-        "className": "BuildersClubQueryFurniCountEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/BuildersClubQueryFurniCountEvent.java"
-      },
-      "typescript": {
-        "symbol": "BUILDERS_CLUB_QUERY_FURNI_COUNT",
-        "className": "BuildersClubQueryFurniCountMessageComposer",
-        "path": "packages/communication/src/messages/outgoing/catalog/BuildersClubQueryFurniCountMessageComposer.ts"
-      },
-      "fields": []
     },
     {
       "name": "TRADE_CLOSE",
@@ -18613,28 +18503,6 @@
       ]
     },
     {
-      "name": "BUILDERS_CLUB_FURNI_COUNT",
-      "direction": "server_to_client",
-      "header": 3828,
-      "java": {
-        "symbol": "CatalogModeComposer",
-        "className": "CatalogModeComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/catalog/CatalogModeComposer.java"
-      },
-      "typescript": {
-        "symbol": "BUILDERS_CLUB_FURNI_COUNT",
-        "className": "BuildersClubFurniCountMessageParser",
-        "path": "packages/communication/src/messages/parser/catalog/BuildersClubFurniCountMessageParser.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        }
-      ]
-    },
-    {
       "name": "COMPETITION_USER_PART_OF",
       "direction": "server_to_client",
       "header": 3841,
@@ -25531,22 +25399,6 @@
         "path": "packages/communication/src/messages/parser/room/furniture/floor/ObjectRemoveMultipleParser.ts"
       },
       "reason": "Java analyzer: Data-dependent packet operations in ForEachStmt inside composeInternal; TypeScript analyzer: Data-dependent packet operations in WhileStatement inside parse"
-    },
-    {
-      "name": "BUILDERS_CLUB_SUBSCRIPTION",
-      "direction": "server_to_client",
-      "header": 1452,
-      "java": {
-        "symbol": "BuildersClubExpiredComposer",
-        "className": "BuildersClubExpiredComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/unknown/BuildersClubExpiredComposer.java"
-      },
-      "typescript": {
-        "symbol": "BUILDERS_CLUB_SUBSCRIPTION",
-        "className": "BuildersClubSubscriptionStatusMessageParser",
-        "path": "packages/communication/src/messages/parser/catalog/BuildersClubSubscriptionStatusMessageParser.ts"
-      },
-      "reason": "TypeScript analyzer: Data-dependent packet operations in IfStatement inside parse"
     },
     {
       "name": "OBJECTS_DATA_UPDATE",
