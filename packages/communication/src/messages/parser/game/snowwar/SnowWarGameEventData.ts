@@ -14,6 +14,8 @@ export class SnowWarGameEventData
     public static readonly CREATE_SNOWBALL = 8;
     public static readonly MACHINE_CREATES_SNOWBALL = 11;
     public static readonly HUMAN_GETS_SNOWBALLS_FROM_MACHINE = 12;
+    /** Plus extra (not in AIR): a ray gun fires 7 snowballs. */
+    public static readonly RAY_GUN_BURST = 100;
 
     public humanGameObjectId = 0;
     public targetHumanGameObjectId = 0;
@@ -22,8 +24,11 @@ export class SnowWarGameEventData
     public x = 0;
     public y = 0;
     public trajectory = 0;
+    public rayGunFuseObjectId = 0;
 
-    private constructor(public readonly id: number) {}
+    private constructor(public readonly id: number)
+    {
+    }
 
     /** Unknown ids return null without reading, exactly like AIR. */
     public static create(id: number, wrapper: IMessageDataWrapper): SnowWarGameEventData
@@ -65,6 +70,11 @@ export class SnowWarGameEventData
             case SnowWarGameEventData.HUMAN_GETS_SNOWBALLS_FROM_MACHINE:
                 event.humanGameObjectId = wrapper.readInt();
                 event.snowBallMachineReference = wrapper.readInt();
+                return event;
+            case SnowWarGameEventData.RAY_GUN_BURST:
+                event.humanGameObjectId = wrapper.readInt();
+                event.rayGunFuseObjectId = wrapper.readInt();
+                event.snowBallGameObjectId = wrapper.readInt();
                 return event;
             default:
                 return null;

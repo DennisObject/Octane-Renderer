@@ -468,6 +468,11 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
                     gameInput.handleClickOnHuman(event.objectId, event.altKey, event.shiftKey);
                 }
 
+                else if((category === RoomObjectCategory.FLOOR) && gameInput.handleClickOnFurniture?.(event.objectId, event.altKey, event.shiftKey))
+                {
+                    this._gameClickEventId = event.eventId;
+                }
+
                 else if(event instanceof RoomObjectTileMouseEvent)
                 {
                     this._gameClickEventId = event.eventId;
