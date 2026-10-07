@@ -283,6 +283,8 @@ export class RoomContentLoader implements IRoomContentLoader
 
         if(type === RoomObjectVisualizationType.USER) return false;
 
+        if((type === RoomObjectVisualizationType.GAME_SNOWBALL) || (type === RoomObjectVisualizationType.GAME_SNOWSPLASH)) return false;
+
         return true;
     }
 

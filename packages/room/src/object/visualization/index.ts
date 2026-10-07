@@ -4,6 +4,7 @@ export * from './avatar';
 export * from './avatar/additions';
 export * from './data';
 export * from './furniture';
+export * from './game';
 export * from './pet';
 export * from './room';
 export * from './room/mask';

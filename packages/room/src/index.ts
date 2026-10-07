@@ -7,6 +7,7 @@ export * from './GetRoomObjectLogicFactory';
 export * from './GetRoomObjectVisualizationFactory';
 export * from './GetRoomPreviewerInstance';
 export * from './ImageResult';
+export * from './IRoomGameInputHandler';
 export * from './messages';
 export * from './object';
 export * from './object/logic';

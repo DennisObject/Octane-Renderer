@@ -1,4 +1,4 @@
-import { IFurnitureStackingHeightMap, IGetImageListener, IImageResult, ILegacyWallGeometry, IObjectData, IPetColorResult, IPetCustomPart, IRoomAreaSelectionManager, IRoomContentListener, IRoomContentLoader, IRoomCreator, IRoomEngine, IRoomEngineServices, IRoomGeometry, IRoomInstance, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomRenderer, IRoomRenderingCanvas, IRoomSessionManager, ISelectedRoomObjectData, ISessionDataManager, ITileObjectMap, IUpdateReceiver, IVector3D, LegacyDataType, MouseEventType, ObjectDataFactory, PetFigureData, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectUserType, RoomObjectVariable, ToolbarIconEnum } from '@octane/api';
+import { IFurnitureStackingHeightMap, IGetImageListener, IImageResult, ILegacyWallGeometry, IObjectData, IPetColorResult, IPetCustomPart, IRoomAreaSelectionManager, IRoomContentListener, IRoomContentLoader, IRoomCreator, IRoomEngine, IRoomEngineServices, IRoomGeometry, IRoomInstance, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomRenderer, IRoomRenderingCanvas, IRoomSessionManager, ISelectedRoomObjectData, ISessionDataManager, ITileObjectMap, IUpdateReceiver, IVector3D, LegacyDataType, MouseEventType, ObjectDataFactory, PetFigureData, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectUserType, RoomObjectVariable, RoomObjectVisualizationType, ToolbarIconEnum } from '@octane/api';
 import { GetCommunication, RenderRoomMessageComposer, RenderRoomThumbnailMessageComposer } from '@octane/communication';
 import { GetConfiguration } from '@octane/configuration';
 import { BadgeImageReadyEvent, GetEventDispatcher, OctaneToolbarAnimateIconEvent, RoomBackgroundColorEvent, RoomDragEvent, RoomEngineAreaHideStateEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomSessionEvent, RoomToObjectOwnAvatarMoveEvent } from '@octane/events';
@@ -10,6 +10,7 @@ import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomManager } from './GetRoomManager';
 import { GetRoomMessageHandler } from './GetRoomMessageHandler';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
+import { IRoomGameInputHandler } from './IRoomGameInputHandler';
 import { ImageResult } from './ImageResult';
 import { RoomInstance } from './RoomInstance';
 import { RoomObjectEventHandler } from './RoomObjectEventHandler';
@@ -31,6 +32,10 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
     public static ARROW_OBJECT_ID: number = -3;
     public static ARROW_OBJECT_TYPE: string = 'selection_arrow';
+
+    /** AIR room object categories of the SnowWar snowball and its splash. */
+    public static SNOWWAR_SNOWBALL_CATEGORY: number = 201;
+    public static SNOWWAR_SPLASH_CATEGORY: number = 202;
 
     public static OVERLAY: string = 'overlay';
     public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
@@ -1744,6 +1749,40 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         return this.createRoomObjectAndInitialize(roomId, objectId, type, RoomObjectCategory.UNIT);
     }
 
+    public addRoomObjectSnowWar(roomId: number, objectId: number, location: IVector3D, category: number): boolean
+    {
+        const type = (category === RoomEngine.SNOWWAR_SPLASH_CATEGORY) ? RoomObjectVisualizationType.GAME_SNOWSPLASH : RoomObjectVisualizationType.GAME_SNOWBALL;
+        const object = this.createRoomObjectAndInitialize(roomId, objectId, type, category);
+
+        if(!object) return false;
+
+        object.processUpdateMessage(new RoomObjectUpdateMessage(location, null));
+
+        return true;
+    }
+
+    public updateRoomObjectSnowWar(roomId: number, objectId: number, location: IVector3D, category: number): boolean
+    {
+        const object = this.getObject(this.getRoomId(roomId), objectId, category);
+
+        if(!object) return false;
+
+        object.processUpdateMessage(new RoomObjectUpdateMessage(location, null));
+
+        return true;
+    }
+
+    public removeRoomObjectSnowWar(roomId: number, objectId: number, category: number): void
+    {
+        this.removeRoomObject(roomId, objectId, category);
+    }
+
+    /** Routes the room's mouse input to a client-run game (AIR `isGameMode` + `gameEngine`); null restores normal handling. */
+    public setRoomGameInputHandler(roomId: number, handler: IRoomGameInputHandler): void
+    {
+        this._roomObjectEventHandler.setGameInputHandler(roomId, handler);
+    }
+
     public getRoomObjectFloor(roomId: number, objectId: number): IRoomObjectController
     {
         return this.getObject(this.getRoomId(roomId), objectId, RoomObjectCategory.FLOOR);
@@ -2512,6 +2551,8 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
     private handleRoomDragging(canvas: IRoomRenderingCanvas, x: number, y: number, type: string, altKey: boolean, ctrlKey: boolean, shiftKey: boolean): boolean
     {
+        if(this._roomObjectEventHandler.getGameInputHandler(this._activeRoomId)) return false;
+
         const selectedData = this.getSelectedRoomObjectData(this._activeRoomId);
 
         if(selectedData &&
