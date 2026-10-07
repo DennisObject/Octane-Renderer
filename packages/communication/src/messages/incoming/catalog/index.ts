@@ -2,8 +2,6 @@ export * from './BonusRareInfoMessageEvent';
 export * from './CatalogAdminOfferDetailsEvent';
 export * from './CatalogAdminPageDetailsEvent';
 export * from './CatalogAdminResultEvent';
-export * from './BuildersClubFurniCountMessageEvent';
-export * from './BuildersClubSubscriptionStatusMessageEvent';
 export * from './BundleDiscountRulesetMessageEvent';
 export * from './CatalogPageExpirationEvent';
 export * from './CatalogPageMessageEvent';

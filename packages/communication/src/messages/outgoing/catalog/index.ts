@@ -1,4 +1,3 @@
-export * from './BuildersClubPlaceRoomItemMessageComposer';
 export * from './CatalogAdminCreateOfferComposer';
 export * from './CatalogAdminCreatePageComposer';
 export * from './CatalogAdminDeleteOfferComposer';
@@ -15,8 +14,6 @@ export * from './CatalogAdminSavePageImagesComposer';
 export * from './CatalogAdminSavePageComposer';
 export * from './CatalogAdminSetPageEnabledComposer';
 export * from './CatalogAdminSetPageVisibleComposer';
-export * from './BuildersClubPlaceWallItemMessageComposer';
-export * from './BuildersClubQueryFurniCountMessageComposer';
 export * from './GetBonusRareInfoMessageComposer';
 export * from './GetBundleDiscountRulesetComposer';
 export * from './GetCatalogIndexComposer';
