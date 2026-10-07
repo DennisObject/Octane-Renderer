@@ -3,6 +3,7 @@ import { GetAssetManager } from '@octane/assets';
 import { AdvancedMap } from '@octane/utils';
 import { Sprite, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
+import { GetHalfSizeTexture } from '../HalfSizeTexture';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 import { ExpressionAdditionFactory, FloatingIdleZAddition, GameClickTargetAddition, GuideStatusBubbleAddition, HabbiconBubbleAddition, IAvatarAddition, MutedBubbleAddition, NumberBubbleAddition, TypingBubbleAddition } from './additions';
 
@@ -447,21 +448,20 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
                         const assetSuffix = ((((('_' + spriteData.member) + '_') + dd) + '_') + frameNumber);
 
                         let asset = GetAssetManager().getAsset(this._avatarImage.getScale() + assetSuffix);
-                        let assetScale = 1;
+                        let resampled = false;
 
-                        // AIR: a small avatar whose effect has no sh_ art draws the h_ art at half size.
+                        // AIR: a small avatar whose effect has no sh_ art draws the h_ art resampled to half size.
                         if(!asset && (this._avatarImage.getScale() === AvatarScaleType.SMALL))
                         {
                             asset = GetAssetManager().getAsset(AvatarScaleType.LARGE + assetSuffix);
-                            assetScale = 0.5;
+                            resampled = true;
                         }
 
                         if(!asset) continue;
 
-                        sprite.texture = asset.texture;
-                        sprite.scale = assetScale;
-                        sprite.offsetX = (((asset.offsetX * assetScale) - (scale / 2)) + offsetX);
-                        sprite.offsetY = ((asset.offsetY * assetScale) + offsetY);
+                        sprite.texture = resampled ? GetHalfSizeTexture((AvatarScaleType.LARGE + assetSuffix), asset.texture) : asset.texture;
+                        sprite.offsetX = (((resampled ? (asset.offsetX / 2) : asset.offsetX) - (scale / 2)) + offsetX);
+                        sprite.offsetY = ((resampled ? (asset.offsetY / 2) : asset.offsetY) + offsetY);
                         sprite.flipH = asset.flipH;
 
                         if(spriteData.hasStaticY)
