@@ -69,6 +69,8 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
     private _roomDraggingAlwaysCenters: boolean = false;
     private _roomAllowsDragging: boolean = true;
     private _roomDatas: Map<number, RoomData> = new Map();
+    private _roomsWithInitializedObjects: Set<number> = new Set();
+    private _initializedRooms: Set<number> = new Set();
     private _roomInstanceDatas: Map<number, RoomInstanceData> = new Map();
     private _skipFurnitureCreationForNextFrame: boolean = false;
     private _mouseCursorUpdate: boolean = false;
@@ -179,6 +181,10 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
     public removeRoomInstance(roomId: number): void
     {
+        this._roomsWithInitializedObjects.delete(roomId);
+        this._initializedRooms.delete(roomId);
+        this._roomObjectEventHandler.setGameInputHandler(roomId, null);
+
         const instance = this.getRoomInstance(roomId);
 
         if(instance)
@@ -857,6 +863,8 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
         this._roomManager.update(time, update);
 
+        this.reportInitializedRooms();
+
         this.updateRoomCameras(time);
 
         if(this._mouseCursorUpdate) this.setPointer();
@@ -943,12 +951,7 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
                 }
             }
 
-            if(furnitureAdded && this._roomManager)
-            {
-                const roomInstance = this._roomManager.getRoomInstance(this.getRoomId(instanceData.roomId)) as RoomInstance;
-
-                if(!roomInstance.hasUninitializedObjects()) this.objectsInitialized(instanceData.roomId.toString());
-            }
+            if(furnitureAdded) this._roomsWithInitializedObjects.add(instanceData.roomId);
 
             if(this._skipFurnitureCreationForNextFrame) return;
         }
@@ -2361,10 +2364,32 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
         if(roomId !== RoomEngine.TEMPORARY_ROOM) this.addObjectToTileMap(id, object);
 
-        // AIR RoomManager: the room's objects are initialized once the last pending content arrives.
-        const instance = this.getRoomInstance(id) as RoomInstance;
+        this._roomsWithInitializedObjects.add(id);
+    }
 
-        if(instance && !instance.hasUninitializedObjects()) this.objectsInitialized(roomId);
+    /** AIR RoomManager: a room reports its objects initialized once the last pending content arrives. */
+    private reportInitializedRooms(): void
+    {
+        for(const roomId of this._roomsWithInitializedObjects)
+        {
+            const instance = this.getRoomInstance(roomId) as RoomInstance;
+
+            if(!instance) continue;
+
+            if(instance.hasUninitializedObjects())
+            {
+                this._initializedRooms.delete(roomId);
+
+                continue;
+            }
+
+            if(this._initializedRooms.has(roomId)) continue;
+
+            this._initializedRooms.add(roomId);
+            this.objectsInitialized(this.getRoomId(roomId));
+        }
+
+        this._roomsWithInitializedObjects.clear();
     }
 
     public changeObjectModelData(roomId: number, objectId: number, category: number, numberKey: string, numberValue: number): boolean
