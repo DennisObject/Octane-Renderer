@@ -624,6 +624,7 @@ export class IncomingHeader
     public static GAME2_STAGE_ENDING = 5025;
     public static GAME2_PLAYER_EXITED_GAME_ARENA = 5027;
     public static GAME2_PLAYER_REMATCHES = 5029;
+    public static SNOWSTORM_ARENA_VOTES = 5030;
 
     // Hotel view landing scene (server -> client)
     public static HOTEL_VIEW_LANDING = 9409;

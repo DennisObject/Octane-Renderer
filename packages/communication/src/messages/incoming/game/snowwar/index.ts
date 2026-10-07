@@ -13,3 +13,4 @@ export * from './Game2StageLoadMessageEvent';
 export * from './Game2StageRunningMessageEvent';
 export * from './Game2StageStartingMessageEvent';
 export * from './Game2StageStillLoadingMessageEvent';
+export * from './SnowStormArenaVotesMessageEvent';
