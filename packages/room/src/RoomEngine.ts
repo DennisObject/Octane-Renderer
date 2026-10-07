@@ -891,11 +891,13 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
 
         const startTime = new Date().valueOf();
         const furniturePerTick = 5;
-        const hasTickLimit = true;
 
         for(const instanceData of this._roomInstanceDatas.values())
         {
             if(!instanceData) continue;
+
+            // AIR class_56: a game room adds all of its furniture at once, without the per-frame budget.
+            const hasTickLimit = !this._roomObjectEventHandler.getGameInputHandler(instanceData.roomId);
 
             let pendingData: RoomFurnitureData = null;
             let totalFurnitureAdded = 0;
