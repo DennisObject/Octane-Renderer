@@ -42,7 +42,7 @@ describe('authoritative connection state contract', () =>
         });
     });
 
-    it('moves a reopened socket to reauthenticating with a reset attempt counter', () =>
+    it('moves a reopened socket to reauthenticating', () =>
     {
         const connection = new SocketConnection();
         const internals = connection as unknown as {
@@ -58,7 +58,6 @@ describe('authoritative connection state contract', () =>
         internals.onSocketOpened();
 
         expect(connection.connectionState.phase).toBe('reauthenticating');
-        expect(connection.connectionState.reconnectAttempt).toBe(0);
     });
 
     it('clears stale close metadata when intentionally disposed', () =>

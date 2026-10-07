@@ -9,6 +9,7 @@ export interface IConnection
     dispose(): void;
     ready(): void;
     serverDisconnected(reason: number): void;
+    reauthenticationFailed(): void;
     authenticated(): void;
     send(...composers: IMessageComposer<unknown[]>[]): void;
     processReceivedData(): void;

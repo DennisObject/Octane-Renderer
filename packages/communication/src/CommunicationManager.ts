@@ -10,6 +10,9 @@ import { Thumbmark } from '@thumbmarkjs/thumbmarkjs';
 
 export class CommunicationManager implements ICommunicationManager
 {
+    /** A reconnect that has not logged in again within this time ends the session. */
+    public static readonly REAUTHENTICATION_TIMEOUT_MS: number = 20000;
+
     private _connection: IConnection = new SocketConnection();
     private _messages: IMessageConfiguration;
     private _floorPlanRevision: string;
@@ -25,6 +28,8 @@ export class CommunicationManager implements ICommunicationManager
     private _initResolved: boolean = false;
     private _floorPlanProfileSelected: boolean = false;
     private _recoveryToken: string = '';
+    private _reconnectTicketProvider: (() => Promise<string>) | null = null;
+    private _reauthenticationTimer: ReturnType<typeof setTimeout> = null;
 
     private async generateMachineID(): Promise<string>
     {
@@ -42,7 +47,7 @@ export class CommunicationManager implements ICommunicationManager
         }
     }
 
-    private async sendHandshake(): Promise<void>
+    private async sendHandshake(ticket: string = GetConfiguration().getValue('sso.ticket', null)): Promise<void>
     {
         if(this._machineIdPromise === null) this._machineIdPromise = this.generateMachineID();
 
@@ -53,9 +58,69 @@ export class CommunicationManager implements ICommunicationManager
         // has the machineId available when it processes the login in Habbo.connect().
         this._connection.send(new UniqueIDMessageComposer(machineId, '', ''));
         this._connection.send(new SSOTicketMessageComposer(
-            GetConfiguration().getValue('sso.ticket', null),
+            ticket,
             GetTickerTime(),
             this._recoveryToken));
+    }
+
+    // The server spent the ticket the session logged in with, so a reconnect logs in with a new one.
+    // Without one, or without an answer in time, the session ends instead of waiting forever.
+    private async reauthenticate(): Promise<void>
+    {
+        this.clearReauthenticationTimer();
+
+        // A socket that closed again meanwhile is the reconnect loop's to retry or give up on.
+        const timer = setTimeout(() =>
+        {
+            if(this._connection.connectionState.phase === 'reauthenticating') this.failReauthentication();
+            else this.clearReauthenticationTimer();
+        }, CommunicationManager.REAUTHENTICATION_TIMEOUT_MS);
+
+        this._reauthenticationTimer = timer;
+
+        let ticket: string = GetConfiguration().getValue('sso.ticket', null);
+
+        if(this._reconnectTicketProvider)
+        {
+            try
+            {
+                ticket = await this._reconnectTicketProvider();
+            }
+            catch (error)
+            {
+                OctaneLogger.warn('[CommunicationManager] Could not get a reconnect ticket', error);
+                ticket = '';
+            }
+        }
+
+        // Timed out, ended or superseded by a newer reconnect while the ticket was on its way.
+        if(this._reauthenticationTimer !== timer) return;
+
+        if(!ticket)
+        {
+            this.failReauthentication();
+            return;
+        }
+
+        await this.sendHandshake(ticket);
+    }
+
+    private failReauthentication(): void
+    {
+        this.clearReauthenticationTimer();
+
+        OctaneLogger.warn('[CommunicationManager] Re-authentication failed, ending the session');
+
+        this._connection.reauthenticationFailed();
+    }
+
+    private clearReauthenticationTimer(): void
+    {
+        if(!this._reauthenticationTimer) return;
+
+        clearTimeout(this._reauthenticationTimer);
+
+        this._reauthenticationTimer = null;
     }
 
     constructor()
@@ -73,6 +138,7 @@ export class CommunicationManager implements ICommunicationManager
         this._socketClosedCallback = () =>
         {
             this.stopPong();
+            this.clearReauthenticationTimer();
         };
         GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_CLOSED, this._socketClosedCallback);
 
@@ -83,7 +149,7 @@ export class CommunicationManager implements ICommunicationManager
 
             if(GetConfiguration().getValue<boolean>('system.pong.manually', false)) this.startPong();
 
-            void this.sendHandshake();
+            void this.reauthenticate();
         };
         GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
 
@@ -113,6 +179,7 @@ export class CommunicationManager implements ICommunicationManager
                 const parser = event.getParser();
 
                 this._recoveryToken = parser.recoveryToken;
+                this.clearReauthenticationTimer();
 
                 OctaneLogger.log('[CommunicationManager] AuthenticatedEvent received (isReconnect=' + isReconnect + ')');
 
@@ -164,6 +231,7 @@ export class CommunicationManager implements ICommunicationManager
     {
         // Stop pong interval
         this.stopPong();
+        this.clearReauthenticationTimer();
 
         // Remove event dispatcher listeners
         if(this._socketClosedCallback)
@@ -231,6 +299,11 @@ export class CommunicationManager implements ICommunicationManager
         applyFloorPlanWireProfile(this._messages.events, this._messages.composers, profile);
         this._connection.registerMessages(this._messages);
         (this._connection as SocketConnection).rebindMessageEvents();
+    }
+
+    public setReconnectTicketProvider(provider: (() => Promise<string>) | null): void
+    {
+        this._reconnectTicketProvider = provider;
     }
 
     public registerMessageEvent(event: IMessageEvent): IMessageEvent
