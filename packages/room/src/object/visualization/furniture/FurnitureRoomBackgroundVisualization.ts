@@ -1,6 +1,6 @@
 import { Texture } from 'pixi.js';
 import { DirectionalOffsetData } from '../data';
-import { GetHalfSizeTexture } from '../HalfSizeTexture';
+import { CreateHalfSizeTexture } from '../HalfSizeTexture';
 import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';
 
 export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageVisualization
@@ -8,6 +8,8 @@ export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageV
     private static readonly BRANDED_IMAGE_LAYER_DEPTH_BIAS: number = 0.01;
 
     private _imageOffsets: Map<number, DirectionalOffsetData> = null;
+    private _halfSizeImage: Texture = null;
+    private _halfSizeImageUrl: string = null;
 
     protected imageReady(texture: Texture, imageUrl: string): void
     {
@@ -69,13 +71,61 @@ export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageV
     {
         super.updateSprite(scale, layerId);
 
-        if(this.getLayerTag(scale, this._direction, layerId) !== FurnitureBrandedImageVisualization.BRANDED_IMAGE) return;
+        if(!this._imageUrl || (this.getLayerTag(scale, this._direction, layerId) !== FurnitureBrandedImageVisualization.BRANDED_IMAGE)) return;
 
         const sprite = this.getSprite(layerId);
 
         if(!sprite || !sprite.texture || (this.getImageFactor(scale) === 1)) return;
 
-        sprite.texture = GetHalfSizeTexture(this._imageUrl, sprite.texture);
+        const halfSizeImage = this.getHalfSizeImage(sprite.texture, layerId);
+
+        // Until the resample is ready (or when the image cannot be read) the GPU draws it at half size.
+        if(halfSizeImage) sprite.texture = halfSizeImage;
+        else sprite.scale = (sprite.scale * 0.5);
+    }
+
+    /** AIR draws the image into a half-size bitmap once; built from the loaded image outside the render path. */
+    private getHalfSizeImage(texture: Texture, layerId: number): Texture
+    {
+        if(this._halfSizeImageUrl === this._imageUrl) return this._halfSizeImage;
+
+        this.disposeHalfSizeImage();
+
+        const imageUrl = this._imageUrl;
+
+        this._halfSizeImageUrl = imageUrl;
+
+        setTimeout(() =>
+        {
+            if(this._halfSizeImageUrl !== imageUrl) return;
+
+            this._halfSizeImage = CreateHalfSizeTexture(texture);
+
+            const sprite = this.getSprite(layerId);
+
+            if(!this._halfSizeImage || !sprite || (sprite.texture !== texture)) return;
+
+            sprite.texture = this._halfSizeImage;
+            sprite.scale = (sprite.scale * 2);
+            this.updateSpriteCounter++;
+        }, 0);
+
+        return null;
+    }
+
+    private disposeHalfSizeImage(): void
+    {
+        if(this._halfSizeImage) this._halfSizeImage.destroy(true);
+
+        this._halfSizeImage = null;
+        this._halfSizeImageUrl = null;
+    }
+
+    public dispose(): void
+    {
+        this.disposeHalfSizeImage();
+
+        super.dispose();
     }
 
 

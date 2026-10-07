@@ -3,7 +3,7 @@ import { GetAssetManager } from '@octane/assets';
 import { AdvancedMap } from '@octane/utils';
 import { Sprite, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
-import { GetHalfSizeTexture } from '../HalfSizeTexture';
+import { HalfSizeTextureCache } from '../HalfSizeTexture';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 import { ExpressionAdditionFactory, FloatingIdleZAddition, GameClickTargetAddition, GuideStatusBubbleAddition, HabbiconBubbleAddition, IAvatarAddition, MutedBubbleAddition, NumberBubbleAddition, TypingBubbleAddition } from './additions';
 
@@ -21,6 +21,8 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     private static OWN_USER_ID: number = 4;
     private static UPDATE_TIME_INCREASER: number = 41;
     private static AVATAR_LAYER_ID: number = 0;
+    /** Small avatars draw h_-only effect art resampled to half size (AIR); bounded so a session cannot grow it forever. */
+    private static HALF_SIZE_EFFECT_TEXTURES: HalfSizeTextureCache = new HalfSizeTextureCache(512);
     private static SHADOW_LAYER_ID: number = 1;
     private static SNOWBOARDING_EFFECT: number = 97;
     private static INITIAL_RESERVED_SPRITES: number = 2;
@@ -459,7 +461,17 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
 
                         if(!asset) continue;
 
-                        sprite.texture = resampled ? GetHalfSizeTexture((AvatarScaleType.LARGE + assetSuffix), asset.texture) : asset.texture;
+                        const texture = resampled ? AvatarVisualization.HALF_SIZE_EFFECT_TEXTURES.getTexture((AvatarScaleType.LARGE + assetSuffix), asset.texture) : asset.texture;
+
+                        if(!texture)
+                        {
+                            // The half-size art is resampled off the render path; redraw until it is ready.
+                            this._forcedAnimFrames = AvatarVisualization.ANIMATION_FRAME_UPDATE_INTERVAL;
+
+                            continue;
+                        }
+
+                        sprite.texture = texture;
                         sprite.offsetX = (((resampled ? (asset.offsetX / 2) : asset.offsetX) - (scale / 2)) + offsetX);
                         sprite.offsetY = ((resampled ? (asset.offsetY / 2) : asset.offsetY) + offsetY);
                         sprite.flipH = asset.flipH;
