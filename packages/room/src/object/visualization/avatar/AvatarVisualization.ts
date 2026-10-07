@@ -1,4 +1,4 @@
-import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
+import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarScaleType, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
 import { GetAssetManager } from '@octane/assets';
 import { AdvancedMap } from '@octane/utils';
 import { Sprite, Texture } from 'pixi.js';
@@ -444,15 +444,24 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
                             if(dd > 7) dd -= 8;
                         }
 
-                        const assetName = ((((((this._avatarImage.getScale() + '_') + spriteData.member) + '_') + dd) + '_') + frameNumber);
+                        const assetSuffix = ((((('_' + spriteData.member) + '_') + dd) + '_') + frameNumber);
 
-                        const asset = GetAssetManager().getAsset(assetName);
+                        let asset = GetAssetManager().getAsset(this._avatarImage.getScale() + assetSuffix);
+                        let assetScale = 1;
+
+                        // AIR: a small avatar whose effect has no sh_ art draws the h_ art at half size.
+                        if(!asset && (this._avatarImage.getScale() === AvatarScaleType.SMALL))
+                        {
+                            asset = GetAssetManager().getAsset(AvatarScaleType.LARGE + assetSuffix);
+                            assetScale = 0.5;
+                        }
 
                         if(!asset) continue;
 
                         sprite.texture = asset.texture;
-                        sprite.offsetX = ((asset.offsetX - (scale / 2)) + offsetX);
-                        sprite.offsetY = (asset.offsetY + offsetY);
+                        sprite.scale = assetScale;
+                        sprite.offsetX = (((asset.offsetX * assetScale) - (scale / 2)) + offsetX);
+                        sprite.offsetY = ((asset.offsetY * assetScale) + offsetY);
                         sprite.flipH = asset.flipH;
 
                         if(spriteData.hasStaticY)
