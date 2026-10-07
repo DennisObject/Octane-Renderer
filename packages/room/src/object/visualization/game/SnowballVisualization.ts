@@ -28,19 +28,34 @@ export class SnowballVisualization extends RoomObjectSpriteVisualization
     {
         if(!this.object || !this._shadow) return;
 
-        this.updateTextures();
+        const offsetY = (this.object.getLocation().z * SnowballVisualization.SHADOW_OFFSET_PER_HEIGHT);
 
-        this._shadow.offsetY = (this.object.getLocation().z * SnowballVisualization.SHADOW_OFFSET_PER_HEIGHT);
-        this._shadow.alpha = Math.max(0, (100 - (this._shadow.offsetY / 10)));
+        if(!this.updateTextures() && (offsetY === this._shadow.offsetY)) return;
+
+        this._shadow.offsetY = offsetY;
+        this._shadow.alpha = Math.max(0, (100 - (offsetY / 10)));
+        this.updateSpriteCounter++;
     }
 
-    private updateTextures(): void
+    /** True when a texture arrived; the embedded bitmaps decode a frame after their first use. */
+    private updateTextures(): boolean
     {
         const ball = this.getSprite(0);
+        let changed = false;
 
-        if(ball && !ball.texture) ball.texture = GetSnowWarGameTexture(SnowballVisualization.SNOWBALL_ASSET_NAME);
+        if(ball && !ball.texture)
+        {
+            ball.texture = GetSnowWarGameTexture(SnowballVisualization.SNOWBALL_ASSET_NAME);
+            changed = !!ball.texture;
+        }
 
-        if(this._shadow && !this._shadow.texture) this._shadow.texture = GetSnowWarGameTexture(SnowballVisualization.SNOWBALL_SHADOW_ASSET_NAME);
+        if(this._shadow && !this._shadow.texture)
+        {
+            this._shadow.texture = GetSnowWarGameTexture(SnowballVisualization.SNOWBALL_SHADOW_ASSET_NAME);
+            changed = (changed || !!this._shadow.texture);
+        }
+
+        return changed;
     }
 
     public dispose(): void

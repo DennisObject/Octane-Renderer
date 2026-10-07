@@ -23,10 +23,14 @@ export class SnowSplashVisualization extends RoomObjectSpriteVisualization
         return (this._frameNumber >= SnowSplashVisualization.FRAME_ASSET_NAMES.length);
     }
 
+    // AIR updates every visualization on each 60 fps render, so the three frames last about 50 ms.
     public update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void
     {
+        if(this.isDone) return;
+
         this._frameNumber++;
 
         this.getSprite(0).texture = this.isDone ? null : GetSnowWarGameTexture(SnowSplashVisualization.FRAME_ASSET_NAMES[this._frameNumber]);
+        this.updateSpriteCounter++;
     }
 }
