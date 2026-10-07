@@ -1,9 +1,10 @@
 import { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection } from '@octane/api';
-import { OctaneBundle, OctaneBundleTextureDecoder, parseConfigJsonFromResponse } from '@octane/utils';
+import { HabBundle, OctaneBundle, OctaneBundleTextureDecoder, parseConfigJsonFromResponse } from '@octane/utils';
 import { Spritesheet, SpritesheetData, Texture } from 'pixi.js';
+import { AssetBundleFormat, GetAssetBundleFormat, GetAssetBundleUrl, isAssetBundleUrl } from './AssetBundleFormat';
 import { assetImageFallbackUrl, isAssetJsonUrl } from './AssetJsonUrl';
 import { GraphicAssetCollection } from './GraphicAssetCollection';
-import { detectImageFormat, ImageLoadRequest, LoadedImageResource, loadImageResource, normalizedSourceExtension } from './image';
+import { detectImageFormat, ImageLoadRequest, LoadedImageResource, loadImageResource } from './image';
 
 export interface AssetManagerDependencies
 {
@@ -11,13 +12,17 @@ export interface AssetManagerDependencies
     parseAssetData(response: Response, source: string): Promise<IAssetData>;
     loadImageResource(request: ImageLoadRequest): Promise<LoadedImageResource>;
     loadOctaneBundle(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<OctaneBundle>;
+    loadHabBundle(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<HabBundle>;
+    bundleFormat(): AssetBundleFormat;
 }
 
 const DEFAULT_DEPENDENCIES: AssetManagerDependencies = {
     fetch: url => globalThis.fetch(url),
     parseAssetData: (response, source) => parseConfigJsonFromResponse<IAssetData>(response, source),
     loadImageResource,
-    loadOctaneBundle: (buffer, textureDecoder) => OctaneBundle.from(buffer, textureDecoder)
+    loadOctaneBundle: (buffer, textureDecoder) => OctaneBundle.from(buffer, textureDecoder),
+    loadHabBundle: (buffer, textureDecoder) => HabBundle.from(buffer, textureDecoder),
+    bundleFormat: GetAssetBundleFormat
 };
 
 export class AssetManager implements IAssetManager
@@ -117,14 +122,17 @@ export class AssetManager implements IAssetManager
 
             if(url.startsWith('local://')) return this.downloadLocalAsset(url);
 
-            if(normalizedSourceExtension(url) === 'nitro')
+            if(isAssetBundleUrl(url))
             {
-                const response = await this.fetchAsset(url);
+                // Only the configured format is fetched and read; the texture stays keyed by the requested URL.
+                const format = this._dependencies.bundleFormat();
+                const response = await this.fetchAsset(GetAssetBundleUrl(url, format));
+                const loadBundle = (format === 'hab') ? this._dependencies.loadHabBundle : this._dependencies.loadOctaneBundle;
                 const decodedResources: LoadedImageResource[] = [];
 
                 try
                 {
-                    const octaneBundle = await this._dependencies.loadOctaneBundle(
+                    const bundle = await loadBundle(
                         await response.arrayBuffer(),
                         async (bytes, entryName) =>
                         {
@@ -144,7 +152,7 @@ export class AssetManager implements IAssetManager
                             return pinPixelArtSampling(resource.texture);
                         });
 
-                    await this.processAsset(octaneBundle.texture, octaneBundle.jsonFile);
+                    await this.processAsset(bundle.texture, bundle.jsonFile);
 
                     const retainedResource = decodedResources.pop();
 
