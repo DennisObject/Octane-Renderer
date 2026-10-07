@@ -2358,6 +2358,11 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         }
 
         if(roomId !== RoomEngine.TEMPORARY_ROOM) this.addObjectToTileMap(id, object);
+
+        // AIR RoomManager: the room's objects are initialized once the last pending content arrives.
+        const instance = this.getRoomInstance(id) as RoomInstance;
+
+        if(instance && !instance.hasUninitializedObjects()) this.objectsInitialized(roomId);
     }
 
     public changeObjectModelData(roomId: number, objectId: number, category: number, numberKey: string, numberValue: number): boolean
