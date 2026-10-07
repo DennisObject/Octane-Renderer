@@ -124,7 +124,8 @@ export class CommunicationManager implements ICommunicationManager
                     resolve();
                 }
 
-                if(isReconnect)
+                // A reconnect while the client is still loading waits for its first ready() like the first login.
+                if(isReconnect && this._connection.hasBeenReady)
                 {
                     this._connection.ready();
                 }
