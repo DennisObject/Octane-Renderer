@@ -23,7 +23,6 @@ export interface IFurnitureData
     specialType: number;
     purchaseCouldBeUsedForBuyout: boolean;
     rentCouldBeUsedForBuyout: boolean;
-    availableForBuildersClub: boolean;
     allowStack: boolean;
     canPutStuffOn?: boolean;
     height?: number;

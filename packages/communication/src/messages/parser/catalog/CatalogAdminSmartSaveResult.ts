@@ -11,7 +11,7 @@ export interface CatalogAdminSmartSaveResult
     draftVersionId: number;
     revision: number;
     entityType: 'PAGE' | 'OFFER';
-    catalogType: 'NORMAL' | 'BUILDER';
+    catalogType: 'NORMAL';
     entityId: number;
     entity: CatalogStudioPageSnapshot | CatalogStudioOfferSnapshot | null;
     historyGroup: CatalogStudioHistoryGroup | null;
@@ -35,7 +35,7 @@ const parseJsonObject = (value: string): Record<string, unknown> | null =>
 export const parseCatalogAdminEntity = (
     value: string,
     entityType: 'PAGE' | 'OFFER',
-    catalogType: 'NORMAL' | 'BUILDER',
+    catalogType: 'NORMAL',
     entityId: number): CatalogStudioPageSnapshot | CatalogStudioOfferSnapshot | null =>
 {
     const parsed = parseJsonObject(value);

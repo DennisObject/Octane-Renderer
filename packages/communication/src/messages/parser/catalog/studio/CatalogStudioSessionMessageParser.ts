@@ -30,7 +30,7 @@ export interface CatalogStudioPublishedVersion
 
 export interface CatalogStudioPageSnapshot
 {
-    catalogType: 'NORMAL' | 'BUILDER';
+    catalogType: 'NORMAL';
     pageId: number;
     parentId: number;
     captionSave: string;
@@ -57,7 +57,7 @@ export interface CatalogStudioPageSnapshot
 
 export interface CatalogStudioOfferSnapshot
 {
-    catalogType: 'NORMAL' | 'BUILDER';
+    catalogType: 'NORMAL';
     offerId: number;
     itemIds: string;
     pageId: number;

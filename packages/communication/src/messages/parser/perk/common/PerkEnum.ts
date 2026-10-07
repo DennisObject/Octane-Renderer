@@ -8,7 +8,6 @@ export class PerkEnum
     public static CITIZEN: string = 'CITIZEN';
     public static TRADE: string = 'TRADE';
     public static HEIGHTMAP_EDITOR_BETA: string = 'HEIGHTMAP_EDITOR_BETA';
-    public static BUILDER_AT_WORK: string = 'BUILDER_AT_WORK';
     public static NAVIGATOR_ROOM_THUMBNAIL_CAMERA: string = 'NAVIGATOR_ROOM_THUMBNAIL_CAMERA';
     public static CAMERA: string = 'CAMERA';
     public static MOUSE_ZOOM: string = 'MOUSE_ZOOM';
