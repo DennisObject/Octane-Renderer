@@ -153,7 +153,7 @@ export class SessionDataManager implements ISessionDataManager
     public async init(): Promise<void>
     {
         await Promise.all([
-            this._furnitureData.init(),
+            this._furnitureData.init(true),
             this._productData.init(),
             this._badgeImageManager.init(),
             Promise.resolve(this._ignoredUsersManager.init()),

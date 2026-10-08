@@ -1,8 +1,8 @@
 import { FurnitureType, IFurnitureData } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
 import { GetLocalizationManager } from '@octane/localization';
 import { loadGamedata } from '@octane/utils';
 import { FurnitureData } from './FurnitureData';
+import { GetFurnitureDataUrl } from './FurnitureDataUrl';
 
 export class FurnitureDataLoader
 {
@@ -15,9 +15,10 @@ export class FurnitureDataLoader
         this._wallItems = wallItems;
     }
 
-    public async init(): Promise<void>
+    /** Loads the furnidata; the boot load asks for the version the client was started with. */
+    public async init(versioned: boolean = false): Promise<void>
     {
-        const url = GetConfiguration().getValue<string>('furnidata.url');
+        const url = GetFurnitureDataUrl(versioned);
 
         if(!url || !url.length) throw new Error('Missing "furnidata.url" in config — add the furniture data URL to your renderer-config.json');
 
