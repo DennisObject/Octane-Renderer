@@ -1,4 +1,4 @@
-﻿import { OctaneLogger, OctaneVersion, parseConfigJsonFromResponse } from '@octane/utils';
+﻿import { OctaneLogger, OctaneVersion, parseConfigJson, parseConfigJsonFromResponse } from '@octane/utils';
 import { IConfigurationManager } from './IConfigurationManager';
 
 export class ConfigurationManager implements IConfigurationManager
@@ -6,6 +6,7 @@ export class ConfigurationManager implements IConfigurationManager
     private _definitions: Map<string, unknown> = new Map();
     private _missingKeys: string[] = [];
     private _initialLoad: Promise<void> = null;
+    private _preloadedDocuments: Map<string, string> = new Map();
 
     constructor()
     {
@@ -28,6 +29,15 @@ export class ConfigurationManager implements IConfigurationManager
         return this._initialLoad;
     }
 
+    /**
+     * Supplies the text of a config.urls document the page already has (e.g. inlined into the entry
+     * HTML), so the next load parses it instead of fetching. Used once; a later reload fetches again.
+     */
+    public preloadDocument(url: string, text: string): void
+    {
+        if(url && (typeof text === 'string')) this._preloadedDocuments.set(url, text);
+    }
+
     public async reloadConfiguration(): Promise<void>
     {
         try
@@ -48,6 +58,22 @@ export class ConfigurationManager implements IConfigurationManager
             // Fetched together; later documents still override earlier ones below.
             const documents: any[] = await Promise.all(urls.map(async url =>
             {
+                const preloaded = this._preloadedDocuments.get(url);
+
+                if(preloaded !== undefined)
+                {
+                    this._preloadedDocuments.delete(url);
+
+                    try
+                    {
+                        return parseConfigJson(preloaded, url);
+                    }
+                    catch (parseError)
+                    {
+                        throw new Error(`Invalid config "${ url }" — JSON/JSONC parse failed. JSONC allows comments and trailing commas (${ parseError.message })`);
+                    }
+                }
+
                 let response: Response;
 
                 try
