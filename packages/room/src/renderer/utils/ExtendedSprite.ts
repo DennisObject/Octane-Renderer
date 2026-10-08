@@ -8,6 +8,9 @@ const BYTES_PER_PIXEL = 4;
 export class ExtendedSprite extends Sprite
 {
     private static SCRATCH_POINT: Point = new Point();
+    // Thousands of room sprites can share one texture, and an emitter rebuilds its whole
+    // listener list on every off(). One listener per texture keeps each sprite's watch O(1).
+    private static TEXTURE_SPRITES: WeakMap<Texture, Set<ExtendedSprite>> = new WeakMap();
 
     private _offsetX: number = 0;
     private _offsetY: number = 0;
@@ -195,13 +198,51 @@ export class ExtendedSprite extends Sprite
     {
         const previous = super.texture;
 
-        if(previous && (previous !== texture)) previous.off('destroy', this.onTextureDestroyed, this);
+        if(previous && (previous !== texture)) ExtendedSprite.unwatchTexture(previous, this);
 
         super.texture = texture;
 
         const current = super.texture;
 
-        if(current && (current !== previous) && (current !== Texture.EMPTY)) current.on('destroy', this.onTextureDestroyed, this);
+        if(current && (current !== previous) && (current !== Texture.EMPTY)) ExtendedSprite.watchTexture(current, this);
+    }
+
+    private static watchTexture(texture: Texture, sprite: ExtendedSprite): void
+    {
+        let sprites = ExtendedSprite.TEXTURE_SPRITES.get(texture);
+
+        if(!sprites)
+        {
+            sprites = new Set();
+
+            ExtendedSprite.TEXTURE_SPRITES.set(texture, sprites);
+            texture.on('destroy', ExtendedSprite.onSharedTextureDestroyed);
+        }
+
+        sprites.add(sprite);
+    }
+
+    private static unwatchTexture(texture: Texture, sprite: ExtendedSprite): void
+    {
+        const sprites = ExtendedSprite.TEXTURE_SPRITES.get(texture);
+
+        if(!sprites?.delete(sprite) || sprites.size) return;
+
+        ExtendedSprite.TEXTURE_SPRITES.delete(texture);
+        texture.off('destroy', ExtendedSprite.onSharedTextureDestroyed);
+    }
+
+    // Like the emitter it replaces: every sprite watching when the texture is destroyed is
+    // told, in the order it started watching, even if an earlier one stops watching meanwhile.
+    private static onSharedTextureDestroyed(texture: Texture): void
+    {
+        const sprites = ExtendedSprite.TEXTURE_SPRITES.get(texture);
+
+        if(!sprites) return;
+
+        ExtendedSprite.TEXTURE_SPRITES.delete(texture);
+
+        for(const sprite of [ ...sprites ]) sprite.onTextureDestroyed(texture);
     }
 
     private onTextureDestroyed(texture: Texture): void
@@ -228,7 +269,7 @@ export class ExtendedSprite extends Sprite
 
     public override destroy(options?: DestroyOptions): void
     {
-        super.texture?.off('destroy', this.onTextureDestroyed, this);
+        if(super.texture) ExtendedSprite.unwatchTexture(super.texture, this);
 
         if(this._highlight)
         {
