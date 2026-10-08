@@ -4,7 +4,6 @@ import { IConfigurationManager } from './IConfigurationManager';
 export class ConfigurationManager implements IConfigurationManager
 {
     private _definitions: Map<string, unknown> = new Map();
-    private _config: any = {};
     private _missingKeys: string[] = [];
     private _initialLoad: Promise<void> = null;
 
@@ -91,7 +90,6 @@ export class ConfigurationManager implements IConfigurationManager
     public resetConfiguration(): void
     {
         this._definitions.clear();
-        this._config = {};
         this._missingKeys = [];
     }
 
@@ -177,28 +175,9 @@ export class ConfigurationManager implements IConfigurationManager
         return (existing as T);
     }
 
+    // Keys stay flat: Habbo sets both a key and deeper keys under it, e.g. currencyiconstyle.big.101 and currencyiconstyle.big.101.combo.
     public setValue<T>(key: string, value: T): void
     {
-        const parts = key.split('.');
-
-        let last = this._config;
-
-        for(let i = 0; i < parts.length; i++)
-        {
-            const part = parts[i].toString();
-
-            if(i !== (parts.length - 1))
-            {
-                if(!last[part]) last[part] = {};
-
-                last = last[part];
-
-                continue;
-            }
-
-            last[part] = value;
-        }
-
         this._definitions.set(key, value);
     }
 
