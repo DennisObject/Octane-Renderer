@@ -818,11 +818,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas
 
         if((spriteCount < this._activeSpriteCount) || !this._activeSpriteCount)
         {
-            // Detaching the range at once, last sprite first as before, avoids a linear child
-            // search per sprite (removeChild and removeChildAt both look the child up).
-            if(destroy && (spriteCount < this._spriteCount) && (this._spriteCount <= this._display.children.length))
+            // Detaching every sprite at once, last first as before, avoids a linear child search
+            // per sprite (removeChild and removeChildAt both look the child up). Only the whole
+            // display: Pixi's removeChildren(begin, end) removes end items from begin, not a range.
+            if(destroy && !spriteCount && this._spriteCount && (this._spriteCount === this._display.children.length))
             {
-                for(const sprite of this._display.removeChildren(spriteCount, this._spriteCount)) this.cleanSprite(sprite as ExtendedSprite, true);
+                for(const sprite of this._display.removeChildren()) this.cleanSprite(sprite as ExtendedSprite, true);
             }
             else
             {
