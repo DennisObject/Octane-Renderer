@@ -5,6 +5,8 @@ export class ConfigurationManager implements IConfigurationManager
 {
     private _definitions: Map<string, unknown> = new Map();
     private _missingKeys: string[] = [];
+    public static readonly GAMEDATA_VERSIONS_KEY = 'gamedata.versions';
+
     private _initialLoad: Promise<void> = null;
     private _preloadedDocuments: Map<string, string> = new Map();
 
@@ -172,10 +174,27 @@ export class ConfigurationManager implements IConfigurationManager
 
         if(value.indexOf('%timestamp%') >= 0)
         {
-            value = value.replace(/%timestamp%/gi, Date.now().toString());
+            value = this.versionCacheBuster(value).replace(/%timestamp%/gi, Date.now().toString());
         }
 
         return value;
+    }
+
+    /**
+     * A gamedata URL whose file has a known version (gamedata.versions, file name -> version, which the client
+     * gets from its entry page) asks for that version (?v=) instead of a new timestamp, so browsers and the
+     * edge can cache it until the file changes.
+     */
+    private versionCacheBuster(value: string): string
+    {
+        const versions = this._definitions.get(ConfigurationManager.GAMEDATA_VERSIONS_KEY) as Record<string, unknown>;
+
+        if(!versions || (typeof versions !== 'object')) return value;
+
+        const file = value.split(/[?#]/, 1)[0].split('/').pop();
+        const version = file ? versions[file] : null;
+
+        return (typeof version === 'string' && version.length) ? value.replace(/([?&])t=%timestamp%/i, `$1v=${ encodeURIComponent(version) }`) : value;
     }
 
     private removeInterpolateKey(value: string): string
