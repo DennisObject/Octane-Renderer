@@ -818,13 +818,22 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas
 
         if((spriteCount < this._activeSpriteCount) || !this._activeSpriteCount)
         {
-            let iterator = (this._spriteCount - 1);
-
-            while(iterator >= spriteCount)
+            // Detaching the range at once, last sprite first as before, avoids a linear child
+            // search per sprite (removeChild and removeChildAt both look the child up).
+            if(destroy && (spriteCount < this._spriteCount) && (this._spriteCount <= this._display.children.length))
             {
-                this.cleanSprite(this.getExtendedSprite(iterator), destroy);
+                for(const sprite of this._display.removeChildren(spriteCount, this._spriteCount)) this.cleanSprite(sprite as ExtendedSprite, true);
+            }
+            else
+            {
+                let iterator = (this._spriteCount - 1);
 
-                iterator--;
+                while(iterator >= spriteCount)
+                {
+                    this.cleanSprite(this.getExtendedSprite(iterator), destroy);
+
+                    iterator--;
+                }
             }
         }
 
