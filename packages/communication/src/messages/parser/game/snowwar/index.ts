@@ -28,4 +28,3 @@ export * from './GameObjectsData';
 export * from './GameStatusData';
 export * from './SnowWarGameEventData';
 export * from './SnowWarGameObjectData';
-export * from './SnowStormArenaVotesMessageParser';

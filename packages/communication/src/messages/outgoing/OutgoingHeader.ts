@@ -647,7 +647,7 @@ export class OutgoingHeader
     public static REQUEST_MESSENGER_HISTORY = 4901;
     public static SEND_MESSENGER_MESSAGE = 4902;
     public static MARK_MESSENGER_READ = 4903;
-    // SnowStorm (AIR Game2 payloads on the Octane 6000 range; 6001, 6002, 6010, 6011, 6014 are retired; 6015 is Plus arena voting).
+    // SnowStorm (AIR Game2 payloads on the Octane 6000 range; 6001, 6002, 6010, 6011, 6014, 6015 are retired).
     public static GAME2LOADSTAGEREADYMESSAGE = 6000;
     public static GAME2SETUSERMOVETARGETMESSAGE = 6003;
     public static GAME2THROWSNOWBALLATPOSITIONMESSAGE = 6004;
@@ -658,7 +658,6 @@ export class OutgoingHeader
     public static GAME2GAMECHATMESSAGE = 6009;
     public static GAME2QUICKJOINMESSAGE = 6012;
     public static GAME2LEAVELOBBYMESSAGE = 6013;
-    public static GAME2VOTEARENAMESSAGE = 6015;
     public static GAME2EXITGAMEMESSAGE = 6016;
     public static GAME2GETTOTALLEADERBOARD = 6027;
     public static GAME2GETFRIENDSLEADERBOARD = 6028;
