@@ -129,9 +129,10 @@ export class RoomCameraWidgetManager implements IRoomCameraWidgetManager
         const imagesUrl = GetConfiguration().getValue<string>('image.library.url') + 'Habbo-Stories/';
         const effects = GetConfiguration().getValue<CameraEffectConfiguration[]>('camera.available.effects');
 
-        for(const effect of effects)
+        // Texture effects download together; the effects keep their configured order.
+        const loaded = await Promise.all(effects.map(async effect =>
         {
-            if(!effect.enabled || !isCameraEffectName(effect.name)) continue;
+            if(!effect.enabled || !isCameraEffectName(effect.name)) return null;
 
             const cameraEffect = new RoomCameraWidgetEffect(effect.name, effect.minLevel, resolveCameraEffectType(effect));
 
@@ -149,7 +150,12 @@ export class RoomCameraWidgetManager implements IRoomCameraWidgetManager
                 cameraEffect.blendMode = normalizeCameraBlendMode(effect.blendMode);
             }
 
-            this._effects.set(cameraEffect.name, cameraEffect);
+            return cameraEffect;
+        }));
+
+        for(const cameraEffect of loaded)
+        {
+            if(cameraEffect) this._effects.set(cameraEffect.name, cameraEffect);
         }
 
         GetEventDispatcher().dispatchEvent(new RoomCameraWidgetManagerEvent(RoomCameraWidgetManagerEvent.INITIALIZED));
