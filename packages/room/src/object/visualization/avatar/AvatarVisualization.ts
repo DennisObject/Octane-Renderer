@@ -1090,12 +1090,12 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         {
             const expression = AvatarAction.getExpression(this._expression);
 
-            if(expression !== '')
+            if(expression)
             {
                 switch(expression)
                 {
                     case AvatarAction.DANCE:
-                        this._avatarImage.appendAction(AvatarAction.DANCE, 2);
+                        this._avatarImage.appendAction(AvatarAction.DANCE, (this._expression === AvatarAction.EXPRESSION_SIX_SEVEN_ID) ? AvatarAction.DANCE_SIX_SEVEN : 2);
                         break;
                     default:
                         this._avatarImage.appendAction(expression);
