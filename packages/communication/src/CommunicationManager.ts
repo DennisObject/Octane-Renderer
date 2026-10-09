@@ -53,7 +53,7 @@ export class CommunicationManager implements ICommunicationManager
 
         const machineId = await this._machineIdPromise;
 
-        this._connection.send(new ClientHelloMessageComposer(this._floorPlanRevision, null, null, null));
+        this._connection.send(new ClientHelloMessageComposer(this._connection.packetRevision || this._floorPlanRevision, null, null, null));
         // Send the machine fingerprint (UniqueID) BEFORE the SSO ticket so the server
         // has the machineId available when it processes the login in Habbo.connect().
         this._connection.send(new UniqueIDMessageComposer(machineId, '', ''));
