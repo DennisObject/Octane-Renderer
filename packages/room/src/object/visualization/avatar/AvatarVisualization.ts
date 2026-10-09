@@ -20,6 +20,8 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     private static HABBICON_BUBBLE_ID: number = 8;
     private static OWN_USER_ID: number = 4;
     private static UPDATE_TIME_INCREASER: number = 41;
+    // Like Habbo: purge cached actions unused for 60 s every 500 updates; the first purge is staggered.
+    private static INACTIVE_PURGE_INTERVAL: number = 500;
     private static AVATAR_LAYER_ID: number = 0;
     private static SHADOW_LAYER_ID: number = 1;
     private static SNOWBOARDING_EFFECT: number = 97;
@@ -36,6 +38,7 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     protected _data: AvatarVisualizationData;
 
     private _avatarImage: IAvatarImage;
+    private _updatesUntilPurge: number = 200 + Math.floor(Math.random() * 200);
     private _cachedAvatars: IAdvancedMap<string, IAvatarImage>;
     private _cachedAvatarEffects: IAdvancedMap<string, IAvatarImage>;
     private _shadow: IGraphicAsset;
@@ -43,6 +46,7 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
     private _disposed: boolean;
 
     private _figure: string;
+    private _isBlocked: boolean = false;
     private _gender: string;
     private _direction: number;
     private _headDirection: number;
@@ -216,6 +220,12 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         this._lastUpdate += AvatarVisualization.UPDATE_TIME_INCREASER;
 
         if((this._lastUpdate + AvatarVisualization.UPDATE_TIME_INCREASER) < time) this._lastUpdate = (time - AvatarVisualization.UPDATE_TIME_INCREASER);
+
+        if(--this._updatesUntilPurge <= 0)
+        {
+            this._updatesUntilPurge = AvatarVisualization.INACTIVE_PURGE_INTERVAL;
+            this._avatarImage?.disposeInactiveActions();
+        }
 
         const model = this.object.model;
         const scale = geometry.scale;
@@ -543,6 +553,22 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
 
     private createAvatarImage(scale: number, effectId: number): IAvatarImage
     {
+        // Like Habbo, a blocked user is an anonymous ghost: the placeholder silhouette, no effects.
+        if(this._isBlocked)
+        {
+            const blockedName = 'blockedAvatarImage' + scale.toString();
+            let blockedImage = this._cachedAvatars.getValue(blockedName);
+
+            if(!blockedImage)
+            {
+                blockedImage = this._data.createBlockedAvatarImage(scale);
+
+                if(blockedImage) this._cachedAvatars.add(blockedName, blockedImage);
+            }
+
+            return blockedImage;
+        }
+
         let cachedImage: IAvatarImage = null;
         let imageName = 'avatarImage' + scale.toString();
 
@@ -969,6 +995,16 @@ export class AvatarVisualization extends RoomObjectSpriteVisualization implement
         }
 
         if(this.updateFigure(model.getValue<string>(RoomObjectVariable.FIGURE))) needsUpdate = true;
+
+        const isBlocked = (model.getValue<number>(RoomObjectVariable.FIGURE_IS_BLOCKED) > 0);
+
+        if(isBlocked !== this._isBlocked)
+        {
+            this._isBlocked = isBlocked;
+            this.clearAvatar();
+
+            needsUpdate = true;
+        }
 
         let sign = model.getValue<number>(RoomObjectVariable.FIGURE_SIGN);
 

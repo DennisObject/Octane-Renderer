@@ -77,6 +77,11 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener
         this._animationFrameCount = 0;
     }
 
+    public disposeInactiveActions(): void
+    {
+        this._cache?.disposeInactiveActions();
+    }
+
     public dispose(): void
     {
         if(this._disposed) return;

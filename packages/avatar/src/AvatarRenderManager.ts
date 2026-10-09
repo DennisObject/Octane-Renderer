@@ -137,6 +137,13 @@ export class AvatarRenderManager implements IAvatarRenderManager
         return new PlaceHolderAvatarImage(this._structure, this._aliasCollection, this._placeHolderFigure, size, this._effectAssetDownloadManager);
     }
 
+    public createPlaceholderAvatarImage(size: string): IAvatarImage
+    {
+        if(!this._structure) return null;
+
+        return new PlaceHolderAvatarImage(this._structure, this._aliasCollection, this._placeHolderFigure, size, this._effectAssetDownloadManager);
+    }
+
     public downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void
     {
         if(!this._avatarAssetDownloadManager) return;
