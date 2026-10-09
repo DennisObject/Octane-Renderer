@@ -1,3 +1,4 @@
+import { WiredVariableInspectionDataEvent, WiredVariableInspectionRequestComposer } from './messages';
 import { WiredUserVariableUpdate64Composer, WiredUserVariableManage64Composer } from './messages';
 import { IMessageConfiguration } from '@octane/api';
 import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent } from './messages';
@@ -633,6 +634,7 @@ export class OctaneMessages implements IMessageConfiguration
         this._events.set(IncomingHeader.WIRED_MONITOR_DATA, WiredMonitorDataEvent);
         this._events.set(IncomingHeader.WIRED_ROOM_SETTINGS_DATA, WiredRoomSettingsDataEvent);
         this._events.set(IncomingHeader.WIRED_USER_VARIABLES_DATA, WiredUserVariablesDataEvent);
+        this._events.set(IncomingHeader.WIRED_VARIABLE_INSPECTION_DATA, WiredVariableInspectionDataEvent);
         this._events.set(IncomingHeader.WIRED_FURNI_RUNTIME_STATE, WiredFurniRuntimeStateEvent);
         this._events.set(IncomingHeader.WIRED_FURNI_OPACITY, WiredFurniOpacityEvent);
         this._events.set(IncomingHeader.WIRED_FURNI_MOVE_STYLE, WiredFurniMoveStyleEvent);
@@ -1356,6 +1358,7 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.WIRED_ROOM_SETTINGS_SAVE, WiredRoomSettingsSaveComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLES_REQUEST, WiredUserVariablesRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE64, WiredUserVariableUpdate64Composer);
+        this._composers.set(OutgoingHeader.WIRED_VARIABLE_INSPECTION_REQUEST, WiredVariableInspectionRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE64, WiredUserVariableManage64Composer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE, WiredUserVariableUpdateComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE, WiredUserVariableManageComposer);

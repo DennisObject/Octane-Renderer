@@ -1,5 +1,6 @@
 export class IncomingHeader
 {
+    public static WIRED_VARIABLE_INSPECTION_DATA = 9483;
     // These packets do not belong to this revision, so these are custom packet ids
     public static WIRED_USER_VARIABLES_DATA64 = 9480;
     public static WIRED_VARIABLE_HOLDERS64 = 9481;
