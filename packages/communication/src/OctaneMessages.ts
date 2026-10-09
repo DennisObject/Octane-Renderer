@@ -41,20 +41,18 @@ import { EarningsCenterEvent, EarningsClaimResultEvent, IncomeRewardNotification
 import { ActiveDailyTasksMessageEvent, ClaimDailyTaskMessageComposer, ClaimRewardTrackPrizeMessageComposer, DailyTaskUpdatedMessageEvent, DailyTasksAddedMessageEvent, DeleteRewardTrackEntityMessageComposer, GetDailyTasksMessageComposer, GetRewardTrackAdminDataMessageComposer, GetRewardTracksMessageComposer, PurchaseRewardTrackPremiumMessageComposer, RewardTrackAdminDataMessageEvent, RewardTrackAdminResultMessageEvent, RewardTrackClaimResultMessageEvent, RewardTrackFurniSearchResultMessageEvent, RewardTrackTextsMessageEvent, RewardTrackPremiumPurchaseResultMessageEvent, RewardTrackProgressMessageEvent, RewardTracksMessageEvent, SaveRewardTrackMessageComposer, SaveRewardTrackPrizeMessageComposer, SaveRewardTrackTaskMessageComposer, SaveRewardTrackTextsMessageComposer, SearchRewardTrackFurniMessageComposer } from './messages';
 import { TreasureHuntFirstWinnerMessageEvent, TreasureHuntFailMessageEvent, TreasureHuntUpdateMessageEvent } from './messages';
 import { SelfDonationResultMessageEvent, SelfDonationMessageComposer } from './messages';
-import { applyFloorPlanWireProfile, FloorPlanWireProfile, FloorPlanWireProfileName } from './messages/floorplan/FloorPlanProtocol';
 export class OctaneMessages implements IMessageConfiguration
 {
     private _events: Map<number, Function>;
     private _composers: Map<number, Function>;
 
-    constructor(profile: FloorPlanWireProfileName = FloorPlanWireProfile.Hybrid)
+    constructor()
     {
         this._events = new Map();
         this._composers = new Map();
 
         this.registerEvents();
         this.registerComposers();
-        applyFloorPlanWireProfile(this._events, this._composers, profile);
     }
 
     private registerEvents(): void

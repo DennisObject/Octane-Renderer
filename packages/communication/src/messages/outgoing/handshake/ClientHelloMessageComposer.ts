@@ -1,14 +1,15 @@
 import { ClientDeviceCategoryEnum, ClientPlatformEnum, IMessageComposer } from '@octane/api';
-import { FloorPlanRevisionName, FloorPlanWireProfile } from '../../floorplan/FloorPlanProtocol';
 
 export class ClientHelloMessageComposer implements IMessageComposer<ConstructorParameters<typeof ClientHelloMessageComposer>>
 {
+    public static readonly BUILD = 'WIN63-202609161723-93809945';
+
     private _data: ConstructorParameters<typeof ClientHelloMessageComposer>;
 
     constructor(releaseVersion: string, type: string, platform: number, category: number)
     {
         this._data = [
-            releaseVersion || FloorPlanRevisionName[FloorPlanWireProfile.Hybrid],
+            releaseVersion || ClientHelloMessageComposer.BUILD,
             type || 'HTML5',
             platform ?? ClientPlatformEnum.HTML5,
             category ?? ClientDeviceCategoryEnum.BROWSER

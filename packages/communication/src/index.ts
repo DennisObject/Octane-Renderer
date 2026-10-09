@@ -6,7 +6,6 @@ export * from './codec';
 export * from './codec/evawire';
 export * from './crypto';
 export * from './messages';
-export * from './messages/floorplan/FloorPlanProtocol';
 export * from './messages/incoming';
 export * from './messages/incoming/advertisement';
 export * from './messages/incoming/availability';

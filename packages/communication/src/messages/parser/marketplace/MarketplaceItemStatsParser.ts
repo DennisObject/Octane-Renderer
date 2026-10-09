@@ -11,6 +11,9 @@ export class MarketplaceItemStatsParser implements IMessageParser
     private _furniTypeId: number;
     private _furniCategoryId: number;
 
+    private _lowestCurrentPrice: number;
+    private _suggestedPrice: number;
+
     public flush(): boolean
     {
         this._averagePrice = 0;
@@ -21,6 +24,8 @@ export class MarketplaceItemStatsParser implements IMessageParser
         this._soldAmounts = [];
         this._furniTypeId = 0;
         this._furniCategoryId = 0;
+        this._lowestCurrentPrice = 0;
+        this._suggestedPrice = 0;
 
         return true;
     }
@@ -46,6 +51,8 @@ export class MarketplaceItemStatsParser implements IMessageParser
 
         this._furniCategoryId = wrapper.readInt();
         this._furniTypeId = wrapper.readInt();
+        this._lowestCurrentPrice = wrapper.readInt();
+        this._suggestedPrice = wrapper.readInt();
 
         return true;
     }
@@ -89,4 +96,15 @@ export class MarketplaceItemStatsParser implements IMessageParser
     {
         return this._furniCategoryId;
     }
+
+    public get lowestCurrentPrice(): number
+    {
+        return this._lowestCurrentPrice;
+    }
+
+    public get suggestedPrice(): number
+    {
+        return this._suggestedPrice;
+    }
+
 }

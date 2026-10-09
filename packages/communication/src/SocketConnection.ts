@@ -7,7 +7,7 @@ import { aesGcmDecrypt, aesGcmEncrypt, buildClientHello, deriveAesKey, deriveSha
 import { ConnectionStateStore } from './ConnectionStateStore';
 import { MessageClassManager } from './messages';
 import { shouldReconnectAfterClose } from './socketClosePolicy';
-import { createPacketWireProfile, PacketWireProfile } from './PacketWireProfile';
+import { ClientHelloMessageComposer } from './messages/outgoing/handshake/ClientHelloMessageComposer';
 
 type CryptoState = 'disabled' | 'awaiting_server_hello' | 'ready' | 'error';
 
@@ -34,11 +34,9 @@ export class SocketConnection implements IConnection
     private _isReconnecting: boolean = false;
     private _intentionalClose: boolean = false;
     private _wasAuthenticated: boolean = false;
-    private _packetWireProfile: Readonly<PacketWireProfile> = null;
-    private _packetWireProfileInitialized: boolean = false;
-    private _packetProfileAnnounced: boolean = false;
-    private _packetProfileGeneration: number = 0;
-    private _profileEncryptChain: Promise<void> = Promise.resolve();
+    private _helloAnnounced: boolean = false;
+    private _socketGeneration: number = 0;
+    private _encryptChain: Promise<void> = Promise.resolve();
 
     public static readonly MAX_RECONNECT_ATTEMPTS: number = 7;
     public static readonly BASE_RECONNECT_DELAY_MS: number = 1000;
@@ -54,12 +52,6 @@ export class SocketConnection implements IConnection
     public init(socketUrl: string): void
     {
         if(!socketUrl || !socketUrl.length) return;
-
-        if(!this._packetWireProfileInitialized)
-        {
-            this._packetWireProfile = createPacketWireProfile(GetConfiguration().getValue<unknown>('communication.packet.profile', null));
-            this._packetWireProfileInitialized = true;
-        }
 
         this._socketUrl = socketUrl;
         this._intentionalClose = false;
@@ -78,9 +70,9 @@ export class SocketConnection implements IConnection
 
     private createSocket(socketUrl: string): void
     {
-        this._packetProfileAnnounced = false;
-        this._packetProfileGeneration++;
-        this._profileEncryptChain = Promise.resolve();
+        this._helloAnnounced = false;
+        this._socketGeneration++;
+        this._encryptChain = Promise.resolve();
         this._dataBuffer = new ArrayBuffer(0);
         this._pendingChunks = [];
         this._pendingBytes = 0;
@@ -130,14 +122,14 @@ export class SocketConnection implements IConnection
 
         if(this._cryptoState === 'awaiting_server_hello')
         {
-            const generation = this._packetProfileGeneration;
+            const generation = this._socketGeneration;
             this.handleServerHello(data)
                 .catch(err =>
                 {
-                    if(this._packetWireProfile && generation !== this._packetProfileGeneration) return;
+                    if(generation !== this._socketGeneration) return;
 
                     OctaneLogger.error('[ws-crypto] handshake failed', err);
-                    if(this._packetWireProfile) this._packetProfileAnnounced = false;
+                    this._helloAnnounced = false;
                     this._cryptoState = 'error';
                     this._intentionalClose = true;
                     if(this._socket) this._socket.close();
@@ -251,7 +243,7 @@ export class SocketConnection implements IConnection
 
     private async handleServerHello(frame: ArrayBuffer): Promise<void>
     {
-        const generation = this._packetProfileGeneration;
+        const generation = this._socketGeneration;
         const socket = this._socket;
         const { pubkeySpki: serverPubkeySpki, signature } = parseServerHello(frame);
         const signingRequired = !!GetConfiguration().getValue<boolean>('crypto.ws.signing.enabled', false);
@@ -269,7 +261,7 @@ export class SocketConnection implements IConnection
         const ourPubkeySpki = await exportPublicKeySpki(ourKeys.publicKey);
         const shared = await deriveSharedSecret(ourKeys.privateKey, serverPubkey);
         const key = await deriveAesKey(shared);
-        if(this._packetWireProfile && (generation !== this._packetProfileGeneration || socket !== this._socket || this._intentionalClose)) return;
+        if(generation !== this._socketGeneration || socket !== this._socket || this._intentionalClose) return;
         this._sessionKey = key;
         this._socket.send(buildClientHello(ourPubkeySpki));
         this._cryptoState = 'ready';
@@ -278,15 +270,8 @@ export class SocketConnection implements IConnection
         {
             const queued = this._pendingEncryptedSends;
             this._pendingEncryptedSends = [];
-            if(this._packetWireProfile)
-            {
-                // Append the entire pending FIFO before another ready-state send can append.
-                for(const buf of queued) this.queueProfileEncryptedSend(buf);
-            }
-            else
-            {
-                for(const buf of queued) await this.encryptAndSend(buf);
-            }
+            // Enqueue the entire backlog before a ready-state send can append.
+            for(const buf of queued) this.queueEncryptedSend(buf);
         }
     }
 
@@ -321,32 +306,21 @@ export class SocketConnection implements IConnection
         return aesGcmDecrypt(this._sessionKey, nonce, ct);
     }
 
-    private async encryptAndSend(plaintext: ArrayBuffer): Promise<void>
+    private queueEncryptedSend(plaintext: ArrayBuffer): void
     {
-        if(!this._sessionKey) return;
-        const nonce = randomNonce();
-        const ct = await aesGcmEncrypt(this._sessionKey, nonce, plaintext);
-        const framed = new Uint8Array(NONCE_LEN + ct.byteLength);
-        framed.set(nonce, 0);
-        framed.set(new Uint8Array(ct), NONCE_LEN);
-        if(this._socket && this._socket.readyState === WebSocket.OPEN) this._socket.send(framed.buffer);
-    }
-
-    private queueProfileEncryptedSend(plaintext: ArrayBuffer): void
-    {
-        const generation = this._packetProfileGeneration;
+        const generation = this._socketGeneration;
         const socket = this._socket;
         const key = this._sessionKey;
 
-        this._profileEncryptChain = this._profileEncryptChain.then(async () =>
+        this._encryptChain = this._encryptChain.then(async () =>
         {
-            if(generation !== this._packetProfileGeneration || socket !== this._socket || this._cryptoState !== 'ready' || this._intentionalClose) return;
-            if(!key) throw new Error('Missing profile encryption key');
+            if(generation !== this._socketGeneration || socket !== this._socket || this._cryptoState !== 'ready' || this._intentionalClose) return;
+            if(!key) throw new Error('Missing encryption key');
 
             const nonce = randomNonce();
             const ct = await aesGcmEncrypt(key, nonce, plaintext);
 
-            if(generation !== this._packetProfileGeneration || socket !== this._socket || this._cryptoState !== 'ready' || this._intentionalClose) return;
+            if(generation !== this._socketGeneration || socket !== this._socket || this._cryptoState !== 'ready' || this._intentionalClose) return;
             if(socket.readyState !== WebSocket.OPEN) return;
 
             const framed = new Uint8Array(NONCE_LEN + ct.byteLength);
@@ -355,10 +329,10 @@ export class SocketConnection implements IConnection
             socket.send(framed.buffer);
         }).catch(err =>
         {
-            if(generation !== this._packetProfileGeneration || socket !== this._socket) return;
+            if(generation !== this._socketGeneration || socket !== this._socket) return;
 
-            OctaneLogger.error('[ws-crypto] profile encrypt failed', err);
-            this._packetProfileAnnounced = false;
+            OctaneLogger.error('[ws-crypto] encrypt failed', err);
+            this._helloAnnounced = false;
             this._cryptoState = 'error';
             this._intentionalClose = true;
             this._pendingEncryptedSends = [];
@@ -657,12 +631,7 @@ export class SocketConnection implements IConnection
 
         if(this._isAuthenticated && !this._isReady)
         {
-            if(this._packetWireProfile && !this._packetProfileAnnounced)
-            {
-                OctaneLogger.packets('Profile Hello required', this.packetRevision);
-
-                return false;
-            }
+            if(!this._helloAnnounced) return false;
 
             this._pendingClientMessages.push(...composers);
 
@@ -678,25 +647,14 @@ export class SocketConnection implements IConnection
             if(header === -1)
             {
                 OctaneLogger.packets('Unknown Composer', composer.constructor.name);
-
-                if(this._packetWireProfile) supported = false;
-
-                continue;
-            }
-
-            const wireHeader = this._packetWireProfile ? this._packetWireProfile.outgoing[header] : header;
-
-            if(wireHeader === undefined)
-            {
-                OctaneLogger.packets('Unsupported profile composer', this.packetRevision, header, composer.constructor.name);
                 supported = false;
 
                 continue;
             }
 
-            if(this._packetWireProfile && header !== 4000 && !this._packetProfileAnnounced)
+            if(header !== 4000 && !this._helloAnnounced)
             {
-                OctaneLogger.packets('Profile Hello required', this.packetRevision, header);
+                OctaneLogger.packets('Hello required', header);
                 supported = false;
 
                 continue;
@@ -704,61 +662,57 @@ export class SocketConnection implements IConnection
 
             const message = composer.getMessageArray();
 
-            if(this._packetWireProfile && header === 4000 && message[0] !== this.packetRevision)
+            if(header === 4000 && message[0] !== ClientHelloMessageComposer.BUILD)
             {
-                OctaneLogger.packets('Profile Hello revision mismatch', this.packetRevision, message[0]);
+                OctaneLogger.packets('Hello revision mismatch', message[0]);
                 supported = false;
 
                 continue;
             }
 
-            const encoded = this._codec.encode(wireHeader, message);
+            const encoded = this._codec?.encode(header, message);
 
             if(!encoded)
             {
                 OctaneLogger.packets('Encoding Failed', composer.constructor.name);
-
-                if(this._packetWireProfile) supported = false;
+                supported = false;
 
                 continue;
             }
 
-            OctaneLogger.packets('OutgoingComposer', wireHeader, composer.constructor.name, message);
+            OctaneLogger.packets('OutgoingComposer', header, composer.constructor.name, message);
 
-            this.write(encoded.getBuffer());
-
-            if(this._packetWireProfile && header === 4000 && this._socket?.readyState === WebSocket.OPEN
-                && ['disabled', 'ready', 'awaiting_server_hello'].includes(this._cryptoState))
-            {
-                this._packetProfileAnnounced = true;
-            }
+            const accepted = this.write(encoded.getBuffer());
+            if(!accepted) supported = false;
+            if(header === 4000 && accepted) this._helloAnnounced = true;
         }
 
         return supported;
     }
 
-    private write(buffer: ArrayBuffer): void
+    private write(buffer: ArrayBuffer): boolean
     {
-        if(!this._socket || this._socket.readyState !== WebSocket.OPEN) return;
+        if(!this._socket || this._socket.readyState !== WebSocket.OPEN) return false;
 
         if(this._cryptoState === 'disabled')
         {
             this._socket.send(buffer);
-            return;
+            return true;
         }
 
         if(this._cryptoState === 'ready')
         {
-            if(this._packetWireProfile) this.queueProfileEncryptedSend(buffer);
-            else this.encryptAndSend(buffer).catch(err => OctaneLogger.error('[ws-crypto] encrypt failed', err));
-            return;
+            this.queueEncryptedSend(buffer);
+            return true;
         }
 
         if(this._cryptoState === 'awaiting_server_hello')
         {
             this._pendingEncryptedSends.push(buffer);
-            return;
+            return true;
         }
+
+        return false;
     }
 
     public processReceivedData(): void
@@ -834,17 +788,7 @@ export class SocketConnection implements IConnection
     {
         if(!wrapper) return null;
 
-        // EvaWire exposes a signed short; profile keys use the unsigned wire value.
-        const header = this._packetWireProfile ? this._packetWireProfile.incoming[wrapper.header & 0xFFFF] : wrapper.header;
-
-        if(header === undefined)
-        {
-            OctaneLogger.packets('Unsupported profile message', this.packetRevision, wrapper.header);
-
-            return null;
-        }
-
-        const events = this._messages.getEvents(header);
+        const events = this._messages.getEvents(wrapper.header);
 
         if(!events || !events.length)
         {
@@ -893,11 +837,6 @@ export class SocketConnection implements IConnection
         this._messages.registerMessages(configuration);
     }
 
-    public rebindMessageEvents(): void
-    {
-        this._messages.rebindMessageEvents();
-    }
-
     public addMessageEvent(event: IMessageEvent): void
     {
         if(!event || !this._messages) return;
@@ -915,11 +854,6 @@ export class SocketConnection implements IConnection
     public get isAuthenticated(): boolean
     {
         return this._isAuthenticated;
-    }
-
-    public get packetRevision(): string
-    {
-        return this._packetWireProfile?.name;
     }
 
     public get connectionState(): Readonly<IConnectionStateSnapshot>

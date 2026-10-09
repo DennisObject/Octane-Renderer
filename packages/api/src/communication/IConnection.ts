@@ -5,7 +5,6 @@ import { IConnectionStateSnapshot } from './IConnectionStateSnapshot';
 
 export interface IConnection
 {
-    readonly packetRevision?: string;
     init(socketUrl: string): void;
     dispose(): void;
     ready(): void;

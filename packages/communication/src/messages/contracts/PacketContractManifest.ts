@@ -38,14 +38,15 @@ export const parsePacketContractManifest = (input: unknown): PacketContractManif
     const classified = new Set<string>();
     for(const entry of [...contracts, ...unpaired, ...exemptions])
     {
-        const key = `${ entry.direction }:${ entry.header }`;
+        const packetSide = 'side' in entry ? entry.side : 'typescript';
+        const key = `${ packetSide }:${ entry.direction }:${ entry.header }`;
         if(classified.has(key)) throw new TypeError(`${ key } is classified more than once`);
         classified.add(key);
     }
     for(const alias of registry.aliases)
     {
-        const key = `${ alias.direction }:${ alias.header }`;
-        if(!classified.has(key)) throw new TypeError(`alias header ${ key } is not classified`);
+        const key = `${ alias.side }:${ alias.direction }:${ alias.header }`;
+        if(!classified.has(key)) throw new TypeError(`alias header ${ alias.direction }:${ alias.header } is not classified`);
     }
 
     return deepFreeze({ schemaVersion: 2, registry, contracts, unpaired, exemptions });
@@ -75,7 +76,7 @@ const packetRegistry = (input: unknown): PacketRegistryPolicy =>
         return {
             side: side(alias.side, `${ context }.side`),
             direction: direction(alias.direction, context),
-            header: positiveInteger(alias.header, `${ context }.header`),
+            header: wireHeader(alias.header, `${ context }.header`),
             canonical,
             aliases: symbols,
             reason: concreteReason(alias.reason, context)
@@ -178,7 +179,7 @@ const contract = (input: unknown, context: string): PacketContract =>
     return {
         name: nonEmptyString(value.name, `${ context }.name`),
         direction: direction(value.direction, context),
-        header: positiveInteger(value.header, `${ context }.header`),
+        header: wireHeader(value.header, `${ context }.header`),
         java: endpoint(value.java, `${ context }.java`),
         typescript: endpoint(value.typescript, `${ context }.typescript`),
         fields: array(value.fields, `${ context }.fields`).map((field, index) => schema(field, `${ context }.fields[${ index }]`))
@@ -193,7 +194,7 @@ const unpairedPacket = (input: unknown, context: string): UnpairedPacket =>
     return {
         direction: direction(value.direction, context),
         side: side as UnpairedPacket['side'],
-        header: positiveInteger(value.header, `${ context }.header`),
+        header: wireHeader(value.header, `${ context }.header`),
         symbol: nonEmptyString(value.symbol, `${ context }.symbol`),
         path: nonEmptyString(value.path, `${ context }.path`),
         reason: concreteReason(value.reason, context)
@@ -206,7 +207,7 @@ const exemption = (input: unknown, context: string): PacketExemption =>
     return {
         name: nonEmptyString(value.name, `${ context }.name`),
         direction: direction(value.direction, context),
-        header: positiveInteger(value.header, `${ context }.header`),
+        header: wireHeader(value.header, `${ context }.header`),
         java: endpoint(value.java, `${ context }.java`),
         typescript: endpoint(value.typescript, `${ context }.typescript`),
         reason: concreteReason(value.reason, context)
@@ -221,6 +222,13 @@ const endpoint = (input: unknown, context: string): PacketEndpoint =>
         className: nonEmptyString(value.className, `${ context }.className`),
         path: nonEmptyString(value.path, `${ context }.path`)
     };
+};
+
+const wireHeader = (input: unknown, context: string): number =>
+{
+    if(!Number.isInteger(input) || ((input as number) < 0 || (input as number) > 65535))
+        throw new TypeError(`${ context } must be a 16-bit unsigned integer`);
+    return input as number;
 };
 
 const schema = (input: unknown, context: string): WireSchema =>

@@ -26,24 +26,24 @@ class TestWrapper
     }
 }
 
-/** AIR 13 class_1956: composers 145 / 68 / 1996, events 3883 / 3333. */
+/** September 16 AIR class_2036: composers 2078 / 2171 / 3651, events 2338 / 1585. */
 describe('personal word filter packet contract', () =>
 {
     it('uses the official headers and registers every request and response', () =>
     {
         const messages = new OctaneMessages();
 
-        expect(OutgoingHeader.GET_CUSTOM_FILTER).toBe(145);
-        expect(OutgoingHeader.ADD_CUSTOM_FILTER_WORD).toBe(68);
-        expect(OutgoingHeader.REMOVE_CUSTOM_FILTER_WORD).toBe(1996);
-        expect(IncomingHeader.CUSTOM_FILTER_RESULT).toBe(3883);
-        expect(IncomingHeader.MODIFY_CUSTOM_FILTER_RESULT).toBe(3333);
+        expect(OutgoingHeader.GET_CUSTOM_FILTER).toBe(2078);
+        expect(OutgoingHeader.ADD_CUSTOM_FILTER_WORD).toBe(2171);
+        expect(OutgoingHeader.REMOVE_CUSTOM_FILTER_WORD).toBe(3651);
+        expect(IncomingHeader.CUSTOM_FILTER_RESULT).toBe(2338);
+        expect(IncomingHeader.MODIFY_CUSTOM_FILTER_RESULT).toBe(1585);
 
-        expect(messages.composers.get(145)).toBe(GetCustomFilterMessageComposer);
-        expect(messages.composers.get(68)).toBe(AddCustomFilterWordMessageComposer);
-        expect(messages.composers.get(1996)).toBe(RemoveCustomFilterWordMessageComposer);
-        expect(messages.events.get(3883)).toBe(CustomFilterResultEvent);
-        expect(messages.events.get(3333)).toBe(ModifyCustomFilterResultEvent);
+        expect(messages.composers.get(2078)).toBe(GetCustomFilterMessageComposer);
+        expect(messages.composers.get(2171)).toBe(AddCustomFilterWordMessageComposer);
+        expect(messages.composers.get(3651)).toBe(RemoveCustomFilterWordMessageComposer);
+        expect(messages.events.get(2338)).toBe(CustomFilterResultEvent);
+        expect(messages.events.get(1585)).toBe(ModifyCustomFilterResultEvent);
     });
 
     it('serializes the request bodies as the official composers do', () =>

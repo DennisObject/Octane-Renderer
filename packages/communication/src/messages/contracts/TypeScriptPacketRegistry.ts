@@ -73,7 +73,7 @@ export class TypeScriptPacketRegistry
             if(header.owner === 'IncomingHeader')
             {
                 const value = requireHeader(incoming, header.symbol, 'server_to_client');
-                if(value <= 0) return;
+                if(value < 0) return;
                 const eventSource = requireUniqueSource(eventSources, registeredClass);
                 const parserClass = eventParser(eventSource);
                 const source = requireUniqueSource(parserSources, parserClass);
@@ -85,7 +85,7 @@ export class TypeScriptPacketRegistry
             else if(header.owner === 'OutgoingHeader')
             {
                 const value = requireHeader(outgoing, header.symbol, 'client_to_server');
-                if(value <= 0) return;
+                if(value < 0) return;
                 const source = requireUniqueSource(composerSources, registeredClass);
                 discovered.push({
                     direction: 'client_to_server', header: value, symbol: header.symbol,
@@ -192,7 +192,7 @@ const validateDeclarations = (table: HeaderTable, direction: PacketDirection): v
     const symbolsByHeader = new Map<number, string[]>();
     for(const [symbol, header] of table.values)
     {
-        if(header <= 0) throw new TypeError(`non-positive ${ direction } header ${ symbol }=${ header }`);
+        if(header < 0) throw new TypeError(`negative ${ direction } header ${ symbol }=${ header }`);
         const symbols = symbolsByHeader.get(header) ?? [];
         symbols.push(symbol);
         symbolsByHeader.set(header, symbols);
@@ -234,7 +234,7 @@ const findDeclaredOnly = (
     table: HeaderTable,
     active: ReadonlyMap<string, RegisteredTypeScriptPacket>): DeclaredTypeScriptPacket[] =>
     [...table.values]
-        .filter(([, header]) => header > 0)
+        .filter(([, header]) => header >= 0)
         .filter(([symbol, header]) =>
         {
             const packet = active.get(key(direction, header));
