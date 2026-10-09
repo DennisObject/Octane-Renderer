@@ -1583,7 +1583,7 @@
     {
       "name": "GET_CRAFTABLE_PRODUCTS",
       "direction": "client_to_server",
-      "header": 1420,
+      "header": 2698,
       "java": {
         "symbol": "CraftingAddRecipeEvent",
         "className": "CraftingAddRecipeEvent",
@@ -2533,7 +2533,7 @@
     {
       "name": "GET_CRAFTING_RECIPE",
       "direction": "client_to_server",
-      "header": 2698,
+      "header": 1420,
       "java": {
         "symbol": "RequestCraftingRecipesEvent",
         "className": "RequestCraftingRecipesEvent",

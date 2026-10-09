@@ -434,8 +434,8 @@ export class OutgoingHeader
     public static GET_BONUS_RARE_INFO = 2453;
     public static CRAFT = 2324;
     public static CRAFT_SECRET = 383;
-    public static GET_CRAFTABLE_PRODUCTS = 1420;
-    public static GET_CRAFTING_RECIPE = 2698;
+    public static GET_CRAFTABLE_PRODUCTS = 2698;
+    public static GET_CRAFTING_RECIPE = 1420;
     public static GET_CRAFTING_RECIPES_AVAILABLE = 3746;
     public static PHOTO_COMPETITION = 3200;
     public static PUBLISH_PHOTO = 1021;
