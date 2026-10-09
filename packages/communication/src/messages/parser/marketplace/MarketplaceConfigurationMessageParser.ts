@@ -10,6 +10,9 @@ export class MarketplaceConfigurationMessageParser implements IMessageParser
     private _minimumPrice: number;
     private _offerTime: number;
     private _displayTime: number;
+    private _sellingFeePercentage: number;
+    private _revenueLimit: number;
+    private _halfTaxLimit: number;
 
     public flush(): boolean
     {
@@ -21,6 +24,9 @@ export class MarketplaceConfigurationMessageParser implements IMessageParser
         this._minimumPrice = 0;
         this._offerTime = 0;
         this._displayTime = 0;
+        this._sellingFeePercentage = 0;
+        this._revenueLimit = 0;
+        this._halfTaxLimit = 0;
 
         return true;
     }
@@ -37,6 +43,13 @@ export class MarketplaceConfigurationMessageParser implements IMessageParser
         this._maximumPrice = wrapper.readInt();
         this._offerTime = wrapper.readInt();
         this._displayTime = wrapper.readInt();
+
+        // The official client (MarketplaceConfigurationEvent, WIN63-202609161723) reads three more ints after the average price period: sellingFeePercentage, revenueLimit and
+        // halfTaxLimit, which make its seller price `price - ceil(round(1000 * price * (sellingFeePercentage / 100 + 0.5 * price / halfTaxLimit)) / 1000)`.
+        // A hotel that does not send them leaves them 0 (a missing fee percentage then means the commission above).
+        this._sellingFeePercentage = wrapper.bytesAvailable ? wrapper.readInt() : 0;
+        this._revenueLimit = wrapper.bytesAvailable ? wrapper.readInt() : 0;
+        this._halfTaxLimit = wrapper.bytesAvailable ? wrapper.readInt() : 0;
 
         return true;
     }
@@ -79,5 +92,20 @@ export class MarketplaceConfigurationMessageParser implements IMessageParser
     public get displayTime(): number
     {
         return this._displayTime;
+    }
+
+    public get sellingFeePercentage(): number
+    {
+        return this._sellingFeePercentage;
+    }
+
+    public get revenueLimit(): number
+    {
+        return this._revenueLimit;
+    }
+
+    public get halfTaxLimit(): number
+    {
+        return this._halfTaxLimit;
     }
 }
