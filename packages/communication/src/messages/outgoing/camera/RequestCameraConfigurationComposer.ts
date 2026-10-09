@@ -6,7 +6,11 @@ export class RequestCameraConfigurationComposer implements IMessageComposer<Cons
 
     constructor(viewport?: string)
     {
-        this._data = viewport ? [viewport] : [];
+        if(viewport === null || viewport === '') viewport = undefined;
+
+        this._data = [];
+
+        if(viewport !== undefined) this._data.push(viewport);
     }
 
     public getMessageArray()
