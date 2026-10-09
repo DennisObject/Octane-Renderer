@@ -41,6 +41,9 @@ export interface IRoomEngineServices
     moveBlocked: boolean;
     readonly wiredClickUserOption: number;
     readonly wiredClickFurniOption: number;
+    beginWiredUserClick(roomId: number, index: number): number;
+    pendingWiredUserClick(roomId: number, index: number): number;
+    cancelWiredUserClick(): void;
     isAreaSelectionMode(): boolean;
     whereYouClickIsWhereYouGo(): boolean;
     areaSelectionManager: IRoomAreaSelectionManager;

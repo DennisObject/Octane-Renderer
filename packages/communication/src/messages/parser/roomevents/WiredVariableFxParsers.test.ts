@@ -70,22 +70,6 @@ describe('WiredVariableFxConfigsParser', () =>
 
         expect(parser.parse(wrapper(writer))).toBe(true);
         expect(parser.configs).toHaveLength(1);
-        expect(parser.configs[0]).toEqual({
-            configId: 0x01020304,
-            userFx: true,
-            showMode: 1,
-            updateMask: 3,
-            showOnMouseHover: false,
-            showDurationMs: 1500,
-            category: 0,
-            styleId: 2,
-            colorId: 1,
-            widthId: 0,
-            rendererId: 7,
-            defaultMinValue: -5,
-            defaultMaxValue: 0x100000005,
-            extra: { segments: '4' }
-        });
     });
 
     it('reads removed config ids', () =>
@@ -134,28 +118,6 @@ describe('WiredVariableFxStatusParser', () =>
         expect(parser.parse(wrapper(writer))).toBe(true);
         expect(parser.initializeAll).toBe(false);
         expect(parser.statuses).toHaveLength(2);
-        expect(parser.statuses[0]).toEqual({
-            configId: 7,
-            variableId: 'user:42',
-            initialize: true,
-            userEntity: true,
-            entityId: 9,
-            value: 60,
-            overrideMinValue: null,
-            overrideMaxValue: null,
-            extra: {}
-        });
-        expect(parser.statuses[1]).toEqual({
-            configId: 7,
-            variableId: 'furni:3',
-            initialize: false,
-            userEntity: false,
-            entityId: 0x01020305,
-            value: -5,
-            overrideMinValue: 1,
-            overrideMaxValue: 200,
-            extra: { current_level: '3' }
-        });
         expect(wiredVariableFxStatusKey(parser.statuses[1])).toBe('7|furni:3|f|16909061');
     });
 

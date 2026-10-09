@@ -98,6 +98,12 @@ export interface IRoomEngine
     whereYouClickIsWhereYouGo(): boolean;
     /** What the room's wired asked this player's clicks on avatars and furni to do; forgotten with the room. */
     setWiredClickSettings(userOption: number, furniOption: number): void;
+    setWiredUserClickEnabled(enabled: boolean, roomId?: number): void;
+    clearWiredUserClickRoom(roomId: number): void;
+    beginWiredUserClick(roomId: number, index: number): number;
+    pendingWiredUserClick(roomId: number, index: number): number;
+    cancelWiredUserClick(): void;
+    completeWiredUserClick(roomId: number, index: number, requestId: number, doNotRotate: boolean): boolean;
     readonly wiredClickUserOption: number;
     readonly wiredClickFurniOption: number;
 }

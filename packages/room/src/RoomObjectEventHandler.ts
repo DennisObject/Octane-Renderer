@@ -387,7 +387,9 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
 
         if((category === RoomObjectCategory.UNIT) && (operation === RoomObjectOperationType.OBJECT_UNDEFINED) && (objectType === RoomObjectUserType.USER))
         {
-            GetCommunication().connection.send(new ClickUserMessageComposer(objectId));
+            const roomId = this._roomEngine.activeRoomId;
+            const requestId = this._roomEngine.beginWiredUserClick(roomId, objectId);
+            GetCommunication().connection.send(requestId ? new ClickUserMessageComposer(objectId, roomId, requestId) : new ClickUserMessageComposer(objectId));
         }
     }
 
@@ -2298,6 +2300,7 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
         if(!this._roomEngine) return;
 
         this.clearPendingAvatarLook();
+        if(!select || !this._roomEngine.pendingWiredUserClick(roomId, objectId)) this._roomEngine.cancelWiredUserClick();
 
         const category = RoomObjectCategory.UNIT;
         const previousAvatar = this._roomEngine.getRoomObject(roomId, this._selectedAvatarId, category);
@@ -2325,7 +2328,7 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
 
                 const location = targetAvatar.getLocation();
 
-                if(location)
+                if(location && !this._roomEngine.pendingWiredUserClick(roomId, objectId))
                 {
                     this._pendingAvatarLookTimeout = setTimeout(() =>
                     {
@@ -2352,6 +2355,14 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
     public clearSelectedAvatar(roomId: number): void
     {
         this.setSelectedAvatar(roomId, 0, false);
+    }
+
+    public releaseWiredAvatarLook(roomId: number, index: number, doNotRotate: boolean): void
+    {
+        this.clearPendingAvatarLook();
+        if(doNotRotate || this._selectedAvatarId !== index) return;
+        const location = this._roomEngine.getRoomObject(roomId, index, RoomObjectCategory.UNIT)?.getLocation();
+        if(location) GetCommunication().connection.send(new RoomUnitLookComposer(~~location.x, ~~location.y));
     }
 
     private clearPendingAvatarLook(): void

@@ -84,10 +84,23 @@ export function readWiredLong(wrapper: IMessageDataWrapper): number
 }
 
 /** A signed `long` sent as two 32-bit halves; the high half carries the sign. */
-export function readWiredSignedLong(wrapper: IMessageDataWrapper): number
+export function readWiredSignedLong(wrapper: IMessageDataWrapper): bigint
 {
-    const high = wrapper.readInt();
-    const low = wrapper.readInt() >>> 0;
+    return (BigInt(wrapper.readInt()) << 32n) | BigInt(wrapper.readInt() >>> 0);
+}
 
-    return (high * 0x100000000) + low;
+export const WIRED_INT64_MIN = -(1n << 63n);
+export const WIRED_INT64_MAX = (1n << 63n) - 1n;
+export function parseWiredInt64(value: string | bigint | number): bigint
+{
+    if(typeof value === 'number' && !Number.isSafeInteger(value)) throw new RangeError('Inexact variable value');
+    if(typeof value === 'string' && !/^-?\d+$/.test(value)) throw new RangeError('Invalid integer');
+    const exact = BigInt(value);
+    if(exact < WIRED_INT64_MIN || exact > WIRED_INT64_MAX) throw new RangeError('Variable value is outside signed 64-bit range');
+    return exact;
+}
+export function wiredInt64Parts(value: string | bigint | number): [number, number]
+{
+    const exact = parseWiredInt64(value);
+    return [Number(BigInt.asIntN(32, exact >> 32n)), Number(BigInt.asIntN(32, exact))];
 }

@@ -1,10 +1,11 @@
 import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { readWiredSignedLong } from './WiredVariableData';
 import { readWiredLong } from './WiredVariableData';
 
 /** `package_226.WiredVariableStorageParameter` without the leading variable id. */
 export interface IWiredVariableStorage
 {
-    value: number;
+    value: bigint | number;
     creationTime: number;
     creationTimeStr: string;
     lastUpdateTime: number;
@@ -46,6 +47,8 @@ export class WiredVariableHoldersPageParser implements IMessageParser
     public parse(wrapper: IMessageDataWrapper): boolean
     {
         if(!wrapper) return false;
+        const exact = wrapper.header === 9482;
+        if(exact && wrapper.readInt() !== 1) return false;
 
         this._variableId = wrapper.readString();
         this._totalEntries = wrapper.readInt();
@@ -66,7 +69,7 @@ export class WiredVariableHoldersPageParser implements IMessageParser
                 entityId,
                 entityName,
                 storage: {
-                    value: wrapper.readInt(),
+                    value: exact ? readWiredSignedLong(wrapper) : BigInt(wrapper.readInt()),
                     creationTime: readWiredLong(wrapper),
                     creationTimeStr: wrapper.readString(),
                     lastUpdateTime: readWiredLong(wrapper),
@@ -78,7 +81,7 @@ export class WiredVariableHoldersPageParser implements IMessageParser
         this._userTypeFilter = wrapper.readInt();
         this._sortTypeFilter = wrapper.readInt();
 
-        return true;
+        return !exact || !wrapper.bytesAvailable;
     }
 
     public get variableId(): string

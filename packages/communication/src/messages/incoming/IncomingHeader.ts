@@ -1,6 +1,9 @@
 export class IncomingHeader
 {
     // These packets do not belong to this revision, so these are custom packet ids
+    public static WIRED_USER_VARIABLES_DATA64 = 9480;
+    public static WIRED_VARIABLE_HOLDERS64 = 9481;
+    public static WIRED_VARIABLE_HOLDERS_PAGE64 = 9482;
     public static AREA_HIDE = 6001;
 
     // Original packets
@@ -101,6 +104,8 @@ export class IncomingHeader
     public static CHEST_UPGRADE_RESULT = 9335;
     public static CHEST_NOTIFICATION = 9336;
     public static WIRED_CHEST_TRANSACTION_DETAILS = 9330;
+    public static WIRED_CHEST_SETTINGS_ACK = 9347;
+    public static WIRED_CHEST_REWARD = 9346;
     public static WIRED_TRADE_OPEN = 9331;
     public static WIRED_TRADE_ITEMS = 9332;
     public static WIRED_TRADE_CANCELLED = 9333;

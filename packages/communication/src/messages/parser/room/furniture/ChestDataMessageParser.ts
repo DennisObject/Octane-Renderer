@@ -23,7 +23,7 @@ export const CHEST_KIND_FURNI = 1;
  * int entryCount, [int currencyType, int amount]*,
  * int chestKind, int furniCount, [int baseItemId, int quantity]*, bool locked, int capacity,
  * bool autoLock, bool viewerOwnsChest, int chestSpriteId, bool wiredEnabled,
- * bool starterChest, int previewMode, int previewAmount.
+ * bool starterChest, int previewMode, int previewAmount; optional bool canWithdraw, bool canDeposit, bool canLock.
  */
 export class ChestDataMessageParser implements IMessageParser
 {
@@ -53,6 +53,7 @@ export class ChestDataMessageParser implements IMessageParser
     private _starterChest: boolean = false;
     private _previewMode: number = 0;
     private _previewAmount: number = 1;
+    private _permissions: boolean[] | null = null;
 
     public flush(): boolean
     {
@@ -83,6 +84,7 @@ export class ChestDataMessageParser implements IMessageParser
         this._starterChest = false;
         this._previewMode = 0;
         this._previewAmount = 1;
+        this._permissions = null;
 
         return true;
     }
@@ -128,6 +130,7 @@ export class ChestDataMessageParser implements IMessageParser
         this._starterChest = false;
         this._previewMode = 0;
         this._previewAmount = 1;
+        this._permissions = null;
 
         if(!wrapper.bytesAvailable) return true;
 
@@ -178,10 +181,16 @@ export class ChestDataMessageParser implements IMessageParser
         if(!wrapper.bytesAvailable) return true;
 
         this._previewAmount = wrapper.readInt();
+        if(wrapper.bytesAvailable)
+            this._permissions = [wrapper.readBoolean(), wrapper.readBoolean(), wrapper.readBoolean()];
 
         return true;
     }
 
+    // Legacy servers omit the optional permission tail; preserve their original controls.
+    public get canWithdraw(): boolean { return this._permissions?.[0] ?? (this._viewerOwnsChest || !this._locked); }
+    public get canDeposit(): boolean { return this._permissions?.[1] ?? (this._accessDonate || this.canWithdraw); }
+    public get canLock(): boolean { return this._permissions?.[2] ?? (this._viewerOwnsChest || !this._locked); }
     public get itemId(): number
     {
         return this._itemId;

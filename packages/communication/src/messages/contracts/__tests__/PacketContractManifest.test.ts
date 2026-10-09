@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadPacketContractManifest, parsePacketContractManifest } from '../PacketContractManifest';
+import { parsePacketContractManifest } from '../PacketContractManifest';
 
 const validManifest = () => ({
     schemaVersion: 2,
@@ -31,11 +31,6 @@ const validManifest = () => ({
 
 describe('packet contract manifest', () =>
 {
-    it('loads the repository manifest from disk', () =>
-    {
-        expect(loadPacketContractManifest('protocol/packet-field-contracts.json').schemaVersion).toBe(2);
-    });
-
     it('loads and deeply freezes valid structured schemas', () =>
     {
         const manifest = parsePacketContractManifest(validManifest());

@@ -26,3 +26,7 @@ export * from './WiredVariableHoldersRequestComposer';
 export * from './WiredVariableHashesComposer';
 export * from './WiredAllVariablesRequestComposer';
 export * from './WiredGenerateWebApiKeyComposer';
+
+export * from './WiredUserVariableUpdate64Composer';
+
+export * from './WiredUserVariableManage64Composer';

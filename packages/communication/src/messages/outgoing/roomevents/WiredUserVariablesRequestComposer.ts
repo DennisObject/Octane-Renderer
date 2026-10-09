@@ -1,14 +1,7 @@
 import { IMessageComposer } from '@octane/api';
-
-export class WiredUserVariablesRequestComposer implements IMessageComposer<[]>
+export class WiredUserVariablesRequestComposer implements IMessageComposer<number[]>
 {
-    public getMessageArray(): []
-    {
-        return [];
-    }
-
-    public dispose(): void
-    {
-        return;
-    }
+    constructor(private exact = false) { }
+    public getMessageArray(): number[] { return this.exact ? [1] : []; }
+    public dispose(): void { }
 }

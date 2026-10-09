@@ -15,8 +15,8 @@ export interface IWiredVariableFxConfig
     colorId: number;
     widthId: number;
     rendererId: number;
-    defaultMinValue: number;
-    defaultMaxValue: number;
+    defaultMinValue: bigint | number;
+    defaultMaxValue: bigint | number;
     extra: Record<string, string>;
 }
 
@@ -28,9 +28,9 @@ export interface IWiredVariableFxStatus
     initialize: boolean;
     userEntity: boolean;
     entityId: number;
-    value: number;
-    overrideMinValue: number | null;
-    overrideMaxValue: number | null;
+    value: bigint | number;
+    overrideMinValue: bigint | number | null;
+    overrideMaxValue: bigint | number | null;
     extra: Record<string, string>;
 }
 

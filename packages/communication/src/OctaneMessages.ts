@@ -1,3 +1,4 @@
+import { WiredUserVariableUpdate64Composer, WiredUserVariableManage64Composer } from './messages';
 import { IMessageConfiguration } from '@octane/api';
 import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent } from './messages';
 import { GoToBreedingNestFailureEvent, GroupMemberUpdateEvent, GroupMembersRefreshEvent } from './messages';
@@ -35,7 +36,7 @@ import { CatalogRuntimeConfigurationEvent } from './messages/incoming/catalog/co
 import { CatalogRuntimeConfigurationComposer } from './messages/outgoing/catalog/configuration';
 import { RareValuesEvent, RequestRareValuesComposer } from './messages';
 import { GetHotLooksComposer, HotLooksEvent } from './messages';
-import { ChestDataEvent, ChestDepositComposer, ChestDepositFurniComposer, ChestDepositInventoryItemComposer, ChestFurniChunkEvent, ChestFurniDeltaEvent, ChestOpenComposer, ChestOpenEvent, ChestStartDepositComposer, ChestWithdrawAllFurniComposer, ChestWithdrawComposer, ChestWithdrawFurniComposer, ChestLogEvent, ChestCloseComposer, ChestEnableWiredComposer, ChestSaveOptionsComposer, ChestSaveSettingsComposer, ChestSaveNotificationsComposer, ChestUpgradeCapacityComposer, ChestNotificationEvent, ChestUpgradeResultEvent, ChestRequestLogComposer, WiredChestRoomLogsComposer, WiredChestLockComposer, WiredChestTransactionDetailsComposer, WiredChestRoomLogsEvent, WiredChestLockStateEvent, WiredChestTransactionDetailsEvent, WiredTradeOpenEvent, WiredTradeItemsEvent, WiredTradeCancelledEvent, WiredTradeCompletedEvent, WiredTradeOfferItemsComposer, WiredTradeAcceptComposer, WiredTradeCancelComposer } from './messages';
+import { WiredChestSettingsAckEvent, WiredChestRewardEvent, ChestDataEvent, ChestDepositComposer, ChestDepositFurniComposer, ChestDepositInventoryItemComposer, ChestFurniChunkEvent, ChestFurniDeltaEvent, ChestOpenComposer, ChestOpenEvent, ChestStartDepositComposer, ChestWithdrawAllFurniComposer, ChestWithdrawComposer, ChestWithdrawFurniComposer, ChestLogEvent, ChestCloseComposer, ChestEnableWiredComposer, ChestSaveOptionsComposer, ChestSaveSettingsComposer, ChestSaveNotificationsComposer, ChestUpgradeCapacityComposer, ChestNotificationEvent, ChestUpgradeResultEvent, ChestRequestLogComposer, WiredChestRoomLogsComposer, WiredChestLockComposer, WiredChestTransactionDetailsComposer, WiredChestRoomLogsEvent, WiredChestLockStateEvent, WiredChestTransactionDetailsEvent, WiredTradeOpenEvent, WiredTradeItemsEvent, WiredTradeCancelledEvent, WiredTradeCompletedEvent, WiredTradeOfferItemsComposer, WiredTradeAcceptComposer, WiredTradeCancelComposer } from './messages';
 import { PressKeybindComposer } from './messages';
 import { EarningsCenterEvent, EarningsClaimResultEvent, IncomeRewardNotificationEvent, RequestEarningsCenterComposer, ClaimEarningsRewardComposer, ClaimAllEarningsRewardsComposer } from './messages';
 import { ActiveDailyTasksMessageEvent, ClaimDailyTaskMessageComposer, ClaimRewardTrackPrizeMessageComposer, DailyTaskUpdatedMessageEvent, DailyTasksAddedMessageEvent, DeleteRewardTrackEntityMessageComposer, GetDailyTasksMessageComposer, GetRewardTrackAdminDataMessageComposer, GetRewardTracksMessageComposer, PurchaseRewardTrackPremiumMessageComposer, RewardTrackAdminDataMessageEvent, RewardTrackAdminResultMessageEvent, RewardTrackClaimResultMessageEvent, RewardTrackFurniSearchResultMessageEvent, RewardTrackTextsMessageEvent, RewardTrackPremiumPurchaseResultMessageEvent, RewardTrackProgressMessageEvent, RewardTracksMessageEvent, SaveRewardTrackMessageComposer, SaveRewardTrackPrizeMessageComposer, SaveRewardTrackTaskMessageComposer, SaveRewardTrackTextsMessageComposer, SearchRewardTrackFurniMessageComposer } from './messages';
@@ -541,6 +542,8 @@ export class OctaneMessages implements IMessageConfiguration
         this._events.set(IncomingHeader.CHEST_UPGRADE_RESULT, ChestUpgradeResultEvent);
         this._events.set(IncomingHeader.CHEST_NOTIFICATION, ChestNotificationEvent);
         this._events.set(IncomingHeader.WIRED_CHEST_TRANSACTION_DETAILS, WiredChestTransactionDetailsEvent);
+        this._events.set(IncomingHeader.WIRED_CHEST_SETTINGS_ACK, WiredChestSettingsAckEvent);
+        this._events.set(IncomingHeader.WIRED_CHEST_REWARD, WiredChestRewardEvent);
         this._events.set(IncomingHeader.WIRED_TRADE_OPEN, WiredTradeOpenEvent);
         this._events.set(IncomingHeader.WIRED_TRADE_ITEMS, WiredTradeItemsEvent);
         this._events.set(IncomingHeader.WIRED_TRADE_CANCELLED, WiredTradeCancelledEvent);
@@ -1352,6 +1355,8 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.WIRED_ROOM_SETTINGS_REQUEST, WiredRoomSettingsRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_ROOM_SETTINGS_SAVE, WiredRoomSettingsSaveComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLES_REQUEST, WiredUserVariablesRequestComposer);
+        this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE64, WiredUserVariableUpdate64Composer);
+        this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE64, WiredUserVariableManage64Composer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE, WiredUserVariableUpdateComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE, WiredUserVariableManageComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_INSPECT_MOVE, WiredUserInspectMoveComposer);
@@ -1613,7 +1618,7 @@ export class OctaneMessages implements IMessageConfiguration
 
     public get eventAliases(): ReadonlyMap<number, number>
     {
-        return new Map([[IncomingHeader.LEGACY_USER_FIGURE, IncomingHeader.USER_FIGURE]]);
+        return new Map([[IncomingHeader.LEGACY_USER_FIGURE, IncomingHeader.USER_FIGURE], [IncomingHeader.WIRED_USER_VARIABLES_DATA64, IncomingHeader.WIRED_USER_VARIABLES_DATA], [IncomingHeader.WIRED_VARIABLE_HOLDERS64, IncomingHeader.WIRED_VARIABLE_HOLDERS], [IncomingHeader.WIRED_VARIABLE_HOLDERS_PAGE64, IncomingHeader.WIRED_VARIABLE_HOLDERS_PAGE]]);
     }
 
     public get events(): Map<number, Function>

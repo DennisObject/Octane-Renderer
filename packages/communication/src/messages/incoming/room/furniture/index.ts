@@ -39,3 +39,5 @@ export * from './WiredTradeItemsEvent';
 export * from './WiredTradeCancelledEvent';
 export * from './WiredTradeCompletedEvent';
 export * from './ObjectRemoveConfirmEvent';
+export * from './WiredChestRewardEvent';
+export * from './WiredChestSettingsAckEvent';

@@ -1,11 +1,12 @@
 import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { readWiredSignedLong } from './WiredVariableData';
 import { IWiredVariableData, parseWiredVariableData } from './WiredVariableData';
 
 /** `package_215.ObjectIdAndValuePair`. */
 export interface IWiredVariableHolderValue
 {
     objectId: number;
-    value: number;
+    value: bigint | number;
 }
 
 export class WiredVariableHoldersParser implements IMessageParser
@@ -26,6 +27,8 @@ export class WiredVariableHoldersParser implements IMessageParser
     public parse(wrapper: IMessageDataWrapper): boolean
     {
         if(!wrapper) return false;
+        const exact = wrapper.header === 9481;
+        if(exact && wrapper.readInt() !== 1) return false;
 
         this._roomId = wrapper.readInt();
         this._variable = parseWiredVariableData(wrapper);
@@ -37,11 +40,11 @@ export class WiredVariableHoldersParser implements IMessageParser
         {
             this._holders.push({
                 objectId: wrapper.readInt(),
-                value: wrapper.readInt()
+                value: exact ? readWiredSignedLong(wrapper) : BigInt(wrapper.readInt())
             });
         }
 
-        return true;
+        return !exact || !wrapper.bytesAvailable;
     }
 
     public get roomId(): number

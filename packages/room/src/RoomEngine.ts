@@ -26,6 +26,10 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
     public static ROOM_OBJECT_ID: number = -1;
     public static ROOM_OBJECT_TYPE: string = 'room';
     private _areaHideHoleCounts = new Map<string, number>();
+    private _wiredUserClickEnabled = false;
+    private _wiredUserClickRoomId = 0;
+    private _wiredUserClickSequence = 0;
+    private _pendingWiredUserClick: { roomId: number; index: number; requestId: number; identity: IRoomObject; expiresAt: number } = null;
 
     public static CURSOR_OBJECT_ID: number = -2;
     public static CURSOR_OBJECT_TYPE: string = 'tile_cursor';
@@ -149,7 +153,12 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
     public setActiveRoomId(roomId: number): void
     {
         // A wired click setting belongs to the room that sent it.
-        if(roomId !== this._activeRoomId) this._wiredClickSettings = DEFAULT_WIRED_CLICK_SETTINGS;
+        if(roomId !== this._activeRoomId)
+        {
+            this._wiredClickSettings = DEFAULT_WIRED_CLICK_SETTINGS;
+            this.cancelWiredUserClick();
+            if(this._wiredUserClickRoomId !== roomId) this.setWiredUserClickEnabled(false);
+        }
 
         this._activeRoomId = roomId;
     }
@@ -157,6 +166,61 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
     public setWiredClickSettings(userOption: number, furniOption: number): void
     {
         this._wiredClickSettings = normalizeWiredClickSettings(userOption, furniOption);
+    }
+
+    public setWiredUserClickEnabled(enabled: boolean, roomId = 0): void
+    {
+        this._wiredUserClickRoomId = roomId || this._activeRoomId;
+        this._wiredUserClickEnabled = enabled;
+        if(!enabled) this.cancelWiredUserClick();
+    }
+
+    public clearWiredUserClickRoom(roomId: number): void
+    {
+        if(this._wiredUserClickRoomId === roomId)
+        {
+            this._wiredUserClickEnabled = false;
+            this._wiredUserClickRoomId = 0;
+        }
+        if(this._pendingWiredUserClick?.roomId === roomId) this.cancelWiredUserClick();
+    }
+
+    public beginWiredUserClick(roomId: number, index: number): number
+    {
+        this.cancelWiredUserClick();
+        if(!this._wiredUserClickEnabled || roomId !== this._wiredUserClickRoomId || roomId !== this._activeRoomId) return 0;
+        // Never reuse an in-flight identity, including after a room change.
+        if(this._wiredUserClickSequence === 0x7fffffff) throw new Error('Reconnect to continue using Wired avatar clicks.');
+        const identity = this.getRoomObject(roomId, index, RoomObjectCategory.UNIT);
+        if(!identity) return 0;
+        const requestId = ++this._wiredUserClickSequence;
+        this._pendingWiredUserClick = { roomId, index, requestId, identity, expiresAt: Date.now() + 10000 };
+        return requestId;
+    }
+
+    public pendingWiredUserClick(roomId: number, index: number): number
+    {
+        const pending = this._pendingWiredUserClick;
+        if(!pending || pending.roomId !== roomId || pending.index !== index) return 0;
+        if(pending.expiresAt <= Date.now() || this.getRoomObject(roomId, index, RoomObjectCategory.UNIT) !== pending.identity)
+        {
+            this.cancelWiredUserClick();
+            return 0;
+        }
+        return pending.requestId;
+    }
+
+    public cancelWiredUserClick(): void
+    {
+        this._pendingWiredUserClick = null;
+    }
+
+    public completeWiredUserClick(roomId: number, index: number, requestId: number, doNotRotate: boolean): boolean
+    {
+        if(!requestId || roomId !== this._activeRoomId || this.pendingWiredUserClick(roomId, index) !== requestId) return false;
+        this.cancelWiredUserClick();
+        this._roomObjectEventHandler.releaseWiredAvatarLook(roomId, index, doNotRotate);
+        return true;
     }
 
     public get wiredClickUserOption(): number
@@ -184,6 +248,7 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         this._roomsWithInitializedObjects.delete(roomId);
         this._initializedRooms.delete(roomId);
         this._roomObjectEventHandler.setGameInputHandler(roomId, null);
+        this.clearWiredUserClickRoom(roomId);
 
         const instance = this.getRoomInstance(roomId);
 

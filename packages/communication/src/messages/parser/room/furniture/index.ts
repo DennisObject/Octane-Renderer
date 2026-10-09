@@ -42,3 +42,5 @@ export * from './WiredTradeItemsMessageParser';
 export * from './WiredTradeCancelledMessageParser';
 export * from './WiredTradeCompletedMessageParser';
 export * from './ObjectRemoveConfirmParser';
+export * from './WiredChestRewardMessageParser';
+export * from './WiredChestSettingsAckParser';

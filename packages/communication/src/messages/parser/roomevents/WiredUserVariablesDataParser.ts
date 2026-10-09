@@ -1,4 +1,5 @@
 import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { readWiredSignedLong } from './WiredVariableData';
 
 export interface IWiredArrayFieldDefinitionData
 {
@@ -43,7 +44,7 @@ export interface IWiredUserVariableAssignmentData
     createdAt: number;
     hasValue: boolean;
     updatedAt: number;
-    value: number | null;
+    value: bigint | number | null;
     variableItemId: number;
 }
 
@@ -84,7 +85,7 @@ export interface IWiredRoomVariableAssignmentData
     createdAt: number;
     hasValue: boolean;
     updatedAt: number;
-    value: number | null;
+    value: bigint | number | null;
     variableItemId: number;
 }
 
@@ -126,6 +127,8 @@ export class WiredUserVariablesDataParser implements IMessageParser
     public parse(wrapper: IMessageDataWrapper): boolean
     {
         if(!wrapper) return false;
+        const exact = wrapper.header === 9480;
+        if(exact && wrapper.readInt() !== 1) return false;
 
         this._roomId = wrapper.readInt();
 
@@ -165,7 +168,7 @@ export class WiredUserVariablesDataParser implements IMessageParser
             {
                 const variableItemId = wrapper.readInt();
                 const hasValue = wrapper.readBoolean();
-                const rawValue = wrapper.readInt();
+                const rawValue = exact ? readWiredSignedLong(wrapper) : BigInt(wrapper.readInt());
                 const createdAt = wrapper.readInt();
                 const updatedAt = wrapper.readInt();
 
@@ -212,7 +215,7 @@ export class WiredUserVariablesDataParser implements IMessageParser
             {
                 const variableItemId = wrapper.readInt();
                 const hasValue = wrapper.readBoolean();
-                const rawValue = wrapper.readInt();
+                const rawValue = exact ? readWiredSignedLong(wrapper) : BigInt(wrapper.readInt());
                 const createdAt = wrapper.readInt();
                 const updatedAt = wrapper.readInt();
 
@@ -253,7 +256,7 @@ export class WiredUserVariablesDataParser implements IMessageParser
         {
             const variableItemId = wrapper.readInt();
             const hasValue = wrapper.readBoolean();
-            const rawValue = wrapper.readInt();
+            const rawValue = exact ? readWiredSignedLong(wrapper) : BigInt(wrapper.readInt());
             const createdAt = wrapper.readInt();
             const updatedAt = wrapper.readInt();
 
@@ -286,7 +289,7 @@ export class WiredUserVariablesDataParser implements IMessageParser
 
         if(wrapper.bytesAvailable) this.mergeArrayMetadata(wrapper.readString());
 
-        return true;
+        return !exact || !wrapper.bytesAvailable;
     }
 
     private mergeArrayMetadata(rawValue: string): void

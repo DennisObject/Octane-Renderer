@@ -1,5 +1,7 @@
 export class OutgoingHeader
 {
+    public static WIRED_USER_VARIABLE_UPDATE64 = 10110;
+    public static WIRED_USER_VARIABLE_MANAGE64 = 10111;
     public static CLICK_FURNI = 6002;
     public static CLICK_USER = 10020;
 

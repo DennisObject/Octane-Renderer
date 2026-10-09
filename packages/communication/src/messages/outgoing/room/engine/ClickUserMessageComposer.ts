@@ -1,12 +1,13 @@
 import { IMessageComposer } from '@octane/api';
 
-export class ClickUserMessageComposer implements IMessageComposer<ConstructorParameters<typeof ClickUserMessageComposer>>
+export class ClickUserMessageComposer implements IMessageComposer<number[]>
 {
-    private _data: ConstructorParameters<typeof ClickUserMessageComposer>;
+    private _data: number[];
 
-    constructor(roomUnitId: number)
+    constructor(roomUnitId: number, roomId?: number, requestId?: number)
     {
         this._data = [ roomUnitId ];
+        if(requestId !== undefined) this._data.push(1, roomId, requestId);
     }
 
     public getMessageArray()
