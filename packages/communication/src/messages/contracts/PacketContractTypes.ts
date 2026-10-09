@@ -45,7 +45,8 @@ export interface PacketContract
     name: string;
     direction: PacketDirection;
     header: number;
-    java: PacketEndpoint;
+    java?: PacketEndpoint;
+    csharp?: PacketEndpoint;
     typescript: PacketEndpoint;
     fields: readonly WireSchema[];
 }
