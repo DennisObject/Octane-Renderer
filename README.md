@@ -16,20 +16,11 @@ yarn
 yarn add @octane/renderer
 ```
 
-## Optional paired AIR-ID profile
+## Packet revision
 
-This renderer and the matching PlusEMU AIR-ID profile support revision
-`OCTANE-AIR-IDS-WIN63-202609161723-93809945` together. Upgrade both paired
-implementations before enabling it. This uses existing Octane payloads; it is
-not native AIR client support.
-
-Serve `protocol/OCTANE-AIR-IDS-WIN63-202609161723-93809945.json` from the host
-and append its URL after the regular configuration URLs in `OctaneConfig["config.urls"]`.
-The overlay selects the existing `floorplan.wire.profile` hybrid registry and
-`communication.packet.profile`; keep both settings together. Without the
-overlay, the current floor-plan profile and Hello defaults remain unchanged.
-The packet profile is copied once at connection initialization and retained
-through reconnect; reload the host application to select another profile.
+The packet constants and Hello build use `WIN63-202609161723-93809945`.
+Update PlusEMU and the renderer together. Custom Octane packets remain supported;
+this does not imply native AIR client compatibility.
 
 ## JSON / JSONC configuration parser
 

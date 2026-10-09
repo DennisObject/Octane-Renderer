@@ -97,10 +97,10 @@ describe('packet contract manifest', () =>
         const input = validManifest();
         input.unpaired.push({
             direction: 'client_to_server',
-            side: 'java',
+            side: 'typescript',
             header: 100,
             symbol: 'DuplicateEvent',
-            path: 'src/DuplicateEvent.java',
+            path: 'src/DuplicateEvent.ts',
             reason: 'This packet exists only in the emulator implementation'
         });
 

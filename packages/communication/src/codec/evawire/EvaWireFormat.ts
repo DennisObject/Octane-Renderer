@@ -81,7 +81,7 @@ export class EvaWireFormat implements ICodec
             const bodyStart = offset + 4;
             const body = new BinaryReader(buffer.slice(bodyStart, bodyStart + length));
 
-            wrappers.push(new EvaWireDataWrapper(body.readShort(), body));
+            wrappers.push(new EvaWireDataWrapper(body.readShort() & 0xFFFF, body));
 
             offset = bodyStart + length;
         }

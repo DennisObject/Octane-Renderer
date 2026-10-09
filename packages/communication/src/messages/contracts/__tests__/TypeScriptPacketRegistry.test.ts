@@ -19,7 +19,7 @@ describe('TypeScript packet registry', () =>
         const registry = TypeScriptPacketRegistry.discover(resolve('packages/communication/src'));
 
         expect(registry.active.length).toBeGreaterThan(900);
-        expect(registry.active.some(packet => packet.header === 412)).toBe(true);
+        expect(registry.active.some(packet => packet.header === 3589)).toBe(true);
     });
 
     it('discovers registered events, their parsers, and outgoing composers', () =>
@@ -104,7 +104,7 @@ describe('TypeScript packet registry', () =>
             .toBe('COMPATIBILITY');
     });
 
-    it('rejects non-positive headers in active registry files', () =>
+    it('rejects negative headers in active registry files', () =>
     {
         const root = join(tmpdir(), `packet-registry-negative-${ Date.now() }`);
         write(root, 'messages/incoming/IncomingHeader.ts',
@@ -113,7 +113,7 @@ describe('TypeScript packet registry', () =>
         write(root, 'OctaneMessages.ts', 'class OctaneMessages {}');
 
         expect(() => TypeScriptPacketRegistry.discover(root))
-            .toThrow('non-positive server_to_client header UNSUPPORTED=-1');
+            .toThrow('negative server_to_client header UNSUPPORTED=-1');
     });
 
     it('rejects registrations whose parser source is missing', () =>

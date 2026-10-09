@@ -35,32 +35,16 @@ export class MessageClassManager
 
     private registerMessageEventClass(header: number, handler: Function): void
     {
-        if(!header || !handler) return;
+        if(header === undefined || header < 0 || !handler) return;
 
         this._messageIdByEvent.set(handler, header);
     }
 
     private registerMessageComposerClass(header: number, handler: Function): void
     {
-        if(!header || !handler) return;
+        if(header === undefined || header < 0 || !handler) return;
 
         this._messageIdByComposer.set(handler, header);
-    }
-
-    public rebindMessageEvents(): void
-    {
-        const instances: IMessageEvent[] = [];
-
-        for(const events of this._messageInstancesById.values())
-        {
-            if(!events) continue;
-
-            for(const event of events) if(event) instances.push(event);
-        }
-
-        this._messageInstancesById.clear();
-
-        for(const event of instances) this.registerMessageEvent(event);
     }
 
     public registerMessageEvent(event: IMessageEvent): void
@@ -69,7 +53,7 @@ export class MessageClassManager
 
         const header = this.getEventId(event);
 
-        if(!header) return;
+        if(header === undefined || header < 0) return;
 
         let existing = this._messageInstancesById.get(header);
 
@@ -89,7 +73,7 @@ export class MessageClassManager
 
         const header = this.getEventId(event);
 
-        if(!header) return;
+        if(header === undefined || header < 0) return;
 
         const existing = this._messageInstancesById.get(header);
 
@@ -113,7 +97,7 @@ export class MessageClassManager
 
     public getEvents(header: number): IMessageEvent[]
     {
-        if(!header) return;
+        if(header === undefined || header < 0) return;
 
         return this._messageInstancesById.get(this._eventAliases.get(header) ?? header);
     }
@@ -127,7 +111,7 @@ export class MessageClassManager
 
         const existing = this._messageIdByEvent.get(name);
 
-        if(!existing) return -1;
+        if(existing === undefined) return -1;
 
         return existing;
     }
@@ -138,7 +122,7 @@ export class MessageClassManager
 
         const existing = this._messageIdByComposer.get(composer.constructor);
 
-        if(!existing) return -1;
+        if(existing === undefined) return -1;
 
         return existing;
     }
