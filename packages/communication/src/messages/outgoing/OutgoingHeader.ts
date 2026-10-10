@@ -327,8 +327,6 @@ export class OutgoingHeader
     public static WIRED_VARIABLE_HASHES = 65473;
     public static WIRED_ALL_VARIABLES_REQUEST = 65469;
     public static WIRED_GENERATE_WEB_API_KEY = 1703;
-    public static TRANSLATION_LANGUAGES_REQUEST = 10032;
-    public static TRANSLATION_TEXT_REQUEST = 10033;
     public static WIRED_OPEN = 3540;
     public static WIRED_TRIGGER_SAVE = 2786;
     public static GET_ITEM_DATA = 2220;
@@ -555,43 +553,6 @@ export class OutgoingHeader
 
     public static FURNITURE_PICKUP_ALL = 10017;
 
-    // Furni Editor
-    public static FURNI_EDITOR_SEARCH = 10040;
-    public static FURNI_EDITOR_DETAIL = 10041;
-    public static FURNI_EDITOR_BY_SPRITE = 10042;
-    public static FURNI_EDITOR_INTERACTIONS = 10043;
-    public static FURNI_EDITOR_UPDATE = 10044;
-    public static FURNI_EDITOR_DELETE = 10045;
-    public static FURNI_EDITOR_UPDATE_FURNIDATA = 10046;
-    public static FURNI_EDITOR_REVERT_FURNIDATA = 10048;
-    public static FURNI_EDITOR_IMPORT_TEXT = 10049;
-
-    public static CATALOG_ADMIN_SAVE_PAGE = 10050;
-    public static CATALOG_ADMIN_CREATE_PAGE = 10051;
-    public static CATALOG_ADMIN_DELETE_PAGE = 10052;
-    public static CATALOG_ADMIN_SAVE_OFFER = 10053;
-    public static CATALOG_ADMIN_CREATE_OFFER = 10054;
-    public static CATALOG_ADMIN_DELETE_OFFER = 10055;
-    public static CATALOG_ADMIN_MOVE_OFFER = 10056;
-    public static CATALOG_ADMIN_MOVE_PAGE = 10057;
-    public static CATALOG_ADMIN_PUBLISH = 10058;
-    public static CATALOG_ADMIN_SAVE_PAGE_IMAGES = 10060;
-    public static CATALOG_ADMIN_SAVE_PAGE_ICON = 10061;
-    public static CATALOG_ADMIN_LOAD_OFFER = 10062;
-    public static CATALOG_ADMIN_LOAD_PAGE = 10063;
-    public static CATALOG_ADMIN_SET_PAGE_ENABLED = 10064;
-    public static CATALOG_ADMIN_SET_PAGE_VISIBLE = 10065;
-    public static CATALOG_ADMIN_REORDER_OFFERS = 10066;
-    public static CATALOG_STUDIO_OPEN_SESSION = 10067;
-    public static CATALOG_STUDIO_ACQUIRE_LOCK = 10068;
-    public static CATALOG_STUDIO_RENEW_LOCK = 10069;
-    public static CATALOG_STUDIO_RELEASE_LOCK = 10070;
-    public static CATALOG_STUDIO_LOAD_HISTORY = 10071;
-    public static CATALOG_STUDIO_UNDO = 10072;
-    public static CATALOG_STUDIO_PUBLISH = 10074;
-    public static CATALOG_STUDIO_DISCARD = 10075;
-    public static CATALOG_STUDIO_RESTORE = 10076;
-    public static CATALOG_STUDIO_PREVIEW = 10077;
     public static CATALOG_PRODUCT_METADATA = 10081;
     public static CATALOG_RUNTIME_CONFIGURATION = 10082;
 
@@ -602,38 +563,8 @@ export class OutgoingHeader
     public static ROOM_REMOVE_BACKGROUND = 7020;
     public static ROOM_REMOVE_PAINT = 7021;
 
-    // YouTube Room Broadcast
-    public static YOUTUBE_ROOM_PLAY = 8001;
-    public static YOUTUBE_ROOM_WATCHING = 8002;
-    public static YOUTUBE_ROOM_SETTINGS = 8003;
-
-    // Housekeeping (in-client admin panel) — IDs 9100..9199 reserved
-    public static HOUSEKEEPING_FIND_USER_BY_NAME = 9100;
-    public static HOUSEKEEPING_FIND_USER_BY_ID = 9101;
-    public static HOUSEKEEPING_BAN_USER = 9102;
-    public static HOUSEKEEPING_UNBAN_USER = 9103;
-    public static HOUSEKEEPING_MUTE_USER = 9104;
-    public static HOUSEKEEPING_KICK_USER = 9105;
-    public static HOUSEKEEPING_FORCE_DISCONNECT_USER = 9106;
-    public static HOUSEKEEPING_TRADE_LOCK_USER = 9108;
-    public static HOUSEKEEPING_RESET_USER_PASSWORD = 9109;
-    public static HOUSEKEEPING_FIND_ROOM_BY_ID = 9110;
-    public static HOUSEKEEPING_SEARCH_ROOMS = 9111;
-    public static HOUSEKEEPING_ROOM_STATE = 9112;
-    public static HOUSEKEEPING_MUTE_ROOM = 9113;
-    public static HOUSEKEEPING_KICK_ALL_FROM_ROOM = 9114;
-    public static HOUSEKEEPING_TRANSFER_ROOM_OWNERSHIP = 9115;
-    public static HOUSEKEEPING_DELETE_ROOM = 9116;
-    public static HOUSEKEEPING_GIVE_CREDITS = 9117;
-    public static HOUSEKEEPING_GIVE_CURRENCY = 9118;
-    public static HOUSEKEEPING_GRANT_ITEM = 9119;
-    public static HOUSEKEEPING_SET_HC_SUBSCRIPTION = 9120;
-    public static HOUSEKEEPING_SEND_HOTEL_ALERT = 9121;
-    public static HOUSEKEEPING_GET_DASHBOARD = 9122;
-    public static HOUSEKEEPING_LIST_ACTION_LOG = 9123;
 
     // Custom features — IDs 9300+ reserved
-    public static REQUEST_RARE_VALUES = 9300;
     public static EARNINGS_REQUEST = 9308;
     public static EARNINGS_CLAIM = 9309;
     public static EARNINGS_CLAIM_ALL = 9310;
@@ -663,12 +594,6 @@ export class OutgoingHeader
     public static GAME2GETWEEKLYLEADERBOARD = 1281;
     public static GAME2GETWEEKLYFRIENDSLEADERBOARD = 3016;
 
-    // Hotel view landing scene (client -> server)
-    public static HOTEL_VIEW_LANDING_REQUEST = 9410;
-    public static HOTEL_VIEW_LANDING_SAVE = 9411;
-    public static HOTEL_VIEW_LANDING_SAVE_SCENE = 9412;
-    public static HOTEL_VIEW_LANDING_VOTE = 9413;
-    public static HOTEL_VIEW_LANDING_RESET_VOTES = 9414;
     public static USER_SETTINGS_PRIVACY = 9415;
     public static REQUEST_OFFLINE_MESSAGES = 9416;
     // Trigger habbicon (client -> server). 9417 to match emulator TriggerHabbiconEvent;
@@ -700,16 +625,4 @@ export class OutgoingHeader
     public static DISCORD_UPDATE_PREFERENCES = 65445;
     // AIR 13 self donation tool (client -> server), official id.
     public static SELF_DONATION = 65452;
-    public static HOUSEKEEPING_GET_ROLES = 9130;
-    public static HOUSEKEEPING_GET_ROLE_MEMBERS = 9131;
-    public static HOUSEKEEPING_GET_USER_OVERRIDES = 9132;
-    public static HOUSEKEEPING_GET_ROLES_AUDIT = 9133;
-    public static HOUSEKEEPING_SAVE_ROLE = 9134;
-    public static HOUSEKEEPING_DELETE_ROLE = 9135;
-    public static HOUSEKEEPING_SET_ROLE_PERMISSION = 9136;
-    public static HOUSEKEEPING_SET_ROLE_LIMIT = 9137;
-    public static HOUSEKEEPING_ASSIGN_ROLE = 9138;
-    public static HOUSEKEEPING_REVOKE_ROLE = 9139;
-    public static HOUSEKEEPING_SET_USER_OVERRIDE = 9140;
-    public static HOUSEKEEPING_REMOVE_USER_OVERRIDE = 9141;
 }

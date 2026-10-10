@@ -1,7 +1,5 @@
 import { IClientAccessListsSnapshot, IFurnitureData, IGroupInformationManager, IMessageComposer, IMessageEvent, IProductData, ISessionDataManager, IUserDataSnapshot, NoobnessLevelEnum, SecurityLevel } from '@volt/api';
-import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent, AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, FurnitureDataReloadEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@volt/communication';
-import type { FurnidataDeltaEntry } from '@volt/communication';
-import { applyFurnidataDeltaTo } from './furniture/applyFurnidataDelta';
+import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent, AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@volt/communication';
 import { GetConfiguration } from '@volt/configuration';
 import { GetLocalizationManager } from '@volt/localization';
 import { GetEventDispatcher, MysteryBoxKeysUpdateEvent, VoltEvent, VoltEventType, VoltSettingsEvent, SessionDataPreferencesEvent, UserNameUpdateEvent } from '@volt/events';
@@ -195,19 +193,7 @@ export class SessionDataManager implements ISessionDataManager
             GetCommunication().registerMessageEvent(new MysteryBoxKeysEvent(this.onMysteryBoxKeysEvent.bind(this))),
             GetCommunication().registerMessageEvent(new NoobnessLevelMessageEvent(this.onNoobnessLevelMessageEvent.bind(this))),
             GetCommunication().registerMessageEvent(new AccountSafetyLockStatusChangeMessageEvent(this.onAccountSafetyLockStatusChangeMessageEvent.bind(this))),
-            GetCommunication().registerMessageEvent(new EmailStatusResultEvent(this.onEmailStatus.bind(this))),
-            GetCommunication().registerMessageEvent(new FurnitureDataReloadEvent((event: FurnitureDataReloadEvent) =>
-            {
-                const parser = event.getParser();
-                if(parser.mode === 1)
-                {
-                    void this.applyFurnidataReloadHint();
-                }
-                else
-                {
-                    this.applyFurnidataDelta(parser.entries);
-                }
-            }))
+            GetCommunication().registerMessageEvent(new EmailStatusResultEvent(this.onEmailStatus.bind(this)))
         );
 
         // Store event dispatcher callback for cleanup
@@ -279,8 +265,7 @@ export class SessionDataManager implements ISessionDataManager
         const added = await this._furnitureData.mergeFromUrl(url);
 
         // Refresh the furni name/desc surfaces (catalog, inventory, infostand)
-        // via the window event they actually listen to — same signal
-        // applyFurnidataDelta uses. SESSION_DATA_UPDATED only drives the userData
+        // via the window event they actually listen to. SESSION_DATA_UPDATED only drives the userData
         // snapshot and, dispatched here without invalidateUserDataSnapshot(), was
         // a no-op (the snapshot ref never changed, so consumers bailed out).
         if(added && added.length && (typeof window !== 'undefined')) window.dispatchEvent(new CustomEvent('volt-localization-updated'));
@@ -627,18 +612,6 @@ export class SessionDataManager implements ISessionDataManager
             localizationManager.setValue(('wallItem.name.' + item.id), resolvedItem.name);
             localizationManager.setValue(('wallItem.desc.' + item.id), resolvedItem.description);
         }
-    }
-
-    public applyFurnidataDelta(entries: FurnidataDeltaEntry[]): void
-    {
-        applyFurnidataDeltaTo(entries, this._floorItems as any, this._wallItems as any, GetLocalizationManager(), (typeof window !== 'undefined') ? window : { dispatchEvent: () =>
-        {} });
-    }
-
-    public async applyFurnidataReloadHint(): Promise<void>
-    {
-        await this._furnitureData.init();
-        if(typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('volt-localization-updated'));
     }
 
     public getBadgeUrl(name: string): string
