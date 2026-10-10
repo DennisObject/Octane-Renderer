@@ -333,8 +333,8 @@ export class OutgoingHeader
     public static WIRED_ROOM_LOGS_PAGE = 65422;
     public static WIRED_VARIABLE_HOLDERS_PAGE = 65307;
     public static WIRED_VARIABLE_HOLDERS_REQUEST = 65441;
-    public static WIRED_VARIABLE_HASHES = 65473;
-    public static WIRED_ALL_VARIABLES_REQUEST = 65469;
+    public static WIRED_VARIABLE_HASHES = 3698;
+    public static WIRED_ALL_VARIABLES_REQUEST = 1327;
     public static WIRED_GENERATE_WEB_API_KEY = 1703;
     public static TRANSLATION_LANGUAGES_REQUEST = 10032;
     public static TRANSLATION_TEXT_REQUEST = 10033;

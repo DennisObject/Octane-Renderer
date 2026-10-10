@@ -316,7 +316,7 @@ export class IncomingHeader
     public static WIRED_CLICK_SETTINGS = 917;
     public static WIRED_LOG_PAGE = 65414;
     public static WIRED_ALL_VARIABLES_HASH = 3478;
-    public static WIRED_ALL_VARIABLES_DIFF = 65496;
+    public static WIRED_ALL_VARIABLES_DIFF = 3058;
     public static WIRED_CLICK_USER_RESPONSE = 2789;
     public static WIRED_VARIABLE_HOLDERS_PAGE = 9461;
     public static WIRED_VARIABLE_HOLDERS = 9462;

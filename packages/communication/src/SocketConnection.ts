@@ -1,11 +1,12 @@
 import { ICodec, IConnection, IConnectionStateSnapshot, IMessageComposer, IMessageConfiguration, IMessageDataWrapper, IMessageEvent, IMessageParser, WebSocketEventEnum } from '@octane/api';
 import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType, ReconnectEvent } from '@octane/events';
+import { GetEventDispatcher, OctaneEvent, OctaneEventType, ReconnectEvent, WiredCatalogParseFailureEvent } from '@octane/events';
 import { OctaneLogger } from '@octane/utils';
 import { EvaWireFormat } from './codec';
 import { aesGcmDecrypt, aesGcmEncrypt, buildClientHello, deriveAesKey, deriveSharedSecret, exportPublicKeySpki, generateEphemeralKeyPair, importPublicKeySpki, importSigningPublicKeyFromBase64, NONCE_LEN, parseServerHello, randomNonce, verifyEphemeralSignature } from './crypto';
 import { ConnectionStateStore } from './ConnectionStateStore';
 import { MessageClassManager } from './messages';
+import { IncomingHeader } from './messages/incoming/IncomingHeader';
 import { shouldReconnectAfterClose } from './socketClosePolicy';
 import { ClientHelloMessageComposer } from './messages/outgoing/handshake/ClientHelloMessageComposer';
 
@@ -801,19 +802,29 @@ export class SocketConnection implements IConnection
         {
             const parser = new (events[0].parserClass as new () => IMessageParser)();
 
-            if(!parser || !parser.flush() || !parser.parse(wrapper)) return null;
+            if(parser && parser.flush() && parser.parse(wrapper))
+            {
+                for(const event of events) (event.parser = parser);
 
-            for(const event of events) (event.parser = parser);
+                return events;
+            }
         }
 
         catch (e)
         {
             OctaneLogger.error('Error parsing message', e, events[0].constructor.name);
-
-            return null;
         }
 
-        return events;
+        this.notifyCatalogParseFailure(wrapper.header);
+
+        return null;
+    }
+
+    private notifyCatalogParseFailure(header: number): void
+    {
+        if(header !== IncomingHeader.WIRED_ALL_VARIABLES_HASH && header !== IncomingHeader.WIRED_ALL_VARIABLES_DIFF) return;
+
+        GetEventDispatcher().dispatchEvent(new WiredCatalogParseFailureEvent(this, header));
     }
 
     private handleMessages(...messages: IMessageEvent[]): void
