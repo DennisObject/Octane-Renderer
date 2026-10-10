@@ -1,13 +1,6 @@
 import { IMessageDataWrapper, IMessageParser, ObjectRolling } from '@octane/api';
 import { Vector3d } from '@octane/utils';
 
-function parseLocaleFloat(value: string): number
-{
-    if(!value) return 0;
-
-    return parseFloat(value.replace(',', '.'));
-}
-
 function parseDirection(value: number): number
 {
     return (value % 8) * 45;
@@ -173,8 +166,8 @@ export class WiredMovementsParser implements IMessageParser
                     const fromY = wrapper.readInt();
                     const toX = wrapper.readInt();
                     const toY = wrapper.readInt();
-                    const fromZ = parseLocaleFloat(wrapper.readString());
-                    const toZ = parseLocaleFloat(wrapper.readString());
+                    const fromZ = Number(wrapper.readString());
+                    const toZ = Number(wrapper.readString());
                     const id = wrapper.readInt();
                     const animationType = wrapper.readInt();
                     const duration = wrapper.readInt();
@@ -204,8 +197,8 @@ export class WiredMovementsParser implements IMessageParser
                     const fromY = wrapper.readInt();
                     const toX = wrapper.readInt();
                     const toY = wrapper.readInt();
-                    const fromZ = parseLocaleFloat(wrapper.readString());
-                    const toZ = parseLocaleFloat(wrapper.readString());
+                    const fromZ = Number(wrapper.readString());
+                    const toZ = Number(wrapper.readString());
                     const id = wrapper.readInt();
                     const duration = wrapper.readInt();
                     const rotation = parseDirection(wrapper.readInt());
