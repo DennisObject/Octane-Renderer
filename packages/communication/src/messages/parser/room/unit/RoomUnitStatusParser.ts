@@ -42,7 +42,7 @@ export class RoomUnitStatusParser implements IMessageParser
             totalUnits--;
         }
 
-        return true;
+        return wrapper.remainingBytes === 0;
     }
 
     public parseStatus(wrapper: IMessageDataWrapper): RoomUnitStatusMessage
@@ -55,6 +55,7 @@ export class RoomUnitStatusParser implements IMessageParser
         const z = parseLocaleFloat(wrapper.readString());
         const headDirection = ((wrapper.readInt() % 8) * 45);
         const direction = ((wrapper.readInt() % 8) * 45);
+        const jumpingPower = wrapper.readInt();
         const actions = wrapper.readString();
 
         let targetX = 0;
@@ -113,7 +114,7 @@ export class RoomUnitStatusParser implements IMessageParser
                 statusActions.push(new RoomUnitStatusAction(parts[0], parts[1]));
             }
 
-            this._statuses.push(new RoomUnitStatusMessage(unitId, x, y, z, height, headDirection, direction, targetX, targetY, targetZ, didMove, canStandUp, statusActions));
+            this._statuses.push(new RoomUnitStatusMessage(unitId, x, y, z, height, headDirection, direction, targetX, targetY, targetZ, didMove, canStandUp, statusActions, jumpingPower));
         }
     }
 
