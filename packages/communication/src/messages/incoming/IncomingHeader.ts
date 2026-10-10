@@ -290,6 +290,9 @@ export class IncomingHeader
     public static USER_CLASSIFICATION = 457;
     public static GET_USER_TAGS = 65514;
     public static WIRED_ACTION = 902;
+    public static WIRED_SELECTOR = 1443;
+    public static WIRED_ADDON = 685;
+    public static WIRED_VARIABLE = 804;
     public static WIRED_CONDITION = 1773;
     public static WIRED_ERROR = 3594;
     public static WIRED_MONITOR_DATA = 5101;

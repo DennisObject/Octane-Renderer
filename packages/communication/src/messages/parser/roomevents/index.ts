@@ -32,3 +32,6 @@ export * from './WiredVariableHoldersParser';
 export * from './WiredAllVariablesHashParser';
 export * from './WiredAllVariablesDiffParser';
 export * from './WiredWebApiKeyResultParser';
+export * from './WiredEditorData';
+export * from './WiredAdditionalDefinitions';
+export * from './WiredFurniAdditionalParser';

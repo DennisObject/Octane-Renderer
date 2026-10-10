@@ -1,3 +1,4 @@
+import { WiredFurniSelectorEvent, WiredFurniAddonEvent, WiredFurniVariableEvent, UpdateSelectorMessageComposer, UpdateAddonMessageComposer, UpdateVariableMessageComposer } from './messages';
 import { IMessageConfiguration } from '@octane/api';
 import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent } from './messages';
 import { GoToBreedingNestFailureEvent, GroupMemberUpdateEvent, GroupMembersRefreshEvent } from './messages';
@@ -622,6 +623,9 @@ export class OctaneMessages implements IMessageConfiguration
 
         // ROOM EVENTS
         this._events.set(IncomingHeader.WIRED_ACTION, WiredFurniActionEvent);
+        this._events.set(IncomingHeader.WIRED_SELECTOR, WiredFurniSelectorEvent);
+        this._events.set(IncomingHeader.WIRED_ADDON, WiredFurniAddonEvent);
+        this._events.set(IncomingHeader.WIRED_VARIABLE, WiredFurniVariableEvent);
         this._events.set(IncomingHeader.WIRED_CONDITION, WiredFurniConditionEvent);
         this._events.set(IncomingHeader.WIRED_TRIGGER, WiredFurniTriggerEvent);
         this._events.set(IncomingHeader.WIRED_OPEN, WiredOpenEvent);
@@ -1370,6 +1374,9 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.TRANSLATION_TEXT_REQUEST, TranslationTextRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_OPEN, OpenMessageComposer);
         this._composers.set(OutgoingHeader.WIRED_ACTION_SAVE, UpdateActionMessageComposer);
+        this._composers.set(OutgoingHeader.WIRED_SELECTOR_SAVE, UpdateSelectorMessageComposer);
+        this._composers.set(OutgoingHeader.WIRED_ADDON_SAVE, UpdateAddonMessageComposer);
+        this._composers.set(OutgoingHeader.WIRED_VARIABLE_SAVE, UpdateVariableMessageComposer);
         this._composers.set(OutgoingHeader.WIRED_CONDITION_SAVE, UpdateConditionMessageComposer);
         this._composers.set(OutgoingHeader.WIRED_TRIGGER_SAVE, UpdateTriggerMessageComposer);
         this._composers.set(OutgoingHeader.ROOM_MUTE, RoomMuteComposer);

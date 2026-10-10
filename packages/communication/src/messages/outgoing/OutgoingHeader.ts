@@ -304,6 +304,9 @@ export class OutgoingHeader
     public static USER_CLASSIFICATION = 3448;
     public static VISIT_USER = 3290;
     public static WIRED_ACTION_SAVE = 2554;
+    public static WIRED_SELECTOR_SAVE = 268;
+    public static WIRED_ADDON_SAVE = 1692;
+    public static WIRED_VARIABLE_SAVE = 2836;
     public static WIRED_APPLY_SNAPSHOT = 2723;
     public static WIRED_CONDITION_SAVE = 3636;
     public static WIRED_MONITOR_REQUEST = 10021;

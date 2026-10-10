@@ -1,47 +1,15 @@
-﻿import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@octane/api';
 import { Triggerable } from './Triggerable';
 
 export class WiredActionDefinition extends Triggerable
 {
-    private _type: number;
     private _delayInPulses: number;
-    private _conflictingTriggers: number[];
-
     constructor(wrapper: IMessageDataWrapper)
     {
         super(wrapper);
-
-        this._conflictingTriggers = [];
-        this._type = wrapper.readInt();
         this._delayInPulses = wrapper.readInt();
-
-        let count = wrapper.readInt();
-
-        while(count > 0)
-        {
-            this._conflictingTriggers.push(wrapper.readInt());
-
-            count--;
-        }
+        this.readFooter(wrapper);
     }
-
-    public get type(): number
-    {
-        return this._type;
-    }
-
-    public get code(): number
-    {
-        return this._type;
-    }
-
-    public get delayInPulses(): number
-    {
-        return this._delayInPulses;
-    }
-
-    public get conflictingTriggers(): number[]
-    {
-        return this._conflictingTriggers;
-    }
+    public get type(): number { return this.code; }
+    public get delayInPulses(): number { return this._delayInPulses; }
 }

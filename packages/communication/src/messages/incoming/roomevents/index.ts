@@ -26,3 +26,4 @@ export * from './WiredVariableHoldersEvent';
 export * from './WiredAllVariablesHashEvent';
 export * from './WiredAllVariablesDiffEvent';
 export * from './WiredWebApiKeyResultEvent';
+export * from './WiredFurniAdditionalEvent';
