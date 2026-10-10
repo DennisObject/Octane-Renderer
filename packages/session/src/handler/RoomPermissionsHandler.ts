@@ -17,7 +17,7 @@ export class RoomPermissionsHandler extends BaseHandler
     {
         if(!(event instanceof RoomRightsEvent)) return;
 
-        const session = this.listener.getSession(this.roomId);
+        const session = this.listener.getSession(event.getParser().roomId);
 
         if(!session) return;
 
@@ -30,7 +30,7 @@ export class RoomPermissionsHandler extends BaseHandler
     {
         if(!(event instanceof RoomRightsClearEvent)) return;
 
-        const session = this.listener.getSession(this.roomId);
+        const session = this.listener.getSession(event.getParser().roomId);
 
         if(!session) return;
 
