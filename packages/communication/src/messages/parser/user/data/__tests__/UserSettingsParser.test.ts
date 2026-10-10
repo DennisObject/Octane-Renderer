@@ -43,9 +43,13 @@ class TestWrapper
     {
         return this.reader.remaining() > 0;
     }
+    get remainingBytes()
+    {
+        return this.reader.remaining();
+    }
 }
 
-const writeLegacySettings = (writer: BinaryWriter) =>
+const writeLegacySettings = (writer: BinaryWriter, onlineStatusVisible = true) =>
 {
     writer.writeInt(10);
     writer.writeInt(20);
@@ -55,7 +59,7 @@ const writeLegacySettings = (writer: BinaryWriter) =>
     writer.writeByte(1);
     writer.writeInt(12);
     writer.writeInt(4);
-    writer.writeByte(1);
+    writer.writeByte(onlineStatusVisible ? 1 : 0);
     writer.writeByte(0);
     writer.writeByte(1);
 };
@@ -74,7 +78,11 @@ describe('UserSettingsParser per-user preferences', () =>
     {
         const writer = new BinaryWriter();
         writeLegacySettings(writer);
+        writer.writeInt(0);
         writer.writeByte(1);
+        writer.writeByte(0);
+        writer.writeShort(0);
+        writer.writeInt(0);
         writer.writeInt(1);
         writer.writeInt(2);
         writer.writeInt(0);
@@ -89,18 +97,21 @@ describe('UserSettingsParser per-user preferences', () =>
         expect(parser.onlineIndicatorPreference).toBe(2);
     });
 
-    it('reads whether the extended profile is visible to others', () =>
+    it('reads whether online status is visible to others', () =>
     {
         const writer = new BinaryWriter();
-        writeLegacySettings(writer);
+        writeLegacySettings(writer, false);
+        writer.writeInt(0);
         writer.writeByte(0);
+        writer.writeByte(0);
+        writer.writeShort(0);
+        writer.writeInt(0);
         writer.writeInt(1);
         writer.writeInt(2);
         writer.writeInt(0);
         writer.writeInt(2);
-        writer.writeByte(0);
 
-        expect(parse(writer).profileVisible).toBe(false);
+        expect(parse(writer).onlineStatusVisible).toBe(false);
     });
 
     it('keeps the profile visible when the emulator does not send the flag', () =>

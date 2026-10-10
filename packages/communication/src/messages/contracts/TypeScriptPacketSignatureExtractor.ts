@@ -55,7 +55,7 @@ const extractIncomingMethod = (
     const name = method.name.getText();
     if(stack.includes(name)) return unsupported(`Recursive packet helper ${ [...stack, name].join(' -> ') }`);
     const dynamic = dynamicPacketFlow(method);
-    if(dynamic) return unsupported(dynamic);
+    if(dynamic) return extractCountedIncoming(method) ?? unsupported(dynamic);
 
     const calls: ts.CallExpression[] = [];
     visit(method.body, node =>
@@ -103,6 +103,121 @@ const extractIncomingMethod = (
     if(delegatedConstructor)
         return unsupported(`Packet fields delegated to external constructor ${ delegatedConstructor } inside ${ name }`);
     return { fields };
+};
+
+/** Count-prefixed lists can be checked without flattening one iteration into the packet. */
+const extractCountedIncoming = (method: ts.MethodDeclaration): TypeScriptExtractionResult | undefined =>
+{
+    const wrapperNames = new Set(method.parameters.map(parameter => parameter.name.getText()));
+    let unresolved = false;
+    visit(method.body, node =>
+    {
+        if((ts.isCallExpression(node) || ts.isNewExpression(node))
+            && node.arguments?.some(argument => ts.isIdentifier(argument) && wrapperNames.has(argument.text)))
+            unresolved = true;
+        if(ts.isCallExpression(node) && localHelperName(node)) unresolved = true;
+        if(ts.isCallExpression(node) && readCall(node)
+            && (!ts.isPropertyAccessExpression(node.expression) || !ts.isIdentifier(node.expression.expression)
+                || !wrapperNames.has(node.expression.expression.text))) unresolved = true;
+    });
+    if(unresolved) return undefined;
+
+    const sequence = (nodes: readonly ts.Statement[]): WireSchema[] | undefined =>
+    {
+        const fields: WireSchema[] = [];
+        const counts = new Map<string, WireSchema>();
+        for(const node of nodes)
+        {
+            if(ts.isWhileStatement(node) || ts.isForStatement(node))
+            {
+                const count = countedLoop(node);
+                const last = fields.at(-1);
+                if(!count || last?.type !== 'int' || counts.get(count) !== last) return undefined;
+                const counters = new Set([count]);
+                if(ts.isForStatement(node) && node.condition && ts.isBinaryExpression(node.condition))
+                    counters.add(node.condition.left.getText());
+                let changesCount = false;
+                visit(node.statement, child =>
+                {
+                    if(ts.isBreakStatement(child) || ts.isContinueStatement(child) || ts.isReturnStatement(child))
+                        changesCount = true;
+                    if(ts.isBinaryExpression(child) && ts.isIdentifier(child.left) && counters.has(child.left.text)
+                        && child.operatorToken.kind >= ts.SyntaxKind.FirstAssignment
+                        && child.operatorToken.kind <= ts.SyntaxKind.LastAssignment) changesCount = true;
+                    if((ts.isPostfixUnaryExpression(child) || ts.isPrefixUnaryExpression(child))
+                        && ts.isIdentifier(child.operand) && counters.has(child.operand.text)
+                        && (child.operator === ts.SyntaxKind.PlusPlusToken || child.operator === ts.SyntaxKind.MinusMinusToken))
+                        changesCount = true;
+                });
+                if(changesCount) return undefined;
+                const item = sequence(ts.isBlock(node.statement) ? node.statement.statements : [node.statement]);
+                if(!item?.length) return undefined;
+                counts.delete(count);
+                fields.pop();
+                fields.push({ type: 'list', countType: 'int', item });
+                continue;
+            }
+
+            let controlReads = false;
+            visit(node, child =>
+            {
+                if(ts.isIfStatement(child) || ts.isSwitchStatement(child) || ts.isForOfStatement(child)
+                    || ts.isForInStatement(child) || ts.isDoStatement(child) || ts.isConditionalExpression(child)
+                    || (ts.isBinaryExpression(child) && [ts.SyntaxKind.AmpersandAmpersandToken,
+                        ts.SyntaxKind.BarBarToken, ts.SyntaxKind.QuestionQuestionToken].includes(child.operatorToken.kind)))
+                    visit(child, nested =>
+                    {
+                        if(ts.isCallExpression(nested) && readCall(nested)) controlReads = true;
+                    });
+            });
+            if(controlReads) return undefined;
+            visit(node, child =>
+            {
+                if(ts.isBinaryExpression(child) && ts.isIdentifier(child.left)
+                    && child.operatorToken.kind >= ts.SyntaxKind.FirstAssignment
+                    && child.operatorToken.kind <= ts.SyntaxKind.LastAssignment) counts.delete(child.left.text);
+                if((ts.isPostfixUnaryExpression(child) || ts.isPrefixUnaryExpression(child))
+                    && ts.isIdentifier(child.operand)) counts.delete(child.operand.text);
+                if(ts.isVariableDeclaration(child) && ts.isIdentifier(child.name)) counts.delete(child.name.text);
+                if(!ts.isCallExpression(child)) return;
+                const type = readCall(child);
+                if(!type) return;
+                const field: WireSchema = { type, name: inferredName(child) };
+                fields.push(field);
+                const parent = child.parent;
+                if(type === 'int' && ts.isVariableDeclaration(parent) && parent.initializer === child
+                    && ts.isIdentifier(parent.name)) counts.set(parent.name.text, field);
+                if(type === 'int' && ts.isBinaryExpression(parent) && parent.right === child
+                    && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken
+                    && ts.isIdentifier(parent.left)) counts.set(parent.left.text, field);
+            });
+        }
+        return fields;
+    };
+
+    const fields = sequence(method.body.statements);
+    return fields ? { fields } : undefined;
+};
+
+const countedLoop = (node: ts.WhileStatement | ts.ForStatement): string | undefined =>
+{
+    const condition = ts.isWhileStatement(node) ? node.expression : node.condition;
+    if(!condition || !ts.isBinaryExpression(condition)) return undefined;
+    if(ts.isWhileStatement(node) && condition.operatorToken.kind === ts.SyntaxKind.GreaterThanToken
+        && ts.isPostfixUnaryExpression(condition.left) && condition.left.operator === ts.SyntaxKind.MinusMinusToken
+        && ts.isIdentifier(condition.left.operand) && condition.right.getText() === '0')
+        return condition.left.operand.text;
+    if(!ts.isForStatement(node) || condition.operatorToken.kind !== ts.SyntaxKind.LessThanToken
+        || !ts.isIdentifier(condition.left) || !ts.isIdentifier(condition.right)
+        || !node.initializer || !ts.isVariableDeclarationList(node.initializer)
+        || node.initializer.declarations.length !== 1 || !node.incrementor) return undefined;
+    const variable = node.initializer.declarations[0];
+    const increment = node.incrementor;
+    if(variable.name.getText() !== condition.left.text || variable.initializer?.getText() !== '0'
+        || !(ts.isPostfixUnaryExpression(increment) || ts.isPrefixUnaryExpression(increment))
+        || increment.operator !== ts.SyntaxKind.PlusPlusToken || increment.operand.getText() !== condition.left.text)
+        return undefined;
+    return condition.right.text;
 };
 
 const trailingOptionalGuard = (

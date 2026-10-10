@@ -180,7 +180,7 @@ const contract = (input: unknown, context: string): PacketContract =>
         name: nonEmptyString(value.name, `${ context }.name`),
         direction: direction(value.direction, context),
         header: wireHeader(value.header, `${ context }.header`),
-        java: endpoint(value.java, `${ context }.java`),
+        ...backendEndpoint(value, context),
         typescript: endpoint(value.typescript, `${ context }.typescript`),
         fields: array(value.fields, `${ context }.fields`).map((field, index) => schema(field, `${ context }.fields[${ index }]`))
     };
@@ -222,6 +222,14 @@ const endpoint = (input: unknown, context: string): PacketEndpoint =>
         className: nonEmptyString(value.className, `${ context }.className`),
         path: nonEmptyString(value.path, `${ context }.path`)
     };
+};
+
+const backendEndpoint = (value: Record<string, unknown>, context: string): Pick<PacketContract, 'java' | 'csharp'> =>
+{
+    if(value.java !== undefined && value.csharp !== undefined)
+        throw new TypeError(`${ context } must declare exactly one backend endpoint`);
+    if(value.csharp !== undefined) return { csharp: endpoint(value.csharp, `${ context }.csharp`) };
+    return { java: endpoint(value.java, `${ context }.java`) };
 };
 
 const wireHeader = (input: unknown, context: string): number =>

@@ -2,7 +2,7 @@ import { IAssetPlaneVisualizationAnimatedLayer, IAssetPlaneVisualizationLayer, I
 import { GetAssetManager } from '@octane/assets';
 import { GetRenderer, GetTexturePool, PlaneMaskFilter, Vector3d } from '@octane/utils';
 import { Container, Filter, Graphics, Matrix, Point, RenderTexture, Sprite, Texture, TilingSprite } from 'pixi.js';
-import { RoomGeometry } from '../../../utils';
+import { RoomGeometry } from '../../../utils/RoomGeometry';
 import { PlaneVisualizationAnimationLayer } from './animated';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
 import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';

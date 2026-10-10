@@ -17,7 +17,7 @@ describe('packet contract coverage', () =>
         const classified = new Set([
             ...manifest.contracts.map(entry => key(entry.direction, entry.header)),
             ...manifest.exemptions.map(entry => key(entry.direction, entry.header)),
-            ...manifest.unpaired.map(entry => key(entry.direction, entry.header))
+            ...manifest.unpaired.filter(entry => entry.side === 'typescript').map(entry => key(entry.direction, entry.header))
         ]);
         const missing = registry.active
             .map(packet => key(packet.direction, packet.header))
