@@ -7211,38 +7211,6 @@
       ]
     },
     {
-      "name": "MARKETPLACE_SELL_ITEM",
-      "direction": "client_to_server",
-      "header": 3676,
-      "java": {
-        "symbol": "SellItemEvent",
-        "className": "SellItemEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/marketplace/SellItemEvent.java"
-      },
-      "typescript": {
-        "symbol": "MARKETPLACE_SELL_ITEM",
-        "className": "MakeOfferMessageComposer",
-        "path": "packages/communication/src/messages/outgoing/marketplace/MakeOfferMessageComposer.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "credits"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "furniType"
-        },
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": "itemId"
-        }
-      ]
-    },
-    {
       "name": "FURNITURE_PICKUP",
       "direction": "client_to_server",
       "header": 1829,
@@ -14507,6 +14475,21 @@
         {
           "kind": "scalar",
           "type": "boolean",
+          "name": ""
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": ""
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
+          "name": ""
+        },
+        {
+          "kind": "scalar",
+          "type": "int",
           "name": ""
         },
         {
@@ -22092,22 +22075,6 @@
       "reason": "Java analyzer: Packet fields delegated to external constructor RoomChatMessage inside handle; TypeScript analyzer: Outgoing value recipientName + ' ' + message has no statically resolvable wire type"
     },
     {
-      "name": "MARKETPLACE_SELL_MULTIPLE_ITEMS",
-      "direction": "client_to_server",
-      "header": 65472,
-      "java": {
-        "symbol": "SellMultipleItemsEvent",
-        "className": "SellMultipleItemsEvent",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/marketplace/SellMultipleItemsEvent.java"
-      },
-      "typescript": {
-        "symbol": "MARKETPLACE_SELL_MULTIPLE_ITEMS",
-        "className": "MakeMultipleOffersMessageComposer",
-        "path": "packages/communication/src/messages/outgoing/marketplace/MakeMultipleOffersMessageComposer.ts"
-      },
-      "reason": "Java analyzer: Data-dependent packet operations in ForStmt inside handle; TypeScript analyzer: Outgoing value ids.length has no statically resolvable wire type"
-    },
-    {
       "name": "RELEASE_ISSUES",
       "direction": "client_to_server",
       "header": 830,
@@ -28257,6 +28224,22 @@
         "path": "packages/communication/src/messages/parser/room/access/rights/RoomRightsClearParser.ts"
       },
       "reason": "The current AIR and paired Plus protocol sends roomId; historical Java sends no fields."
+    },
+    {
+      "name": "MARKETPLACE_SELL_ITEM",
+      "direction": "client_to_server",
+      "header": 3676,
+      "java": {
+        "symbol": "SellItemEvent",
+        "className": "SellItemEvent",
+        "path": "Emulator/src/main/java/com/eu/habbo/messages/incoming/catalog/marketplace/SellItemEvent.java"
+      },
+      "typescript": {
+        "symbol": "MARKETPLACE_SELL_ITEM",
+        "className": "MakeOfferMessageComposer",
+        "path": "packages/communication/src/messages/outgoing/marketplace/MakeOfferMessageComposer.ts"
+      },
+      "reason": "Java analyzer: SellItemEvent reads one item id, not the AIR count-prefixed batch; TypeScript analyzer: Outgoing value itemIds.length has no statically resolvable wire type"
     }
   ]
 }

@@ -379,7 +379,6 @@ export class OutgoingHeader
     // 1551 make one offer out of several identical items.
     public static MARKETPLACE_CANCEL_ALL_OFFERS = 858;
     public static MARKETPLACE_CLEAR_OWN_HISTORY = 65462;
-    public static MARKETPLACE_SELL_MULTIPLE_ITEMS = 65472;
     // AIR 13 club extend confirmation (ClubDiscountPromoExtension).
     public static HABBO_CLUB_EXTEND_CONFIRM = 65427;
     // AIR 13 help: 2935 ask for my reports, 3063 appeal one of them.

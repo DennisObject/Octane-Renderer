@@ -619,6 +619,11 @@ export class RoomPreviewer
         this._addViewOffset = point;
     }
 
+    public set disableUpdate(value: boolean)
+    {
+        this._disableUpdate = value;
+    }
+
     public get addViewOffset(): Point
     {
         return this._addViewOffset;

@@ -16,7 +16,14 @@ export class FurnitureListAddOrUpdateParser implements IMessageParser
     {
         if(!wrapper) return false;
 
-        this._items.push(new FurnitureListItemParser(wrapper));
+        let totalItems = wrapper.readInt();
+
+        while(totalItems > 0)
+        {
+            this._items.push(new FurnitureListItemParser(wrapper));
+
+            totalItems--;
+        }
 
         return true;
     }
