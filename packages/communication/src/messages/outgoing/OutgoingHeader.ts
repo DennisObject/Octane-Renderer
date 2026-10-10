@@ -75,7 +75,7 @@ export class OutgoingHeader
     public static GROUP_INFO = 1130;
     public static GROUP_DELETE = 319;
     public static GROUP_MEMBER_REMOVE_CONFIRM = 2359;
-    public static GROUP_MEMBER_REMOVE = 65409;
+    public static GROUP_MEMBER_REMOVE = 1397;
     public static GROUP_MEMBERS = 1756;
     public static GROUP_MEMBERSHIPS = 384;
     public static GROUP_REQUEST = 2103;
