@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { FriendRequestsParser } from '../../parser';
 
 export class FriendRequestsEvent extends MessageEvent implements IMessageEvent

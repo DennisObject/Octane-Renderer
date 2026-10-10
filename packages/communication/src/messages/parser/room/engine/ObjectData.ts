@@ -1,4 +1,4 @@
-import { IObjectData } from '@octane/api';
+import { IObjectData } from '@volt/api';
 
 export class ObjectData
 {

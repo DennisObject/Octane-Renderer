@@ -1,4 +1,4 @@
-import { RoomObjectVariable } from '@octane/api';
+import { RoomObjectVariable } from '@volt/api';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 
 export class FurnitureSoundBlockVisualization extends FurnitureAnimatedVisualization

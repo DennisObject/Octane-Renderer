@@ -1,4 +1,4 @@
-import { IAssetData, IAssetVisualizationData, IObjectVisualizationData } from '@octane/api';
+import { IAssetData, IAssetVisualizationData, IObjectVisualizationData } from '@volt/api';
 import { BLEND_MODES } from 'pixi.js';
 import { RoomGeometry } from '../../../utils/RoomGeometry';
 import { ColorData, LayerData, SizeData } from '../data';

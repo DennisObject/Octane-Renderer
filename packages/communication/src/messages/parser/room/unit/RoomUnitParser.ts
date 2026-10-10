@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, RoomObjectType } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, RoomObjectType } from '@volt/api';
 import { UserMessageData } from './UserMessageData';
 
 function parseLocaleFloat(value: string): number

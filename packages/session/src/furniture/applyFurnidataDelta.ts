@@ -1,9 +1,9 @@
-import type { FurnidataDeltaEntry } from '@octane/communication';
+import type { FurnidataDeltaEntry } from '@volt/communication';
 
 /**
  * Pure, testable furnidata-delta patcher. Mutates the FurnitureData objects in
  * the given maps (by id) and the localization keys, then dispatches the
- * `octane-localization-updated` window event so subscribed React surfaces refresh.
+ * `volt-localization-updated` window event so subscribed React surfaces refresh.
  */
 export function applyFurnidataDeltaTo(
     entries: FurnidataDeltaEntry[],
@@ -42,8 +42,8 @@ export function applyFurnidataDeltaTo(
     if(win && typeof win.dispatchEvent === 'function')
     {
         const evt = (typeof CustomEvent !== 'undefined')
-            ? new CustomEvent('octane-localization-updated')
-            : { type: 'octane-localization-updated' } as any;
+            ? new CustomEvent('volt-localization-updated')
+            : { type: 'volt-localization-updated' } as any;
         win.dispatchEvent(evt);
     }
 }

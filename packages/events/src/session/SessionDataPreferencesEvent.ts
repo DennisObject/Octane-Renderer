@@ -1,6 +1,6 @@
-﻿import { OctaneEvent } from '../core';
+﻿import { VoltEvent } from '../core';
 
-export class SessionDataPreferencesEvent extends OctaneEvent
+export class SessionDataPreferencesEvent extends VoltEvent
 {
     public static UPDATED: string = 'APUE_UPDATED';
 

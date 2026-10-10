@@ -1,4 +1,4 @@
-import { ToInt32 } from '@octane/utils';
+import { ToInt32 } from '@volt/utils';
 
 export class Randomizer
 {

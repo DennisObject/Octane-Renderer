@@ -1,4 +1,4 @@
-﻿import { IAssetAnimationDirection } from '@octane/api';
+﻿import { IAssetAnimationDirection } from '@volt/api';
 
 export class DirectionDataContainer
 {

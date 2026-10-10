@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official AIR 13 `HabboUserDefinedRoomEvents.userSelected`: sent only while the

@@ -1,4 +1,4 @@
-import { IRoomObjectModel, RoomObjectVariable } from '@octane/api';
+import { IRoomObjectModel, RoomObjectVariable } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { MovingObjectLogic } from './MovingObjectLogic';
 

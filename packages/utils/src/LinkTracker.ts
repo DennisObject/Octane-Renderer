@@ -1,4 +1,4 @@
-import { ILinkEventTracker } from '@octane/api';
+import { ILinkEventTracker } from '@volt/api';
 
 const linkTrackers: ILinkEventTracker[] = [];
 

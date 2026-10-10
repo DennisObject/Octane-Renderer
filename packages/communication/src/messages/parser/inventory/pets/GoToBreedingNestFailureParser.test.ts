@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { IBinaryWriter } from '@octane/api';
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { IBinaryWriter } from '@volt/api';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { EvaWireDataWrapper } from '../../../../codec/evawire/EvaWireDataWrapper';
 import { GoToBreedingNestFailureParser } from './GoToBreedingNestFailureParser';
 

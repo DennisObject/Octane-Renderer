@@ -1,5 +1,5 @@
-import { RoomObjectCategory } from '@octane/api';
-import { TextureUtils } from '@octane/utils';
+import { RoomObjectCategory } from '@volt/api';
+import { TextureUtils } from '@volt/utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { RoomEngine } from './RoomEngine';
 import { buildRoomObjectImageKey, RoomObjectImageCache } from './RoomObjectImageCache';

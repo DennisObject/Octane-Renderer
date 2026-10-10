@@ -1,6 +1,6 @@
-import { IRoomGeometry, MouseEventType, RoomObjectVariable, StringDataType } from '@octane/api';
-import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@octane/events';
-import { GetTickerTime } from '@octane/utils';
+import { IRoomGeometry, MouseEventType, RoomObjectVariable, StringDataType } from '@volt/api';
+import { RoomObjectBadgeAssetEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@volt/events';
+import { GetTickerTime } from '@volt/utils';
 import { ObjectDataUpdateMessage, ObjectGroupBadgeUpdateMessage, ObjectSelectedMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

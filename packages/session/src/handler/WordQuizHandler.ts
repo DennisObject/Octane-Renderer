@@ -1,6 +1,6 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { QuestionAnsweredEvent, QuestionEvent, QuestionFinishedEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionWordQuizEvent } from '@octane/events';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { QuestionAnsweredEvent, QuestionEvent, QuestionFinishedEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionWordQuizEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class WordQuizHandler extends BaseHandler

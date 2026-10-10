@@ -1,4 +1,4 @@
-﻿import { IRoomSession } from '@octane/api';
+﻿import { IRoomSession } from '@volt/api';
 import { RoomSessionDimmerPresetsEventPresetItem } from './RoomSessionDimmerPresetsEventPresetItem';
 import { RoomSessionEvent } from './RoomSessionEvent';
 

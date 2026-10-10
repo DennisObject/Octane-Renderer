@@ -1,5 +1,5 @@
-import { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, RoomObjectVariable, RoomObjectVisualizationType } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
+import { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, RoomObjectVariable, RoomObjectVisualizationType } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
 import { AnimationData, AnimationStateData, DirectionData, LayerData } from '../data';
 import { FurnitureAnimatedVisualization, FurnitureVisualizationData } from '../furniture';
 import { ExperienceData } from './ExperienceData';

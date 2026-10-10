@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** AIR rejoin: the room the player was in before the game. */
 export class Game2RejoinPreviousRoomMessageParser implements IMessageParser

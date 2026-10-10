@@ -1,6 +1,6 @@
-﻿import { IProductData } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { loadGamedata } from '@octane/utils';
+﻿import { IProductData } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { loadGamedata } from '@volt/utils';
 import { ProductData } from './ProductData';
 
 export class ProductDataLoader

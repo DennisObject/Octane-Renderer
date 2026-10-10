@@ -1,6 +1,6 @@
 import stripJsonComments from 'strip-json-comments';
 
-declare const __OCTANE_JSON_MODE__: 'legacy' | 'jsonc' | 'auto' | undefined;
+declare const __VOLT_JSON_MODE__: 'legacy' | 'jsonc' | 'auto' | undefined;
 
 const JSONC_EXTENSION = /\.jsonc(?:[?#]|$)/i;
 const JSONC_MIME = /(?:application|text)\/(?:jsonc|x-jsonc)/i;
@@ -34,9 +34,9 @@ export const resolveJsonMode = (): JsonMode =>
 {
     try
     {
-        if(typeof __OCTANE_JSON_MODE__ !== 'undefined' && __OCTANE_JSON_MODE__)
+        if(typeof __VOLT_JSON_MODE__ !== 'undefined' && __VOLT_JSON_MODE__)
         {
-            if(__OCTANE_JSON_MODE__ === 'legacy' || __OCTANE_JSON_MODE__ === 'jsonc' || __OCTANE_JSON_MODE__ === 'auto') return __OCTANE_JSON_MODE__;
+            if(__VOLT_JSON_MODE__ === 'legacy' || __VOLT_JSON_MODE__ === 'jsonc' || __VOLT_JSON_MODE__ === 'auto') return __VOLT_JSON_MODE__;
         }
     }
     catch

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { readWiredLong } from './WiredVariableData';
 
 /** `package_226.WiredVariableStorageParameter` without the leading variable id. */

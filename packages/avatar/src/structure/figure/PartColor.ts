@@ -1,4 +1,4 @@
-import { IFigureDataColor, IPartColor } from '@octane/api';
+import { IFigureDataColor, IPartColor } from '@volt/api';
 
 export class PartColor implements IPartColor
 {

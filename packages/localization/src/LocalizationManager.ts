@@ -1,7 +1,7 @@
-﻿import { ILocalizationManager } from '@octane/api';
-import { BadgePointLimitsEvent, GetCommunication } from '@octane/communication';
-import { GetConfiguration } from '@octane/configuration';
-import { loadGamedata } from '@octane/utils';
+﻿import { ILocalizationManager } from '@volt/api';
+import { BadgePointLimitsEvent, GetCommunication } from '@volt/communication';
+import { GetConfiguration } from '@volt/configuration';
+import { loadGamedata } from '@volt/utils';
 import { BadgeBaseAndLevel } from './BadgeBaseAndLevel';
 
 export class LocalizationManager implements ILocalizationManager

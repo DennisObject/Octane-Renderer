@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** AIR EnterArenaFailed; reason 1 = game already started. */
 export class Game2EnterArenaFailedMessageParser implements IMessageParser

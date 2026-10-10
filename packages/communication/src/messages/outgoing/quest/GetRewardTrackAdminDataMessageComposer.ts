@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Asks for every stored reward track, disabled ones included (staff editor, needs rewardtrack.manage). */
 export class GetRewardTrackAdminDataMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetRewardTrackAdminDataMessageComposer>>

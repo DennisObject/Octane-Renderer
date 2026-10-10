@@ -1,4 +1,4 @@
-import { IConnection, IMessageEvent, IMessageParser } from '@octane/api';
+import { IConnection, IMessageEvent, IMessageParser } from '@volt/api';
 
 export class MessageEvent implements IMessageEvent
 {

@@ -1,4 +1,4 @@
-import { IAssetData, RoomObjectVariable } from '@octane/api';
+import { IAssetData, RoomObjectVariable } from '@volt/api';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureWindowLogic extends FurnitureMultiStateLogic

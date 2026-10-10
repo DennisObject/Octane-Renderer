@@ -1,4 +1,4 @@
-import { OctaneLogger, TextureUtils } from '@octane/utils';
+import { VoltLogger, TextureUtils } from '@volt/utils';
 import { Texture } from 'pixi.js';
 
 export class TexturePool

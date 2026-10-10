@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { Game2WeeklyLeaderboardParser } from './Game2WeeklyLeaderboardParser';
 

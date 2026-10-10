@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { NavigatorSavedSearch } from './utils';
 
 export class NavigatorSearchesParser implements IMessageParser

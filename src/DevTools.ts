@@ -1,17 +1,17 @@
-import { GetRoomEngine, RoomEngine } from '@octane/room';
+import { GetRoomEngine, RoomEngine } from '@volt/room';
 export { };
 
 declare global
 {
 	interface Window
 	{
-		OctaneDevTools?:
+		VoltDevTools?:
 		{
             roomEngine: RoomEngine;
 		};
 	}
 }
 
-window.OctaneDevTools = {
+window.VoltDevTools = {
     roomEngine: GetRoomEngine()
 };

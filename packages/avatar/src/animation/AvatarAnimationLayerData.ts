@@ -1,4 +1,4 @@
-﻿import { IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@octane/api';
+﻿import { IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@volt/api';
 import { ActiveActionData } from '../actions';
 
 export class AvatarAnimationLayerData implements IAnimationLayerData

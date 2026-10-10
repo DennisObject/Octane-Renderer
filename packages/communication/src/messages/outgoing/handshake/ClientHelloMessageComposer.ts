@@ -1,4 +1,4 @@
-import { ClientDeviceCategoryEnum, ClientPlatformEnum, IMessageComposer } from '@octane/api';
+import { ClientDeviceCategoryEnum, ClientPlatformEnum, IMessageComposer } from '@volt/api';
 
 export class ClientHelloMessageComposer implements IMessageComposer<ConstructorParameters<typeof ClientHelloMessageComposer>>
 {

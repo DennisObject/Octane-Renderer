@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * AIR `TotalGroupLeaderboardTable.getMessageComposer`: the all-time group

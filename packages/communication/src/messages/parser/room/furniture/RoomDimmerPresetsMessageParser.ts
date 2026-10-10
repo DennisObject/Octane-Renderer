@@ -1,4 +1,4 @@
-﻿import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+﻿import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { RoomDimmerPresetsMessageData } from './RoomDimmerPresetsMessageData';
 
 export class RoomDimmerPresetsMessageParser implements IMessageParser

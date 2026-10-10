@@ -1,4 +1,4 @@
-﻿import { IAssetManager, IGraphicAsset } from '@octane/api';
+﻿import { IAssetManager, IGraphicAsset } from '@volt/api';
 import { AvatarRenderManager } from '../AvatarRenderManager';
 import { AssetAlias } from './AssetAlias';
 

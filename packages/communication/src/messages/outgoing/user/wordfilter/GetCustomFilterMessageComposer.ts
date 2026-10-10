@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** GetCustomFilter (145): asks for the personal word filter list. */
 export class GetCustomFilterMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetCustomFilterMessageComposer>>

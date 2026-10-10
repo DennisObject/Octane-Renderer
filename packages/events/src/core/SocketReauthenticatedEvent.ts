@@ -1,6 +1,6 @@
-import { OctaneEvent } from './OctaneEvent';
+import { VoltEvent } from './VoltEvent';
 
-export class SocketReauthenticatedEvent extends OctaneEvent
+export class SocketReauthenticatedEvent extends VoltEvent
 {
     constructor(type: string, public readonly sessionResumed: boolean, public readonly roomId: number)
     {

@@ -1,6 +1,6 @@
-import { IAssetData, IRoomGeometry, MapDataType, MouseEventType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { RoomObjectRoomAdEvent, RoomSpriteMouseEvent } from '@octane/events';
+import { IAssetData, IRoomGeometry, MapDataType, MouseEventType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { RoomObjectRoomAdEvent, RoomSpriteMouseEvent } from '@volt/events';
 import { ObjectAdUpdateMessage, ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 

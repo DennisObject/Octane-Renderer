@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { FriendParser } from './FriendParser';
 
 export class FriendListFragmentParser implements IMessageParser

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { ClubOfferData } from './ClubOfferData';
 
 export class ClubOfferExtendData extends ClubOfferData

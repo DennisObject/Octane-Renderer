@@ -1,4 +1,4 @@
-import { IAssetVisualizationData } from '@octane/api';
+import { IAssetVisualizationData } from '@volt/api';
 import { AnimationSizeData, PetSizeData, SizeData } from '../data';
 import { FurnitureAnimatedVisualizationData } from '../furniture';
 

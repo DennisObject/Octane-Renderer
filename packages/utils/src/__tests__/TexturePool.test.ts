@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Texture } from 'pixi.js';
 import { TexturePool } from '../TexturePool';
 
-vi.mock('@octane/utils', () => ({
-    OctaneLogger: { log: vi.fn(), warn: vi.fn(), error: vi.fn() },
+vi.mock('@volt/utils', () => ({
+    VoltLogger: { log: vi.fn(), warn: vi.fn(), error: vi.fn() },
     TextureUtils: {
         createRenderTexture: vi.fn((width: number, height: number) => makeTexture(width, height))
     }

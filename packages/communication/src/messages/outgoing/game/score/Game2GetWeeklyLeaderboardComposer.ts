@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR weekly leaderboard page. */
 export class Game2GetWeeklyLeaderboardComposer implements IMessageComposer<ConstructorParameters<typeof Game2GetWeeklyLeaderboardComposer>>

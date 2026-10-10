@@ -1,7 +1,7 @@
-import { IRoomHandlerListener, IRoomSession, IRoomSessionManager, IRoomSessionSnapshot } from '@octane/api';
-import { GetCommunication, RoomEnterComposer, RoomUnitWalkComposer } from '@octane/communication';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType, RoomSessionEvent, SocketReauthenticatedEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { IRoomHandlerListener, IRoomSession, IRoomSessionManager, IRoomSessionSnapshot } from '@volt/api';
+import { GetCommunication, RoomEnterComposer, RoomUnitWalkComposer } from '@volt/communication';
+import { GetEventDispatcher, VoltEvent, VoltEventType, RoomSessionEvent, SocketReauthenticatedEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { RoomSession } from './RoomSession';
 import { BaseHandler, GenericErrorHandler, PetPackageHandler, PollHandler, RoomChatHandler, RoomDataHandler, RoomDimmerPresetsHandler, RoomPermissionsHandler, RoomPresentHandler, RoomSessionHandler, RoomUsersHandler, WordQuizHandler } from './handler';
 import { shouldAttemptRoomReEntry } from './reconnectRoomPolicy';
@@ -33,7 +33,7 @@ export class RoomSessionManager implements IRoomSessionManager, IRoomHandlerList
     {
         this._activeRoomSessionSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.ROOM_SESSION_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.ROOM_SESSION_UPDATED));
     }
 
     public getActiveRoomSessionSnapshot(): Readonly<IRoomSessionSnapshot> | null
@@ -115,7 +115,7 @@ export class RoomSessionManager implements IRoomSessionManager, IRoomHandlerList
 
     private setupReconnectListener(): void
     {
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_RECONNECTING, () =>
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_RECONNECTING, () =>
         {
             this.cancelRoomIdClear();
             if(this._lastRoomId > 0)
@@ -125,14 +125,14 @@ export class RoomSessionManager implements IRoomSessionManager, IRoomHandlerList
             this._isReconnecting = true;
         });
 
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_RECONNECTED, () =>
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_RECONNECTED, () =>
         {
             this.clearGuardTimer();
 
-            if(shouldAttemptRoomReEntry(OctaneEventType.SOCKET_RECONNECTED)) this.attemptRoomReEntry();
+            if(shouldAttemptRoomReEntry(VoltEventType.SOCKET_RECONNECTED)) this.attemptRoomReEntry();
         });
 
-        GetEventDispatcher().addEventListener<SocketReauthenticatedEvent>(OctaneEventType.SOCKET_REAUTHENTICATED, event =>
+        GetEventDispatcher().addEventListener<SocketReauthenticatedEvent>(VoltEventType.SOCKET_REAUTHENTICATED, event =>
         {
             this.snapshotSavedPosition();
             this.clearGuardTimer();
@@ -149,9 +149,9 @@ export class RoomSessionManager implements IRoomSessionManager, IRoomHandlerList
             }
         });
 
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_RECONNECT_FAILED, () =>
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_RECONNECT_FAILED, () =>
         {
-            OctaneLogger.log('[RoomSessionManager] SOCKET_RECONNECT_FAILED - clearing state');
+            VoltLogger.log('[RoomSessionManager] SOCKET_RECONNECT_FAILED - clearing state');
             this.clearGuardTimer();
             this._isReconnecting = false;
             this._lastRoomId = -1;
@@ -160,7 +160,7 @@ export class RoomSessionManager implements IRoomSessionManager, IRoomHandlerList
             this.clearPersistedPosition();
         });
 
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_CLOSED, () =>
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_CLOSED, () =>
         {
             this.clearGuardTimer();
             this._isReconnecting = false;

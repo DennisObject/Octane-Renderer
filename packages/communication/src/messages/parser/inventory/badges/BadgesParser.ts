@@ -1,5 +1,5 @@
-﻿import { IAdvancedMap, IMessageDataWrapper, IMessageParser } from '@octane/api';
-import { AdvancedMap, BinaryReader } from '@octane/utils';
+﻿import { IAdvancedMap, IMessageDataWrapper, IMessageParser } from '@volt/api';
+import { AdvancedMap, BinaryReader } from '@volt/utils';
 import { EvaWireDataWrapper } from '../../../../codec/evawire/EvaWireDataWrapper';
 
 /** One badge as the inventory badges packet carries it. */

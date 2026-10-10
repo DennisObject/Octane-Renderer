@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { OfficialRoomEntryData } from './utils/OfficialRoomEntryData';
 import { OfficialRoomsData } from './utils/OfficialRoomsData';
 import { PromotedRoomsData } from './utils/PromotedRoomsData';

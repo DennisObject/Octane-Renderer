@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { CraftingRecipeMessageParser } from '../../parser';
 
 export class CraftingRecipeEvent extends MessageEvent implements IMessageEvent

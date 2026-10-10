@@ -1,4 +1,4 @@
-﻿import { IActiveActionData } from '@octane/api';
+﻿import { IActiveActionData } from '@volt/api';
 import { AvatarImageActionCache } from './AvatarImageActionCache';
 
 export class AvatarImageBodyPartCache

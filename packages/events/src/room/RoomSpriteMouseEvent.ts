@@ -1,4 +1,4 @@
-import { IRoomSpriteMouseEvent } from '@octane/api';
+import { IRoomSpriteMouseEvent } from '@volt/api';
 
 export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent
 {

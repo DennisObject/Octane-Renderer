@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { TreasureHuntWinnerInfo } from './TreasureHuntWinnerInfo';
 
 /** Official `class_2486`: the first winner of a treasure hunt. */

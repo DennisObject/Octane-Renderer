@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * `TreasureHuntWinnerInfo` of the official AIR 13 client: the first player who

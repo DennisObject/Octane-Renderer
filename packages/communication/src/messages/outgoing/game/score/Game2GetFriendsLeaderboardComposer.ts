@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR all-time friends leaderboard page. */
 export class Game2GetFriendsLeaderboardComposer implements IMessageComposer<ConstructorParameters<typeof Game2GetFriendsLeaderboardComposer>>

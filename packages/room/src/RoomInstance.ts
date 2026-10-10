@@ -1,4 +1,4 @@
-import { IRoomInstance, IRoomInstanceContainer, IRoomObject, IRoomObjectController, IRoomObjectManager, IRoomObjectModel, IRoomRendererBase } from '@octane/api';
+import { IRoomInstance, IRoomInstanceContainer, IRoomObject, IRoomObjectController, IRoomObjectManager, IRoomObjectModel, IRoomRendererBase } from '@volt/api';
 import { RoomObjectModel } from './object';
 
 export class RoomInstance implements IRoomInstance

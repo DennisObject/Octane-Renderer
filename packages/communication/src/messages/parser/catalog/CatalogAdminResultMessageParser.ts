@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { CatalogAdminSmartSaveResult, isCatalogAdminSmartSaveAction, parseCatalogAdminEntity, parseCatalogAdminFieldErrors, parseCatalogAdminHistoryGroup } from './CatalogAdminSmartSaveResult';
 
 export class CatalogAdminResultMessageParser implements IMessageParser

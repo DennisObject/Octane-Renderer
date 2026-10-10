@@ -1,5 +1,5 @@
-import { ContextMenuEnum, IAssetData, RoomObjectVariable, StringDataType } from '@octane/api';
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { ContextMenuEnum, IAssetData, RoomObjectVariable, StringDataType } from '@volt/api';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

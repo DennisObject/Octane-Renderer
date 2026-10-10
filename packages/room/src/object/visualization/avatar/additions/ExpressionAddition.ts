@@ -1,4 +1,4 @@
-import { IRoomObjectSprite } from '@octane/api';
+import { IRoomObjectSprite } from '@volt/api';
 import { AvatarVisualization } from '../AvatarVisualization';
 import { IExpressionAddition } from './IExpressionAddition';
 

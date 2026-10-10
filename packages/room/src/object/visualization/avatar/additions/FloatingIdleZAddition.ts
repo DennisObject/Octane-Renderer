@@ -1,6 +1,6 @@
-import { AvatarAction, IRoomObjectSprite } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { GetTickerTime } from '@octane/utils';
+import { AvatarAction, IRoomObjectSprite } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { GetTickerTime } from '@volt/utils';
 import { Texture } from 'pixi.js';
 import { AvatarVisualization } from '../AvatarVisualization';
 import { IAvatarAddition } from './IAvatarAddition';

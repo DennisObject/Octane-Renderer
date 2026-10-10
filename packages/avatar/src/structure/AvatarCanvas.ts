@@ -1,4 +1,4 @@
-﻿import { AvatarScaleType, IAssetAvatarGeometry } from '@octane/api';
+﻿import { AvatarScaleType, IAssetAvatarGeometry } from '@volt/api';
 import { Point } from 'pixi.js';
 
 export class AvatarCanvas

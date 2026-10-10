@@ -1,8 +1,8 @@
-import { IAdvancedMap, IMessageEvent, IMusicController, IPlaylistController, ISongInfo } from '@octane/api';
-import { GetCommunication, GetNowPlayingMessageComposer, GetSongInfoMessageComposer, GetUserSongDisksMessageComposer, TraxSongInfoMessageEvent, UserSongDisksInventoryMessageEvent } from '@octane/communication';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, NotifyPlayedSongEvent, NowPlayingEvent, RoomObjectSoundMachineEvent, SongDiskInventoryReceivedEvent, SongInfoReceivedEvent, SoundManagerEvent } from '@octane/events';
-import { AdvancedMap } from '@octane/utils';
+import { IAdvancedMap, IMessageEvent, IMusicController, IPlaylistController, ISongInfo } from '@volt/api';
+import { GetCommunication, GetNowPlayingMessageComposer, GetSongInfoMessageComposer, GetUserSongDisksMessageComposer, TraxSongInfoMessageEvent, UserSongDisksInventoryMessageEvent } from '@volt/communication';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, NotifyPlayedSongEvent, NowPlayingEvent, RoomObjectSoundMachineEvent, SongDiskInventoryReceivedEvent, SongInfoReceivedEvent, SoundManagerEvent } from '@volt/events';
+import { AdvancedMap } from '@volt/utils';
 import { GetSoundManager } from '../GetSoundManager';
 import { SongDataEntry, SongStartRequestData } from '../common';
 import { TraxData } from '../trax/TraxData';

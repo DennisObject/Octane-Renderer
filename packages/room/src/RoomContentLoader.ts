@@ -1,9 +1,9 @@
-import { FurnitureType, IEventDispatcher, IFurnitureData, IGraphicAssetCollection, IPetColorResult, IRoomContentListener, IRoomContentLoader, IRoomObject, RoomObjectCategory, RoomObjectUserType, RoomObjectVariable, RoomObjectVisualizationType } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, RoomContentLoadedEvent } from '@octane/events';
-import { GetSessionDataManager } from '@octane/session';
-import { OctaneLogger } from '@octane/utils';
+import { FurnitureType, IEventDispatcher, IFurnitureData, IGraphicAssetCollection, IPetColorResult, IRoomContentListener, IRoomContentLoader, IRoomObject, RoomObjectCategory, RoomObjectUserType, RoomObjectVariable, RoomObjectVisualizationType } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, RoomContentLoadedEvent } from '@volt/events';
+import { GetSessionDataManager } from '@volt/session';
+import { VoltLogger } from '@volt/utils';
 import { Texture } from 'pixi.js';
 import { PetColorResult } from './PetColorResult';
 
@@ -329,7 +329,7 @@ export class RoomContentLoader implements IRoomContentLoader
             {
                 image.onload = null;
 
-                OctaneLogger.error('Failed to download asset', url);
+                VoltLogger.error('Failed to download asset', url);
 
                 this._iconListener.onRoomContentLoaded(id, [type, param].join('_'), false);
             };

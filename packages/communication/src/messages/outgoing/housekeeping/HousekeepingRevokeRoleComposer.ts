@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class HousekeepingRevokeRoleComposer implements IMessageComposer<ConstructorParameters<typeof HousekeepingRevokeRoleComposer>>
 {

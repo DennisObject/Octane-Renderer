@@ -1,4 +1,4 @@
-import { RoomObjectCategory } from '@octane/api';
+import { RoomObjectCategory } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { normalizeWiredClickSettings, resolveWiredClickBehaviour, tileBehind, WIRED_CLICK_FURNI_PASS_THROUGH, WIRED_CLICK_USER_PASS_THROUGH, WIRED_CLICK_USER_WALK_BEHIND } from './WiredClickSettings';
 

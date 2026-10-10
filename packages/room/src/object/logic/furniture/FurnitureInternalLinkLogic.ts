@@ -1,5 +1,5 @@
-import { IAssetData, IRoomGeometry, MouseEventType, RoomObjectVariable } from '@octane/api';
-import { RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@octane/events';
+import { IAssetData, IRoomGeometry, MouseEventType, RoomObjectVariable } from '@volt/api';
+import { RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureInternalLinkLogic extends FurnitureLogic

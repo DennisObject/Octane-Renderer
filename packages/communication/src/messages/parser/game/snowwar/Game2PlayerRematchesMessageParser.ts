@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** AIR PlayerRematches. */
 export class Game2PlayerRematchesMessageParser implements IMessageParser

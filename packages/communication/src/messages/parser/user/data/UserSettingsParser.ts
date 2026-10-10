@@ -1,4 +1,4 @@
-import type { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import type { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 export class UserSettingsParser implements IMessageParser
 {

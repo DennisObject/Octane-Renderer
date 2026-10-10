@@ -1,4 +1,4 @@
-import { RoomObjectPlaySoundIdEvent } from '@octane/events';
+import { RoomObjectPlaySoundIdEvent } from '@volt/events';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

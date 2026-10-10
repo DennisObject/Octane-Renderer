@@ -1,4 +1,4 @@
-import { IRoomObjectModel } from '@octane/api';
+import { IRoomObjectModel } from '@volt/api';
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
 
 export class FurnitureRoomBackgroundLogic extends FurnitureRoomBrandingLogic

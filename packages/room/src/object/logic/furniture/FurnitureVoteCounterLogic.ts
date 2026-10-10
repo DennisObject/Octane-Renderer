@@ -1,5 +1,5 @@
-import { RoomObjectVariable, VoteDataType } from '@octane/api';
-import { GetTickerTime } from '@octane/utils';
+import { RoomObjectVariable, VoteDataType } from '@volt/api';
+import { GetTickerTime } from '@volt/utils';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

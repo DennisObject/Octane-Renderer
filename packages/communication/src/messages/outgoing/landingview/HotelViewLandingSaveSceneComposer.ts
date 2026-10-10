@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 import { IHotelViewLandingScene } from '../../parser';
 
 export class HotelViewLandingSaveSceneComposer implements IMessageComposer<(string | number | boolean)[]>

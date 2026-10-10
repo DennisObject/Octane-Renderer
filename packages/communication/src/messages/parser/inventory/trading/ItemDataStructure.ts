@@ -1,5 +1,5 @@
-﻿import { IMessageDataWrapper, IObjectData } from '@octane/api';
-import { GetTickerTime } from '@octane/utils';
+﻿import { IMessageDataWrapper, IObjectData } from '@volt/api';
+import { GetTickerTime } from '@volt/utils';
 import { FurnitureDataParser } from '../../room';
 import { IFurnitureItemData } from '../furniture';
 

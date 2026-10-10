@@ -1,7 +1,7 @@
-import { AvatarAction, IGetImageListener, IImageResult, IObjectData, IRoomEngine, IRoomObjectController, IRoomRenderingCanvas, IVector3D, LegacyDataType, RoomObjectCategory, RoomObjectUserType, RoomObjectVariable } from '@octane/api';
-import { FloorHeightMapMessageParser, RoomEntryTileMessageParser } from '@octane/communication';
-import { GetEventDispatcher, RoomEngineEvent, RoomEngineObjectEvent } from '@octane/events';
-import { GetTickerTime, RoomId, Vector3d } from '@octane/utils';
+import { AvatarAction, IGetImageListener, IImageResult, IObjectData, IRoomEngine, IRoomObjectController, IRoomRenderingCanvas, IVector3D, LegacyDataType, RoomObjectCategory, RoomObjectUserType, RoomObjectVariable } from '@volt/api';
+import { FloorHeightMapMessageParser, RoomEntryTileMessageParser } from '@volt/communication';
+import { GetEventDispatcher, RoomEngineEvent, RoomEngineObjectEvent } from '@volt/events';
+import { GetTickerTime, RoomId, Vector3d } from '@volt/utils';
 import { Container, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 import { RoomEngine } from './RoomEngine';
 import { ObjectRoomMapUpdateMessage } from './messages';

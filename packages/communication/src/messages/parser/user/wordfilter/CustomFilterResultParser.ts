@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** CustomFilterResult (3883): the user's personal word filter list. */
 export class CustomFilterResultParser implements IMessageParser

@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { NoOwnedRoomsAlertMessageParser } from '../../parser';
 
 export class NoOwnedRoomsAlertMessageEvent extends MessageEvent implements IMessageEvent

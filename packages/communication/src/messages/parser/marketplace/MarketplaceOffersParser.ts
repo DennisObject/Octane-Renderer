@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, IObjectData, LegacyDataType, ObjectDataFactory } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, IObjectData, LegacyDataType, ObjectDataFactory } from '@volt/api';
 import { FurnitureDataParser } from '../room';
 import { MarketplaceOffer } from './MarketplaceOffer';
 

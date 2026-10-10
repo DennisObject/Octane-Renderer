@@ -1,7 +1,7 @@
-import { ICodec, IConnection, IConnectionStateSnapshot, IMessageComposer, IMessageConfiguration, IMessageDataWrapper, IMessageEvent, IMessageParser, WebSocketEventEnum } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType, ReconnectEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { ICodec, IConnection, IConnectionStateSnapshot, IMessageComposer, IMessageConfiguration, IMessageDataWrapper, IMessageEvent, IMessageParser, WebSocketEventEnum } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, VoltEvent, VoltEventType, ReconnectEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { EvaWireFormat } from './codec';
 import { aesGcmDecrypt, aesGcmEncrypt, buildClientHello, deriveAesKey, deriveSharedSecret, exportPublicKeySpki, generateEphemeralKeyPair, importPublicKeySpki, importSigningPublicKeyFromBase64, NONCE_LEN, parseServerHello, randomNonce, verifyEphemeralSignature } from './crypto';
 import { ConnectionStateStore } from './ConnectionStateStore';
@@ -80,7 +80,7 @@ export class SocketConnection implements IConnection
         const cryptoEnabled = !!GetConfiguration().getValue<boolean>('crypto.ws.enabled', false);
         if(cryptoEnabled && !this.subtleCryptoAvailable())
         {
-            OctaneLogger.error('[ws-crypto] crypto.ws.enabled=true but window.crypto.subtle is unavailable. '
+            VoltLogger.error('[ws-crypto] crypto.ws.enabled=true but window.crypto.subtle is unavailable. '
                 + 'This page must be served from a secure context - HTTPS, localhost, or 127.0.0.1. '
                 + 'Current origin: ' + (typeof window !== 'undefined' ? window.location.origin : 'unknown'));
             this._cryptoState = 'error';
@@ -128,7 +128,7 @@ export class SocketConnection implements IConnection
                 {
                     if(generation !== this._socketGeneration) return;
 
-                    OctaneLogger.error('[ws-crypto] handshake failed', err);
+                    VoltLogger.error('[ws-crypto] handshake failed', err);
                     this._helloAnnounced = false;
                     this._cryptoState = 'error';
                     this._intentionalClose = true;
@@ -153,7 +153,7 @@ export class SocketConnection implements IConnection
                 }
                 catch (err)
                 {
-                    OctaneLogger.error('[ws-crypto] decrypt failed', err);
+                    VoltLogger.error('[ws-crypto] decrypt failed', err);
                     this._cryptoState = 'error';
                     this._intentionalClose = true;
                     if(this._socket) this._socket.close();
@@ -331,7 +331,7 @@ export class SocketConnection implements IConnection
         {
             if(generation !== this._socketGeneration || socket !== this._socket) return;
 
-            OctaneLogger.error('[ws-crypto] encrypt failed', err);
+            VoltLogger.error('[ws-crypto] encrypt failed', err);
             this._helloAnnounced = false;
             this._cryptoState = 'error';
             this._intentionalClose = true;
@@ -350,18 +350,18 @@ export class SocketConnection implements IConnection
 
             this.setConnectionState({ phase: 'reauthenticating', authenticated: false });
 
-            GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_RECONNECTED));
+            GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_RECONNECTED));
         }
         else
         {
             this.setConnectionState({ phase: 'authenticating', authenticated: false });
-            GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_OPENED));
+            GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_OPENED));
         }
     }
 
     private onSocketClosed(event: CloseEvent): void
     {
-        OctaneLogger.log('[SocketConnection] Socket closed, code: ' + (event?.code ?? 'unknown') + ', reason: ' + (event?.reason || 'none'));
+        VoltLogger.log('[SocketConnection] Socket closed, code: ' + (event?.code ?? 'unknown') + ', reason: ' + (event?.reason || 'none'));
 
         const code = event?.code ?? 0;
         const closeReason = event?.reason || '';
@@ -379,7 +379,7 @@ export class SocketConnection implements IConnection
                 closeReason
             });
 
-            GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
+            GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_CLOSED));
             return;
         }
 
@@ -409,7 +409,7 @@ export class SocketConnection implements IConnection
 
         if(!this._wasAuthenticated && !this._isAuthenticated)
         {
-            GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_ERROR));
+            GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_ERROR));
         }
     }
 
@@ -427,12 +427,12 @@ export class SocketConnection implements IConnection
             });
 
             GetEventDispatcher().dispatchEvent(new ReconnectEvent(
-                OctaneEventType.SOCKET_RECONNECT_FAILED,
+                VoltEventType.SOCKET_RECONNECT_FAILED,
                 this._reconnectAttempt,
                 SocketConnection.MAX_RECONNECT_ATTEMPTS
             ));
 
-            GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
+            GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_CLOSED));
 
             return;
         }
@@ -452,7 +452,7 @@ export class SocketConnection implements IConnection
         );
 
         GetEventDispatcher().dispatchEvent(new ReconnectEvent(
-            OctaneEventType.SOCKET_RECONNECTING,
+            VoltEventType.SOCKET_RECONNECTING,
             this._reconnectAttempt,
             SocketConnection.MAX_RECONNECT_ATTEMPTS
         ));
@@ -560,7 +560,7 @@ export class SocketConnection implements IConnection
 
         this.setConnectionState({ phase: 'disconnected', reconnectAttempt: 0, authenticated: false });
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_CLOSED));
     }
 
     /** No new login could be made after a reconnect: the session ends for good, as after too many attempts. */
@@ -584,7 +584,7 @@ export class SocketConnection implements IConnection
 
         this.setConnectionState({ phase: 'failed', reconnectAttempt: 0, authenticated: false });
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOCKET_CLOSED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOCKET_CLOSED));
     }
 
     public ready(): void
@@ -619,7 +619,7 @@ export class SocketConnection implements IConnection
     {
         if(!this._connectionState.update(patch)) return;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.CONNECTION_STATE_CHANGED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.CONNECTION_STATE_CHANGED));
     }
 
     public send(...composers: IMessageComposer<unknown[]>[]): boolean
@@ -646,7 +646,7 @@ export class SocketConnection implements IConnection
 
             if(header === -1)
             {
-                OctaneLogger.packets('Unknown Composer', composer.constructor.name);
+                VoltLogger.packets('Unknown Composer', composer.constructor.name);
                 supported = false;
 
                 continue;
@@ -654,7 +654,7 @@ export class SocketConnection implements IConnection
 
             if(header !== 4000 && !this._helloAnnounced)
             {
-                OctaneLogger.packets('Hello required', header);
+                VoltLogger.packets('Hello required', header);
                 supported = false;
 
                 continue;
@@ -664,7 +664,7 @@ export class SocketConnection implements IConnection
 
             if(header === 4000 && message[0] !== ClientHelloMessageComposer.BUILD)
             {
-                OctaneLogger.packets('Hello revision mismatch', message[0]);
+                VoltLogger.packets('Hello revision mismatch', message[0]);
                 supported = false;
 
                 continue;
@@ -674,13 +674,13 @@ export class SocketConnection implements IConnection
 
             if(!encoded)
             {
-                OctaneLogger.packets('Encoding Failed', composer.constructor.name);
+                VoltLogger.packets('Encoding Failed', composer.constructor.name);
                 supported = false;
 
                 continue;
             }
 
-            OctaneLogger.packets('OutgoingComposer', header, composer.constructor.name, message);
+            VoltLogger.packets('OutgoingComposer', header, composer.constructor.name, message);
 
             const accepted = this.write(encoded.getBuffer());
             if(!accepted) supported = false;
@@ -724,7 +724,7 @@ export class SocketConnection implements IConnection
 
         catch (err)
         {
-            OctaneLogger.error(err);
+            VoltLogger.error(err);
         }
     }
 
@@ -760,7 +760,7 @@ export class SocketConnection implements IConnection
 
             if(messages && messages.length)
             {
-                OctaneLogger.packets('IncomingMessage', wrapper.header, messages[0].constructor.name, messages[0].parser);
+                VoltLogger.packets('IncomingMessage', wrapper.header, messages[0].constructor.name, messages[0].parser);
 
                 this.handleMessages(...messages);
             }
@@ -792,7 +792,7 @@ export class SocketConnection implements IConnection
 
         if(!events || !events.length)
         {
-            OctaneLogger.packets('IncomingMessage', wrapper.header, 'UNREGISTERED', wrapper);
+            VoltLogger.packets('IncomingMessage', wrapper.header, 'UNREGISTERED', wrapper);
 
             return null;
         }
@@ -808,7 +808,7 @@ export class SocketConnection implements IConnection
 
         catch (e)
         {
-            OctaneLogger.error('Error parsing message', e, events[0].constructor.name);
+            VoltLogger.error('Error parsing message', e, events[0].constructor.name);
 
             return null;
         }

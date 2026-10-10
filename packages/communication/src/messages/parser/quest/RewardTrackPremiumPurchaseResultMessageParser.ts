@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** RewardTrackPremiumPurchaseResult (2248): 0 is success, else reward_track.premium.notification.fail.N. */
 export class RewardTrackPremiumPurchaseResultMessageParser implements IMessageParser

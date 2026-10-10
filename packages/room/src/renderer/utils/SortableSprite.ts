@@ -1,4 +1,4 @@
-﻿import { IRoomObjectSprite, ISortableSprite } from '@octane/api';
+﻿import { IRoomObjectSprite, ISortableSprite } from '@volt/api';
 
 export class SortableSprite implements ISortableSprite
 {

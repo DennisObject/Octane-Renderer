@@ -1,4 +1,4 @@
-import { ISongInfo } from '@octane/api';
+import { ISongInfo } from '@volt/api';
 
 export class SongDataEntry implements ISongInfo
 {

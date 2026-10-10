@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** One cached wired variable and the hash the client currently holds for it. */
 export interface IWiredVariableHash

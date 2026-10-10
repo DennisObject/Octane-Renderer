@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { TextureUtils } from '@octane/utils';
+import { TextureUtils } from '@volt/utils';
 import { buildRoomObjectImageKey, RoomObjectImageCache, SharedImageResult } from './RoomObjectImageCache';
 
 const fakeTexture = () => ({ destroyed: false, destroy: vi.fn(function (this: { destroyed: boolean }) { this.destroyed = true; }) });

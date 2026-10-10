@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * The call for help somebody already has open. The official `class_2768` reads a different set of

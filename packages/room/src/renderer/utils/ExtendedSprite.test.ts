@@ -4,7 +4,7 @@ import { ExtendedSprite } from './ExtendedSprite';
 
 const { rendererState } = vi.hoisted(() => ({ rendererState: { value: null } }));
 
-vi.mock('@octane/utils', () => ({
+vi.mock('@volt/utils', () => ({
     GetRenderer: () => rendererState.value,
     TextureUtils: {}
 }));

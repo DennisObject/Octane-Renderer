@@ -1,6 +1,6 @@
-import { OctaneEvent } from '@octane/events';
+import { VoltEvent } from '@volt/events';
 
-export class SoundManagerEvent extends OctaneEvent
+export class SoundManagerEvent extends VoltEvent
 {
     public static TRAX_SONG_COMPLETE: string = 'SME_TRAX_SONG_COMPLETE';
 

@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { MyReportsStatusMessageParser } from '../../parser';
 
 export class MyReportsStatusMessageEvent extends MessageEvent implements IMessageEvent

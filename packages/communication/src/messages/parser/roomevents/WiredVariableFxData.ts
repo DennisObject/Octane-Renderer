@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { readWiredSignedLong } from './WiredVariableData';
 
 /** How one variable fx is drawn; statuses point at it by `configId` (the fx box's item id). */

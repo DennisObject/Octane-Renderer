@@ -1,7 +1,7 @@
-import { IAdvancedMap, IMusicController, IOctaneEvent, ISoundManager, ISoundVolumesSnapshot } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType, OctaneSettingsEvent, OctaneSoundEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomEngineSamplePlaybackEvent } from '@octane/events';
-import { AdvancedMap, OctaneLogger } from '@octane/utils';
+import { IAdvancedMap, IMusicController, IVoltEvent, ISoundManager, ISoundVolumesSnapshot } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, VoltEvent, VoltEventType, VoltSettingsEvent, VoltSoundEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomEngineSamplePlaybackEvent } from '@volt/events';
+import { AdvancedMap, VoltLogger } from '@volt/utils';
 import { MusicController } from './music/MusicController';
 
 export class SoundManager implements ISoundManager
@@ -16,20 +16,20 @@ export class SoundManager implements ISoundManager
     private _furnitureBeingPlayed: IAdvancedMap<number, number> = new AdvancedMap();
 
     private _musicController: IMusicController = new MusicController();
-    private _eventCallback: (event: IOctaneEvent) => void = null;
+    private _eventCallback: (event: IVoltEvent) => void = null;
 
     public async init(): Promise<void>
     {
         this._musicController.init();
 
         // Store callback for cleanup
-        this._eventCallback = (event: IOctaneEvent) => this.onEvent(event);
+        this._eventCallback = (event: IVoltEvent) => this.onEvent(event);
 
         GetEventDispatcher().addEventListener<RoomEngineSamplePlaybackEvent>(RoomEngineSamplePlaybackEvent.PLAY_SAMPLE, this._eventCallback);
         GetEventDispatcher().addEventListener<RoomEngineObjectEvent>(RoomEngineObjectEvent.REMOVED, this._eventCallback);
         GetEventDispatcher().addEventListener<RoomEngineEvent>(RoomEngineEvent.DISPOSED, this._eventCallback);
-        GetEventDispatcher().addEventListener<OctaneSettingsEvent>(OctaneSettingsEvent.SETTINGS_UPDATED, this._eventCallback);
-        GetEventDispatcher().addEventListener<OctaneSoundEvent>(OctaneSoundEvent.PLAY_SOUND, this._eventCallback);
+        GetEventDispatcher().addEventListener<VoltSettingsEvent>(VoltSettingsEvent.SETTINGS_UPDATED, this._eventCallback);
+        GetEventDispatcher().addEventListener<VoltSoundEvent>(VoltSoundEvent.PLAY_SOUND, this._eventCallback);
     }
 
     public dispose(): void
@@ -39,8 +39,8 @@ export class SoundManager implements ISoundManager
             GetEventDispatcher().removeEventListener(RoomEngineSamplePlaybackEvent.PLAY_SAMPLE, this._eventCallback);
             GetEventDispatcher().removeEventListener(RoomEngineObjectEvent.REMOVED, this._eventCallback);
             GetEventDispatcher().removeEventListener(RoomEngineEvent.DISPOSED, this._eventCallback);
-            GetEventDispatcher().removeEventListener(OctaneSettingsEvent.SETTINGS_UPDATED, this._eventCallback);
-            GetEventDispatcher().removeEventListener(OctaneSoundEvent.PLAY_SOUND, this._eventCallback);
+            GetEventDispatcher().removeEventListener(VoltSettingsEvent.SETTINGS_UPDATED, this._eventCallback);
+            GetEventDispatcher().removeEventListener(VoltSoundEvent.PLAY_SOUND, this._eventCallback);
             this._eventCallback = null;
         }
 
@@ -56,7 +56,7 @@ export class SoundManager implements ISoundManager
         this._furnitureBeingPlayed.dispose();
     }
 
-    private onEvent(event: IOctaneEvent)
+    private onEvent(event: IVoltEvent)
     {
         switch(event.type)
         {
@@ -79,8 +79,8 @@ export class SoundManager implements ISoundManager
                 });
                 return;
             }
-            case OctaneSettingsEvent.SETTINGS_UPDATED: {
-                const castedEvent = (event as OctaneSettingsEvent);
+            case VoltSettingsEvent.SETTINGS_UPDATED: {
+                const castedEvent = (event as VoltSettingsEvent);
 
                 const nextSystem = (castedEvent.volumeSystem / 100);
                 const nextFurni = (castedEvent.volumeFurni / 100);
@@ -102,8 +102,8 @@ export class SoundManager implements ISoundManager
 
                 return;
             }
-            case OctaneSoundEvent.PLAY_SOUND: {
-                const castedEvent = (event as OctaneSoundEvent);
+            case VoltSoundEvent.PLAY_SOUND: {
+                const castedEvent = (event as VoltSoundEvent);
 
                 this.playInternalSample(castedEvent.sampleCode);
                 return;
@@ -122,7 +122,7 @@ export class SoundManager implements ISoundManager
         }
         catch (e)
         {
-            OctaneLogger.error(e);
+            VoltLogger.error(e);
         }
     }
 
@@ -176,7 +176,7 @@ export class SoundManager implements ISoundManager
         }
         catch (e)
         {
-            OctaneLogger.error(e);
+            VoltLogger.error(e);
         }
     }
 
@@ -198,7 +198,7 @@ export class SoundManager implements ISoundManager
         }
         catch (e)
         {
-            OctaneLogger.error(e);
+            VoltLogger.error(e);
         }
     }
 
@@ -242,7 +242,7 @@ export class SoundManager implements ISoundManager
     {
         this._volumesSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SOUND_VOLUMES_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SOUND_VOLUMES_UPDATED));
     }
 
     public getVolumesSnapshot(): Readonly<ISoundVolumesSnapshot>

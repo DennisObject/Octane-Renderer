@@ -1,4 +1,4 @@
-import { FurnitureType, IFurnitureData } from '@octane/api';
+import { FurnitureType, IFurnitureData } from '@volt/api';
 
 export class FurnitureData implements IFurnitureData
 {

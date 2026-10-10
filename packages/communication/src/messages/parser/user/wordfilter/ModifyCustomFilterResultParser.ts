@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** ModifyCustomFilterResult (3333): result code followed by the word it refers to. */
 export class ModifyCustomFilterResultParser implements IMessageParser

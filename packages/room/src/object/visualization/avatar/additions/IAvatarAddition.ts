@@ -1,4 +1,4 @@
-import { IRoomObjectSprite } from '@octane/api';
+import { IRoomObjectSprite } from '@volt/api';
 
 export interface IAvatarAddition
 {

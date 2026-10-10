@@ -1,7 +1,7 @@
-import { IRoomSession } from '@octane/api';
-import { OctaneEvent } from '../core';
+import { IRoomSession } from '@volt/api';
+import { VoltEvent } from '../core';
 
-export class RoomSessionEvent extends OctaneEvent
+export class RoomSessionEvent extends VoltEvent
 {
     public static CREATED: string = 'RSE_CREATED';
     public static STARTED: string = 'RSE_STARTED';

@@ -1,8 +1,8 @@
-import { ICommunicationManager, IConnection, IMessageConfiguration, IMessageEvent } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEventType, SocketReauthenticatedEvent } from '@octane/events';
-import { GetTickerTime, OctaneLogger } from '@octane/utils';
-import { OctaneMessages } from './OctaneMessages';
+import { ICommunicationManager, IConnection, IMessageConfiguration, IMessageEvent } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, VoltEventType, SocketReauthenticatedEvent } from '@volt/events';
+import { GetTickerTime, VoltLogger } from '@volt/utils';
+import { VoltMessages } from './VoltMessages';
 import { SocketConnection } from './SocketConnection';
 import { AuthenticatedEvent, ClientHelloMessageComposer, ClientPingEvent, DisconnectReasonEvent, InfoRetrieveMessageComposer, PongMessageComposer, SSOTicketMessageComposer, UniqueIDMessageComposer } from './messages';
 import { Thumbmark } from '@thumbmarkjs/thumbmarkjs';
@@ -38,7 +38,7 @@ export class CommunicationManager implements ICommunicationManager
         }
         catch (error)
         {
-            OctaneLogger.warn('[CommunicationManager] Failed to generate machine ID', error);
+            VoltLogger.warn('[CommunicationManager] Failed to generate machine ID', error);
 
             return 'FAILED';
         }
@@ -85,7 +85,7 @@ export class CommunicationManager implements ICommunicationManager
             }
             catch (error)
             {
-                OctaneLogger.warn('[CommunicationManager] Could not get a reconnect ticket', error);
+                VoltLogger.warn('[CommunicationManager] Could not get a reconnect ticket', error);
                 ticket = '';
             }
         }
@@ -106,7 +106,7 @@ export class CommunicationManager implements ICommunicationManager
     {
         this.clearReauthenticationTimer();
 
-        OctaneLogger.warn('[CommunicationManager] Re-authentication failed, ending the session');
+        VoltLogger.warn('[CommunicationManager] Re-authentication failed, ending the session');
 
         this._connection.reauthenticationFailed();
     }
@@ -122,7 +122,7 @@ export class CommunicationManager implements ICommunicationManager
 
     constructor()
     {
-        this._messages = new OctaneMessages();
+        this._messages = new VoltMessages();
         this._connection.registerMessages(this._messages);
     }
 
@@ -134,18 +134,18 @@ export class CommunicationManager implements ICommunicationManager
             this.stopPong();
             this.clearReauthenticationTimer();
         };
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_CLOSED, this._socketClosedCallback);
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_CLOSED, this._socketClosedCallback);
 
         // Handle reconnection - re-authenticate when socket reconnects
         this._socketReconnectedCallback = () =>
         {
-            OctaneLogger.log('[CommunicationManager] Socket reconnected, re-authenticating...');
+            VoltLogger.log('[CommunicationManager] Socket reconnected, re-authenticating...');
 
             if(GetConfiguration().getValue<boolean>('system.pong.manually', false)) this.startPong();
 
             void this.reauthenticate();
         };
-        GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
+        GetEventDispatcher().addEventListener(VoltEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
 
         return new Promise((resolve, reject) =>
         {
@@ -156,14 +156,14 @@ export class CommunicationManager implements ICommunicationManager
 
                 void this.sendHandshake();
             };
-            GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_OPENED, this._socketOpenedCallback);
+            GetEventDispatcher().addEventListener(VoltEventType.SOCKET_OPENED, this._socketOpenedCallback);
 
             // Store callback for cleanup
             this._socketErrorCallback = () =>
             {
                 if(!this._initResolved) reject(new Error('Socket error before init resolved'));
             };
-            GetEventDispatcher().addEventListener(OctaneEventType.SOCKET_ERROR, this._socketErrorCallback);
+            GetEventDispatcher().addEventListener(VoltEventType.SOCKET_ERROR, this._socketErrorCallback);
 
             // Store message events for cleanup
             const pingEvent = new ClientPingEvent((event: ClientPingEvent) => this.sendPong());
@@ -175,7 +175,7 @@ export class CommunicationManager implements ICommunicationManager
                 this._recoveryToken = parser.recoveryToken;
                 this.clearReauthenticationTimer();
 
-                OctaneLogger.log('[CommunicationManager] AuthenticatedEvent received (isReconnect=' + isReconnect + ')');
+                VoltLogger.log('[CommunicationManager] AuthenticatedEvent received (isReconnect=' + isReconnect + ')');
 
                 this._connection.authenticated();
 
@@ -195,9 +195,9 @@ export class CommunicationManager implements ICommunicationManager
 
                 if(isReconnect)
                 {
-                    OctaneLogger.log('[CommunicationManager] Dispatching SOCKET_REAUTHENTICATED');
+                    VoltLogger.log('[CommunicationManager] Dispatching SOCKET_REAUTHENTICATED');
                     GetEventDispatcher().dispatchEvent(new SocketReauthenticatedEvent(
-                        OctaneEventType.SOCKET_REAUTHENTICATED,
+                        VoltEventType.SOCKET_REAUTHENTICATED,
                         parser.sessionResumed,
                         parser.roomId));
                 }
@@ -207,7 +207,7 @@ export class CommunicationManager implements ICommunicationManager
             {
                 const reason = event.getParser()?.reason ?? -1;
 
-                OctaneLogger.log('[CommunicationManager] Server disconnect reason ' + reason);
+                VoltLogger.log('[CommunicationManager] Server disconnect reason ' + reason);
 
                 this._connection.serverDisconnected(reason);
             });
@@ -230,25 +230,25 @@ export class CommunicationManager implements ICommunicationManager
         // Remove event dispatcher listeners
         if(this._socketClosedCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.SOCKET_CLOSED, this._socketClosedCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.SOCKET_CLOSED, this._socketClosedCallback);
             this._socketClosedCallback = null;
         }
 
         if(this._socketOpenedCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.SOCKET_OPENED, this._socketOpenedCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.SOCKET_OPENED, this._socketOpenedCallback);
             this._socketOpenedCallback = null;
         }
 
         if(this._socketErrorCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.SOCKET_ERROR, this._socketErrorCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.SOCKET_ERROR, this._socketErrorCallback);
             this._socketErrorCallback = null;
         }
 
         if(this._socketReconnectedCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
             this._socketReconnectedCallback = null;
         }
 

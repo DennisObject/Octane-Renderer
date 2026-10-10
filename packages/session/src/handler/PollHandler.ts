@@ -1,6 +1,6 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { PollContentsEvent, PollErrorEvent, PollOfferEvent, RoomPollResultEvent, StartRoomPollEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionPollEvent, RoomSessionVoteEvent } from '@octane/events';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { PollContentsEvent, PollErrorEvent, PollOfferEvent, RoomPollResultEvent, StartRoomPollEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionPollEvent, RoomSessionVoteEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class PollHandler extends BaseHandler

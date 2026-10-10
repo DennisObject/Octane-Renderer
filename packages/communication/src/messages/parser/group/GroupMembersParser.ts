@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { GroupMemberParser } from './utils';
 
 export class GroupMembersParser implements IMessageParser

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { QuestMessageData } from './QuestMessageData';
 
 /** QuestCancelled (3027): the tracked quest stops; AIR 13 sends the expiry flag and the quest. */

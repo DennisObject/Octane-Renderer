@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class SaveWardrobeOutfitMessageComposer implements IMessageComposer<ConstructorParameters<typeof SaveWardrobeOutfitMessageComposer>>
 {

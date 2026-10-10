@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `MarketPlaceLogic.clearOwnHistory(state)` -> `HabboCatalog.clearOwnMarketPlaceHistory(state)`

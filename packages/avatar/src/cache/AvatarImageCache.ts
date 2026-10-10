@@ -1,6 +1,6 @@
-import { AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, GeometryType, IActiveActionData, IAvatarImage, IGraphicAsset } from '@octane/api';
-import { GraphicAsset } from '@octane/assets';
-import { GetRenderer, GetTexturePool, GetTickerTime } from '@octane/utils';
+import { AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, GeometryType, IActiveActionData, IAvatarImage, IGraphicAsset } from '@volt/api';
+import { GraphicAsset } from '@volt/assets';
+import { GetRenderer, GetTexturePool, GetTickerTime } from '@volt/utils';
 import { Container, Matrix, Point, Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
 import { AvatarImageBodyPartContainer } from '../AvatarImageBodyPartContainer';
 import { AvatarImagePartContainer } from '../AvatarImagePartContainer';

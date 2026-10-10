@@ -20494,7 +20494,7 @@
       "header": 3346,
       "symbol": "FORWARD_TO_RANDOM_PROMOTED_ROOM",
       "path": "packages/communication/src/messages/outgoing/navigator/ForwardToARandomPromotedRoomMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20502,7 +20502,7 @@
       "header": 65397,
       "symbol": "WELCOME_GIFT_CHANGE_EMAIL",
       "path": "packages/communication/src/messages/outgoing/user/WelcomeGiftChangeEmailComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20510,7 +20510,7 @@
       "header": 65381,
       "symbol": "REDEEM_COMMUNITY_GOAL_PRIZE",
       "path": "packages/communication/src/messages/outgoing/quest/RedeemCommunityGoalPrizeMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20518,7 +20518,7 @@
       "header": 65421,
       "symbol": "GETUSERGAMEACHIEVEMENTSMESSAGE",
       "path": "packages/communication/src/messages/outgoing/game/lobby/GetUserGameAchievementsMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20526,7 +20526,7 @@
       "header": 1037,
       "symbol": "PET_SELECTED",
       "path": "packages/communication/src/messages/outgoing/room/pets/PetSelectedMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20534,7 +20534,7 @@
       "header": 2960,
       "symbol": "GET_NEXT_TARGETED_OFFER",
       "path": "packages/communication/src/messages/outgoing/catalog/GetNextTargetedOfferComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20542,7 +20542,7 @@
       "header": 65400,
       "symbol": "GET_HABBO_BASIC_MEMBERSHIP_EXTEND_OFFER",
       "path": "packages/communication/src/messages/outgoing/catalog/GetHabboBasicMembershipExtendOfferComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20550,7 +20550,7 @@
       "header": 65395,
       "symbol": "GO_TO_FLAT",
       "path": "packages/communication/src/messages/outgoing/room/session/GoToFlatMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20558,7 +20558,7 @@
       "header": 65389,
       "symbol": "GET_CATALOG_PAGE_EXPIRATION",
       "path": "packages/communication/src/messages/outgoing/catalog/GetCatalogPageExpirationComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20566,7 +20566,7 @@
       "header": 3789,
       "symbol": "TRY_PHONE_NUMBER",
       "path": "packages/communication/src/messages/outgoing/gifts/TryPhoneNumberMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20574,7 +20574,7 @@
       "header": 65384,
       "symbol": "GET_DIRECT_CLUB_BUY_AVAILABLE",
       "path": "packages/communication/src/messages/outgoing/catalog/GetDirectClubBuyAvailableComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20582,7 +20582,7 @@
       "header": 2954,
       "symbol": "MY_FREQUENT_ROOM_HISTORY_SEARCH",
       "path": "packages/communication/src/messages/outgoing/navigator/MyFrequentRoomHistorySearchMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20590,7 +20590,7 @@
       "header": 2650,
       "symbol": "CLIENT_VARIABLES",
       "path": "packages/communication/src/messages/outgoing/handshake/VersionCheckMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20598,7 +20598,7 @@
       "header": 2658,
       "symbol": "INTERSTITIAL_SHOWN",
       "path": "packages/communication/src/messages/outgoing/advertisement/InterstitialShownMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20606,7 +20606,7 @@
       "header": 188,
       "symbol": "FRIEND_REQUEST_QUEST_COMPLETE",
       "path": "packages/communication/src/messages/outgoing/quest/FriendRequestQuestCompleteMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20614,7 +20614,7 @@
       "header": 727,
       "symbol": "PEER_USERS_CLASSIFICATION",
       "path": "packages/communication/src/messages/outgoing/userclassification/PeerUsersClassificationMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20622,7 +20622,7 @@
       "header": 3303,
       "symbol": "GET_IS_OFFER_GIFTABLE",
       "path": "packages/communication/src/messages/outgoing/catalog/GetIsOfferGiftableComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20630,7 +20630,7 @@
       "header": 2505,
       "symbol": "SET_PHONE_NUMBER_VERIFICATION_STATUS",
       "path": "packages/communication/src/messages/outgoing/gifts/SetPhoneNumberVerificationStatusMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20638,7 +20638,7 @@
       "header": 3654,
       "symbol": "HARVEST_PET",
       "path": "packages/communication/src/messages/outgoing/room/engine/HarvestPetMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20646,7 +20646,7 @@
       "header": 65466,
       "symbol": "GET_FAQ_TEXT",
       "path": "packages/communication/src/messages/outgoing/help/GetFaqTextMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20654,7 +20654,7 @@
       "header": 2164,
       "symbol": "MARKETPLACE_BUY_TOKENS",
       "path": "packages/communication/src/messages/outgoing/marketplace/BuyMarketplaceTokensMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20662,7 +20662,7 @@
       "header": 65463,
       "symbol": "SEARCH_FAQS",
       "path": "packages/communication/src/messages/outgoing/help/SearchFaqsMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20670,7 +20670,7 @@
       "header": 2488,
       "symbol": "MARK_CATALOG_NEW_ADDITIONS_PAGE_OPENED",
       "path": "packages/communication/src/messages/outgoing/catalog/MarkCatalogNewAdditionsPageOpenedComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20678,7 +20678,7 @@
       "header": 1889,
       "symbol": "GET_COMMUNITY_GOAL_HALL_OF_FAME",
       "path": "packages/communication/src/messages/outgoing/quest/GetCommunityGoalHallOfFameMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20686,7 +20686,7 @@
       "header": 2576,
       "symbol": "USER_PROFILE_BY_NAME",
       "path": "packages/communication/src/messages/outgoing/user/data/GetExtendedProfileByNameMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20694,7 +20694,7 @@
       "header": 3844,
       "symbol": "ROOM_AD_PURCHASE_INITIATED",
       "path": "packages/communication/src/messages/outgoing/catalog/RoomAdPurchaseInitiatedComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20702,7 +20702,7 @@
       "header": 3448,
       "symbol": "USER_CLASSIFICATION",
       "path": "packages/communication/src/messages/outgoing/userclassification/RoomUsersClassificationMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20710,7 +20710,7 @@
       "header": 65458,
       "symbol": "LEAVEQUEUEMESSAGE",
       "path": "packages/communication/src/messages/outgoing/game/lobby/LeaveQueueMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20718,7 +20718,7 @@
       "header": 65457,
       "symbol": "GETGAMEACHIEVEMENTSMESSAGE",
       "path": "packages/communication/src/messages/outgoing/game/lobby/GetGameAchievementsMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20726,7 +20726,7 @@
       "header": 3076,
       "symbol": "ROOM_AD_EVENT_TAB_CLICKED",
       "path": "packages/communication/src/messages/outgoing/navigator/RoomAdEventTabAdClickedComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20734,7 +20734,7 @@
       "header": 1438,
       "symbol": "GAME2LOADSTAGEREADYMESSAGE",
       "path": "packages/communication/src/messages/outgoing/game/arena/Game2LoadStageReadyMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20742,7 +20742,7 @@
       "header": 65456,
       "symbol": "GET_GIFT",
       "path": "packages/communication/src/messages/outgoing/gifts/GetGiftMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20750,7 +20750,7 @@
       "header": 65454,
       "symbol": "UPDATE_ROOM_THUMBNAIL",
       "path": "packages/communication/src/messages/outgoing/navigator/UpdateRoomThumbnailMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20758,7 +20758,7 @@
       "header": 607,
       "symbol": "GET_INTERSTITIAL",
       "path": "packages/communication/src/messages/outgoing/advertisement/GetInterstitialMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20766,7 +20766,7 @@
       "header": 3685,
       "symbol": "MY_RECOMMENDED_ROOMS",
       "path": "packages/communication/src/messages/outgoing/navigator/MyRecommendedRoomsMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20774,7 +20774,7 @@
       "header": 2281,
       "symbol": "CLIENT_PONG",
       "path": "packages/communication/src/messages/outgoing/handshake/PongMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20782,7 +20782,7 @@
       "header": 65450,
       "symbol": "WELCOME_OPEN_GIFT",
       "path": "packages/communication/src/messages/outgoing/room/furniture/OpenWelcomeGiftComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20790,7 +20790,7 @@
       "header": 2842,
       "symbol": "ROOM_AD_EVENT_TAB_VIEWED",
       "path": "packages/communication/src/messages/outgoing/navigator/RoomAdEventTabViewedComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20798,7 +20798,7 @@
       "header": 65448,
       "symbol": "GET_COMMUNITY_GOAL_EARNED_PRIZES",
       "path": "packages/communication/src/messages/outgoing/quest/GetCommunityGoalEarnedPrizesMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20806,7 +20806,7 @@
       "header": 1218,
       "symbol": "VERIFY_CODE",
       "path": "packages/communication/src/messages/outgoing/gifts/VerifyCodeMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20814,7 +20814,7 @@
       "header": 107,
       "symbol": "CANCEL_ROOM_EVENT",
       "path": "packages/communication/src/messages/outgoing/navigator/CancelEventMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20822,7 +20822,7 @@
       "header": 1458,
       "symbol": "PURCHASE_BASIC_MEMBERSHIP_EXTENSION",
       "path": "packages/communication/src/messages/outgoing/catalog/PurchaseBasicMembershipExtensionComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20830,7 +20830,7 @@
       "header": 3630,
       "symbol": "RESET_PHONE_NUMBER_STATE",
       "path": "packages/communication/src/messages/outgoing/gifts/ResetPhoneNumberStateMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20838,7 +20838,7 @@
       "header": 288,
       "symbol": "CALL_FOR_HELP_FROM_SELFIE",
       "path": "packages/communication/src/messages/outgoing/help/CallForHelpFromSelfieMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20846,7 +20846,7 @@
       "header": 1034,
       "symbol": "ROOM_AD_SEARCH",
       "path": "packages/communication/src/messages/outgoing/navigator/RoomAdSearchMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20854,7 +20854,7 @@
       "header": 3148,
       "symbol": "GUILD_BASE_SEARCH",
       "path": "packages/communication/src/messages/outgoing/navigator/GuildBaseSearchMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20862,7 +20862,7 @@
       "header": 1232,
       "symbol": "GET_CATALOG_PAGE_WITH_EARLIEST_EXP",
       "path": "packages/communication/src/messages/outgoing/catalog/GetCatalogPageWithEarliestExpiryComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20870,7 +20870,7 @@
       "header": 285,
       "symbol": "TRACKING_PERFORMANCE_LOG",
       "path": "packages/communication/src/messages/outgoing/tracking/PerformanceLogMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20878,7 +20878,7 @@
       "header": 68,
       "symbol": "GET_SEASONAL_CALENDAR_DAILY_OFFER",
       "path": "packages/communication/src/messages/outgoing/catalog/GetSeasonalCalendarDailyOfferComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20886,7 +20886,7 @@
       "header": 792,
       "symbol": "SET_ROOM_SESSION_TAGS",
       "path": "packages/communication/src/messages/outgoing/navigator/SetRoomSessionTagsMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20894,7 +20894,7 @@
       "header": 65431,
       "symbol": "GET_FAQ_CATEGORY",
       "path": "packages/communication/src/messages/outgoing/help/GetFaqCategoryMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20902,7 +20902,7 @@
       "header": 1534,
       "symbol": "SHOP_TARGETED_OFFER_VIEWED",
       "path": "packages/communication/src/messages/outgoing/catalog/ShopTargetedOfferViewedComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20910,7 +20910,7 @@
       "header": 3109,
       "symbol": "GET_SOUND_MACHINE_PLAYLIST",
       "path": "packages/communication/src/messages/outgoing/sound/GetSoundMachinePlayListMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20918,7 +20918,7 @@
       "header": 65423,
       "symbol": "ACCEPTGAMEINVITE",
       "path": "packages/communication/src/messages/outgoing/game/lobby/AcceptGameInviteMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20926,7 +20926,7 @@
       "header": 2293,
       "symbol": "TRACKING_LAG_WARNING_REPORT",
       "path": "packages/communication/src/messages/outgoing/tracking/LagWarningReportMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20934,7 +20934,7 @@
       "header": 2068,
       "symbol": "GET_FORUM_THREAD",
       "path": "packages/communication/src/messages/outgoing/groupforums/GetThreadMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20942,7 +20942,7 @@
       "header": 6200,
       "symbol": "POLL_VOTE_COUNTER",
       "path": "packages/communication/src/messages/outgoing/poll/VotePollCounterMessageComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20950,7 +20950,7 @@
       "header": 10034,
       "symbol": "WIRED_ARRAY_INSPECTION_REQUEST",
       "path": "packages/communication/src/messages/outgoing/roomevents/WiredArrayInspectionRequestComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -20958,7 +20958,7 @@
       "header": 10035,
       "symbol": "WIRED_ARRAY_INSPECTION_UPDATE",
       "path": "packages/communication/src/messages/outgoing/roomevents/WiredArrayInspectionUpdateComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -20966,7 +20966,7 @@
       "header": 3697,
       "symbol": "GAME2_FRIENDS_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2LeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -20974,7 +20974,7 @@
       "header": 2812,
       "symbol": "NO_SUCH_FLAT",
       "path": "packages/communication/src/messages/parser/roomsettings/NoSuchFlatParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -20982,7 +20982,7 @@
       "header": 65503,
       "symbol": "DIRECT_SMS_CLUB_BUY",
       "path": "packages/communication/src/messages/parser/catalog/DirectSMSClubBuyAvailableMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -20990,7 +20990,7 @@
       "header": 65466,
       "symbol": "CAMERA_SNAPSHOT",
       "path": "packages/communication/src/messages/parser/camera/CameraSnapshotMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -20998,7 +20998,7 @@
       "header": 65422,
       "symbol": "AVAILABILITY_TIME",
       "path": "packages/communication/src/messages/parser/availability/AvailabilityTimeMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21006,7 +21006,7 @@
       "header": 65421,
       "symbol": "IS_OFFER_GIFTABLE",
       "path": "packages/communication/src/messages/parser/catalog/IsOfferGiftableMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21014,7 +21014,7 @@
       "header": 715,
       "symbol": "GAME_CENTER_IN_ARENA_QUEUE",
       "path": "packages/communication/src/messages/parser/game/directory/Game2InArenaQueueMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21022,7 +21022,7 @@
       "header": 65415,
       "symbol": "GAMEINVITE",
       "path": "packages/communication/src/messages/parser/game/lobby/GameInviteMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21030,7 +21030,7 @@
       "header": 317,
       "symbol": "GROUP_MEMBERSHIP_REQUESTED",
       "path": "packages/communication/src/messages/parser/user/GroupMembershipRequestedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21038,7 +21038,7 @@
       "header": 65509,
       "symbol": "HOTEL_MERGE_NAME_CHANGE",
       "path": "packages/communication/src/messages/parser/help/HotelMergeNameChangeParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21046,7 +21046,7 @@
       "header": 65508,
       "symbol": "GAMEACHIEVEMENTS",
       "path": "packages/communication/src/messages/parser/game/lobby/GameAchievementsMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21054,7 +21054,7 @@
       "header": 1654,
       "symbol": "GAME_CENTER_JOINING_FAILED",
       "path": "packages/communication/src/messages/parser/game/directory/Game2JoiningGameFailedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21062,7 +21062,7 @@
       "header": 2441,
       "symbol": "GAME2_TOTAL_GROUP_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2GroupLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21070,7 +21070,7 @@
       "header": 65504,
       "symbol": "THUMBNAIL_UPDATE_RESULT",
       "path": "packages/communication/src/messages/parser/navigator/RoomThumbnailUpdateResultMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21078,7 +21078,7 @@
       "header": 113,
       "symbol": "GAME_CENTER_STARTING_GAME_FAILED",
       "path": "packages/communication/src/messages/parser/game/directory/Game2StartingGameFailedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21086,7 +21086,7 @@
       "header": 2708,
       "symbol": "WEEKLY_GAME2_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2WeeklyLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21094,7 +21094,7 @@
       "header": 564,
       "symbol": "GAME_CENTER_ACHIEVEMENTS",
       "path": "packages/communication/src/messages/parser/game/lobby/UserGameAchievementsMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21102,7 +21102,7 @@
       "header": 506,
       "symbol": "WEEKLY_GAME2_FRIENDS_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2WeeklyLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21110,7 +21110,7 @@
       "header": 1770,
       "symbol": "GAME2_TOTAL_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2LeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21118,7 +21118,7 @@
       "header": 65492,
       "symbol": "WEEKLY_GAME_REWARD",
       "path": "packages/communication/src/messages/parser/game/score/WeeklyGameRewardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21126,7 +21126,7 @@
       "header": 65490,
       "symbol": "CATALOG_PAGE_EXPIRATION",
       "path": "packages/communication/src/messages/parser/catalog/CatalogPageExpirationParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21134,7 +21134,7 @@
       "header": 65485,
       "symbol": "TRADE_NO_SUCH_ITEM",
       "path": "packages/communication/src/messages/parser/inventory/trading/TradingNoSuchItemParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21142,7 +21142,7 @@
       "header": 3210,
       "symbol": "ROOM_SETTINGS_ERROR",
       "path": "packages/communication/src/messages/parser/roomsettings/RoomSettingsErrorParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21150,7 +21150,7 @@
       "header": 2348,
       "symbol": "GAME2_WEEKLY_GROUP_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2WeeklyGroupLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21158,7 +21158,7 @@
       "header": 65483,
       "symbol": "JOININGQUEUEFAILED",
       "path": "packages/communication/src/messages/parser/game/lobby/JoiningQueueFailedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21166,7 +21166,7 @@
       "header": 65481,
       "symbol": "WEEKLY_GAME_REWARD_WINNERS",
       "path": "packages/communication/src/messages/parser/game/score/WeeklyGameRewardWinnersParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21174,7 +21174,7 @@
       "header": 3665,
       "symbol": "GAME_CENTER_USER_LEFT_GAME",
       "path": "packages/communication/src/messages/parser/game/directory/Game2UserLeftGameMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21182,7 +21182,7 @@
       "header": 2747,
       "symbol": "GAME_CENTER_STOP_COUNTER",
       "path": "packages/communication/src/messages/parser/game/directory/Game2StopCounterMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21190,7 +21190,7 @@
       "header": 65480,
       "symbol": "COMMUNITY_GOAL_EARNED_PRIZES",
       "path": "packages/communication/src/messages/parser/quest/CommunityGoalEarnedPrizesMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21198,7 +21198,7 @@
       "header": 1134,
       "symbol": "WEEKLY_COMPETITIVE_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2WeeklyLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21206,7 +21206,7 @@
       "header": 65478,
       "symbol": "WEEKLY_COMPETITIVE_FRIENDS_LEADERBOARD",
       "path": "packages/communication/src/messages/parser/game/score/Game2WeeklyLeaderboardParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21214,7 +21214,7 @@
       "header": 65475,
       "symbol": "BOT_RECEIVED",
       "path": "packages/communication/src/messages/parser/bots/BotReceivedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21222,7 +21222,7 @@
       "header": 5108,
       "symbol": "WIRED_FURNI_RUNTIME_STATE",
       "path": "packages/communication/src/messages/parser/roomevents/WiredFurniRuntimeStateParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21230,7 +21230,7 @@
       "header": 5109,
       "symbol": "WIRED_FURNI_OPACITY",
       "path": "packages/communication/src/messages/parser/roomevents/WiredFurniOpacityParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21238,7 +21238,7 @@
       "header": 5110,
       "symbol": "WIRED_FURNI_MOVE_STYLE",
       "path": "packages/communication/src/messages/parser/roomevents/WiredFurniMoveStyleParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21246,7 +21246,7 @@
       "header": 5111,
       "symbol": "WIRED_ARRAY_INSPECTION_DATA",
       "path": "packages/communication/src/messages/parser/roomevents/WiredArrayInspectionDataParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21254,7 +21254,7 @@
       "header": 5200,
       "symbol": "POLL_START_ROOM",
       "path": "packages/communication/src/messages/parser/poll/RoomPollDataParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21262,7 +21262,7 @@
       "header": 5201,
       "symbol": "POLL_ROOM_RESULT",
       "path": "packages/communication/src/messages/parser/poll/RoomPollResultParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21270,7 +21270,7 @@
       "header": 5210,
       "symbol": "FIREWORK_CHARGE_DATA",
       "path": "packages/communication/src/messages/parser/catalog/FireworkChargeDataParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21278,7 +21278,7 @@
       "header": 5000,
       "symbol": "GAME2_GAME_CREATED",
       "path": "packages/communication/src/messages/parser/game/directory/Game2GameCreatedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21286,7 +21286,7 @@
       "header": 5002,
       "symbol": "GAME2_GAME_LONG_DATA",
       "path": "packages/communication/src/messages/parser/game/directory/Game2GameLongDataMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21294,7 +21294,7 @@
       "header": 5004,
       "symbol": "GAME2_USER_JOINED_GAME",
       "path": "packages/communication/src/messages/parser/game/directory/Game2UserJoinedGameMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21302,7 +21302,7 @@
       "header": 5009,
       "symbol": "GAME2_GAME_STARTED",
       "path": "packages/communication/src/messages/parser/game/directory/Game2GameStartedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21310,7 +21310,7 @@
       "header": 5011,
       "symbol": "GAME2_ENTER_ARENA",
       "path": "packages/communication/src/messages/parser/game/snowwar/Game2EnterArenaMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21318,7 +21318,7 @@
       "header": 5013,
       "symbol": "GAME2_ARENA_ENTERED",
       "path": "packages/communication/src/messages/parser/game/snowwar/Game2ArenaEnteredMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21326,7 +21326,7 @@
       "header": 5014,
       "symbol": "GAME2_ENTER_ARENA_FAILED",
       "path": "packages/communication/src/messages/parser/game/snowwar/Game2EnterArenaFailedMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "server_to_client",
@@ -21334,7 +21334,7 @@
       "header": 5020,
       "symbol": "GAME2_STAGE_STILL_LOADING",
       "path": "packages/communication/src/messages/parser/game/snowwar/Game2StageStillLoadingMessageParser.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry"
+      "reason": "Header is registered only by the Volt Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -23048,7 +23048,7 @@
         "className": "ClientHelloMessageComposer",
         "path": "packages/communication/src/messages/outgoing/handshake/ClientHelloMessageComposer.ts"
       },
-      "reason": "TypeScript analyzer: Outgoing value `NITRO-${OctaneVersion.RENDERER_VERSION.replaceAll('.', '-')}` has no statically resolvable wire type"
+      "reason": "TypeScript analyzer: Outgoing value `NITRO-${VoltVersion.RENDERER_VERSION.replaceAll('.', '-')}` has no statically resolvable wire type"
     },
     {
       "name": "YOUTUBE_ROOM_PLAY",

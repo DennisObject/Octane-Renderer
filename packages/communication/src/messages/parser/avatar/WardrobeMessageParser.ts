@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { OutfitData } from './OutfitData';
 
 export class WardrobeMessageParser implements IMessageParser

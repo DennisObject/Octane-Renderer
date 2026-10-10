@@ -1,8 +1,8 @@
-# Octane Renderer — Claude project context
+# Volt Renderer — Claude project context
 
-Pure-TypeScript renderer library for the Octane retro Habbo client.
+Pure-TypeScript renderer library for the Volt retro Habbo client.
 Wraps **PixiJS v8** for room/avatar rendering and provides the WebSocket
-+ event-bus infrastructure that the React client (`../octane`) sits on
++ event-bus infrastructure that the React client (`../volt`) sits on
 top of.
 
 ## Stack
@@ -15,7 +15,7 @@ top of.
 - **Vitest 4** for unit tests
 - **Yarn 4.18 workspaces** (`packages/*`) through Corepack, using the
   `node-modules` linker for compatibility with the existing build tooling.
-- **No React** — this is a pure TS library; React lives in `../octane`.
+- **No React** — this is a pure TS library; React lives in `../volt`.
 
 ## Workspace layout
 
@@ -30,7 +30,7 @@ packages/
   camera           in-room camera widget
   communication    WebSocket + composer/parser pipeline
   configuration    runtime config loader
-  events           EventDispatcher + OctaneEventType + per-domain events
+  events           EventDispatcher + VoltEventType + per-domain events
   localization     LocalizationManager
   room             RoomEngine + RoomVisualization
   session          SessionDataManager + RoomSessionManager + handlers
@@ -38,8 +38,8 @@ packages/
   utils            shared utilities (BinaryReader, Logger, …)
 ```
 
-Root `index.ts` re-exports everything from `@octane/*` so the React
-client gets a flat `import { … } from '@octane/renderer'`.
+Root `index.ts` re-exports everything from `@volt/*` so the React
+client gets a flat `import { … } from '@volt/renderer'`.
 
 ## React-friendly API additions (v2.1.0)
 
@@ -74,12 +74,12 @@ dispatches an invalidation event. The React side reads via
 | `UserDataManager` | `getRoomUserListSnapshot(): ReadonlyArray<IRoomUserData>` | `ROOM_USER_LIST_UPDATED` (inner IRoomUserData kept mutable — don't deep-clone) |
 | `SoundManager` | `getVolumesSnapshot(): Readonly<ISoundVolumesSnapshot>` | `SOUND_VOLUMES_UPDATED` (only when a volume actually changes) |
 
-Snapshot interface contracts live under `packages/api/src/octane/session/`
-and `packages/api/src/octane/sound/`. When adding a new snapshot, the
+Snapshot interface contracts live under `packages/api/src/volt/session/`
+and `packages/api/src/volt/sound/`. When adding a new snapshot, the
 checklist is:
-1. Define the `Ixxx Snapshot` interface in `packages/api/src/octane/...`
+1. Define the `Ixxx Snapshot` interface in `packages/api/src/volt/...`
    and export it from the matching `index.ts`.
-2. Add a `XXX_UPDATED` member to `packages/events/src/OctaneEventType.ts`.
+2. Add a `XXX_UPDATED` member to `packages/events/src/VoltEventType.ts`.
 3. Add `getXxxSnapshot()` to the interface AND impl; cache + invalidate
    on every mutation path (don't forget batch operations like queue
    truncation — invalidate AFTER the full batch, not mid-way).
@@ -141,7 +141,7 @@ unchanged.
 - `TextureUtils.generateImage` casts the extractor's `ImageLike`
   union return to `HTMLImageElement` (the default backend produces
   one).
-- `Window.OctaneConfig` declaration in `OctaneConfig.ts` realigned to
+- `Window.VoltConfig` declaration in `VoltConfig.ts` realigned to
   the client's `Record<string, unknown>` type so the merged decls
   agree.
 - Empty-tuple composers (`WiredRoomSettingsRequestComposer`,
@@ -202,15 +202,15 @@ yarn test:coverage      # vitest with v8 coverage
 
 ## Consumed by
 
-`../octane` consumes this library via `link:../octane-renderer`
+`../volt` consumes this library via `link:../volt-renderer`
 (yarn 4 node-modules linker). DO NOT use `yarn link` — it confuses
 vite's asset resolution. The client's `vite.config.js` then maps each
-`@octane/*` package directly to its source `index.ts` so there's no
+`@volt/*` package directly to its source `index.ts` so there's no
 build step needed for development.
 
 When making changes to renderer APIs the React client uses, the
 client's `feat/react19-*` branches contain consumers — check
-`octane/src/hooks/events/` and `octane/src/hooks/{session,rooms}/`
+`volt/src/hooks/events/` and `volt/src/hooks/{session,rooms}/`
 for the React-side bridge code.
 
 ## Gotchas
@@ -245,9 +245,9 @@ for the React-side bridge code.
 
 ## Sister projects in the same DEV folder
 
-- `../octane` — React 19 client (consumes this lib via link)
+- `../volt` — React 19 client (consumes this lib via link)
 - `../Arcturus-Morningstar-Extended` — Java emulator (server side)
-- `../OctaneV3-Housekeeping` — Next.js + Prisma admin CMS
+- `../VoltV3-Housekeeping` — Next.js + Prisma admin CMS
 
 ## Live furnidata updates: `FurnitureDataReload` (incoming header 10047)
 
@@ -255,23 +255,23 @@ Server-pushed furni name/description changes (pairs with Arcturus'
 `FurnitureDataReloadComposer`). `SessionDataManager.applyFurnidataDelta` (pure
 `applyFurnidataDeltaTo` in `packages/session/src/furniture/`) patches
 `_floorItems`/`_wallItems` by id + the `roomItem/wallItem.name/desc.{id}`
-localization keys, then dispatches the window event `octane-localization-updated`
+localization keys, then dispatches the window event `volt-localization-updated`
 so the client's already-subscribed surfaces refresh. `mode` 0 = delta, 1 =
 reload-hint (re-runs `FurnitureDataLoader.init()`). Kept SEPARATE from the
 furni-editor's `applyLiveFurnitureNameUpdate`.
 
 **Adding an incoming packet:** id in `IncomingHeader.ts` -> map in
-`OctaneMessages.ts` (`this._events.set(IncomingHeader.X, XEvent)`) -> Event +
+`VoltMessages.ts` (`this._events.set(IncomingHeader.X, XEvent)`) -> Event +
 Parser under `messages/incoming/<area>` + `messages/parser/<area>` -> wire the
 barrel chain (`<area>/index.ts` -> parent `index.ts` -> package `src/index.ts`).
 
 **Adding an outgoing composer:** id in `OutgoingHeader.ts` -> register in
-`OctaneMessages.ts` (`this._composers.set(OutgoingHeader.X, XComposer)`) -> Composer
+`VoltMessages.ts` (`this._composers.set(OutgoingHeader.X, XComposer)`) -> Composer
 under `messages/outgoing/<area>` -> wire the barrel chain. An unregistered composer
 makes `getComposerId()` return -1, logs "Unknown Composer", and the packet is
 silently DROPPED — the request never reaches the server.
 
-**A feature usually needs BOTH directions registered.** `OctaneMessages` holds two
+**A feature usually needs BOTH directions registered.** `VoltMessages` holds two
 maps — `_events` (incoming) and `_composers` (outgoing). When a panel is "dead",
 audit BOTH, not just `_events`.
 

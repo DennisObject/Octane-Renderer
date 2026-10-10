@@ -1,4 +1,4 @@
-import { IBinaryReader, IMessageDataWrapper } from '@octane/api';
+import { IBinaryReader, IMessageDataWrapper } from '@volt/api';
 
 export class EvaWireDataWrapper implements IMessageDataWrapper
 {

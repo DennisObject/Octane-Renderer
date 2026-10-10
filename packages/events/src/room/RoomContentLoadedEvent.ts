@@ -1,6 +1,6 @@
-import { OctaneEvent } from '../core';
+import { VoltEvent } from '../core';
 
-export class RoomContentLoadedEvent extends OctaneEvent
+export class RoomContentLoadedEvent extends VoltEvent
 {
     public static RCLE_SUCCESS: string = 'RCLE_SUCCESS';
     public static RCLE_FAILURE: string = 'RCLE_FAILURE';

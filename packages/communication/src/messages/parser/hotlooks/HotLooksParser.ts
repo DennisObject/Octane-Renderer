@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** One ready-made outfit of the avatar editor "hot looks" tab (AIR 13 HotLookInfo). */
 export interface IHotLookInfo

@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR all-time leaderboard page (startRank -1 = around me, direction 0 down / 1 up). */
 export class Game2GetTotalLeaderboardComposer implements IMessageComposer<ConstructorParameters<typeof Game2GetTotalLeaderboardComposer>>

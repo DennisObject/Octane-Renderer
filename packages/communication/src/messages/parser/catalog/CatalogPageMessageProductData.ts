@@ -1,4 +1,4 @@
-import { FurnitureType, IMessageDataWrapper } from '@octane/api';
+import { FurnitureType, IMessageDataWrapper } from '@volt/api';
 
 export class CatalogPageMessageProductData
 {

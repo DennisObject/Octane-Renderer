@@ -1,4 +1,4 @@
-import { IFurnitureStackingHeightMap } from '@octane/api';
+import { IFurnitureStackingHeightMap } from '@volt/api';
 
 export class FurnitureStackingHeightMap implements IFurnitureStackingHeightMap
 {

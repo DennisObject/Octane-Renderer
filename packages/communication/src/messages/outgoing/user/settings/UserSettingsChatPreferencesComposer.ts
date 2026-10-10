@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official AIR 13 chat preferences composer (header 2506): a leading boolean the official client

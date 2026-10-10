@@ -1,7 +1,7 @@
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { gzip } from 'pako';
 import { describe, expect, it } from 'vitest';
-import { OctaneMessages } from '../../../../OctaneMessages';
+import { VoltMessages } from '../../../../VoltMessages';
 import { IncomingHeader } from '../../../incoming/IncomingHeader';
 import { OutgoingHeader } from '../../../outgoing/OutgoingHeader';
 import { CatalogStudioHistoryComposer, CatalogStudioOpenSessionComposer, CatalogStudioUndoComposer } from '../../../outgoing/catalog/studio';
@@ -55,7 +55,7 @@ describe('catalog studio packet contract', () =>
 {
     it('uses the emulator headers and registers every request and response', () =>
     {
-        const messages = new OctaneMessages();
+        const messages = new VoltMessages();
 
         [ 10067, 10071, 10072 ].forEach(header =>
             expect(messages.composers.has(header)).toBe(true));

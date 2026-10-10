@@ -1,4 +1,4 @@
-import { IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '@octane/api';
+import { IAvatarEffectListener, IAvatarImage, IAvatarImageListener } from '@volt/api';
 import { AvatarVisualizationData } from '../avatar';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
 

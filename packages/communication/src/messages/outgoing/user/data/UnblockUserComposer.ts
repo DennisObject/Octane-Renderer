@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Official `BlockedUsersManager.unblockUser(userId)` (composer 1886). */
 export class UnblockUserComposer implements IMessageComposer<ConstructorParameters<typeof UnblockUserComposer>>

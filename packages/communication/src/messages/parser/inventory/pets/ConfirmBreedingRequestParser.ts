@@ -1,4 +1,4 @@
-﻿import { BreedingPetInfo, IMessageDataWrapper, IMessageParser, RarityCategoryData } from '@octane/api';
+﻿import { BreedingPetInfo, IMessageDataWrapper, IMessageParser, RarityCategoryData } from '@volt/api';
 
 export class ConfirmBreedingRequestParser implements IMessageParser
 {

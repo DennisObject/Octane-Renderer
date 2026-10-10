@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { IWiredVariableFxConfig, readWiredVariableFxConfig } from './WiredVariableFxData';
 
 /** New or changed fx configs; a first batch for a newcomer carries all of them. */

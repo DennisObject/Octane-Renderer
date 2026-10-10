@@ -1,6 +1,6 @@
-import { OctaneEvent } from '@octane/events';
+import { VoltEvent } from '@volt/events';
 
-export class NotifyPlayedSongEvent extends OctaneEvent
+export class NotifyPlayedSongEvent extends VoltEvent
 {
     public static readonly NOTIFY_PLAYED_SONG = 'UIEW_NOTIFY_PLAYED_SONG';
 

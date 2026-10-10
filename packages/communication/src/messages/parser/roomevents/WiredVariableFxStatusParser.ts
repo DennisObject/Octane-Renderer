@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { IWiredVariableFxStatus, readWiredVariableFxStatus } from './WiredVariableFxData';
 
 /** The values to draw; `initializeAll` marks a viewer's first sync, drawn without change animations. */

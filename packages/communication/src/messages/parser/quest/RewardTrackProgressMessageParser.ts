@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** RewardTrackProgress (9452): a task moved and the track points it yielded. */
 export class RewardTrackProgressMessageParser implements IMessageParser

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { HousekeepingAccessRole, HousekeepingAccessSnapshot } from './HousekeepingAccessData';
 
 export class HousekeepingRolesParser implements IMessageParser

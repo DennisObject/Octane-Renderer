@@ -1,4 +1,4 @@
-﻿import { IRoomSession } from '@octane/api';
+﻿import { IRoomSession } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 /** One worn badge of UserCurrentBadges (1087) with its official rarity data. */

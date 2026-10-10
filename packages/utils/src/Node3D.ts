@@ -1,4 +1,4 @@
-﻿import { IVector3D } from '@octane/api';
+﻿import { IVector3D } from '@volt/api';
 import { Matrix4x4 } from './Matrix4x4';
 import { Vector3d } from './Vector3d';
 

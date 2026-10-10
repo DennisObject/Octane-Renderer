@@ -1,8 +1,8 @@
-import type { IRoomCameraWidgetEffect, IRoomCameraWidgetManager, IRoomCameraWidgetSelectedEffect, RoomCameraWidgetBlendMode } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, RoomCameraWidgetManagerEvent } from '@octane/events';
-import { TextureUtils } from '@octane/utils';
+import type { IRoomCameraWidgetEffect, IRoomCameraWidgetManager, IRoomCameraWidgetSelectedEffect, RoomCameraWidgetBlendMode } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, RoomCameraWidgetManagerEvent } from '@volt/events';
+import { TextureUtils } from '@volt/utils';
 import 'pixi.js/advanced-blend-modes';
 import { ColorMatrixFilter, Container, RenderTexture, Sprite } from 'pixi.js';
 import type { ColorMatrix, Texture } from 'pixi.js';

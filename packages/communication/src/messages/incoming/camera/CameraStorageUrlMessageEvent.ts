@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { CameraStorageUrlMessageParser } from '../../parser';
 
 export class CameraStorageUrlMessageEvent extends MessageEvent implements IMessageEvent

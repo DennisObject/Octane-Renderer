@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * AIR 13 GetHotLooks: the avatar editor asks for up to `count` ready-made looks of the user's gender

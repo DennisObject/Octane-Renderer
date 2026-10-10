@@ -1,5 +1,5 @@
-import { IAdvancedMap, IFigureDataSetType, IFigurePartSet, ISetType } from '@octane/api';
-import { AdvancedMap } from '@octane/utils';
+import { IAdvancedMap, IFigureDataSetType, IFigurePartSet, ISetType } from '@volt/api';
+import { AdvancedMap } from '@volt/utils';
 import { FigurePartSet } from './FigurePartSet';
 
 export class SetType implements ISetType

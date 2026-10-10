@@ -1,4 +1,4 @@
-import { IRoomObjectController } from '@octane/api';
+import { IRoomObjectController } from '@volt/api';
 
 export class RoomObjectBadgeImageAssetListener
 {

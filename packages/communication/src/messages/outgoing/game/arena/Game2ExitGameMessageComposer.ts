@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class Game2ExitGameMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2ExitGameMessageComposer>>
 {

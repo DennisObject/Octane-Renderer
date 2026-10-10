@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** RewardTrackClaimResult (9451): 0 is success, any other code is localized as reward_track.claim.notification.fail.N. */
 export class RewardTrackClaimResultMessageParser implements IMessageParser

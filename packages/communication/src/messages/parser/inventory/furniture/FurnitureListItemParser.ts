@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IObjectData } from '@octane/api';
+import { IMessageDataWrapper, IObjectData } from '@volt/api';
 import { FurnitureDataParser } from '../../room';
 import { IFurnitureItemData } from './IFurnitureItemData';
 

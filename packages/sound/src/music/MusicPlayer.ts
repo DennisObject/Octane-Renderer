@@ -1,5 +1,5 @@
-import { GetEventDispatcher, SoundManagerEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { GetEventDispatcher, SoundManagerEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { Howl, Howler } from 'howler';
 import { TraxData } from '../trax/TraxData';
 
@@ -203,7 +203,7 @@ export class MusicPlayer
 
             sample.once('loaderror', () =>
             {
-                OctaneLogger.error('failed to load sample ' + songId);
+                VoltLogger.error('failed to load sample ' + songId);
                 reject(new Error('failed to load sample ' + songId));
             });
         });

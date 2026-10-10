@@ -1,7 +1,7 @@
-import { IEffectAssetDownloadLibrary } from '@octane/api';
-import { OctaneEvent } from '../core';
+import { IEffectAssetDownloadLibrary } from '@volt/api';
+import { VoltEvent } from '../core';
 
-export class AvatarRenderEffectLibraryEvent extends OctaneEvent
+export class AvatarRenderEffectLibraryEvent extends VoltEvent
 {
     public static DOWNLOAD_COMPLETE: string = 'ARELE_DOWNLOAD_COMPLETE';
 

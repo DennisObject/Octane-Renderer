@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { HotelWillShutdownParser } from '../../parser';
 
 export class HotelWillShutdownEvent extends MessageEvent implements IMessageEvent

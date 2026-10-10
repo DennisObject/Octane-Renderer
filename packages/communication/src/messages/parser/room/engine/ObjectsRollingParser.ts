@@ -1,5 +1,5 @@
-import { IMessageDataWrapper, IMessageParser, ObjectRolling } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { IMessageDataWrapper, IMessageParser, ObjectRolling } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 
 function parseLocaleFloat(value: string): number
 {

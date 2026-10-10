@@ -1,6 +1,6 @@
 {
-  "name": "@octane/avatar",
-  "description": "Octane communication module",
+  "name": "@volt/avatar",
+  "description": "Volt communication module",
   "version": "1.0.0",
   "type": "module",
   "license": "GPL-3.0",
@@ -9,10 +9,10 @@
   },
   "main": "./index",
   "dependencies": {
-    "@octane/api": "1.0.0",
-    "@octane/assets": "1.0.0",
-    "@octane/events": "1.0.0",
-    "@octane/utils": "1.0.0",
+    "@volt/api": "1.0.0",
+    "@volt/assets": "1.0.0",
+    "@volt/events": "1.0.0",
+    "@volt/utils": "1.0.0",
     "pixi.js": "^8.21.0"
   },
   "devDependencies": {

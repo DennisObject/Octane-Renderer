@@ -1,5 +1,5 @@
-import { IAssetData, IParticleSystem, IRoomGeometry, MapDataType, MouseEventType, RoomObjectVariable } from '@octane/api';
-import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@octane/events';
+import { IAssetData, IParticleSystem, IRoomGeometry, MapDataType, MouseEventType, RoomObjectVariable } from '@volt/api';
+import { RoomObjectFurnitureActionEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@volt/events';
 import { ObjectDataUpdateMessage, ObjectModelDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 

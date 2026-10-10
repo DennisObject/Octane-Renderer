@@ -1,6 +1,6 @@
 {
-  "name": "@octane/room",
-  "description": "Octane room module",
+  "name": "@volt/room",
+  "description": "Volt room module",
   "version": "1.0.0",
   "type": "module",
   "license": "GPL-3.0",
@@ -9,13 +9,13 @@
   },
   "main": "./index",
   "dependencies": {
-    "@octane/api": "1.0.0",
-    "@octane/assets": "1.0.0",
-    "@octane/avatar": "1.0.0",
-    "@octane/communication": "1.0.0",
-    "@octane/configuration": "1.0.0",
-    "@octane/events": "1.0.0",
-    "@octane/session": "1.0.0",
+    "@volt/api": "1.0.0",
+    "@volt/assets": "1.0.0",
+    "@volt/avatar": "1.0.0",
+    "@volt/communication": "1.0.0",
+    "@volt/configuration": "1.0.0",
+    "@volt/events": "1.0.0",
+    "@volt/session": "1.0.0",
     "pixi.js": "^8.21.0"
   },
   "devDependencies": {

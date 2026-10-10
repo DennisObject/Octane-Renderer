@@ -1,5 +1,5 @@
-import { LegacyDataType } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { LegacyDataType } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 import { ObjectDataUpdateMessage, ObjectMoveUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { MovingObjectLogic } from '../MovingObjectLogic';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';

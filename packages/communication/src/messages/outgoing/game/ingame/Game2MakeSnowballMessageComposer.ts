@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2MakeSnowball: turn, subturn. */
 export class Game2MakeSnowballMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2MakeSnowballMessageComposer>>

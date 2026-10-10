@@ -1,5 +1,5 @@
-import { RoomObjectVariable } from '@octane/api';
-import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@octane/events';
+import { RoomObjectVariable } from '@volt/api';
+import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureYoutubeLogic extends FurnitureLogic

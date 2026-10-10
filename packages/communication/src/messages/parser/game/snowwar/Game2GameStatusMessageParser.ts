@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { GameStatusData } from './GameStatusData';
 
 /** AIR GameStatus: events for turn + 1 and the checksum of turn. */

@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class NavigatorSearchCloseComposer implements IMessageComposer<ConstructorParameters<typeof NavigatorSearchCloseComposer>>
 {

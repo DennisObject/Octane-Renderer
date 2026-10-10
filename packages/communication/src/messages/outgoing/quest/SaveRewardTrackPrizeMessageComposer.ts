@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Creates or updates a reward track prize. */
 export class SaveRewardTrackPrizeMessageComposer implements IMessageComposer<ConstructorParameters<typeof SaveRewardTrackPrizeMessageComposer>>

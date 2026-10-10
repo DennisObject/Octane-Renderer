@@ -1,4 +1,4 @@
-import { GetConfiguration } from '@octane/configuration';
+import { GetConfiguration } from '@volt/configuration';
 import { normalizedSourceExtension } from './image';
 
 /** The asset bundle format a hotel serves: official Habbo `.hab` files (the default) or Nitro `.nitro` files. */

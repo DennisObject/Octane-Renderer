@@ -1,7 +1,7 @@
-import { IAssetManager, IAvatarEffectListener } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { AvatarRenderEffectLibraryEvent, GetEventDispatcher, OctaneEvent, OctaneEventType } from '@octane/events';
-import { loadGamedata } from '@octane/utils';
+import { IAssetManager, IAvatarEffectListener } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { AvatarRenderEffectLibraryEvent, GetEventDispatcher, VoltEvent, VoltEventType } from '@volt/events';
+import { loadGamedata } from '@volt/utils';
 import { AvatarStructure } from './AvatarStructure';
 import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
 
@@ -47,7 +47,7 @@ export class EffectAssetDownloadManager
 
         // Store callback for cleanup
         this._libraryLoadedCallback = (event: AvatarRenderEffectLibraryEvent) => this.onLibraryLoaded(event);
-        GetEventDispatcher().addEventListener(OctaneEventType.AVATAR_EFFECT_DOWNLOADED, this._libraryLoadedCallback);
+        GetEventDispatcher().addEventListener(VoltEventType.AVATAR_EFFECT_DOWNLOADED, this._libraryLoadedCallback);
 
         await this.processMissingLibraries();
     }
@@ -56,7 +56,7 @@ export class EffectAssetDownloadManager
     {
         if(this._libraryLoadedCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.AVATAR_EFFECT_DOWNLOADED, this._libraryLoadedCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.AVATAR_EFFECT_DOWNLOADED, this._libraryLoadedCallback);
             this._libraryLoadedCallback = null;
         }
 
@@ -154,7 +154,7 @@ export class EffectAssetDownloadManager
 
                 this._effectListeners.delete(id);
 
-                GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.AVATAR_EFFECT_LOADED));
+                GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.AVATAR_EFFECT_LOADED));
             }
         }
 

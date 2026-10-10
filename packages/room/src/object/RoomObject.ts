@@ -1,5 +1,5 @@
-import { IRoomObjectController, IRoomObjectEventHandler, IRoomObjectModel, IRoomObjectMouseHandler, IRoomObjectUpdateMessage, IRoomObjectVisualization, IVector3D } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { IRoomObjectController, IRoomObjectEventHandler, IRoomObjectModel, IRoomObjectMouseHandler, IRoomObjectUpdateMessage, IRoomObjectVisualization, IVector3D } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 import { RoomObjectModel } from './RoomObjectModel';
 
 export class RoomObject implements IRoomObjectController

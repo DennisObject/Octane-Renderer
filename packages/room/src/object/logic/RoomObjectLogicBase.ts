@@ -1,5 +1,5 @@
-import { IEventDispatcher, IRoomGeometry, IRoomObjectController, IRoomObjectEventHandler, IRoomObjectUpdateMessage } from '@octane/api';
-import { RoomSpriteMouseEvent } from '@octane/events';
+import { IEventDispatcher, IRoomGeometry, IRoomObjectController, IRoomObjectEventHandler, IRoomObjectUpdateMessage } from '@volt/api';
+import { RoomSpriteMouseEvent } from '@volt/events';
 
 export class RoomObjectLogicBase implements IRoomObjectEventHandler
 {

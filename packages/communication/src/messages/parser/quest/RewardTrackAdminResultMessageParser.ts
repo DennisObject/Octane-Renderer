@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** RewardTrackAdminResult (10105): whether a staff editor write went through, and what it touched. */
 export class RewardTrackAdminResultMessageParser implements IMessageParser

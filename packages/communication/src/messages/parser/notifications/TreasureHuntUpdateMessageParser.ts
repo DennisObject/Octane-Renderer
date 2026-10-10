@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** Official `class_3710`: progress of the hunt after a find. */
 export class TreasureHuntUpdateMessageParser implements IMessageParser

@@ -1,6 +1,6 @@
-import { IBlockedUsersManager } from '@octane/api';
-import { BlockedUsersEvent, BlockResultEvent, BlockResultParser, BlockUserComposer, GetBlockedUsersComposer, GetCommunication, UnblockUserComposer } from '@octane/communication';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType } from '@octane/events';
+import { IBlockedUsersManager } from '@volt/api';
+import { BlockedUsersEvent, BlockResultEvent, BlockResultParser, BlockUserComposer, GetBlockedUsersComposer, GetCommunication, UnblockUserComposer } from '@volt/communication';
+import { GetEventDispatcher, VoltEvent, VoltEventType } from '@volt/events';
 
 /**
  * Official `com.sulake.habbo.session.BlockedUsersManager`: the block list is a session cache of
@@ -17,7 +17,7 @@ export class BlockedUsersManager implements IBlockedUsersManager
     {
         this._blockedUserIdsSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.BLOCKED_USERS_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.BLOCKED_USERS_UPDATED));
     }
 
     public getBlockedUsersSnapshot(): ReadonlyArray<number>

@@ -1,5 +1,5 @@
-import { IAssetManager, IAvatarAssetDownloadLibrary } from '@octane/api';
-import { AvatarRenderLibraryEvent, GetEventDispatcher, OctaneEventType } from '@octane/events';
+import { IAssetManager, IAvatarAssetDownloadLibrary } from '@volt/api';
+import { AvatarRenderLibraryEvent, GetEventDispatcher, VoltEventType } from '@volt/events';
 
 export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary
 {
@@ -39,7 +39,7 @@ export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary
             if(!status) throw new Error('Could not download asset');
         }
 
-        if(this.checkIsLoaded()) GetEventDispatcher().dispatchEvent(new AvatarRenderLibraryEvent(OctaneEventType.AVATAR_ASSET_DOWNLOADED, this));
+        if(this.checkIsLoaded()) GetEventDispatcher().dispatchEvent(new AvatarRenderLibraryEvent(VoltEventType.AVATAR_ASSET_DOWNLOADED, this));
     }
 
     private checkIsLoaded(): boolean

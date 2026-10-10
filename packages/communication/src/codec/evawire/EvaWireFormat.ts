@@ -1,5 +1,5 @@
-import { IBinaryWriter, ICodec, IConnection, IMessageDataWrapper } from '@octane/api';
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { IBinaryWriter, ICodec, IConnection, IMessageDataWrapper } from '@volt/api';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { Byte } from '../Byte';
 import { Short } from '../Short';
 import { EvaWireDataWrapper } from './EvaWireDataWrapper';

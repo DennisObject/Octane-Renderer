@@ -1,7 +1,7 @@
 
-import { AvatarAction, IRoomGeometry, IRoomObjectModel, IVector3D, MouseEventType, RoomObjectVariable } from '@octane/api';
-import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomSpriteMouseEvent } from '@octane/events';
-import { GetTickerTime, Vector3d } from '@octane/utils';
+import { AvatarAction, IRoomGeometry, IRoomObjectModel, IVector3D, MouseEventType, RoomObjectVariable } from '@volt/api';
+import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomSpriteMouseEvent } from '@volt/events';
+import { GetTickerTime, Vector3d } from '@volt/utils';
 import { ObjectAvatarCarryObjectUpdateMessage, ObjectAvatarChatUpdateMessage, ObjectAvatarDanceUpdateMessage, ObjectAvatarEffectUpdateMessage, ObjectAvatarExpressionUpdateMessage, ObjectAvatarFigureUpdateMessage, ObjectAvatarFlatControlUpdateMessage, ObjectAvatarGestureUpdateMessage, ObjectAvatarHabbiconUpdateMessage, ObjectAvatarMutedUpdateMessage, ObjectAvatarOwnMessage, ObjectAvatarPlayerValueUpdateMessage, ObjectAvatarPlayingGameUpdateMessage, ObjectAvatarPostureUpdateMessage, ObjectAvatarSelectedMessage, ObjectAvatarSignUpdateMessage, ObjectAvatarSleepUpdateMessage, ObjectAvatarTypingUpdateMessage, ObjectAvatarUpdateMessage, ObjectAvatarUseObjectUpdateMessage, RoomObjectUpdateMessage } from '../../messages';
 import { HabbiconAssetManager } from '../visualization/avatar/additions/HabbiconAssetManager';
 import { MovingObjectLogic } from './MovingObjectLogic';

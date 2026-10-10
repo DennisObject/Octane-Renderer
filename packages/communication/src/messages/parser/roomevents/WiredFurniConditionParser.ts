@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { ConditionDefinition } from './ConditionDefinition';
 
 export class WiredFurniConditionParser implements IMessageParser

@@ -1,7 +1,7 @@
-import { IRoomGeometry, IRoomObjectModel, MouseEventType, RoomObjectVariable } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { RoomObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomSpriteMouseEvent } from '@octane/events';
-import { ColorConverter, Vector3d } from '@octane/utils';
+import { IRoomGeometry, IRoomObjectModel, MouseEventType, RoomObjectVariable } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { RoomObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomSpriteMouseEvent } from '@volt/events';
+import { ColorConverter, Vector3d } from '@volt/utils';
 import { Point } from 'pixi.js';
 import { ObjectRoomColorUpdateMessage, ObjectRoomFloorHoleUpdateMessage, ObjectRoomMapUpdateMessage, ObjectRoomMaskUpdateMessage, ObjectRoomPlanePropertyUpdateMessage, ObjectRoomPlaneVisibilityUpdateMessage, ObjectRoomUpdateMessage, RoomObjectUpdateMessage } from '../../messages';
 import { RoomMapData } from '../RoomMapData';

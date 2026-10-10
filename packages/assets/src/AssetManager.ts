@@ -1,5 +1,5 @@
-import { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection } from '@octane/api';
-import { HabBundle, OctaneBundle, OctaneBundleTextureDecoder, parseConfigJsonFromResponse } from '@octane/utils';
+import { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection } from '@volt/api';
+import { HabBundle, VoltBundle, VoltBundleTextureDecoder, parseConfigJsonFromResponse } from '@volt/utils';
 import { Spritesheet, SpritesheetData, Texture } from 'pixi.js';
 import { AssetBundleFormat, GetAssetBundleFormat, GetAssetBundleUrl, isAssetBundleUrl } from './AssetBundleFormat';
 import { assetImageFallbackUrl, isAssetJsonUrl } from './AssetJsonUrl';
@@ -11,8 +11,8 @@ export interface AssetManagerDependencies
     fetch(url: string): Promise<Response>;
     parseAssetData(response: Response, source: string): Promise<IAssetData>;
     loadImageResource(request: ImageLoadRequest): Promise<LoadedImageResource>;
-    loadOctaneBundle(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<OctaneBundle>;
-    loadHabBundle(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<HabBundle>;
+    loadVoltBundle(buffer: ArrayBuffer, textureDecoder: VoltBundleTextureDecoder): Promise<VoltBundle>;
+    loadHabBundle(buffer: ArrayBuffer, textureDecoder: VoltBundleTextureDecoder): Promise<HabBundle>;
     bundleFormat(): AssetBundleFormat;
 }
 
@@ -20,7 +20,7 @@ const DEFAULT_DEPENDENCIES: AssetManagerDependencies = {
     fetch: url => globalThis.fetch(url),
     parseAssetData: (response, source) => parseConfigJsonFromResponse<IAssetData>(response, source),
     loadImageResource,
-    loadOctaneBundle: (buffer, textureDecoder) => OctaneBundle.from(buffer, textureDecoder),
+    loadVoltBundle: (buffer, textureDecoder) => VoltBundle.from(buffer, textureDecoder),
     loadHabBundle: (buffer, textureDecoder) => HabBundle.from(buffer, textureDecoder),
     bundleFormat: GetAssetBundleFormat
 };
@@ -127,7 +127,7 @@ export class AssetManager implements IAssetManager
                 // Only the configured format is fetched and read; the texture stays keyed by the requested URL.
                 const format = this._dependencies.bundleFormat();
                 const response = await this.fetchAsset(GetAssetBundleUrl(url, format));
-                const loadBundle = (format === 'hab') ? this._dependencies.loadHabBundle : this._dependencies.loadOctaneBundle;
+                const loadBundle = (format === 'hab') ? this._dependencies.loadHabBundle : this._dependencies.loadVoltBundle;
                 const decodedResources: LoadedImageResource[] = [];
 
                 try
@@ -139,7 +139,7 @@ export class AssetManager implements IAssetManager
                             const detected = detectImageFormat(new Uint8Array(bytes), undefined, entryName);
 
                             if(detected.format === 'svg')
-                                throw new Error(`SVG texture entry "${ entryName }" is not supported inside a Octane bundle`);
+                                throw new Error(`SVG texture entry "${ entryName }" is not supported inside a Volt bundle`);
 
                             const resource = await this._dependencies.loadImageResource({
                                 source: entryName,
@@ -396,12 +396,12 @@ export class AssetManager implements IAssetManager
 
 const pinPixelArtSampling = (texture: Texture): Texture =>
 {
-    const source = texture?.source as (Texture['source'] & { octaneFixedScaleMode?: boolean }) | undefined;
+    const source = texture?.source as (Texture['source'] & { voltFixedScaleMode?: boolean }) | undefined;
 
     if(!source) return texture;
 
     source.scaleMode = 'nearest';
-    source.octaneFixedScaleMode = true;
+    source.voltFixedScaleMode = true;
 
     return texture;
 };

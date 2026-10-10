@@ -1,4 +1,4 @@
-﻿import { IAnimation, IAssetAnimation, IAssetAnimationFrame } from '@octane/api';
+﻿import { IAnimation, IAssetAnimation, IAssetAnimationFrame } from '@volt/api';
 import { AvatarStructure } from '../AvatarStructure';
 import { AddDataContainer } from './AddDataContainer';
 import { AvatarAnimationLayerData } from './AvatarAnimationLayerData';

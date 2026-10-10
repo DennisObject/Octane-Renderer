@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * AIR `SnowWarGameTokenOffer`: one "buy more games" offer of the game hub.

@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Puts items on the negotiation table, or takes them off. [remove, count, itemId...].

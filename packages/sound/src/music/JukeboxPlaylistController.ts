@@ -1,6 +1,6 @@
-import { IMessageEvent, IPlaylistController, ISongInfo } from '@octane/api';
-import { GetCommunication, GetJukeboxPlayListMessageComposer, JukeboxPlayListFullMessageEvent, JukeboxSongDisksMessageEvent, NowPlayingMessageEvent } from '@octane/communication';
-import { GetEventDispatcher, NowPlayingEvent, PlayListStatusEvent, SongInfoReceivedEvent } from '@octane/events';
+import { IMessageEvent, IPlaylistController, ISongInfo } from '@volt/api';
+import { GetCommunication, GetJukeboxPlayListMessageComposer, JukeboxPlayListFullMessageEvent, JukeboxSongDisksMessageEvent, NowPlayingMessageEvent } from '@volt/communication';
+import { GetEventDispatcher, NowPlayingEvent, PlayListStatusEvent, SongInfoReceivedEvent } from '@volt/events';
 import { GetSoundManager } from '../GetSoundManager';
 import { SongDataEntry } from '../common';
 import { MusicPriorities } from './MusicPriorities';

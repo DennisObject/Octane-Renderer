@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { CatalogPageMessageProductData } from './CatalogPageMessageProductData';
 import { readBoundedCatalogCount } from './catalogPacketGuards';
 

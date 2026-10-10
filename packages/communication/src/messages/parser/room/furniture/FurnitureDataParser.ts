@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, IObjectData, ObjectDataFactory } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, IObjectData, ObjectDataFactory } from '@volt/api';
 
 export class FurnitureDataParser implements IMessageParser
 {

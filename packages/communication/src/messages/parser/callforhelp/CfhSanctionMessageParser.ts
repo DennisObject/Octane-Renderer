@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { CfhSanctionTypeData } from './CfhSanctionTypeData';
 
 export class CfhSanctionMessageParser implements IMessageParser

@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `DiscordSettingsController.initComponent()` (composer 1055): asks the server for the

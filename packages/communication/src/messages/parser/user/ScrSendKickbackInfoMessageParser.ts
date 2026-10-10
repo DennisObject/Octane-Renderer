@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { ScrKickbackData } from './ScrKickbackData';
 
 export class ScrSendKickbackInfoMessageParser implements IMessageParser

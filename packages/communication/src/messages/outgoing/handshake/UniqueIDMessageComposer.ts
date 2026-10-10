@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class UniqueIDMessageComposer implements IMessageComposer<ConstructorParameters<typeof UniqueIDMessageComposer>>
 {

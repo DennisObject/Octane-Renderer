@@ -1,4 +1,4 @@
-import { IConnectionStateSnapshot } from '@octane/api';
+import { IConnectionStateSnapshot } from '@volt/api';
 
 export class ConnectionStateStore
 {

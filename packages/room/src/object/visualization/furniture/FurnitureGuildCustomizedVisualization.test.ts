@@ -1,4 +1,4 @@
-import { IRoomObjectController, RoomObjectVariable } from '@octane/api';
+import { IRoomObjectController, RoomObjectVariable } from '@volt/api';
 import { describe, expect, it, vi } from 'vitest';
 import { FurnitureGuildCustomizedVisualization } from './FurnitureGuildCustomizedVisualization';
 
@@ -7,7 +7,7 @@ const { getGroupBadgeImage, loadGroupBadgeImage } = vi.hoisted(() => ({
     loadGroupBadgeImage: vi.fn()
 }));
 
-vi.mock('@octane/utils', () => ({
+vi.mock('@volt/utils', () => ({
     ChooserSelectionFilter: class
     {},
     TextureUtils: {},
@@ -31,7 +31,7 @@ vi.mock('../../../utils', () => ({
     {}
 }));
 
-vi.mock('@octane/session', () => ({
+vi.mock('@volt/session', () => ({
     GetSessionDataManager: () => ({
         getGroupBadgeImage,
         loadGroupBadgeImage

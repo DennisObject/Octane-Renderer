@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { IWiredVariableFxStatusKey, parseWiredVariableFxStatusKey } from './WiredVariableFxData';
 
 /** Values to stop drawing: the holder lost the variable, left, or this viewer may no longer see it. */

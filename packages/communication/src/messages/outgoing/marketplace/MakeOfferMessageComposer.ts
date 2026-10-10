@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `MakeOfferMessageComposer` (3676): the price a buyer pays, the furni type (1 floor, 2 wall),

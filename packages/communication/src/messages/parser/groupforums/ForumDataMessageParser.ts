@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { ExtendedForumData } from './ExtendedForumData';
 
 export class ForumDataMessageParser implements IMessageParser

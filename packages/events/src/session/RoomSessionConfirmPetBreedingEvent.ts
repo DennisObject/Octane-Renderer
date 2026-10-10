@@ -1,4 +1,4 @@
-﻿import { BreedingPetInfo, IRoomSession, RarityCategoryData } from '@octane/api';
+﻿import { BreedingPetInfo, IRoomSession, RarityCategoryData } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 export class RoomSessionConfirmPetBreedingEvent extends RoomSessionEvent

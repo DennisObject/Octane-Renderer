@@ -1,4 +1,4 @@
-﻿import { IAdvancedMap } from '@octane/api';
+﻿import { IAdvancedMap } from '@volt/api';
 
 export class AdvancedMap<T, U> implements IAdvancedMap<T, U>
 {

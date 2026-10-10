@@ -1,6 +1,6 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { PresentOpenedMessageEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionPresentEvent } from '@octane/events';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { PresentOpenedMessageEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionPresentEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class RoomPresentHandler extends BaseHandler

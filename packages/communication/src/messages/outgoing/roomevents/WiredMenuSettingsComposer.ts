@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official AIR 13 wired menu preferences composer (header 1226, WiredMenuController.sendPreferences):

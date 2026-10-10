@@ -602,7 +602,7 @@ export class IncomingHeader
     public static MESSENGER_MESSAGE_FAILED = 4903;
     public static MESSENGER_MESSAGE = 4904;
     public static MESSENGER_READ_CURSOR = 4905;
-    // SnowStorm (AIR Game2 arena messages on the Octane 5000 range; 5006, 5007, 5010, 5012, 5021, 5026, 5028, 5030 are retired).
+    // SnowStorm (AIR Game2 arena messages on the Volt 5000 range; 5006, 5007, 5010, 5012, 5021, 5026, 5028, 5030 are retired).
     public static GAME2_GAME_CREATED = 5000;
     public static GAME2_GAME_LONG_DATA = 5002;
     public static GAME2_START_COUNTER = 5003;

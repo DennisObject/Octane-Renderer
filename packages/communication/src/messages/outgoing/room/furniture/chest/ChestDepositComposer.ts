@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Player deposits currency into a wired chest (Scrigno). [itemId, currencyType, amount].

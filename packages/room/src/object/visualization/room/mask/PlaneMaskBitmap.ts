@@ -1,4 +1,4 @@
-﻿import { IGraphicAsset } from '@octane/api';
+﻿import { IGraphicAsset } from '@volt/api';
 
 export class PlaneMaskBitmap
 {

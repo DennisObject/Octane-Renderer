@@ -1,4 +1,4 @@
-import { IFigureDataPart, IFigurePart } from '@octane/api';
+import { IFigureDataPart, IFigurePart } from '@volt/api';
 
 export class FigurePart implements IFigurePart
 {

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * AIR `SnowWarGameObjectData` and subclasses: `variables` holds every checksum

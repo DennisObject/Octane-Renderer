@@ -1,4 +1,4 @@
-import { IRoomObjectModel } from '@octane/api';
+import { IRoomObjectModel } from '@volt/api';
 
 export class RoomObjectModel implements IRoomObjectModel
 {

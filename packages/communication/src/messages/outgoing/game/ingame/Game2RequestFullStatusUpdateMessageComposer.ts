@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2RequestFullStatusUpdate: reason 0 = too far behind, 1 = checksum mismatch, -1 = forced. */
 export class Game2RequestFullStatusUpdateMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2RequestFullStatusUpdateMessageComposer>>

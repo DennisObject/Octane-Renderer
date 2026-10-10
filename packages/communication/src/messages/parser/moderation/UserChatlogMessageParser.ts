@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { UserChatlogData } from './UserChatlogData';
 
 export class UserChatlogMessageParser implements IMessageParser

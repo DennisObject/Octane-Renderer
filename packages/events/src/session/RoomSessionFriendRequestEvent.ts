@@ -1,4 +1,4 @@
-﻿import { IRoomSession } from '@octane/api';
+﻿import { IRoomSession } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 export class RoomSessionFriendRequestEvent extends RoomSessionEvent
