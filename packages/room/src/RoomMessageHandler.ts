@@ -558,6 +558,16 @@ export class RoomMessageHandler
 
         if(!parser) return;
 
+        if(parser.userMovements?.length)
+        {
+            for(const movement of parser.userMovements)
+            {
+                if(!movement) continue;
+
+                this.applyWiredUserMovement(movement);
+            }
+        }
+
         if(parser.furniMovements?.length)
         {
             for(const movement of parser.furniMovements)
@@ -576,16 +586,6 @@ export class RoomMessageHandler
                     resolvedMovement.elapsed,
                     resolvedMovement.anchorObject,
                     resolvedMovement.anchorOffset);
-            }
-        }
-
-        if(parser.userMovements?.length)
-        {
-            for(const movement of parser.userMovements)
-            {
-                if(!movement) continue;
-
-                this.applyWiredUserMovement(movement);
             }
         }
 
