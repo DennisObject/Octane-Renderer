@@ -1,3 +1,4 @@
+import { WiredUserVariablesRequest64Composer, WiredVariableHoldersRequest64Composer, WiredVariableHoldersPage64Composer, WiredUserVariableUpdate64Composer, WiredUserVariableManage64Composer, WiredUserVariablesData64Event, WiredVariableHolders64Event, WiredVariableHoldersPage64Event } from './messages';
 import { WiredFurniSelectorEvent, WiredFurniAddonEvent, WiredFurniVariableEvent, UpdateSelectorMessageComposer, UpdateAddonMessageComposer, UpdateVariableMessageComposer } from './messages';
 import { IMessageConfiguration } from '@octane/api';
 import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent } from './messages';
@@ -631,6 +632,9 @@ export class OctaneMessages implements IMessageConfiguration
         this._events.set(IncomingHeader.WIRED_OPEN, WiredOpenEvent);
         this._events.set(IncomingHeader.WIRED_MONITOR_DATA, WiredMonitorDataEvent);
         this._events.set(IncomingHeader.WIRED_ROOM_SETTINGS_DATA, WiredRoomSettingsDataEvent);
+        this._events.set(IncomingHeader.WIRED_USER_VARIABLES_DATA_64, WiredUserVariablesData64Event);
+        this._events.set(IncomingHeader.WIRED_VARIABLE_HOLDERS_64, WiredVariableHolders64Event);
+        this._events.set(IncomingHeader.WIRED_VARIABLE_HOLDERS_PAGE_64, WiredVariableHoldersPage64Event);
         this._events.set(IncomingHeader.WIRED_USER_VARIABLES_DATA, WiredUserVariablesDataEvent);
         this._events.set(IncomingHeader.WIRED_FURNI_RUNTIME_STATE, WiredFurniRuntimeStateEvent);
         this._events.set(IncomingHeader.WIRED_FURNI_OPACITY, WiredFurniOpacityEvent);
@@ -1353,6 +1357,11 @@ export class OctaneMessages implements IMessageConfiguration
         this._composers.set(OutgoingHeader.WIRED_MONITOR_REQUEST, WiredMonitorRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_ROOM_SETTINGS_REQUEST, WiredRoomSettingsRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_ROOM_SETTINGS_SAVE, WiredRoomSettingsSaveComposer);
+        this._composers.set(OutgoingHeader.WIRED_USER_VARIABLES_REQUEST_64, WiredUserVariablesRequest64Composer);
+        this._composers.set(OutgoingHeader.WIRED_VARIABLE_HOLDERS_REQUEST_64, WiredVariableHoldersRequest64Composer);
+        this._composers.set(OutgoingHeader.WIRED_VARIABLE_HOLDERS_PAGE_64, WiredVariableHoldersPage64Composer);
+        this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE_64, WiredUserVariableUpdate64Composer);
+        this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE_64, WiredUserVariableManage64Composer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLES_REQUEST, WiredUserVariablesRequestComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_UPDATE, WiredUserVariableUpdateComposer);
         this._composers.set(OutgoingHeader.WIRED_USER_VARIABLE_MANAGE, WiredUserVariableManageComposer);

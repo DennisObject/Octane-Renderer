@@ -1,5 +1,10 @@
 export class OutgoingHeader
 {
+    public static WIRED_USER_VARIABLES_REQUEST_64 = 10113;
+    public static WIRED_VARIABLE_HOLDERS_REQUEST_64 = 10114;
+    public static WIRED_VARIABLE_HOLDERS_PAGE_64 = 10115;
+    public static WIRED_USER_VARIABLE_UPDATE_64 = 10110;
+    public static WIRED_USER_VARIABLE_MANAGE_64 = 10111;
     public static CLICK_FURNI = 843;
     public static CLICK_USER = 10020;
 

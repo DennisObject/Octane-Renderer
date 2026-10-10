@@ -1,5 +1,8 @@
 export class IncomingHeader
 {
+    public static WIRED_USER_VARIABLES_DATA_64 = 9480;
+    public static WIRED_VARIABLE_HOLDERS_64 = 9481;
+    public static WIRED_VARIABLE_HOLDERS_PAGE_64 = 9482;
     // These packets do not belong to this revision, so these are custom packet ids
     public static AREA_HIDE = 9;
 
