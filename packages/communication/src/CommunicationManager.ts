@@ -10,7 +10,6 @@ import { Thumbmark } from '@thumbmarkjs/thumbmarkjs';
 export class CommunicationManager implements ICommunicationManager
 {
     /** A reconnect that has not logged in again within this time ends the session. */
-    public static readonly REAUTHENTICATION_TIMEOUT_MS: number = 20000;
 
     private _connection: IConnection = new SocketConnection();
     private _messages: IMessageConfiguration;
@@ -25,8 +24,6 @@ export class CommunicationManager implements ICommunicationManager
     private _machineIdPromise: Promise<string> | null = null;
     private _initResolved: boolean = false;
     private _recoveryToken: string = '';
-    private _reconnectTicketProvider: (() => Promise<string>) | null = null;
-    private _reauthenticationTimer: ReturnType<typeof setTimeout> = null;
 
     private async generateMachineID(): Promise<string>
     {
@@ -60,66 +57,6 @@ export class CommunicationManager implements ICommunicationManager
             this._recoveryToken));
     }
 
-    // The server spent the ticket the session logged in with, so a reconnect logs in with a new one.
-    // Without one, or without an answer in time, the session ends instead of waiting forever.
-    private async reauthenticate(): Promise<void>
-    {
-        this.clearReauthenticationTimer();
-
-        // A socket that closed again meanwhile is the reconnect loop's to retry or give up on.
-        const timer = setTimeout(() =>
-        {
-            if(this._connection.connectionState.phase === 'reauthenticating') this.failReauthentication();
-            else this.clearReauthenticationTimer();
-        }, CommunicationManager.REAUTHENTICATION_TIMEOUT_MS);
-
-        this._reauthenticationTimer = timer;
-
-        let ticket: string = GetConfiguration().getValue('sso.ticket', null);
-
-        if(this._reconnectTicketProvider)
-        {
-            try
-            {
-                ticket = await this._reconnectTicketProvider();
-            }
-            catch (error)
-            {
-                VoltLogger.warn('[CommunicationManager] Could not get a reconnect ticket', error);
-                ticket = '';
-            }
-        }
-
-        // Timed out, ended or superseded by a newer reconnect while the ticket was on its way.
-        if(this._reauthenticationTimer !== timer) return;
-
-        if(!ticket)
-        {
-            this.failReauthentication();
-            return;
-        }
-
-        await this.sendHandshake(ticket);
-    }
-
-    private failReauthentication(): void
-    {
-        this.clearReauthenticationTimer();
-
-        VoltLogger.warn('[CommunicationManager] Re-authentication failed, ending the session');
-
-        this._connection.reauthenticationFailed();
-    }
-
-    private clearReauthenticationTimer(): void
-    {
-        if(!this._reauthenticationTimer) return;
-
-        clearTimeout(this._reauthenticationTimer);
-
-        this._reauthenticationTimer = null;
-    }
-
     constructor()
     {
         this._messages = new VoltMessages();
@@ -132,18 +69,16 @@ export class CommunicationManager implements ICommunicationManager
         this._socketClosedCallback = () =>
         {
             this.stopPong();
-            this.clearReauthenticationTimer();
         };
         GetEventDispatcher().addEventListener(VoltEventType.SOCKET_CLOSED, this._socketClosedCallback);
 
-        // Handle reconnection - re-authenticate when socket reconnects
+        // The server spent the ticket the session logged in with, and the client has no way to get a
+        // new one, so a reconnected socket cannot log in again: the session ends.
         this._socketReconnectedCallback = () =>
         {
-            VoltLogger.log('[CommunicationManager] Socket reconnected, re-authenticating...');
+            VoltLogger.warn('[CommunicationManager] Socket reconnected without a ticket, ending the session');
 
-            if(GetConfiguration().getValue<boolean>('system.pong.manually', false)) this.startPong();
-
-            void this.reauthenticate();
+            this._connection.reauthenticationFailed();
         };
         GetEventDispatcher().addEventListener(VoltEventType.SOCKET_RECONNECTED, this._socketReconnectedCallback);
 
@@ -173,7 +108,6 @@ export class CommunicationManager implements ICommunicationManager
                 const parser = event.getParser();
 
                 this._recoveryToken = parser.recoveryToken;
-                this.clearReauthenticationTimer();
 
                 VoltLogger.log('[CommunicationManager] AuthenticatedEvent received (isReconnect=' + isReconnect + ')');
 
@@ -225,7 +159,6 @@ export class CommunicationManager implements ICommunicationManager
     {
         // Stop pong interval
         this.stopPong();
-        this.clearReauthenticationTimer();
 
         // Remove event dispatcher listeners
         if(this._socketClosedCallback)
@@ -280,11 +213,6 @@ export class CommunicationManager implements ICommunicationManager
     protected sendPong(): void
     {
         this._connection?.send(new PongMessageComposer());
-    }
-
-    public setReconnectTicketProvider(provider: (() => Promise<string>) | null): void
-    {
-        this._reconnectTicketProvider = provider;
     }
 
     public registerMessageEvent(event: IMessageEvent): IMessageEvent

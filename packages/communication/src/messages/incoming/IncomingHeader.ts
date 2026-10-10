@@ -297,8 +297,6 @@ export class IncomingHeader
     public static WIRED_USER_VARIABLES_DATA = 5103;
     public static CONF_INVIS_STATE = 5104;
     public static HANDITEM_BLOCK_STATE = 5105;
-    public static TRANSLATION_LANGUAGES = 5106;
-    public static TRANSLATION_RESULT = 5107;
     public static WIRED_FURNI_RUNTIME_STATE = 5108;
     public static WIRED_FURNI_OPACITY = 5109;
     public static WIRED_FURNI_MOVE_STYLE = 5110;
@@ -548,49 +546,14 @@ export class IncomingHeader
     public static RENTABLE_FURNI_RENT_OR_BUYOUT_OFFER = 377;
     public static HANDSHAKE_IDENTITY_ACCOUNT = 1652;
 
-    // Furni Editor
-    public static FURNI_EDITOR_SEARCH_RESULT = 10040;
-    public static FURNI_EDITOR_DETAIL_RESULT = 10041;
-    public static FURNI_EDITOR_INTERACTIONS_RESULT = 10043;
-    public static FURNI_EDITOR_RESULT = 10044;
-    public static FURNITURE_DATA_RELOAD = 10047;
-    public static FURNI_EDITOR_IMPORT_TEXT_RESULT = 10049;
-
-    // Catalog Admin
-    public static CATALOG_ADMIN_RESULT = 10059;
-    public static CATALOG_ADMIN_OFFER_DETAILS = 10062;
-    public static CATALOG_ADMIN_PAGE_DETAILS = 10063;
-    public static CATALOG_STUDIO_OPEN_SESSION = 10067;
-    public static CATALOG_STUDIO_ACQUIRE_LOCK = 10068;
-    public static CATALOG_STUDIO_RENEW_LOCK = 10069;
-    public static CATALOG_STUDIO_RELEASE_LOCK = 10070;
-    public static CATALOG_STUDIO_LOAD_HISTORY = 10071;
-    public static CATALOG_STUDIO_UNDO = 10072;
-    public static CATALOG_STUDIO_PUBLISH = 10074;
-    public static CATALOG_STUDIO_DISCARD = 10075;
-    public static CATALOG_STUDIO_RESTORE = 10076;
-    public static CATALOG_STUDIO_PREVIEW = 10077;
     public static CATALOG_PRODUCT_METADATA = 10081;
     public static CATALOG_RUNTIME_CONFIGURATION = 10082;
 
-    // YouTube Room Broadcast
-    public static YOUTUBE_ROOM_BROADCAST = 8001;
-    public static YOUTUBE_ROOM_WATCHERS = 8002;
-    public static YOUTUBE_ROOM_SETTINGS = 8003;
 
     public static ALLOWED_CHAT_STYLES = 9340;
     public static CREATABLE_ROOM_MODELS = 9341;
 
-    // Housekeeping (in-client admin panel) — IDs 9200..9299 reserved
-    public static HOUSEKEEPING_USER_DETAIL = 9200;
-    public static HOUSEKEEPING_ACTION_RESULT = 9201;
-    public static HOUSEKEEPING_ROOM_DETAIL = 9202;
-    public static HOUSEKEEPING_ROOM_LIST = 9203;
-    public static HOUSEKEEPING_DASHBOARD = 9204;
-    public static HOUSEKEEPING_ACTION_LOG = 9205;
-
     // Custom features — IDs 9400+ reserved
-    public static RARE_VALUES = 9400;
     public static EARNINGS_CENTER = 9407;
     public static EARNINGS_CLAIM_RESULT = 9408;
     public static INCOME_REWARD_NOTIFICATION = 965;
@@ -624,8 +587,6 @@ export class IncomingHeader
     public static GAME2_PLAYER_EXITED_GAME_ARENA = 5027;
     public static GAME2_PLAYER_REMATCHES = 5029;
 
-    // Hotel view landing scene (server -> client)
-    public static HOTEL_VIEW_LANDING = 9409;
     // Room unit habbicon broadcast (server -> client). 9410 to match emulator
     // RoomUseHabbiconComposer; 6011 is reserved by SnowWar SAVE_EDITOR.
     public static ROOM_USE_HABBICON = 3578;
@@ -675,8 +636,4 @@ export class IncomingHeader
     public static TREASURE_HUNT_UPDATE = 1944;
     // AIR 13 self donation tool result (server -> client), official id.
     public static SELF_DONATION_RESULT = 1955;
-    public static HOUSEKEEPING_ROLES = 9210;
-    public static HOUSEKEEPING_ROLE_MEMBERS = 9211;
-    public static HOUSEKEEPING_USER_OVERRIDES = 9212;
-    public static HOUSEKEEPING_ROLES_AUDIT = 9213;
 }
