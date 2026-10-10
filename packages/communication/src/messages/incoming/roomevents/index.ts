@@ -30,3 +30,4 @@ export * from './WiredFurniAdditionalEvent';
 export * from './WiredUserVariablesData64Event';
 export * from './WiredVariableHolders64Event';
 export * from './WiredVariableHoldersPage64Event';
+export * from './WiredVariableInspectionDataEvent';

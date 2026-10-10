@@ -1,5 +1,6 @@
 export class OutgoingHeader
 {
+    public static WIRED_VARIABLE_INSPECTION_REQUEST = 10112;
     public static WIRED_USER_VARIABLES_REQUEST_64 = 10113;
     public static WIRED_VARIABLE_HOLDERS_REQUEST_64 = 10114;
     public static WIRED_VARIABLE_HOLDERS_PAGE_64 = 10115;

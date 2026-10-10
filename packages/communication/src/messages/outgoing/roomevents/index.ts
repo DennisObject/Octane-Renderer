@@ -32,3 +32,4 @@ export * from './WiredVariableHoldersRequest64Composer';
 export * from './WiredVariableHoldersPage64Composer';
 export * from './WiredUserVariableUpdate64Composer';
 export * from './WiredUserVariableManage64Composer';
+export * from './WiredVariableInspectionRequestComposer';
