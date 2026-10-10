@@ -1,3 +1,4 @@
+import { CanonicalWiredMovement } from './object/RoomObjectVariable';
 import { IRoomInstance, IRoomObjectController } from '../../room';
 import { IVector3D } from '../../utils';
 import { IObjectData, IRoomMapData } from './object';
@@ -35,9 +36,9 @@ export interface IRoomCreator
     updateRoomObjectFloorHeight(roomId: number, objectId: number, height: number): boolean;
     updateRoomObjectFloorExpiration(roomId: number, objectId: number, expires: number): boolean;
     updateRoomObjectWallExpiration(roomId: number, objectId: number, expires: number): boolean;
-    rollRoomObjectFloor(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, duration?: number, direction?: IVector3D, elapsed?: number, anchorObject?: IRoomObjectController, anchorOffset?: IVector3D): void;
+    rollRoomObjectFloor(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, duration?: number, direction?: IVector3D, elapsed?: number, anchorObject?: IRoomObjectController, anchorOffset?: IVector3D, canonicalWired?: CanonicalWiredMovement): void;
     addRoomObjectUser(roomId: number, objectId: number, location: IVector3D, direction: IVector3D, headDirection: number, type: number, figure: string): boolean;
-    updateRoomObjectUserLocation(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D, headDirection?: number, skipLocationFix?: boolean, isSlide?: boolean, duration?: number): boolean;
+    updateRoomObjectUserLocation(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D, headDirection?: number, skipLocationFix?: boolean, isSlide?: boolean, duration?: number, canonicalWired?: CanonicalWiredMovement): boolean;
     updateRoomObjectUserAction(roomId: number, objectId: number, action: string, value: number, parameter?: string): boolean;
     updateRoomObjectUserFigure(roomId: number, objectId: number, figure: string, gender?: string, subType?: string, isRiding?: boolean): boolean;
     updateRoomObjectUserFlatControl(roomId: number, objectId: number, level: string): boolean;

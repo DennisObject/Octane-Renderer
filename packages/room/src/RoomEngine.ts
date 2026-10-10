@@ -1,4 +1,4 @@
-import { IFurnitureStackingHeightMap, IGetImageListener, IImageResult, ILegacyWallGeometry, IObjectData, IPetColorResult, IPetCustomPart, IRoomAreaSelectionManager, IRoomContentListener, IRoomContentLoader, IRoomCreator, IRoomEngine, IRoomEngineServices, IRoomGeometry, IRoomInstance, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomRenderer, IRoomRenderingCanvas, IRoomSessionManager, ISelectedRoomObjectData, ISessionDataManager, ITileObjectMap, IUpdateReceiver, IVector3D, LegacyDataType, MouseEventType, ObjectDataFactory, PetFigureData, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectUserType, RoomObjectVariable, RoomObjectVisualizationType, ToolbarIconEnum } from '@octane/api';
+import { CanonicalWiredMovement, IFurnitureStackingHeightMap, IGetImageListener, IImageResult, ILegacyWallGeometry, IObjectData, IPetColorResult, IPetCustomPart, IRoomAreaSelectionManager, IRoomContentListener, IRoomContentLoader, IRoomCreator, IRoomEngine, IRoomEngineServices, IRoomGeometry, IRoomInstance, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomRenderer, IRoomRenderingCanvas, IRoomSessionManager, ISelectedRoomObjectData, ISessionDataManager, ITileObjectMap, IUpdateReceiver, IVector3D, LegacyDataType, MouseEventType, ObjectDataFactory, PetFigureData, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectUserType, RoomObjectVariable, RoomObjectVisualizationType, ToolbarIconEnum } from '@octane/api';
 import { GetCommunication, RenderRoomMessageComposer, RenderRoomThumbnailMessageComposer } from '@octane/communication';
 import { GetConfiguration } from '@octane/configuration';
 import { BadgeImageReadyEvent, GetEventDispatcher, OctaneToolbarAnimateIconEvent, RoomBackgroundColorEvent, RoomDragEvent, RoomEngineAreaHideStateEvent, RoomEngineEvent, RoomEngineObjectEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomSessionEvent, RoomToObjectOwnAvatarMoveEvent } from '@octane/events';
@@ -2064,13 +2064,15 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         if(roomOwnObject && roomOwnObject.logic && maskUpdate) roomOwnObject.logic.processUpdateMessage(maskUpdate);
     }
 
-    public rollRoomObjectFloor(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, duration: number = ObjectMoveUpdateMessage.DEFAULT_DURATION, direction: IVector3D = null, elapsed: number = 0, anchorObject: IRoomObjectController = null, anchorOffset: IVector3D = null): void
+    public rollRoomObjectFloor(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, duration: number = ObjectMoveUpdateMessage.DEFAULT_DURATION, direction: IVector3D = null, elapsed: number = 0, anchorObject: IRoomObjectController = null, anchorOffset: IVector3D = null, canonicalWired: CanonicalWiredMovement = null): void
     {
+        if(!ObjectMoveUpdateMessage.validCanonical(location, targetLocation, direction, duration, canonicalWired)) return;
+
         const object = this.getRoomObjectFloor(roomId, objectId);
 
         if(!object) return;
 
-        object.processUpdateMessage(new ObjectMoveUpdateMessage(location, targetLocation, direction, !!targetLocation, duration, elapsed, anchorObject, anchorOffset));
+        object.processUpdateMessage(new ObjectMoveUpdateMessage(location, targetLocation, direction, !!targetLocation, duration, elapsed, anchorObject, anchorOffset, canonicalWired));
     }
 
     public updateRoomObjectWallLocation(roomId: number, objectId: number, location: IVector3D): boolean
@@ -2132,8 +2134,11 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         return true;
     }
 
-    public updateRoomObjectUserLocation(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D = null, headDirection: number = NaN, skipLocationFix: boolean = false, isSlide: boolean = false, duration: number = ObjectMoveUpdateMessage.DEFAULT_DURATION): boolean
+    public updateRoomObjectUserLocation(roomId: number, objectId: number, location: IVector3D, targetLocation: IVector3D, canStandUp: boolean = false, baseY: number = 0, direction: IVector3D = null, headDirection: number = NaN, skipLocationFix: boolean = false, isSlide: boolean = false, duration: number = ObjectMoveUpdateMessage.DEFAULT_DURATION, canonicalWired: CanonicalWiredMovement = null): boolean
     {
+        if(!ObjectMoveUpdateMessage.validCanonical(location, targetLocation, direction, duration, canonicalWired)
+            || (canonicalWired && !Number.isFinite(headDirection))) return false;
+
         const object = this.getRoomObjectUser(roomId, objectId);
 
         if(!object) return false;
@@ -2147,7 +2152,7 @@ export class RoomEngine implements IRoomEngine, IRoomCreator, IRoomEngineService
         const fixedLoc = skipLocationFix ? location : this.fixedUserLocation(roomId, location);
         const fixedTarget = skipLocationFix ? targetLocation : this.fixedUserLocation(roomId, targetLocation);
 
-        object.processUpdateMessage(new ObjectAvatarUpdateMessage(fixedLoc, fixedTarget, direction, headDirection, canStandUp, baseY, isSlide, duration));
+        object.processUpdateMessage(new ObjectAvatarUpdateMessage(fixedLoc, fixedTarget, direction, headDirection, canStandUp, baseY, isSlide, duration, canonicalWired));
 
         const roomSession = this._roomSessionManager.getSession(roomId);
 

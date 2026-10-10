@@ -6,7 +6,7 @@ import { FloorHeightMapMessageParser } from '@octane/communication';
 import { ItemRemoveMultipleEvent, ItemsStateUpdateEvent, ObjectRemoveMultipleEvent } from '@octane/communication';
 import { GetRoomEngine } from './GetRoomEngine';
 import { RoomVariableEnum } from './RoomVariableEnum';
-import { ObjectRoomMapUpdateMessage } from './messages';
+import { ObjectMoveUpdateMessage, ObjectRoomMapUpdateMessage } from './messages';
 import { RoomPlaneParser } from './object/RoomPlaneParser';
 import { FurnitureStackingHeightMap, LegacyWallGeometry } from './utils';
 
@@ -24,9 +24,6 @@ type AreaHideControllerState = {
 
 export class RoomMessageHandler
 {
-    private static WIRED_FURNI_ANCHOR_NONE = 0;
-    private static WIRED_FURNI_ANCHOR_USER = 1;
-    private static WIRED_FURNI_ANCHOR_FURNI = 2;
     private static ROOM_USER_WALK_DURATION = 500;
     private static WIRED_MOVEMENT_STATUS_GRACE = 250;
     private static WIRED_MOVEMENT_Z_EPSILON = 0.01;
@@ -574,18 +571,17 @@ export class RoomMessageHandler
             {
                 if(!movement) continue;
 
-                const resolvedMovement = this.resolveAnchoredFurniMovement(movement);
-
                 this._roomEngine.rollRoomObjectFloor(
                     this._currentRoomId,
                     movement.id,
-                    resolvedMovement.location,
-                    resolvedMovement.targetLocation,
-                    resolvedMovement.duration,
+                    movement.location,
+                    movement.targetLocation,
+                    movement.duration,
                     new Vector3d(movement.rotation),
-                    resolvedMovement.elapsed,
-                    resolvedMovement.anchorObject,
-                    resolvedMovement.anchorOffset);
+                    0,
+                    null,
+                    null,
+                    { overshootTimeMs: movement.overshootTimeMs, curveStrength: movement.curveStrength });
             }
         }
 
@@ -617,93 +613,14 @@ export class RoomMessageHandler
         }
     }
 
-    private resolveAnchoredFurniMovement(movement: WiredFurniMovementData): { location: IVector3D, targetLocation: IVector3D, duration: number, elapsed: number, anchorObject: IRoomObjectController, anchorOffset: IVector3D }
-    {
-        if(!movement || !movement.anchorType || (movement.anchorType === RoomMessageHandler.WIRED_FURNI_ANCHOR_NONE))
-        {
-            return {
-                location: movement.location,
-                targetLocation: movement.targetLocation,
-                duration: movement.duration,
-                elapsed: movement.elapsed,
-                anchorObject: null,
-                anchorOffset: null
-            };
-        }
-
-        const anchorObject = this.getWiredFurniAnchorObject(movement);
-        const activeUserWalk = (movement.anchorType === RoomMessageHandler.WIRED_FURNI_ANCHOR_USER)
-            ? this.getActiveRoomUserWalk(movement.anchorId)
-            : null;
-
-        if(activeUserWalk)
-        {
-            const walkElapsed = Math.max(0, Math.min(activeUserWalk.duration, (Date.now() - activeUserWalk.startedAt)));
-
-            return {
-                location: movement.location,
-                targetLocation: new Vector3d(activeUserWalk.targetX, activeUserWalk.targetY, activeUserWalk.targetZ),
-                duration: activeUserWalk.duration,
-                elapsed: walkElapsed,
-                anchorObject: null,
-                anchorOffset: null
-            };
-        }
-
-        if(!anchorObject)
-        {
-            return {
-                location: movement.location,
-                targetLocation: movement.targetLocation,
-                duration: movement.duration,
-                elapsed: movement.elapsed,
-                anchorObject: null,
-                anchorOffset: null
-            };
-        }
-
-        const anchorLocation = anchorObject.getLocation();
-
-        if(!anchorLocation)
-        {
-            return {
-                location: movement.location,
-                targetLocation: movement.targetLocation,
-                duration: movement.duration,
-                elapsed: movement.elapsed,
-                anchorObject: null,
-                anchorOffset: null
-            };
-        }
-
-        return {
-            location: new Vector3d(anchorLocation.x, anchorLocation.y, anchorLocation.z),
-            targetLocation: movement.targetLocation,
-            duration: Math.max(1, movement.duration - Math.max(0, movement.elapsed)),
-            elapsed: 0,
-            anchorObject,
-            anchorOffset: new Vector3d(0, 0, movement.location.z - anchorLocation.z)
-        };
-    }
-
-    private getWiredFurniAnchorObject(movement: WiredFurniMovementData)
-    {
-        if(!movement || !movement.anchorId) return null;
-
-        switch(movement.anchorType)
-        {
-            case RoomMessageHandler.WIRED_FURNI_ANCHOR_USER:
-                return this._roomEngine.getRoomObjectUser(this._currentRoomId, movement.anchorId);
-            case RoomMessageHandler.WIRED_FURNI_ANCHOR_FURNI:
-                return this._roomEngine.getRoomObjectFloor(this._currentRoomId, movement.anchorId);
-            default:
-                return null;
-        }
-    }
-
     private applyWiredUserMovement(movement: WiredUserMovementData): void
     {
         const isSlide = (movement.movementType === ObjectRolling.SLIDE);
+        const metadata = { animationType: movement.animationType, jumpPower: movement.jumpPower };
+
+        if(!ObjectMoveUpdateMessage.validCanonical(movement.location, movement.targetLocation,
+            new Vector3d(movement.bodyDirection), movement.duration, metadata) || !Number.isFinite(movement.headDirection)) return;
+
         this.trackWiredUserMovement(movement);
 
         this._roomEngine.updateRoomObjectUserLocation(
@@ -717,7 +634,8 @@ export class RoomMessageHandler
             movement.headDirection,
             true,
             isSlide,
-            movement.duration);
+            movement.duration,
+            metadata);
 
         const object = this._roomEngine.getRoomObjectUser(this._currentRoomId, movement.id);
 
@@ -841,7 +759,7 @@ export class RoomMessageHandler
 
         if(!model) return;
 
-        model.setValue(RoomObjectVariable.HEAD_DIRECTION, update.headDirection);
+        model.setValue(RoomObjectVariable.HEAD_DIRECTION, update.bodyDirection);
     }
 
     private onObjectsDataUpdateEvent(event: ObjectsDataUpdateEvent): void
