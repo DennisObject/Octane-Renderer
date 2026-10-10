@@ -560,6 +560,16 @@ export class RoomMessageHandler
 
         if(!parser) return;
 
+        if(parser.userMovements?.length)
+        {
+            for(const movement of parser.userMovements)
+            {
+                if(!movement) continue;
+
+                this.applyWiredUserMovement(movement);
+            }
+        }
+
         if(parser.furniMovements?.length)
         {
             for(const movement of parser.furniMovements)
@@ -597,16 +607,6 @@ export class RoomMessageHandler
                     this._roomEngine.updateRoomObjectWallLocation(this._currentRoomId, movement.id,
                         this.roundWiredWallLocation(source), this.roundWiredWallLocation(target), values[8]);
                 }
-            }
-        }
-
-        if(parser.userMovements?.length)
-        {
-            for(const movement of parser.userMovements)
-            {
-                if(!movement) continue;
-
-                this.applyWiredUserMovement(movement);
             }
         }
 
