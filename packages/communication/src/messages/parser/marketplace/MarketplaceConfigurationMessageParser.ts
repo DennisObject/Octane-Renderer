@@ -46,10 +46,12 @@ export class MarketplaceConfigurationMessageParser implements IMessageParser
 
         // The official client (MarketplaceConfigurationEvent, WIN63-202609161723) reads three more ints after the average price period: sellingFeePercentage, revenueLimit and
         // halfTaxLimit, which make its seller price `price - ceil(round(1000 * price * (sellingFeePercentage / 100 + 0.5 * price / halfTaxLimit)) / 1000)`.
-        // A hotel that does not send them leaves them 0 (a missing fee percentage then means the commission above).
-        this._sellingFeePercentage = wrapper.bytesAvailable ? wrapper.readInt() : 0;
-        this._revenueLimit = wrapper.bytesAvailable ? wrapper.readInt() : 0;
-        this._halfTaxLimit = wrapper.bytesAvailable ? wrapper.readInt() : 0;
+        this._sellingFeePercentage = wrapper.readInt();
+        this._revenueLimit = wrapper.readInt();
+        this._halfTaxLimit = wrapper.readInt();
+
+        // The client divides by halfTaxLimit, so a packet without a positive one is malformed.
+        if(this._halfTaxLimit <= 0) return false;
 
         return true;
     }
