@@ -10,4 +10,3 @@ export * from './MakeOfferMessageComposer';
 export * from './RedeemMarketplaceOfferCreditsMessageComposer';
 export * from './CancelAllMarketplaceOffersMessageComposer';
 export * from './ClearOwnMarketplaceHistoryMessageComposer';
-export * from './MakeMultipleOffersMessageComposer';
