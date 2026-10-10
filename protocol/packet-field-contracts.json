@@ -20877,10 +20877,7 @@
       "header": 1458,
       "symbol": "PURCHASE_BASIC_MEMBERSHIP_EXTENSION",
       "path": "packages/communication/src/messages/outgoing/catalog/PurchaseBasicMembershipExtensionComposer.ts",
-      "reason": "Header is registered only by the Octane Renderer packet registry",
-      "wireProfiles": {
-        "OCTANE-3-6-0-FLOOR-20260909": 6001
-      }
+      "reason": "Header is registered only by the Octane Renderer packet registry"
     },
     {
       "direction": "client_to_server",
@@ -21329,14 +21326,6 @@
       "symbol": "FIREWORK_CHARGE_DATA",
       "path": "packages/communication/src/messages/parser/catalog/FireworkChargeDataParser.ts",
       "reason": "Header is registered only by the Octane Renderer packet registry"
-    },
-    {
-      "direction": "server_to_client",
-      "side": "typescript",
-      "header": 65416,
-      "symbol": "LEGACY_USER_FIGURE",
-      "path": "packages/communication/src/messages/parser/avatar/FigureUpdateParser.ts",
-      "reason": "Former incoming event alias 884 kept as the FigureUpdate reserve at the reviewed wire header"
     },
     {
       "direction": "server_to_client",
@@ -28112,9 +28101,6 @@
         "symbol": "GAME2EXITGAMEMESSAGE",
         "className": "Game2ExitGameMessageComposer",
         "path": "packages/communication/src/messages/outgoing/game/arena/Game2ExitGameMessageComposer.ts"
-      },
-      "wireProfiles": {
-        "OCTANE-3-6-0-FLOOR-20260909": 65004
       },
       "reason": "Legacy Java reads no fields; the current Game2 composer sends exitToRoomBeforeGame:boolean."
     },
