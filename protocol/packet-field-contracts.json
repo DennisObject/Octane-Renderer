@@ -12596,28 +12596,6 @@
       ]
     },
     {
-      "name": "ROOM_RIGHTS",
-      "direction": "server_to_client",
-      "header": 2909,
-      "java": {
-        "symbol": "RoomRightsComposer",
-        "className": "RoomRightsComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/rooms/RoomRightsComposer.java"
-      },
-      "typescript": {
-        "symbol": "ROOM_RIGHTS",
-        "className": "RoomRightsParser",
-        "path": "packages/communication/src/messages/parser/room/access/rights/RoomRightsParser.ts"
-      },
-      "fields": [
-        {
-          "kind": "scalar",
-          "type": "int",
-          "name": ""
-        }
-      ]
-    },
-    {
       "name": "FIRST_LOGIN_OF_DAY",
       "direction": "server_to_client",
       "header": 1905,
@@ -15673,22 +15651,6 @@
           "name": ""
         }
       ]
-    },
-    {
-      "name": "ROOM_RIGHTS_CLEAR",
-      "direction": "server_to_client",
-      "header": 920,
-      "java": {
-        "symbol": "RoomNoRightsComposer",
-        "className": "RoomNoRightsComposer",
-        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/rooms/RoomNoRightsComposer.java"
-      },
-      "typescript": {
-        "symbol": "ROOM_RIGHTS_CLEAR",
-        "className": "RoomRightsClearParser",
-        "path": "packages/communication/src/messages/parser/room/access/rights/RoomRightsClearParser.ts"
-      },
-      "fields": []
     },
     {
       "name": "USER_FIGURE",
@@ -28277,6 +28239,38 @@
         "path": "packages/communication/src/messages/parser/camera/CameraStorageUrlMessageParser.ts"
       },
       "reason": "Current parser reads the URL plus an optional length-prefixed PNG guarded by JSON length and PNG-header validation; the Java URL-only schema does not describe this conditional optimization. Existing camera parser suites exercise these branches."
+    },
+    {
+      "name": "ROOM_RIGHTS",
+      "direction": "server_to_client",
+      "header": 2909,
+      "java": {
+        "symbol": "RoomRightsComposer",
+        "className": "RoomRightsComposer",
+        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/rooms/RoomRightsComposer.java"
+      },
+      "typescript": {
+        "symbol": "ROOM_RIGHTS",
+        "className": "RoomRightsParser",
+        "path": "packages/communication/src/messages/parser/room/access/rights/RoomRightsParser.ts"
+      },
+      "reason": "The current AIR and paired Plus protocol includes roomId before the rights level. Historical Java writes only the rights level."
+    },
+    {
+      "name": "ROOM_RIGHTS_CLEAR",
+      "direction": "server_to_client",
+      "header": 920,
+      "java": {
+        "symbol": "RoomNoRightsComposer",
+        "className": "RoomNoRightsComposer",
+        "path": "Emulator/src/main/java/com/eu/habbo/messages/outgoing/rooms/RoomNoRightsComposer.java"
+      },
+      "typescript": {
+        "symbol": "ROOM_RIGHTS_CLEAR",
+        "className": "RoomRightsClearParser",
+        "path": "packages/communication/src/messages/parser/room/access/rights/RoomRightsClearParser.ts"
+      },
+      "reason": "The current AIR and paired Plus protocol sends roomId; historical Java sends no fields."
     }
   ]
 }
