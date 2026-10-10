@@ -1551,7 +1551,7 @@
     {
       "name": "GROUP_MEMBER_REMOVE",
       "direction": "client_to_server",
-      "header": 65409,
+      "header": 1397,
       "java": {
         "symbol": "GuildRemoveMemberEvent",
         "className": "GuildRemoveMemberEvent",
