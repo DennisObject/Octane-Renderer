@@ -1,4 +1,4 @@
-import { IPetColorResult } from '@octane/api';
+import { IPetColorResult } from '@volt/api';
 
 export class PetColorResult implements IPetColorResult
 {

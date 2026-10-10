@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class DisconnectMessageComposer implements IMessageComposer<ConstructorParameters<typeof DisconnectMessageComposer>>
 {

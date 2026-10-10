@@ -1,7 +1,7 @@
-import { IConnection } from '@octane/api';
-import { OctaneEvent } from './OctaneEvent';
+import { IConnection } from '@volt/api';
+import { VoltEvent } from './VoltEvent';
 
-export class SocketConnectionEvent extends OctaneEvent
+export class SocketConnectionEvent extends VoltEvent
 {
     public static CONNECTION_OPENED = 'SCE_OPEN';
     public static CONNECTION_CLOSED = 'SCE_CLOSED';

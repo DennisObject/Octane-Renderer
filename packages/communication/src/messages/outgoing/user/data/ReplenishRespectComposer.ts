@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `SessionDataManager.replenishRespect()` (composer 3728): buys the daily respect

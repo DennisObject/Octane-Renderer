@@ -1,6 +1,6 @@
 export * from './CommunicationManager';
 export * from './GetCommunication';
-export * from './OctaneMessages';
+export * from './VoltMessages';
 export * from './SocketConnection';
 export * from './codec';
 export * from './codec/evawire';

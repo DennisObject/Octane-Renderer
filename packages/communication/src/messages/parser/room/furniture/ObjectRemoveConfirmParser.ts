@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /**
  * Official `class_3462` (`ObjectRemoveConfirm`, 3488): the server asks the

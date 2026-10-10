@@ -1,4 +1,4 @@
-import { LegacyDataType } from '@octane/api';
+import { LegacyDataType } from '@volt/api';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

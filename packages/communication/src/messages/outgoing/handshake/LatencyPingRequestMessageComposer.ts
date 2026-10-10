@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * AIR `LatencyTracker.testLatency`: a bare request id the server echoes back

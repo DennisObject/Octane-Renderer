@@ -1,5 +1,5 @@
-import { AlphaTolerance } from '@octane/api';
-import { GetRenderer, TextureUtils } from '@octane/utils';
+import { AlphaTolerance } from '@volt/api';
+import { GetRenderer, TextureUtils } from '@volt/utils';
 import { DestroyOptions, Filter, Point, Sprite, Texture, TextureSource, WebGLRenderer, WebGPURenderer } from 'pixi.js';
 import { IWiredHighlight, WiredHighlightCache } from './WiredHighlightCache';
 

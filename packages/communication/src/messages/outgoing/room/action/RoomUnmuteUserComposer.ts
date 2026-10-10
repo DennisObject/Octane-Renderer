@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `RoomSession.unmuteUser(userId)` -> composer 3302 `(userId, roomId)`: the

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /**
  * Official `BadgeInfoMessageParser` (AIR 13, header 3228): the reply to

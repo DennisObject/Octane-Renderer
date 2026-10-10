@@ -1,5 +1,5 @@
-import { IGraphicAsset, IGraphicAssetCollection } from '@octane/api';
-import { TextureUtils } from '@octane/utils';
+import { IGraphicAsset, IGraphicAssetCollection } from '@volt/api';
+import { TextureUtils } from '@volt/utils';
 import { CanvasSource, DOMAdapter, ICanvas, Rectangle, Sprite, Texture } from 'pixi.js';
 
 export type ShoreAlphaMask = { width: number, height: number, alpha: Uint8Array };

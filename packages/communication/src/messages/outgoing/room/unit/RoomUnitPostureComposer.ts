@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class RoomUnitPostureComposer implements IMessageComposer<ConstructorParameters<typeof RoomUnitPostureComposer>>
 {

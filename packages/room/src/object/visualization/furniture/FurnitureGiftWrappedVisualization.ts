@@ -1,4 +1,4 @@
-import { IRoomGeometry, RoomObjectVariable } from '@octane/api';
+import { IRoomGeometry, RoomObjectVariable } from '@volt/api';
 import { FurnitureVisualization } from './FurnitureVisualization';
 
 export class FurnitureGiftWrappedVisualization extends FurnitureVisualization

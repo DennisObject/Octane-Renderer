@@ -1,6 +1,6 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { GetCommunication, OpenPetPackageRequestedMessageEvent, OpenPetPackageResultMessageEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionPetPackageEvent } from '@octane/events';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { GetCommunication, OpenPetPackageRequestedMessageEvent, OpenPetPackageResultMessageEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionPetPackageEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class PetPackageHandler extends BaseHandler

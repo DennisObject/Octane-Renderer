@@ -1,5 +1,5 @@
-﻿import { IRoomObject, ITileObjectMap, RoomObjectVariable } from '@octane/api';
-import { OctaneLogger } from '@octane/utils';
+﻿import { IRoomObject, ITileObjectMap, RoomObjectVariable } from '@volt/api';
+import { VoltLogger } from '@volt/utils';
 
 export class TileObjectMap implements ITileObjectMap
 {
@@ -66,7 +66,7 @@ export class TileObjectMap implements ITileObjectMap
     {
         if(!object.isReady)
         {
-            OctaneLogger.log('Assigning non initialized object to tile object map!');
+            VoltLogger.log('Assigning non initialized object to tile object map!');
 
             return;
         }

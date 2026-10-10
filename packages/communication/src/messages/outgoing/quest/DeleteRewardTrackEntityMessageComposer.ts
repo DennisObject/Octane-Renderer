@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Deletes a reward track, one of its tasks or one of its prizes; the id is empty for a track. */
 export class DeleteRewardTrackEntityMessageComposer implements IMessageComposer<ConstructorParameters<typeof DeleteRewardTrackEntityMessageComposer>>

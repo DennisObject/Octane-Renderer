@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 export class NavigatorSavedSearch
 {

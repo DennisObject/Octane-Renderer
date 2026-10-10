@@ -1,4 +1,4 @@
-import { IPollQuestion } from '@octane/api';
+import { IPollQuestion } from '@volt/api';
 import { PollChoice } from './PollChoice';
 
 export class PollQuestion implements IPollQuestion

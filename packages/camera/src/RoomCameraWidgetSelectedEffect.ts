@@ -1,4 +1,4 @@
-import { IRoomCameraWidgetEffect } from '@octane/api';
+import { IRoomCameraWidgetEffect } from '@volt/api';
 
 export class RoomCameraWidgetSelectedEffect
 {

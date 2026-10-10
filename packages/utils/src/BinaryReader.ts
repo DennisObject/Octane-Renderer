@@ -1,4 +1,4 @@
-import { IBinaryReader } from '@octane/api';
+import { IBinaryReader } from '@volt/api';
 
 export class BinaryReader implements IBinaryReader
 {

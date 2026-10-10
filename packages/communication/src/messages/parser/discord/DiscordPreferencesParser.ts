@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /**
  * Official `class_3818` / `DiscordPreferences.readFromData` (event 1600): the stored Discord

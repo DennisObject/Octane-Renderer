@@ -1,4 +1,4 @@
-﻿import { IPetBreedingResultData, IRoomSession } from '@octane/api';
+﻿import { IPetBreedingResultData, IRoomSession } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 export class RoomSessionPetBreedingResultEvent extends RoomSessionEvent

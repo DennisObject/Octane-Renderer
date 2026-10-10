@@ -1,4 +1,4 @@
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureEcotronBoxLogic extends FurnitureLogic

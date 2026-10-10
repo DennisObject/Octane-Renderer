@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** RewardTrackTexts (10109): full localization keys with their values. */
 export class RewardTrackTextsMessageParser implements IMessageParser

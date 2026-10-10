@@ -1,5 +1,5 @@
-import { IAssetPlaneVisualizationAnimatedLayerItem, IGraphicAssetCollection } from '@octane/api';
-import { TextureUtils } from '@octane/utils';
+import { IAssetPlaneVisualizationAnimatedLayerItem, IGraphicAssetCollection } from '@volt/api';
+import { TextureUtils } from '@volt/utils';
 import { RenderTexture, Sprite, Texture } from 'pixi.js';
 import { AnimationItem } from './AnimationItem';
 

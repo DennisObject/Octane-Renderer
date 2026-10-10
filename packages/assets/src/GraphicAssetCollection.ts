@@ -1,4 +1,4 @@
-import { IAsset, IAssetData, IAssetPalette, IGraphicAsset, IGraphicAssetCollection, IGraphicAssetPalette } from '@octane/api';
+import { IAsset, IAssetData, IAssetPalette, IGraphicAsset, IGraphicAssetCollection, IGraphicAssetPalette } from '@volt/api';
 import { Dict, Spritesheet, Texture, TextureSource } from 'pixi.js';
 import { GraphicAsset } from './GraphicAsset';
 import { GraphicAssetPalette } from './GraphicAssetPalette';

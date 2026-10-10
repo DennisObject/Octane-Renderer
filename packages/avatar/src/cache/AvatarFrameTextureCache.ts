@@ -1,4 +1,4 @@
-import { GetRenderer, GetTexturePool } from '@octane/utils';
+import { GetRenderer, GetTexturePool } from '@volt/utils';
 import { Container, ImageSource, Renderer, Sprite, Texture, TextureSource } from 'pixi.js';
 
 export type AvatarFrameTexture = {

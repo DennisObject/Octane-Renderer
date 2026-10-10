@@ -1,4 +1,4 @@
-import { FriendFurniEngravingWidgetType } from '@octane/api';
+import { FriendFurniEngravingWidgetType } from '@volt/api';
 import { FurnitureFriendFurniLogic } from './FurnitureFriendFurniLogic';
 
 export class FurnitureHweenLovelockLogic extends FurnitureFriendFurniLogic

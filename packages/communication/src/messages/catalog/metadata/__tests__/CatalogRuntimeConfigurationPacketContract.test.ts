@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { describe, expect, it } from 'vitest';
-import { OctaneMessages } from '../../../../OctaneMessages';
+import { VoltMessages } from '../../../../VoltMessages';
 import { IncomingHeader } from '../../../incoming/IncomingHeader';
 import { OutgoingHeader } from '../../../outgoing/OutgoingHeader';
 import { CatalogRuntimeConfigurationComposer } from '../../../outgoing/catalog/configuration';
@@ -53,7 +53,7 @@ describe('catalog runtime configuration packet contract', () =>
 {
     it('registers the optional versioned request and response on header 10082', () =>
     {
-        const messages = new OctaneMessages();
+        const messages = new VoltMessages();
 
         expect(OutgoingHeader.CATALOG_RUNTIME_CONFIGURATION).toBe(10082);
         expect(IncomingHeader.CATALOG_RUNTIME_CONFIGURATION).toBe(10082);

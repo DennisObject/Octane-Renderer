@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `class_3741`, sent by `SelfDonationTool.onDonate`:

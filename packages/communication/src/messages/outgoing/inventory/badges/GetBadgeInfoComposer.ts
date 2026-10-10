@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `GetBadgeInfoComposer` (AIR 13, header 2895): asks for the owner

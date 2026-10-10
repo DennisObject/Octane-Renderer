@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /**
  * Official AIR 13 event 2580 (`SessionDataManager.onPurchasableChatStyleChanged`): one

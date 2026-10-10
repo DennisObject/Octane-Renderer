@@ -1,4 +1,4 @@
-﻿import { IRoomObject } from '@octane/api';
+﻿import { IRoomObject } from '@volt/api';
 import { RoomObjectMouseEvent } from './RoomObjectMouseEvent';
 
 export class RoomObjectTileMouseEvent extends RoomObjectMouseEvent

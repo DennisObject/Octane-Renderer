@@ -1,6 +1,6 @@
-import { IGroupInformationManager } from '@octane/api';
-import { GetCommunication, GetHabboGroupBadgesMessageComposer, HabboGroupBadgesMessageEvent, RoomReadyMessageEvent } from '@octane/communication';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType } from '@octane/events';
+import { IGroupInformationManager } from '@volt/api';
+import { GetCommunication, GetHabboGroupBadgesMessageComposer, HabboGroupBadgesMessageEvent, RoomReadyMessageEvent } from '@volt/communication';
+import { GetEventDispatcher, VoltEvent, VoltEventType } from '@volt/events';
 
 export class GroupInformationManager implements IGroupInformationManager
 {
@@ -39,7 +39,7 @@ export class GroupInformationManager implements IGroupInformationManager
     {
         this._groupBadgesSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.GROUP_BADGES_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.GROUP_BADGES_UPDATED));
     }
 
     public getGroupBadge(groupId: number): string

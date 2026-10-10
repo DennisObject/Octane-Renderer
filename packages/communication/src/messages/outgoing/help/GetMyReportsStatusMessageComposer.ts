@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `HabboHelp.requestReportsStatus()` -> composer 2935 (no payload). The server

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { readRewardTrackAdminTrack, RewardTrackAdminTrack } from './RewardTrackAdminData';
 
 /** RewardTrackAdminData (10100): the choices the editor may pick from, then every stored track. */

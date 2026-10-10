@@ -1,11 +1,11 @@
-import { IClientAccessListsSnapshot, IFurnitureData, IGroupInformationManager, IMessageComposer, IMessageEvent, IProductData, ISessionDataManager, IUserDataSnapshot, NoobnessLevelEnum, SecurityLevel } from '@octane/api';
-import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent, AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, FurnitureDataReloadEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@octane/communication';
-import type { FurnidataDeltaEntry } from '@octane/communication';
+import { IClientAccessListsSnapshot, IFurnitureData, IGroupInformationManager, IMessageComposer, IMessageEvent, IProductData, ISessionDataManager, IUserDataSnapshot, NoobnessLevelEnum, SecurityLevel } from '@volt/api';
+import { AllowedChatStylesMessageEvent, CreatableRoomModelsMessageEvent, AccountSafetyLockStatusChangeMessageEvent, AccountSafetyLockStatusChangeParser, AvailabilityStatusMessageEvent, PetRespectFailedEvent, ReplenishRespectComposer, UpdateUIFlagsComposer, ChangeUserNameResultMessageEvent, EmailStatusResultEvent, FigureUpdateEvent, FurnitureDataReloadEvent, GetCommunication, GetUserTagsComposer, InClientLinkEvent, MysteryBoxKeysEvent, NoobnessLevelMessageEvent, PetRespectComposer, PetScratchFailedMessageEvent, RoomReadyMessageEvent, RoomUnitChatComposer, UserInfoEvent, UserNameChangeMessageEvent, UserPermissionsEvent, UserRespectComposer, UserTagsMessageEvent } from '@volt/communication';
+import type { FurnidataDeltaEntry } from '@volt/communication';
 import { applyFurnidataDeltaTo } from './furniture/applyFurnidataDelta';
-import { GetConfiguration } from '@octane/configuration';
-import { GetLocalizationManager } from '@octane/localization';
-import { GetEventDispatcher, MysteryBoxKeysUpdateEvent, OctaneEvent, OctaneEventType, OctaneSettingsEvent, SessionDataPreferencesEvent, UserNameUpdateEvent } from '@octane/events';
-import { CreateLinkEvent, HabboWebTools, parseConfigJsonFromResponse } from '@octane/utils';
+import { GetConfiguration } from '@volt/configuration';
+import { GetLocalizationManager } from '@volt/localization';
+import { GetEventDispatcher, MysteryBoxKeysUpdateEvent, VoltEvent, VoltEventType, VoltSettingsEvent, SessionDataPreferencesEvent, UserNameUpdateEvent } from '@volt/events';
+import { CreateLinkEvent, HabboWebTools, parseConfigJsonFromResponse } from '@volt/utils';
 import { Texture } from 'pixi.js';
 import { GroupInformationManager } from './GroupInformationManager';
 import { BlockedUsersManager } from './BlockedUsersManager';
@@ -17,7 +17,7 @@ import { ProductDataLoader } from './product/ProductDataLoader';
 export class SessionDataManager implements ISessionDataManager
 {
     private _messageEvents: IMessageEvent[] = [];
-    private _settingsEventCallback: (event: OctaneSettingsEvent) => void = null;
+    private _settingsEventCallback: (event: VoltSettingsEvent) => void = null;
     private _userId: number;
     private _name: string;
     private _figure: string;
@@ -78,14 +78,14 @@ export class SessionDataManager implements ISessionDataManager
     {
         this._userDataSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.SESSION_DATA_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.SESSION_DATA_UPDATED));
     }
 
     private invalidatePermissionsSnapshot(): void
     {
         this._permissionsSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.USER_PERMISSIONS_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.USER_PERMISSIONS_UPDATED));
     }
 
     /**
@@ -177,12 +177,12 @@ export class SessionDataManager implements ISessionDataManager
             GetCommunication().registerMessageEvent(new AllowedChatStylesMessageEvent((event: AllowedChatStylesMessageEvent) =>
             {
                 this._clientAccessLists = Object.freeze({ ...this._clientAccessLists, chatStyleIds: Object.freeze([...event.getParser().chatStyleIds]) });
-                GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.CLIENT_ACCESS_LISTS_UPDATED));
+                GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.CLIENT_ACCESS_LISTS_UPDATED));
             })),
             GetCommunication().registerMessageEvent(new CreatableRoomModelsMessageEvent((event: CreatableRoomModelsMessageEvent) =>
             {
                 this._clientAccessLists = Object.freeze({ ...this._clientAccessLists, roomModels: Object.freeze(event.getParser().models.map(model => Object.freeze({ ...model }))) });
-                GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.CLIENT_ACCESS_LISTS_UPDATED));
+                GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.CLIENT_ACCESS_LISTS_UPDATED));
             })),
             GetCommunication().registerMessageEvent(new AvailabilityStatusMessageEvent(this.onAvailabilityStatusMessageEvent.bind(this))),
             GetCommunication().registerMessageEvent(new PetScratchFailedMessageEvent(this.onPetRespectFailed.bind(this))),
@@ -211,7 +211,7 @@ export class SessionDataManager implements ISessionDataManager
         );
 
         // Store event dispatcher callback for cleanup
-        this._settingsEventCallback = (event: OctaneSettingsEvent) =>
+        this._settingsEventCallback = (event: VoltSettingsEvent) =>
         {
             this._isRoomCameraFollowDisabled = event.cameraFollow;
             this._uiFlags = event.flags;
@@ -221,7 +221,7 @@ export class SessionDataManager implements ISessionDataManager
             this.invalidateUserDataSnapshot();
         };
 
-        GetEventDispatcher().addEventListener<OctaneSettingsEvent>(OctaneSettingsEvent.SETTINGS_UPDATED, this._settingsEventCallback);
+        GetEventDispatcher().addEventListener<VoltSettingsEvent>(VoltSettingsEvent.SETTINGS_UPDATED, this._settingsEventCallback);
     }
 
     public dispose(): void
@@ -245,7 +245,7 @@ export class SessionDataManager implements ISessionDataManager
         // Remove event dispatcher listener
         if(this._settingsEventCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneSettingsEvent.SETTINGS_UPDATED, this._settingsEventCallback);
+            GetEventDispatcher().removeEventListener(VoltSettingsEvent.SETTINGS_UPDATED, this._settingsEventCallback);
             this._settingsEventCallback = null;
         }
     }
@@ -283,7 +283,7 @@ export class SessionDataManager implements ISessionDataManager
         // applyFurnidataDelta uses. SESSION_DATA_UPDATED only drives the userData
         // snapshot and, dispatched here without invalidateUserDataSnapshot(), was
         // a no-op (the snapshot ref never changed, so consumers bailed out).
-        if(added && added.length && (typeof window !== 'undefined')) window.dispatchEvent(new CustomEvent('octane-localization-updated'));
+        if(added && added.length && (typeof window !== 'undefined')) window.dispatchEvent(new CustomEvent('volt-localization-updated'));
 
         return added;
     }
@@ -638,7 +638,7 @@ export class SessionDataManager implements ISessionDataManager
     public async applyFurnidataReloadHint(): Promise<void>
     {
         await this._furnitureData.init();
-        if(typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('octane-localization-updated'));
+        if(typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('volt-localization-updated'));
     }
 
     public getBadgeUrl(name: string): string

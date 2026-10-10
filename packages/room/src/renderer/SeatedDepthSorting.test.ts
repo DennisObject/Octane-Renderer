@@ -1,5 +1,5 @@
-import { AvatarAction, IRoomObject, RoomObjectVariable } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { AvatarAction, IRoomObject, RoomObjectVariable } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 import { describe, expect, it } from 'vitest';
 import { SizeData } from '../object/visualization/data/SizeData';
 import { RoomGeometry } from '../utils/RoomGeometry';

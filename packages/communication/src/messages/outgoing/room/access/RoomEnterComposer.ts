@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 type RoomEnterPayload = [ number, string, number?, number? ];
 

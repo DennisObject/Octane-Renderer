@@ -1,4 +1,4 @@
-import { RoomWidgetEnum } from '@octane/api';
+import { RoomWidgetEnum } from '@volt/api';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureCraftingGizmoLogic extends FurnitureLogic

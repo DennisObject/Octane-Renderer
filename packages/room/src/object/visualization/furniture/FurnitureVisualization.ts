@@ -1,5 +1,5 @@
-import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite, RoomObjectVariable, RoomObjectVisualizationType } from '@octane/api';
-import { ChooserSelectionFilter, OctaneLogger, WiredFilter } from '@octane/utils';
+import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite, RoomObjectVariable, RoomObjectVisualizationType } from '@volt/api';
+import { ChooserSelectionFilter, VoltLogger, WiredFilter } from '@volt/utils';
 import { BLEND_MODES, Filter, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import { ColorData, LayerData } from '../data';
@@ -157,10 +157,10 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization
         this._cacheScale = scale;
         this._cacheSize = this.getValidSize(scale);
 
-        if(typeof window !== 'undefined' && (window as unknown as { OctaneFurniSizeDebug?: boolean }).OctaneFurniSizeDebug)
+        if(typeof window !== 'undefined' && (window as unknown as { VoltFurniSizeDebug?: boolean }).VoltFurniSizeDebug)
         {
             const note = scale === 32 ? (this._cacheSize === 32 ? ' ✓ size-32' : ' fallback -> size-' + this._cacheSize) : '';
-            OctaneLogger.log(`[FurniSize] ${this._type}: geometry ${scale} -> sprite size ${this._cacheSize}${note}`);
+            VoltLogger.log(`[FurniSize] ${this._type}: geometry ${scale} -> sprite size ${this._cacheSize}${note}`);
         }
 
         this.setLayerCount(((this._data && this._data.getLayerCount(scale)) || 0) + this.getAdditionalLayerCount());

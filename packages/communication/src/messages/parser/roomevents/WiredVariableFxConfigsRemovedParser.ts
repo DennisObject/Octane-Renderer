@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** Fx configs whose box is gone; every status drawn for them goes with them. */
 export class WiredVariableFxConfigsRemovedParser implements IMessageParser

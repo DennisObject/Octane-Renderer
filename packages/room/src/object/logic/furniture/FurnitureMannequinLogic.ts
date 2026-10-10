@@ -1,5 +1,5 @@
-import { MapDataType, RoomObjectVariable } from '@octane/api';
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { MapDataType, RoomObjectVariable } from '@volt/api';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 

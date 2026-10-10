@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 export class MessengerMessageFailedParser implements IMessageParser
 {
     private _confirmationId=0; private _errorCode=0;

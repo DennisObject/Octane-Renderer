@@ -16,12 +16,12 @@ describe('ConfigurationManager.reloadConfiguration', () =>
     afterEach(() =>
     {
         vi.unstubAllGlobals();
-        delete (window as any).OctaneConfig;
+        delete (window as any).VoltConfig;
     });
 
     it('keeps the previous values until the new files are fetched and parsed', async () =>
     {
-        (window as any).OctaneConfig = { 'config.urls': [ '/renderer-config.json' ] };
+        (window as any).VoltConfig = { 'config.urls': [ '/renderer-config.json' ] };
 
         const first = jsonResponse({ 'api.url': 'http://127.0.0.1:2096', 'login.endpoint': '${api.url}/api/auth/login' });
         const second = deferred<Response>();
@@ -50,7 +50,7 @@ describe('ConfigurationManager.reloadConfiguration', () =>
 
     it('keeps the previous values when a reload fails', async () =>
     {
-        (window as any).OctaneConfig = { 'config.urls': [ '/renderer-config.json' ] };
+        (window as any).VoltConfig = { 'config.urls': [ '/renderer-config.json' ] };
 
         const fetchMock = vi.fn()
             .mockReturnValueOnce(Promise.resolve(jsonResponse({ 'login.endpoint': 'http://127.0.0.1:2096/api/auth/login' })))

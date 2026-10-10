@@ -1,4 +1,4 @@
-import { IGraphicAsset } from '@octane/api';
+import { IGraphicAsset } from '@volt/api';
 import { Point } from 'pixi.js';
 
 export class AnimationItem

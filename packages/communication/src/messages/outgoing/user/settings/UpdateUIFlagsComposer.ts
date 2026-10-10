@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `SessionDataManager.setUIFlag` -> `UpdateUIFlags(flags)`: bit 1 is the friend-bar

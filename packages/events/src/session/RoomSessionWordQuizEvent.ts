@@ -1,4 +1,4 @@
-﻿import { IQuestion, IRoomSession } from '@octane/api';
+﻿import { IQuestion, IRoomSession } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 export class RoomSessionWordQuizEvent extends RoomSessionEvent

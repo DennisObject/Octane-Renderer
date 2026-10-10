@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { TalentTrackLevel } from './TalentTrackLevel';
 import { TalentTrackRewardProduct } from './TalentTrackRewardProduct';
 import { TalentTrackTask } from './TalentTrackTask';

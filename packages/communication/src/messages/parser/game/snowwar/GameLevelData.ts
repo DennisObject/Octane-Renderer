@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { FuseObjectData } from './FuseObjectData';
 
 /** AIR `GameLevelData`; heightMap rows are separated by `\r`. */

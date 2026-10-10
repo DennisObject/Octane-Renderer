@@ -1,5 +1,5 @@
-import { RoomObjectVariable } from '@octane/api';
-import { RoomObjectBadgeAssetEvent, RoomObjectEvent, RoomObjectWidgetRequestEvent } from '@octane/events';
+import { RoomObjectVariable } from '@volt/api';
+import { RoomObjectBadgeAssetEvent, RoomObjectEvent, RoomObjectWidgetRequestEvent } from '@volt/events';
 import { ObjectGroupBadgeUpdateMessage, ObjectSelectedMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureBadgeDisplayLogic } from './FurnitureBadgeDisplayLogic';
 

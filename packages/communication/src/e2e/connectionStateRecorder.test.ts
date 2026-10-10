@@ -1,4 +1,4 @@
-import { IConnectionStateSnapshot } from '@octane/api';
+import { IConnectionStateSnapshot } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { recordConnectionStates } from './connectionStateRecorder';
 

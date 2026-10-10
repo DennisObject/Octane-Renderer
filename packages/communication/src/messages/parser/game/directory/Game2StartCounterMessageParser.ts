@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** AIR Game2StartCounter: lobby / rematch countdown in seconds. */
 export class Game2StartCounterMessageParser implements IMessageParser

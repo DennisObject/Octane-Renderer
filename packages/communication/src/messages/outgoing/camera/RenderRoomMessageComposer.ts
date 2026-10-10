@@ -1,5 +1,5 @@
-import { IMessageComposer } from '@octane/api';
-import { OctaneLogger, TextureUtils } from '@octane/utils';
+import { IMessageComposer } from '@volt/api';
+import { VoltLogger, TextureUtils } from '@volt/utils';
 import { RenderTexture } from 'pixi.js';
 
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
@@ -42,13 +42,13 @@ export class RenderRoomMessageComposer implements IMessageComposer<ConstructorPa
     {
         if(!base64 || !base64.includes(','))
         {
-            OctaneLogger.error('Camera: invalid base64 data URL');
+            VoltLogger.error('Camera: invalid base64 data URL');
             return;
         }
 
         if(!base64.startsWith('data:image/png'))
         {
-            OctaneLogger.error('Camera: rejected non-PNG image data');
+            VoltLogger.error('Camera: rejected non-PNG image data');
             return;
         }
 
@@ -56,7 +56,7 @@ export class RenderRoomMessageComposer implements IMessageComposer<ConstructorPa
 
         if(!base64Data || !base64Data.length)
         {
-            OctaneLogger.error('Camera: empty base64 payload');
+            VoltLogger.error('Camera: empty base64 payload');
             return;
         }
 
@@ -68,13 +68,13 @@ export class RenderRoomMessageComposer implements IMessageComposer<ConstructorPa
         }
         catch (e)
         {
-            OctaneLogger.error('Camera: failed to decode base64 data');
+            VoltLogger.error('Camera: failed to decode base64 data');
             return;
         }
 
         if(binaryData.byteLength > MAX_IMAGE_BYTES)
         {
-            OctaneLogger.error(`Camera: image too large (${binaryData.byteLength} bytes, max ${MAX_IMAGE_BYTES})`);
+            VoltLogger.error(`Camera: image too large (${binaryData.byteLength} bytes, max ${MAX_IMAGE_BYTES})`);
             return;
         }
 
@@ -84,7 +84,7 @@ export class RenderRoomMessageComposer implements IMessageComposer<ConstructorPa
             || binaryData[2] !== PNG_MAGIC_BYTES[2]
             || binaryData[3] !== PNG_MAGIC_BYTES[3])
         {
-            OctaneLogger.error('Camera: binary data does not have valid PNG header');
+            VoltLogger.error('Camera: binary data does not have valid PNG header');
             return;
         }
 

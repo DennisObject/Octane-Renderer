@@ -1,5 +1,5 @@
 ﻿import { LegacyExternalInterface } from './LegacyExternalInterface';
-import { OctaneLogger } from './OctaneLogger';
+import { VoltLogger } from './VoltLogger';
 
 export class HabboWebTools
 {
@@ -19,7 +19,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working, failed to log event log.');
+            VoltLogger.log('External interface not working, failed to log event log.');
         }
     }
 
@@ -33,13 +33,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available, openPage failed.');
+                VoltLogger.log('External interface not available, openPage failed.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('Failed to open web page', pageUrl);
+            VoltLogger.log('Failed to open web page', pageUrl);
         }
     }
 
@@ -60,7 +60,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to send heartbeat');
+            VoltLogger.log('Failed to send heartbeat');
         }
     }
 
@@ -76,7 +76,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to open web page', pageUrl);
+            VoltLogger.log('Failed to open web page', pageUrl);
         }
     }
 
@@ -92,7 +92,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to close web page and restore client!');
+            VoltLogger.log('Failed to close web page and restore client!');
         }
     }
 
@@ -108,7 +108,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to open Habblet', name);
+            VoltLogger.log('Failed to open Habblet', name);
         }
     }
 
@@ -124,7 +124,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to close Habblet', name);
+            VoltLogger.log('Failed to close Habblet', name);
         }
     }
 
@@ -140,7 +140,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to close send ');
+            VoltLogger.log('Failed to close send ');
         }
     }
 
@@ -156,7 +156,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to open game', e);
+            VoltLogger.log('Failed to open game', e);
         }
     }
 
@@ -172,7 +172,7 @@ export class HabboWebTools
 
         catch (e)
         {
-            OctaneLogger.log('Failed to hide game');
+            VoltLogger.log('Failed to hide game');
         }
     }
 
@@ -186,13 +186,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log(('External interface not available. Could not request to open: ' + url));
+                VoltLogger.log(('External interface not available. Could not request to open: ' + url));
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log(('External interface not working. Could not request to open: ' + url));
+            VoltLogger.log(('External interface not working. Could not request to open: ' + url));
         }
     }
 
@@ -206,13 +206,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not store last room visit.');
+                VoltLogger.log('External interface not available. Could not store last room visit.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not store last room visit.');
+            VoltLogger.log('External interface not working. Could not store last room visit.');
         }
     }
 
@@ -226,13 +226,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not open minimail.');
+                VoltLogger.log('External interface not available. Could not open minimail.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not open minimail.');
+            VoltLogger.log('External interface not working. Could not open minimail.');
         }
     }
 
@@ -246,13 +246,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not open news.');
+                VoltLogger.log('External interface not available. Could not open news.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not open news.');
+            VoltLogger.log('External interface not working. Could not open news.');
         }
     }
 
@@ -266,13 +266,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not close news.');
+                VoltLogger.log('External interface not available. Could not close news.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not close news.');
+            VoltLogger.log('External interface not working. Could not close news.');
         }
     }
 
@@ -286,13 +286,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not open avatars.');
+                VoltLogger.log('External interface not available. Could not open avatars.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not open avatars.');
+            VoltLogger.log('External interface not working. Could not open avatars.');
         }
     }
 
@@ -306,13 +306,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not open roomenterad.');
+                VoltLogger.log('External interface not available. Could not open roomenterad.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not open roomenterad.');
+            VoltLogger.log('External interface not working. Could not open roomenterad.');
         }
     }
 
@@ -326,13 +326,13 @@ export class HabboWebTools
             }
             else
             {
-                OctaneLogger.log('External interface not available. Could not update figure.');
+                VoltLogger.log('External interface not available. Could not update figure.');
             }
         }
 
         catch (e)
         {
-            OctaneLogger.log('External interface not working. Could not update figure.');
+            VoltLogger.log('External interface not working. Could not update figure.');
         }
     }
 }

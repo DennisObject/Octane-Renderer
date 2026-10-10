@@ -1,5 +1,5 @@
-import { RoomObjectVariable } from '@octane/api';
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { RoomObjectVariable } from '@volt/api';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 

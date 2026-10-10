@@ -1,5 +1,5 @@
-import { ILegacyWallGeometry, IVector3D } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { ILegacyWallGeometry, IVector3D } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 
 export class LegacyWallGeometry implements ILegacyWallGeometry
 {

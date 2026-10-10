@@ -1,5 +1,5 @@
-import { IAssetData, IParticleSystem, IRoomGeometry, MouseEventType, RoomObjectVariable } from '@octane/api';
-import { RoomObjectEvent, RoomObjectStateChangedEvent, RoomSpriteMouseEvent } from '@octane/events';
+import { IAssetData, IParticleSystem, IRoomGeometry, MouseEventType, RoomObjectVariable } from '@volt/api';
+import { RoomObjectEvent, RoomObjectStateChangedEvent, RoomSpriteMouseEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureFireworksLogic extends FurnitureLogic

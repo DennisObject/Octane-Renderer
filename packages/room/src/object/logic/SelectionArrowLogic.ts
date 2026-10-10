@@ -1,4 +1,4 @@
-import { IAssetData, RoomObjectVariable } from '@octane/api';
+import { IAssetData, RoomObjectVariable } from '@volt/api';
 import { ObjectVisibilityUpdateMessage, RoomObjectUpdateMessage } from '../../messages';
 import { RoomObjectLogicBase } from './RoomObjectLogicBase';
 

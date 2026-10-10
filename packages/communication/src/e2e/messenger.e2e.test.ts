@@ -1,6 +1,6 @@
-import { IConnection, IMessageEvent } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher } from '@octane/events';
+import { IConnection, IMessageEvent } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher } from '@volt/events';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CommunicationManager } from '../CommunicationManager';
 import {

@@ -1,6 +1,6 @@
-﻿import { OctaneEvent } from '../core';
+﻿import { VoltEvent } from '../core';
 
-export class UserNameUpdateEvent extends OctaneEvent
+export class UserNameUpdateEvent extends VoltEvent
 {
     public static UNUE_NAME_UPDATED: string = 'unue_name_updated';
 

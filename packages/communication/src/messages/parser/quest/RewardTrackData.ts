@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /** One level of a reward-track task (AIR 13 class_4130). */
 export class RewardTrackTaskLevelData

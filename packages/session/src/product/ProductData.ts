@@ -1,4 +1,4 @@
-﻿import { IProductData } from '@octane/api';
+﻿import { IProductData } from '@volt/api';
 
 export class ProductData implements IProductData
 {

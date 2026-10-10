@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /** One reward of a daily task (AIR 13 class_4155). */
 export class DailyTaskRewardData

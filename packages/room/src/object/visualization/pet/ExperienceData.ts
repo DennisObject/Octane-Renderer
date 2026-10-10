@@ -1,4 +1,4 @@
-import { TextureUtils } from '@octane/utils';
+import { TextureUtils } from '@volt/utils';
 import { Container, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 
 export class ExperienceData

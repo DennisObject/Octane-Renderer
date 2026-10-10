@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class SetClothingChangeDataMessageComposer implements IMessageComposer<ConstructorParameters<typeof SetClothingChangeDataMessageComposer>>
 {

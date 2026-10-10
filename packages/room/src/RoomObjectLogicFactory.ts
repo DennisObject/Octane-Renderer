@@ -1,6 +1,6 @@
-import { IEventDispatcher, IRoomObjectEventHandler, IRoomObjectLogicFactory, RoomObjectLogicType } from '@octane/api';
-import { GetEventDispatcher, RoomObjectEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { IEventDispatcher, IRoomObjectEventHandler, IRoomObjectLogicFactory, RoomObjectLogicType } from '@volt/api';
+import { GetEventDispatcher, RoomObjectEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { RoomObjectLogicBase } from '../../room';
 import { AvatarLogic, FurnitureAchievementResolutionLogic, FurnitureAreaHideLogic, FurnitureBadgeDisplayLogic, FurnitureChangeStateWhenStepOnLogic, FurnitureClothingChangeLogic, FurnitureCounterClockLogic, FurnitureCrackableLogic, FurnitureCraftingGizmoLogic, FurnitureCreditLogic, FurnitureCuckooClockLogic, FurnitureCustomStackHeightLogic, FurnitureDiceLogic, FurnitureEcotronBoxLogic, FurnitureEditableInternalLinkLogic, FurnitureEditableRoomLinkLogic, FurnitureEffectBoxLogic, FurnitureExternalImageLogic, FurnitureFireworksLogic, FurnitureFloorHoleLogic, FurnitureGroupForumTerminalLogic, FurnitureGuildCustomizedLogic, FurnitureHabboWheelLogic, FurnitureHighScoreLogic, FurnitureHockeyScoreLogic, FurnitureHweenLovelockLogic, FurnitureIceStormLogic, FurnitureInternalLinkLogic, FurnitureJukeboxLogic, FurnitureLogic, FurnitureLoveLockLogic, FurnitureMannequinLogic, FurnitureMonsterplantSeedLogic, FurnitureMultiHeightLogic, FurnitureMultiStateLogic, FurnitureMysteryBoxLogic, FurnitureMysteryTrophyLogic, FurnitureOneWayDoorLogic, FurniturePetCustomizationLogic, FurniturePlaceholderLogic, FurniturePlanetSystemLogic, FurniturePresentLogic, FurniturePurchaseableClothingLogic, FurniturePushableLogic, FurnitureRandomStateLogic, FurnitureRandomTeleportLogic, FurnitureRentableSpaceLogic, FurnitureRoomBackgroundColorLogic, FurnitureRoomBackgroundLogic, FurnitureRoomBrandingLogic, FurnitureRoomBillboardLogic, FurnitureRoomDimmerLogic, FurnitureScoreLogic, FurnitureSongDiskLogic, FurnitureSoundBlockLogic, FurnitureSoundMachineLogic, FurnitureStickieLogic, FurnitureTrophyLogic, FurnitureVoteCounterLogic, FurnitureVoteMajorityLogic, FurnitureWelcomeGiftLogic, FurnitureWildWestWantedLogic, FurnitureWindowLogic, FurnitureYoutubeLogic, PetLogic, RoomLogic, SelectionArrowLogic, SnowballLogic, TileCursorLogic } from './object';
 
@@ -318,7 +318,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
 
         if(!logic)
         {
-            OctaneLogger.warn('Unknown Logic', type);
+            VoltLogger.warn('Unknown Logic', type);
 
             return null;
         }

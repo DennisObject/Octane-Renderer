@@ -14,7 +14,7 @@ const createManager = (overrides: Record<string, unknown> = {}) =>
         fetch: vi.fn(),
         parseAssetData: vi.fn(),
         loadImageResource: vi.fn(),
-        loadOctaneBundle: vi.fn(),
+        loadVoltBundle: vi.fn(),
         loadHabBundle: vi.fn(),
         bundleFormat: () => 'nitro' as const,
         ...overrides
@@ -99,7 +99,7 @@ describe('AssetManager modern image loading', () =>
         expect(manager.getTexture(source)).toBe(second.texture);
     });
 
-    it('decodes a static WebP texture embedded in a Octane bundle', async () =>
+    it('decodes a static WebP texture embedded in a Volt bundle', async () =>
     {
         const resource = createResource();
         const imageBytes = new Uint8Array([
@@ -113,7 +113,7 @@ describe('AssetManager modern image loading', () =>
                 arrayBuffer: vi.fn().mockResolvedValue(new ArrayBuffer(0))
             }),
             loadImageResource: vi.fn().mockResolvedValue(resource),
-            loadOctaneBundle: vi.fn().mockImplementation(async (_buffer, decodeTexture) => ({
+            loadVoltBundle: vi.fn().mockImplementation(async (_buffer, decodeTexture) => ({
                 texture: await decodeTexture(imageBytes.buffer, 'chair.webp'),
                 jsonFile: { name: 'chair' }
             }))
@@ -132,7 +132,7 @@ describe('AssetManager modern image loading', () =>
         expect(manager.getTexture('https://cdn.example/chair.NITRO?v=3')).toBe(resource.texture);
     });
 
-    it('rejects SVG texture entries inside Octane bundles', async () =>
+    it('rejects SVG texture entries inside Volt bundles', async () =>
     {
         const svgBytes = new TextEncoder().encode('<svg xmlns="http://www.w3.org/2000/svg"/>');
         const { manager, dependencies } = createManager({
@@ -141,13 +141,13 @@ describe('AssetManager modern image loading', () =>
                 status: 200,
                 arrayBuffer: vi.fn().mockResolvedValue(new ArrayBuffer(0))
             }),
-            loadOctaneBundle: vi.fn().mockImplementation(async (_buffer, decodeTexture) => ({
+            loadVoltBundle: vi.fn().mockImplementation(async (_buffer, decodeTexture) => ({
                 texture: await decodeTexture(svgBytes.buffer, 'unsafe.svg'),
                 jsonFile: { name: 'unsafe' }
             }))
         });
 
-        await expect(manager.downloadAsset('https://cdn.example/unsafe.nitro')).rejects.toThrow(/SVG.*Octane bundle/i);
+        await expect(manager.downloadAsset('https://cdn.example/unsafe.nitro')).rejects.toThrow(/SVG.*Volt bundle/i);
         expect(dependencies.loadImageResource).not.toHaveBeenCalled();
     });
 });
@@ -156,9 +156,9 @@ describe('AssetManager spritesheet sampling', () =>
 {
     it('samples bundle atlases with nearest filtering even though the decoder pins linear', async () =>
     {
-        const source = { scaleMode: 'linear', octaneFixedScaleMode: true };
+        const source = { scaleMode: 'linear', voltFixedScaleMode: true };
         const resource = createResource({ label: '', source });
-        const loadOctaneBundle = vi.fn(async (_buffer: ArrayBuffer, decodeImage: (bytes: ArrayBuffer, name: string) => Promise<unknown>) =>
+        const loadVoltBundle = vi.fn(async (_buffer: ArrayBuffer, decodeImage: (bytes: ArrayBuffer, name: string) => Promise<unknown>) =>
         {
             const texture = await decodeImage(new ArrayBuffer(4), 'classic1_wall1.png');
 
@@ -167,13 +167,13 @@ describe('AssetManager spritesheet sampling', () =>
         const { manager, dependencies } = createManager({
             fetch: vi.fn().mockResolvedValue({ ok: true, status: 200, arrayBuffer: async () => new ArrayBuffer(8) }),
             loadImageResource: vi.fn().mockResolvedValue(resource),
-            loadOctaneBundle
+            loadVoltBundle
         });
 
         await manager.downloadAsset('https://cdn.example/furni/classic1_wall1.nitro');
 
         expect(dependencies.loadImageResource).toHaveBeenCalledTimes(1);
         expect(source.scaleMode).toBe('nearest');
-        expect(source.octaneFixedScaleMode).toBe(true);
+        expect(source.voltFixedScaleMode).toBe(true);
     });
 });

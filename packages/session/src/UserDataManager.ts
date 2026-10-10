@@ -1,6 +1,6 @@
-import { IRoomUserData, IUserDataManager } from '@octane/api';
-import { GetCommunication, RequestPetInfoComposer, UserCurrentBadgesComposer } from '@octane/communication';
-import { GetEventDispatcher, OctaneEvent, OctaneEventType } from '@octane/events';
+import { IRoomUserData, IUserDataManager } from '@volt/api';
+import { GetCommunication, RequestPetInfoComposer, UserCurrentBadgesComposer } from '@volt/communication';
+import { GetEventDispatcher, VoltEvent, VoltEventType } from '@volt/events';
 
 export class UserDataManager implements IUserDataManager
 {
@@ -18,7 +18,7 @@ export class UserDataManager implements IUserDataManager
     {
         this._roomUserListSnapshot = null;
 
-        GetEventDispatcher().dispatchEvent(new OctaneEvent(OctaneEventType.ROOM_USER_LIST_UPDATED));
+        GetEventDispatcher().dispatchEvent(new VoltEvent(VoltEventType.ROOM_USER_LIST_UPDATED));
     }
 
     public getRoomUserListSnapshot(): ReadonlyArray<IRoomUserData>

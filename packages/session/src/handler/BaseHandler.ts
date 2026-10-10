@@ -1,4 +1,4 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
 
 export class BaseHandler
 {

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { CraftingRecipeIngredientParser } from './CraftingRecipeIngredientParser';
 
 export class CraftingRecipeMessageParser implements IMessageParser

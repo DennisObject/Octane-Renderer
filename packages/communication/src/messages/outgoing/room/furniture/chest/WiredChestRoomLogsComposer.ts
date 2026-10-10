@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Requests one page of the wired chest transaction log. [amount, page, filter, chestId].

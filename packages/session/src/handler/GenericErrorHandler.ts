@@ -1,6 +1,6 @@
-import { GenericErrorEnum, IConnection, IRoomHandlerListener } from '@octane/api';
-import { GenericErrorEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionErrorMessageEvent } from '@octane/events';
+import { GenericErrorEnum, IConnection, IRoomHandlerListener } from '@volt/api';
+import { GenericErrorEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionErrorMessageEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class GenericErrorHandler extends BaseHandler

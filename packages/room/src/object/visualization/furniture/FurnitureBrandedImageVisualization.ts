@@ -1,5 +1,5 @@
-import { RoomObjectVariable } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
+import { RoomObjectVariable } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
 import { Texture } from 'pixi.js';
 import { FurnitureVisualization } from './FurnitureVisualization';
 

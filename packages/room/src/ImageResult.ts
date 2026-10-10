@@ -1,5 +1,5 @@
-﻿import { IImageResult } from '@octane/api';
-import { TextureUtils } from '@octane/utils';
+﻿import { IImageResult } from '@volt/api';
+import { TextureUtils } from '@volt/utils';
 import { Texture } from 'pixi.js';
 
 export class ImageResult implements IImageResult

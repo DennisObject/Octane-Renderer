@@ -1,5 +1,5 @@
-import { IAssetLogicPlanetSystem, IVector3D, RoomObjectVariable } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { IAssetLogicPlanetSystem, IVector3D, RoomObjectVariable } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 import { FurniturePlanetSystemVisualizationPlanetObject } from './FurniturePlanetSystemVisualizationPlanetObject';
 

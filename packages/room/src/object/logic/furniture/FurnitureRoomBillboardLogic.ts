@@ -1,6 +1,6 @@
-import { IRoomObjectModel, RoomObjectVariable } from '@octane/api';
-import { RoomObjectRoomAdEvent } from '@octane/events';
-import { HabboWebTools } from '@octane/utils';
+import { IRoomObjectModel, RoomObjectVariable } from '@volt/api';
+import { RoomObjectRoomAdEvent } from '@volt/events';
+import { HabboWebTools } from '@volt/utils';
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
 
 export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic

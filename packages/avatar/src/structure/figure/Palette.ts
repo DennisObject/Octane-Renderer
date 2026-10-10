@@ -1,5 +1,5 @@
-import { IAdvancedMap, IFigureDataPalette, IPalette, IPartColor } from '@octane/api';
-import { AdvancedMap } from '@octane/utils';
+import { IAdvancedMap, IFigureDataPalette, IPalette, IPartColor } from '@volt/api';
+import { AdvancedMap } from '@volt/utils';
 import { PartColor } from './PartColor';
 
 export class Palette implements IPalette

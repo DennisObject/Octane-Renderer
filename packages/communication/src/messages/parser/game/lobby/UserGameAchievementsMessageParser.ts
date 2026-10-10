@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { AchievementsParser } from '../../inventory';
 
 export class UserGameAchievementsMessageParser extends AchievementsParser

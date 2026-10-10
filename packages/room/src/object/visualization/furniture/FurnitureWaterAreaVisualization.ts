@@ -1,4 +1,4 @@
-import { IGraphicAsset, RoomObjectVariable } from '@octane/api';
+import { IGraphicAsset, RoomObjectVariable } from '@volt/api';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 import { ShoreAlphaMask, ShoreMaskCreatorUtility } from './ShoreMaskCreatorUtility';
 

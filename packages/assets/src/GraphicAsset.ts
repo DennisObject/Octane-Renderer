@@ -1,4 +1,4 @@
-import { IGraphicAsset } from '@octane/api';
+import { IGraphicAsset } from '@volt/api';
 import { Rectangle, Texture } from 'pixi.js';
 
 export class GraphicAsset implements IGraphicAsset

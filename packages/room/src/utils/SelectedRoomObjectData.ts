@@ -1,5 +1,5 @@
-import { IObjectData, ISelectedRoomObjectData, IVector3D } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { IObjectData, ISelectedRoomObjectData, IVector3D } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 
 export class SelectedRoomObjectData implements ISelectedRoomObjectData
 {

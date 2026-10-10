@@ -1,4 +1,4 @@
-﻿import { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from '@octane/api';
+﻿import { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from '@volt/api';
 
 export class SpriteDataContainer implements ISpriteDataContainer
 {

@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { FurniEditorSearchResultMessageParser } from '../../parser';
 
 export class FurniEditorSearchResultEvent extends MessageEvent implements IMessageEvent

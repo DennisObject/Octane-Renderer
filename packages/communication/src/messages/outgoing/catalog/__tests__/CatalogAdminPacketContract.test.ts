@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { OctaneMessages } from '../../../../OctaneMessages';
+import { VoltMessages } from '../../../../VoltMessages';
 import { OutgoingHeader } from '../../OutgoingHeader';
 import { CatalogAdminSavePageIconComposer } from '../CatalogAdminSavePageIconComposer';
 import { CatalogAdminSavePageImagesComposer } from '../CatalogAdminSavePageImagesComposer';
@@ -15,7 +15,7 @@ describe('catalog admin packet contract', () =>
 
     it('registers both page asset composers', () =>
     {
-        const messages = new OctaneMessages();
+        const messages = new VoltMessages();
 
         expect(messages.composers.get(10060)).toBe(CatalogAdminSavePageImagesComposer);
         expect(messages.composers.get(10061)).toBe(CatalogAdminSavePageIconComposer);

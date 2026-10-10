@@ -1,5 +1,5 @@
-import { IAdvancedMap, IParticleSystem, RoomObjectVariable } from '@octane/api';
-import { AdvancedMap, OctaneLogger } from '@octane/utils';
+import { IAdvancedMap, IParticleSystem, RoomObjectVariable } from '@volt/api';
+import { AdvancedMap, VoltLogger } from '@volt/utils';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
 import { FurnitureParticleSystem } from './FurnitureParticleSystem';
 
@@ -32,7 +32,7 @@ export class FurnitureFireworksVisualization extends FurnitureAnimatedVisualizat
 
                 if(this._particleSystems) this._currentParticleSystem = this._particleSystems.getValue(scale);
 
-                else OctaneLogger.log('ERROR Particle systems could not be read!', this.object.type);
+                else VoltLogger.log('ERROR Particle systems could not be read!', this.object.type);
             }
             else
             {

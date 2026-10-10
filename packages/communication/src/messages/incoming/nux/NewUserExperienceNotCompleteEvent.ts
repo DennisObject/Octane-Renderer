@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { NewUserExperienceNotCompleteParser } from '../../parser/nux';
 
 export class NewUserExperienceNotCompleteEvent extends MessageEvent implements IMessageEvent

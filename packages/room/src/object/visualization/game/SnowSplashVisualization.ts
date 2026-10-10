@@ -1,4 +1,4 @@
-import { IObjectVisualizationData, IRoomGeometry } from '@octane/api';
+import { IObjectVisualizationData, IRoomGeometry } from '@volt/api';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import { GetSnowWarGameTexture } from './SnowWarGameAssets';
 

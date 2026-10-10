@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { RewardTrackData } from './RewardTrackData';
 
 /** RewardTracks (2327): every active track; `disabled` wipes them, `reload` rebuilds the windows. */

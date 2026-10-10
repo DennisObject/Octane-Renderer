@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, PetFigureData } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, PetFigureData } from '@volt/api';
 
 export class OpenPetPackageRequestedMessageParser implements IMessageParser
 {

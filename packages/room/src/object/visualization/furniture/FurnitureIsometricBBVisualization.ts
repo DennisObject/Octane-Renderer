@@ -1,6 +1,6 @@
-import { IGraphicAsset } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { TextureUtils } from '@octane/utils';
+import { IGraphicAsset } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { TextureUtils } from '@volt/utils';
 import { Matrix, Sprite, Texture } from 'pixi.js';
 import { FurnitureBBVisualization } from './FurnitureBBVisualization';
 import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';

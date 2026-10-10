@@ -1,4 +1,4 @@
-﻿import { IRoomPetData } from '@octane/api';
+﻿import { IRoomPetData } from '@volt/api';
 
 export class RoomPetData implements IRoomPetData
 {

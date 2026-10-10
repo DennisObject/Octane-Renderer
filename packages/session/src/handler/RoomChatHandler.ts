@@ -1,6 +1,6 @@
-import { IConnection, IRoomHandlerListener, SystemChatStyleEnum } from '@octane/api';
-import { FloodControlEvent, PetRespectNoficationEvent, PetSupplementTypeEnum, PetSupplementedNotificationEvent, RemainingMuteEvent, RespectReceivedEvent, RoomUnitChatEvent, RoomUnitChatShoutEvent, RoomUnitChatWhisperEvent, RoomUnitHandItemReceivedEvent, SpecialSystemChatEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionChatEvent } from '@octane/events';
+import { IConnection, IRoomHandlerListener, SystemChatStyleEnum } from '@volt/api';
+import { FloodControlEvent, PetRespectNoficationEvent, PetSupplementTypeEnum, PetSupplementedNotificationEvent, RemainingMuteEvent, RespectReceivedEvent, RoomUnitChatEvent, RoomUnitChatShoutEvent, RoomUnitChatWhisperEvent, RoomUnitHandItemReceivedEvent, SpecialSystemChatEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionChatEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class RoomChatHandler extends BaseHandler

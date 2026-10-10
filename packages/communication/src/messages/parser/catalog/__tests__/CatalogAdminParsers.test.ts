@@ -1,4 +1,4 @@
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { describe, expect, it } from 'vitest';
 import { CatalogAdminOfferDetailsMessageParser } from '../CatalogAdminOfferDetailsMessageParser';
 import { CatalogAdminResultMessageParser } from '../CatalogAdminResultMessageParser';

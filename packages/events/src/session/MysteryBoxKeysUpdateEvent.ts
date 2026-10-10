@@ -1,6 +1,6 @@
-﻿import { OctaneEvent } from '../core';
+﻿import { VoltEvent } from '../core';
 
-export class MysteryBoxKeysUpdateEvent extends OctaneEvent
+export class MysteryBoxKeysUpdateEvent extends VoltEvent
 {
     public static MYSTERY_BOX_KEYS_UPDATE: string = 'mbke_update';
 

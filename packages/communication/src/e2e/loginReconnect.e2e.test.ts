@@ -1,5 +1,5 @@
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEventType } from '@octane/events';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, VoltEventType } from '@volt/events';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CommunicationManager } from '../CommunicationManager';
 import { GetCommunication } from '../GetCommunication';
@@ -38,7 +38,7 @@ describe('Polaris login and reconnect', () =>
 
         const recorder = recordConnectionStates(
             () => manager.connection.connectionState,
-            listener => GetEventDispatcher().subscribe(OctaneEventType.CONNECTION_STATE_CHANGED, listener));
+            listener => GetEventDispatcher().subscribe(VoltEventType.CONNECTION_STATE_CHANGED, listener));
 
         try
         {

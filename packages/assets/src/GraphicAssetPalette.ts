@@ -1,5 +1,5 @@
-import { IGraphicAssetPalette } from '@octane/api';
-import { GetRenderer } from '@octane/utils';
+import { IGraphicAssetPalette } from '@volt/api';
+import { GetRenderer } from '@volt/utils';
 import { Texture } from 'pixi.js';
 
 export class GraphicAssetPalette implements IGraphicAssetPalette

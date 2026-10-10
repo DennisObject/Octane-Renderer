@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Creates or updates a reward track. The premium boost travels in hundredths: 150 is 1.5x. */
 export class SaveRewardTrackMessageComposer implements IMessageComposer<ConstructorParameters<typeof SaveRewardTrackMessageComposer>>

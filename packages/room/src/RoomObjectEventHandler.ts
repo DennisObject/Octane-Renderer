@@ -1,9 +1,9 @@
-import { IFurnitureStackingHeightMap, ILegacyWallGeometry, IObjectData, IRoomCanvasMouseListener, IRoomEngineServices, IRoomGeometry, IRoomObject, IRoomObjectController, IRoomObjectEventManager, ISelectedRoomObjectData, IVector3D, MouseEventType, RoomObjectCategory, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariable } from '@octane/api';
-import { BotPlaceComposer, ChestOpenComposer, ClickFurniMessageComposer, ClickUserMessageComposer, FurnitureColorWheelComposer, FurnitureDiceActivateComposer, FurnitureDiceDeactivateComposer, FurnitureFloorUpdateComposer, FurnitureGroupInfoComposer, FurnitureMultiStateComposer, FurnitureOneWayDoorComposer, FurniturePickupComposer, FurniturePlaceComposer, FurniturePostItPlaceComposer, FurnitureRandomStateComposer, FurnitureWallMultiStateComposer, FurnitureWallUpdateComposer, GetCommunication, GetItemDataComposer, GetResolutionAchievementsMessageComposer, PetMoveComposer, PetPlaceComposer, RemoveWallItemComposer, RoomUnitLookComposer, RoomUnitWalkComposer, SetItemDataMessageComposer, SetObjectDataMessageComposer } from '@octane/communication';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, RoomEngineDimmerStateEvent, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomEngineObjectPlaySoundEvent, RoomEngineRoomAdEvent, RoomEngineSamplePlaybackEvent, RoomEngineTriggerWidgetEvent, RoomEngineUseProductEvent, RoomObjectBadgeAssetEvent, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFloorHoleEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectHSLColorEnabledEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectPlaySoundIdEvent, RoomObjectRoomAdEvent, RoomObjectSamplePlaybackEvent, RoomObjectSoundMachineEvent, RoomObjectStateChangedEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@octane/events';
-import { GetRoomSessionManager, GetSessionDataManager } from '@octane/session';
-import { CreateLinkEvent, OctaneLogger, RoomId, Vector3d } from '@octane/utils';
+import { IFurnitureStackingHeightMap, ILegacyWallGeometry, IObjectData, IRoomCanvasMouseListener, IRoomEngineServices, IRoomGeometry, IRoomObject, IRoomObjectController, IRoomObjectEventManager, ISelectedRoomObjectData, IVector3D, MouseEventType, RoomObjectCategory, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectType, RoomObjectUserType, RoomObjectVariable } from '@volt/api';
+import { BotPlaceComposer, ChestOpenComposer, ClickFurniMessageComposer, ClickUserMessageComposer, FurnitureColorWheelComposer, FurnitureDiceActivateComposer, FurnitureDiceDeactivateComposer, FurnitureFloorUpdateComposer, FurnitureGroupInfoComposer, FurnitureMultiStateComposer, FurnitureOneWayDoorComposer, FurniturePickupComposer, FurniturePlaceComposer, FurniturePostItPlaceComposer, FurnitureRandomStateComposer, FurnitureWallMultiStateComposer, FurnitureWallUpdateComposer, GetCommunication, GetItemDataComposer, GetResolutionAchievementsMessageComposer, PetMoveComposer, PetPlaceComposer, RemoveWallItemComposer, RoomUnitLookComposer, RoomUnitWalkComposer, SetItemDataMessageComposer, SetObjectDataMessageComposer } from '@volt/communication';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, RoomEngineDimmerStateEvent, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomEngineObjectPlaySoundEvent, RoomEngineRoomAdEvent, RoomEngineSamplePlaybackEvent, RoomEngineTriggerWidgetEvent, RoomEngineUseProductEvent, RoomObjectBadgeAssetEvent, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFloorHoleEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectHSLColorEnabledEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectPlaySoundIdEvent, RoomObjectRoomAdEvent, RoomObjectSamplePlaybackEvent, RoomObjectSoundMachineEvent, RoomObjectStateChangedEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '@volt/events';
+import { GetRoomSessionManager, GetSessionDataManager } from '@volt/session';
+import { CreateLinkEvent, VoltLogger, RoomId, Vector3d } from '@volt/utils';
 import { IRoomGameInputHandler } from './IRoomGameInputHandler';
 import { isWiredChestFloorItem } from './utils/isWiredChestFloorItem';
 import { RoomEnterEffect, RoomObjectUpdateMessage } from '../../room';
@@ -313,7 +313,7 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
                 this.onRoomObjectDataRequestEvent((event), roomId);
                 return;
             default:
-                OctaneLogger.warn('Unhandled Event', event.constructor.name, 'Object ID', event.object.id);
+                VoltLogger.warn('Unhandled Event', event.constructor.name, 'Object ID', event.object.id);
                 return;
         }
     }
@@ -2364,7 +2364,7 @@ export class RoomObjectEventHandler implements IRoomCanvasMouseListener, IRoomOb
 
     private shouldSuppressAvatarLook(): boolean
     {
-        const control = (globalThis as any).__octaneAvatarClickControl;
+        const control = (globalThis as any).__voltAvatarClickControl;
 
         return !!control && (control.suppressRotateUntil > Date.now());
     }

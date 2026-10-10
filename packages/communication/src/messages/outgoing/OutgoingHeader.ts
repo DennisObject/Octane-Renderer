@@ -646,7 +646,7 @@ export class OutgoingHeader
     public static REQUEST_MESSENGER_HISTORY = 4901;
     public static SEND_MESSENGER_MESSAGE = 4902;
     public static MARK_MESSENGER_READ = 4903;
-    // SnowStorm (AIR Game2 payloads on the Octane 6000 range; 6001, 6002, 6010, 6011, 6014, 6015 are retired).
+    // SnowStorm (AIR Game2 payloads on the Volt 6000 range; 6001, 6002, 6010, 6011, 6014, 6015 are retired).
     public static GAME2LOADSTAGEREADYMESSAGE = 1438;
     public static GAME2SETUSERMOVETARGETMESSAGE = 6003;
     public static GAME2THROWSNOWBALLATPOSITIONMESSAGE = 6004;

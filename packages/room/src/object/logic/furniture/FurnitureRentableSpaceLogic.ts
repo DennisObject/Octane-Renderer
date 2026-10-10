@@ -1,5 +1,5 @@
-import { RoomObjectVariable, RoomWidgetEnum } from '@octane/api';
-import { RoomObjectDataRequestEvent } from '@octane/events';
+import { RoomObjectVariable, RoomWidgetEnum } from '@volt/api';
+import { RoomObjectDataRequestEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureRentableSpaceLogic extends FurnitureLogic

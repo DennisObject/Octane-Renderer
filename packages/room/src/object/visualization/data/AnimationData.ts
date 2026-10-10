@@ -1,4 +1,4 @@
-import { IAssetVisualAnimation, IAssetVisualAnimationLayer, IAssetVisualAnimationSequenceFrame } from '@octane/api';
+import { IAssetVisualAnimation, IAssetVisualAnimationLayer, IAssetVisualAnimationSequenceFrame } from '@volt/api';
 import { AnimationFrame } from './AnimationFrame';
 import { AnimationLayerData } from './AnimationLayerData';
 import { DirectionalOffsetData } from './DirectionalOffsetData';

@@ -1,4 +1,4 @@
-import { GetConfiguration } from '@octane/configuration';
+import { GetConfiguration } from '@volt/configuration';
 
 /** Config key the client sets to the version of the furnidata it boots with (e.g. its SHA-1, from the entry page). */
 export const FURNIDATA_VERSION_KEY = 'furnidata.version';

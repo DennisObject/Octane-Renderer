@@ -1,6 +1,6 @@
-import { IGraphicAsset, IRoomObjectSprite, RoomObjectVariable } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetSessionDataManager } from '@octane/session';
+import { IGraphicAsset, IRoomObjectSprite, RoomObjectVariable } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetSessionDataManager } from '@volt/session';
 import { AnimatedSprite, Texture } from 'pixi.js';
 import { parseGIF, decompressFrames } from 'gifuct-js';
 import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';

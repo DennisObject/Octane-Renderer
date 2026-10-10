@@ -1,32 +1,32 @@
-# Octane Renderer
+# Volt Renderer
 
-Octane originated as a fork of [Nitro React](https://github.com/billsonnn/nitro-react) and its companion [Nitro Renderer](https://github.com/billsonnn/nitro-renderer) and is completely independently developed and has no further ties to Billsonnn / Nitro.
+Volt originated as a fork of [Nitro React](https://github.com/billsonnn/nitro-react) and its companion [Nitro Renderer](https://github.com/billsonnn/nitro-renderer) and is completely independently developed and has no further ties to Billsonnn / Nitro.
 
 ## Installation
 
 npm
 
 ```
-npm install @octane/renderer
+npm install @volt/renderer
 ```
 
 yarn
 
 ```
-yarn add @octane/renderer
+yarn add @volt/renderer
 ```
 
 ## Packet revision
 
 The packet constants and Hello build use `WIN63-202609161723-93809945`.
-Update PlusEMU and the renderer together. Custom Octane packets remain supported;
+Update PlusEMU and the renderer together. Custom Volt packets remain supported;
 this does not imply native AIR client compatibility.
 
 ## JSON / JSONC configuration parser
 
 Every configuration file and gamedata file loaded by the renderer (figuredata,
 furnidata, productdata, effectmap, avatar actions, etc.) goes through
-`@octane/utils` → `JsonParser.ts`. The parser supports three modes, selected at
+`@volt/utils` → `JsonParser.ts`. The parser supports three modes, selected at
 the **host build time** through the compile-time constant `__NITRO_JSON_MODE__`:
 
 | Mode     | Behaviour                                                                 |
@@ -59,7 +59,7 @@ mode values are not mapped; single-quoted strings and unquoted keys must be conv
 ### Using the parser directly
 
 ```ts
-import { parseConfigJson, fetchConfigJson } from '@octane/utils';
+import { parseConfigJson, fetchConfigJson } from '@volt/utils';
 
 const data  = parseConfigJson<MyConfig>(rawText, '/configuration/ui-config.json');
 const data2 = await fetchConfigJson<MyConfig>('/configuration/ui-config.jsonc');
@@ -70,7 +70,7 @@ JSONC — making misconfigurations easy to diagnose in production logs.
 
 ## Split-aware gamedata loader
 
-`@octane/utils` also exports `loadGamedata`, the loader that backs every
+`@volt/utils` also exports `loadGamedata`, the loader that backs every
 gamedata consumer in the renderer (FurnitureDataLoader, ProductDataLoader,
 EffectAssetDownloadManager, AvatarRenderManager, LocalizationManager). It
 accepts either a **single-file URL** (legacy) or a **directory URL** (split
@@ -116,7 +116,7 @@ Recognised id keys (in priority order): `id`, `classname`, `name`. Pass
 ### Programmatic usage
 
 ```ts
-import { loadGamedata, mergeGamedata } from '@octane/utils';
+import { loadGamedata, mergeGamedata } from '@volt/utils';
 
 // host code never needs to care whether the URL is split or not
 const furnidata = await loadGamedata('https://example.com/gamedata/furnidata/');
@@ -125,5 +125,5 @@ const furnidata = await loadGamedata('https://example.com/gamedata/furnidata/');
 const merged = mergeGamedata(coreData, customData);
 ```
 
-A CLI splitter for legacy single-file gamedata lives in the Octane client
-repo at `scripts/split-gamedata.mjs` — see the Octane README for usage.
+A CLI splitter for legacy single-file gamedata lives in the Volt client
+repo at `scripts/split-gamedata.mjs` — see the Volt README for usage.

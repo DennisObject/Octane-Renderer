@@ -1,5 +1,5 @@
-import { IAssetData, IObjectVisualizationData, IRoomObjectGraphicVisualization, IRoomObjectVisualizationFactory, RoomObjectVisualizationType } from '@octane/api';
-import { OctaneLogger } from '@octane/utils';
+import { IAssetData, IObjectVisualizationData, IRoomObjectGraphicVisualization, IRoomObjectVisualizationFactory, RoomObjectVisualizationType } from '@volt/api';
+import { VoltLogger } from '@volt/utils';
 import { AvatarVisualization, AvatarVisualizationData, FurnitureAnimatedVisualization, FurnitureAnimatedVisualizationData, FurnitureBBVisualization, FurnitureBadgeDisplayVisualization, FurnitureBottleVisualization, FurnitureBrandedImageVisualization, FurnitureChestVisualization, FurnitureCounterClockVisualization, FurnitureCuboidVisualization, FurnitureExternalImageVisualization, FurnitureFireworksVisualization, FurnitureGiftWrappedFireworksVisualization, FurnitureGiftWrappedVisualization, FurnitureGuildCustomizedVisualization, FurnitureGuildIsometricBadgeVisualization, FurnitureHabboWheelVisualization, FurnitureIsometricBBVisualization, FurnitureMannequinVisualization, FurnitureMannequinVisualizationData, FurniturePartyBeamerVisualization, FurniturePlanetSystemVisualization, FurniturePosterVisualization, FurnitureQueueTileVisualization, FurnitureResettingAnimatedVisualization, FurnitureRoomBackgroundVisualization, FurnitureScoreBoardVisualization, FurnitureSoundBlockVisualization, FurnitureStickieVisualization, FurnitureValRandomizerVisualization, FurnitureVisualization, FurnitureVisualizationData, FurnitureVoteCounterVisualization, FurnitureVoteMajorityVisualization, FurnitureWaterAreaVisualization, FurnitureYoutubeVisualization, PetVisualization, PetVisualizationData, RoomObjectSpriteVisualization, RoomVisualization, RoomVisualizationData, SnowSplashVisualization, SnowWarVisualizationData, SnowballVisualization, TileCursorVisualization } from './object';
 
 export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory
@@ -154,7 +154,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
 
         if(!visualization)
         {
-            OctaneLogger.log('Unknown Visualization', type);
+            VoltLogger.log('Unknown Visualization', type);
 
             return null;
         }

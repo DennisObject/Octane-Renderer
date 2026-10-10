@@ -59,7 +59,7 @@ export const decodeStaticImage = async (
 
     if(!texture) throw new Error(`Decoded image "${ source }" did not create a Pixi texture`);
     if(texture.source) texture.source.scaleMode = 'linear';
-    if(texture.source) (texture.source as any).octaneFixedScaleMode = true;
+    if(texture.source) (texture.source as any).voltFixedScaleMode = true;
 
     return {
         texture,

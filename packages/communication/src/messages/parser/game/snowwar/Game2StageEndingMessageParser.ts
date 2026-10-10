@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** AIR StageEnding. */
 export class Game2StageEndingMessageParser implements IMessageParser

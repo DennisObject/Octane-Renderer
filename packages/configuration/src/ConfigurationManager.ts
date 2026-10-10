@@ -1,4 +1,4 @@
-﻿import { OctaneLogger, OctaneVersion, parseConfigJson, parseConfigJsonFromResponse } from '@octane/utils';
+﻿import { VoltLogger, VoltVersion, parseConfigJson, parseConfigJsonFromResponse } from '@volt/utils';
 import { IConfigurationManager } from './IConfigurationManager';
 
 export class ConfigurationManager implements IConfigurationManager
@@ -12,7 +12,7 @@ export class ConfigurationManager implements IConfigurationManager
 
     constructor()
     {
-        OctaneVersion.sayHello();
+        VoltVersion.sayHello();
     }
 
     /** Loads the configuration once; later calls share that load. A failed load is retried on the next call. */
@@ -46,13 +46,13 @@ export class ConfigurationManager implements IConfigurationManager
         {
             const defaultConfig = this.getDefaultConfig();
 
-            if(!defaultConfig) throw new Error('Missing OctaneConfig: make sure window.OctaneConfig is defined in index.html');
+            if(!defaultConfig) throw new Error('Missing VoltConfig: make sure window.VoltConfig is defined in index.html');
 
             this.parseConfiguration(defaultConfig, true);
 
             const configurationUrls = this.getValue<string[]>('config.urls').slice();
 
-            if(!configurationUrls || !configurationUrls.length) throw new Error('No config.urls defined in OctaneConfig — expected an array like ["/renderer-config.json", "/ui-config.json"]');
+            if(!configurationUrls || !configurationUrls.length) throw new Error('No config.urls defined in VoltConfig — expected an array like ["/renderer-config.json", "/ui-config.json"]');
 
             const firstEmptyUrl = configurationUrls.findIndex(url => !url || !url.length);
             const urls = (firstEmptyUrl >= 0) ? configurationUrls.slice(0, firstEmptyUrl) : configurationUrls;
@@ -150,7 +150,7 @@ export class ConfigurationManager implements IConfigurationManager
 
         catch (e)
         {
-            OctaneLogger.error(e.stack);
+            VoltLogger.error(e.stack);
 
             return false;
         }
@@ -212,7 +212,7 @@ export class ConfigurationManager implements IConfigurationManager
 
             this._missingKeys.push(key);
 
-            OctaneLogger.warn(`Missing configuration key: ${key}`);
+            VoltLogger.warn(`Missing configuration key: ${key}`);
 
             existing = value;
         }
@@ -228,7 +228,7 @@ export class ConfigurationManager implements IConfigurationManager
 
     public getDefaultConfig(): { [index: string]: any }
     {
-        return window.OctaneConfig;
+        return window.VoltConfig;
     }
 
     public get definitions(): Map<string, unknown>

@@ -1,6 +1,6 @@
 {
-  "name": "@octane/api",
-  "description": "Octane api module",
+  "name": "@volt/api",
+  "description": "Volt api module",
   "version": "1.0.0",
   "type": "module",
   "publishConfig": {

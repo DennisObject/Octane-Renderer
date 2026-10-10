@@ -1,4 +1,4 @@
-import { IActionDefinition, IFigureSetData } from '@octane/api';
+import { IActionDefinition, IFigureSetData } from '@volt/api';
 import { AnimationAction } from './animation';
 
 export class AvatarAnimationData implements IFigureSetData

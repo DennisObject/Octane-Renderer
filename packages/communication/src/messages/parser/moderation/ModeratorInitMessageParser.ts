@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { ModeratorInitData } from './ModeratorInitData';
 
 export class ModeratorInitMessageParser implements IMessageParser

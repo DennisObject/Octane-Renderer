@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 export const WIRED_TRADE_NODE_CURRENCY = 0;
 export const WIRED_TRADE_NODE_FURNI = 1;

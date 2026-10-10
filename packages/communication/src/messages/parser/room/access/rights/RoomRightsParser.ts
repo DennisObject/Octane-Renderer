@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, RoomControllerLevel } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, RoomControllerLevel } from '@volt/api';
 
 export class RoomRightsParser implements IMessageParser
 {

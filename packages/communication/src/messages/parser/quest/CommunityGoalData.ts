@@ -1,4 +1,4 @@
-import { IDisposable, IMessageDataWrapper } from '@octane/api';
+import { IDisposable, IMessageDataWrapper } from '@volt/api';
 
 export class CommunityGoalData implements IDisposable
 {

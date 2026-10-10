@@ -1,5 +1,5 @@
-import { IConnection, IRoomHandlerListener, RoomControllerLevel } from '@octane/api';
-import { RoomRightsClearEvent, RoomRightsEvent, RoomRightsOwnerEvent } from '@octane/communication';
+import { IConnection, IRoomHandlerListener, RoomControllerLevel } from '@volt/api';
+import { RoomRightsClearEvent, RoomRightsEvent, RoomRightsOwnerEvent } from '@volt/communication';
 import { BaseHandler } from './BaseHandler';
 
 export class RoomPermissionsHandler extends BaseHandler

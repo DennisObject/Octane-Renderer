@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { IssueMessageData } from './IssueMessageData';
 import { PatternMatchData } from './PatternMatchData';
 

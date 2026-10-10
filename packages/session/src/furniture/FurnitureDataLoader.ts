@@ -1,6 +1,6 @@
-import { FurnitureType, IFurnitureData } from '@octane/api';
-import { GetLocalizationManager } from '@octane/localization';
-import { loadGamedata } from '@octane/utils';
+import { FurnitureType, IFurnitureData } from '@volt/api';
+import { GetLocalizationManager } from '@volt/localization';
+import { loadGamedata } from '@volt/utils';
 import { FurnitureData } from './FurnitureData';
 import { GetFurnitureDataUrl } from './FurnitureDataUrl';
 

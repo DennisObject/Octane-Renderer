@@ -1,7 +1,7 @@
-import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { DesktopViewEvent, FlatAccessDeniedMessageEvent, GoToFlatMessageComposer, RoomDoorbellAcceptedEvent, RoomEnterEvent, RoomReadyMessageEvent, YouAreSpectatorMessageEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionDoorbellEvent, RoomSessionSpectatorModeEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { DesktopViewEvent, FlatAccessDeniedMessageEvent, GoToFlatMessageComposer, RoomDoorbellAcceptedEvent, RoomEnterEvent, RoomReadyMessageEvent, YouAreSpectatorMessageEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionDoorbellEvent, RoomSessionSpectatorModeEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { BaseHandler } from './BaseHandler';
 
 export class RoomSessionHandler extends BaseHandler
@@ -47,7 +47,7 @@ export class RoomSessionHandler extends BaseHandler
     {
         if(!(event instanceof DesktopViewEvent)) return;
 
-        OctaneLogger.log('[RoomSessionHandler] DesktopViewEvent received (roomId=' + this.roomId + ')');
+        VoltLogger.log('[RoomSessionHandler] DesktopViewEvent received (roomId=' + this.roomId + ')');
 
         if(this.listener) this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_DISCONNECTED);
     }
@@ -88,7 +88,7 @@ export class RoomSessionHandler extends BaseHandler
 
         if(!username || !username.length)
         {
-            OctaneLogger.log('[RoomSessionHandler] FlatAccessDenied (empty username) → RS_DISCONNECTED (roomId=' + this.roomId + ')');
+            VoltLogger.log('[RoomSessionHandler] FlatAccessDenied (empty username) → RS_DISCONNECTED (roomId=' + this.roomId + ')');
             this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_DISCONNECTED);
         }
         else

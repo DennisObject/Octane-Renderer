@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser, IQuestion } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser, IQuestion } from '@volt/api';
 
 export class QuestionParser implements IMessageParser
 {

@@ -1,6 +1,6 @@
-import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarScaleType, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { AdvancedMap } from '@octane/utils';
+import { AlphaTolerance, AvatarAction, AvatarGuideStatus, AvatarScaleType, AvatarSetType, IAdvancedMap, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObject, IRoomObjectModel, RoomObjectSpriteType, RoomObjectVariable } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { AdvancedMap } from '@volt/utils';
 import { Sprite, Texture } from 'pixi.js';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import { HalfSizeTextureCache } from '../HalfSizeTexture';

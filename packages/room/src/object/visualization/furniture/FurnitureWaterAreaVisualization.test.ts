@@ -1,4 +1,4 @@
-import { IGraphicAsset, IGraphicAssetCollection } from '@octane/api';
+import { IGraphicAsset, IGraphicAssetCollection } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { FurnitureWaterAreaVisualization } from './FurnitureWaterAreaVisualization';
 import { ShoreMaskCreatorUtility } from './ShoreMaskCreatorUtility';

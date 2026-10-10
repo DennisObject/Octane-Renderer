@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `MyReportStatus.onClickAppeal(_shownObject.message.id)` -> composer 3063

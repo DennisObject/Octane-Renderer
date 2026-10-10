@@ -1,4 +1,4 @@
-import { RoomObjectCategory } from '@octane/api';
+import { RoomObjectCategory } from '@volt/api';
 
 /** What clicking another avatar does while a wired click setting is on. */
 export const WIRED_CLICK_USER_DEFAULT = 0;

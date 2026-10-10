@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class RemoveAllRightsMessageComposer implements IMessageComposer<ConstructorParameters<typeof RemoveAllRightsMessageComposer>>
 {

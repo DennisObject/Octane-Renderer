@@ -1,7 +1,7 @@
-import { IRoomObject } from '@octane/api';
-import { OctaneEvent } from '../core';
+import { IRoomObject } from '@volt/api';
+import { VoltEvent } from '../core';
 
-export class RoomObjectEvent extends OctaneEvent
+export class RoomObjectEvent extends VoltEvent
 {
     private _object: IRoomObject;
 

@@ -1,4 +1,4 @@
-import { IAvatarFigureContainer } from '@octane/api';
+import { IAvatarFigureContainer } from '@volt/api';
 
 export class AvatarFigureContainer implements IAvatarFigureContainer
 {

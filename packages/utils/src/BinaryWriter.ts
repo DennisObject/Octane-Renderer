@@ -1,4 +1,4 @@
-import { IBinaryWriter } from '@octane/api';
+import { IBinaryWriter } from '@volt/api';
 
 export class BinaryWriter implements IBinaryWriter
 {

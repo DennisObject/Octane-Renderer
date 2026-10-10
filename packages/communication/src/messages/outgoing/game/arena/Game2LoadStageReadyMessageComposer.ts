@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2LoadStageReady: sent with 100 once the arena room objects are initialised. */
 export class Game2LoadStageReadyMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2LoadStageReadyMessageComposer>>

@@ -1,6 +1,6 @@
 import { inflate } from 'pako';
 import { Texture } from 'pixi.js';
-import { OctaneBundleTextureDecoder } from './OctaneBundle';
+import { VoltBundleTextureDecoder } from './VoltBundle';
 
 const HAB_MAGIC = 'HAB\0';
 const HAB_VERSION = 1;
@@ -32,7 +32,7 @@ export class HabBundle
     private _jsonFile: object = null;
     private _texture: Texture = null;
 
-    public static async from(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<HabBundle>
+    public static async from(buffer: ArrayBuffer, textureDecoder: VoltBundleTextureDecoder): Promise<HabBundle>
     {
         const bundle = new HabBundle();
 
@@ -41,7 +41,7 @@ export class HabBundle
         return bundle;
     }
 
-    public async parse(buffer: ArrayBuffer, textureDecoder: OctaneBundleTextureDecoder): Promise<void>
+    public async parse(buffer: ArrayBuffer, textureDecoder: VoltBundleTextureDecoder): Promise<void>
     {
         const bytes = new Uint8Array(buffer);
 

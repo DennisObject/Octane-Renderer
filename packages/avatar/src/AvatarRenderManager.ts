@@ -1,8 +1,8 @@
-import { AvatarSetType, IAssetManager, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IFigureData, IFigurePartSet, IGraphicAsset, IStructureData } from '@octane/api';
-import { GetAssetManager } from '@octane/assets';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher, OctaneEventType } from '@octane/events';
-import { loadGamedata } from '@octane/utils';
+import { AvatarSetType, IAssetManager, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IFigureData, IFigurePartSet, IGraphicAsset, IStructureData } from '@volt/api';
+import { GetAssetManager } from '@volt/assets';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher, VoltEventType } from '@volt/events';
+import { loadGamedata } from '@volt/utils';
 import { AvatarAssetDownloadManager } from './AvatarAssetDownloadManager';
 import { AvatarFigureContainer } from './AvatarFigureContainer';
 import { AvatarImage } from './AvatarImage';
@@ -43,8 +43,8 @@ export class AvatarRenderManager implements IAvatarRenderManager
 
         // Store callback for cleanup
         this._aliasResetCallback = () => this._aliasCollection.reset();
-        GetEventDispatcher().addEventListener(OctaneEventType.AVATAR_ASSET_LOADED, this._aliasResetCallback);
-        GetEventDispatcher().addEventListener(OctaneEventType.AVATAR_EFFECT_LOADED, this._aliasResetCallback);
+        GetEventDispatcher().addEventListener(VoltEventType.AVATAR_ASSET_LOADED, this._aliasResetCallback);
+        GetEventDispatcher().addEventListener(VoltEventType.AVATAR_EFFECT_LOADED, this._aliasResetCallback);
 
         await this._avatarAssetDownloadManager.init();
         await this._effectAssetDownloadManager.init();
@@ -55,8 +55,8 @@ export class AvatarRenderManager implements IAvatarRenderManager
         // Remove event listeners
         if(this._aliasResetCallback)
         {
-            GetEventDispatcher().removeEventListener(OctaneEventType.AVATAR_ASSET_LOADED, this._aliasResetCallback);
-            GetEventDispatcher().removeEventListener(OctaneEventType.AVATAR_EFFECT_LOADED, this._aliasResetCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.AVATAR_ASSET_LOADED, this._aliasResetCallback);
+            GetEventDispatcher().removeEventListener(VoltEventType.AVATAR_EFFECT_LOADED, this._aliasResetCallback);
             this._aliasResetCallback = null;
         }
 

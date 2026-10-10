@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AddCustomFilterWord (68). */
 export class AddCustomFilterWordMessageComposer implements IMessageComposer<ConstructorParameters<typeof AddCustomFilterWordMessageComposer>>

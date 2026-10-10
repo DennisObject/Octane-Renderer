@@ -1,4 +1,4 @@
-import { IActionDefinition, IActiveActionData } from '@octane/api';
+import { IActionDefinition, IActiveActionData } from '@volt/api';
 
 export class ActiveActionData implements IActiveActionData
 {

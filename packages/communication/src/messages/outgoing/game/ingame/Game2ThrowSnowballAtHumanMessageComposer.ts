@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2ThrowSnowballAtHuman: target human game object id, trajectory, turn, subturn. */
 export class Game2ThrowSnowballAtHumanMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2ThrowSnowballAtHumanMessageComposer>>

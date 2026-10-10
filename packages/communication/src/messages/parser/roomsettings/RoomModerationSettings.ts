@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IRoomModerationSettings } from '@octane/api';
+import { IMessageDataWrapper, IRoomModerationSettings } from '@volt/api';
 
 export class RoomModerationSettings implements IRoomModerationSettings
 {

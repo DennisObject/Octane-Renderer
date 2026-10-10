@@ -1,5 +1,5 @@
-import { IImageResult, IObjectData, IVector3D } from '@octane/api';
-import { TextureUtils } from '@octane/utils';
+import { IImageResult, IObjectData, IVector3D } from '@volt/api';
+import { TextureUtils } from '@volt/utils';
 import { Texture } from 'pixi.js';
 
 export interface DisposableTexture { destroyed?: boolean; destroy(destroyBase?: boolean): void; }

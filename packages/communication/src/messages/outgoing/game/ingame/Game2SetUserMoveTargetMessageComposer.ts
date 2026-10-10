@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2SetUserMoveTarget: world target (tile * 3200) stamped with the current turn and subturn. */
 export class Game2SetUserMoveTargetMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2SetUserMoveTargetMessageComposer>>

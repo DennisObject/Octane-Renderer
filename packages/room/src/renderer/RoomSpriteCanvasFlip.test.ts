@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';
 
-vi.mock('@octane/utils', () => ({
+vi.mock('@volt/utils', () => ({
     GetTicker: () => ({ deltaTime: 1 }),
     TextureUtils: {},
     Vector3d: class
@@ -11,7 +11,7 @@ vi.mock('@octane/utils', () => ({
     }
 }));
 
-vi.mock('@octane/configuration', () => ({
+vi.mock('@volt/configuration', () => ({
     GetConfiguration: () => ({ getValue: (_key: string, fallback: unknown) => fallback })
 }));
 

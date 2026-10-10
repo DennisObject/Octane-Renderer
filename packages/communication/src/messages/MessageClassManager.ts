@@ -1,5 +1,5 @@
-import { IMessageComposer, IMessageConfiguration, IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageComposer, IMessageConfiguration, IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 
 export class MessageClassManager
 {

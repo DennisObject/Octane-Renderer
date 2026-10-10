@@ -1,4 +1,4 @@
-import { ICreatableRoomModel, IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { ICreatableRoomModel, IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 export class CreatableRoomModelsMessageParser implements IMessageParser
 {

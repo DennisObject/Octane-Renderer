@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { IWiredVariableData, parseWiredVariableData } from './WiredVariableData';
 
 /** One entry of the official `addedOrUpdated` dictionary: the variable and its hash. */

@@ -1,5 +1,5 @@
-import { IMessageEvent, IMessageParser } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent, IMessageParser } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { MessengerConversationsParser, MessengerHistoryParser, MessengerMessageAckParser, MessengerMessageFailedParser, MessengerMessageParser, MessengerReadCursorParser } from '../../parser';
 
 abstract class TypedMessengerEvent<T extends IMessageParser> extends MessageEvent implements IMessageEvent

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 export const CHEST_TRANSACTION_DEPOSIT = 0;
 export const CHEST_TRANSACTION_WITHDRAW = 1;

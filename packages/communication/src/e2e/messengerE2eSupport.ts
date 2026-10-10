@@ -1,4 +1,4 @@
-import { IConnection } from '@octane/api';
+import { IConnection } from '@volt/api';
 
 export interface DetachableCommunicationManager
 {

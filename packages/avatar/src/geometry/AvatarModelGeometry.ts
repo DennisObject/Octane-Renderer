@@ -1,5 +1,5 @@
-﻿import { IAssetAvatarCanvas, IAvatarImage } from '@octane/api';
-import { Matrix4x4, Vector3d } from '@octane/utils';
+﻿import { IAssetAvatarCanvas, IAvatarImage } from '@volt/api';
+import { Matrix4x4, Vector3d } from '@volt/utils';
 import { AvatarCanvas } from '../structure';
 import { AvatarSet } from './AvatarSet';
 import { GeometryBodyPart } from './GeometryBodyPart';

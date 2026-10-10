@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { ILandingPageUserEntry } from './ILandingPageUserEntry';
 
 export class HallOfFameEntryData implements ILandingPageUserEntry

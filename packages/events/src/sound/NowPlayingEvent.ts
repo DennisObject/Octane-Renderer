@@ -1,6 +1,6 @@
-import { OctaneEvent } from '@octane/events';
+import { VoltEvent } from '@volt/events';
 
-export class NowPlayingEvent extends OctaneEvent
+export class NowPlayingEvent extends VoltEvent
 {
     public static readonly NPE_USER_PLAY_SONG = 'NPE_USER_PLAY_SONG';
     public static readonly NPW_USER_STOP_SONG = 'NPW_USER_STOP_SONG';

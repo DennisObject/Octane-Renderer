@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * One row of the official "my_reports" window, read exactly as AIR 13 reads it

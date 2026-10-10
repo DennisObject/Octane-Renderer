@@ -1,4 +1,4 @@
-import { IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@octane/api';
+import { IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@volt/api';
 import { Palette, SetType } from './figure';
 
 export class FigureSetData implements IFigureSetData, IStructureData

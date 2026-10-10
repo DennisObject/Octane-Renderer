@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { Game2GameResult } from './Game2GameResult';
 import { Game2SnowWarGameStats } from './Game2SnowWarGameStats';
 import { Game2TeamScoreData } from './Game2TeamScoreData';

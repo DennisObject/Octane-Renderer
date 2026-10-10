@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 export const readBoundedCatalogCount = (wrapper: IMessageDataWrapper, minBytesPerEntry: number, field: string): number =>
 {

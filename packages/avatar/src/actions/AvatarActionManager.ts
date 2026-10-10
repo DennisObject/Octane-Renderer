@@ -1,4 +1,4 @@
-import { IActiveActionData, IAssetManager } from '@octane/api';
+import { IActiveActionData, IAssetManager } from '@volt/api';
 import { ActionDefinition } from './ActionDefinition';
 
 export class AvatarActionManager

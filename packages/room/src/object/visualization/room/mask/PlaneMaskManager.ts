@@ -1,5 +1,5 @@
-﻿import { IAssetPlaneMaskData, IAssetPlaneTextureBitmap, IGraphicAssetCollection, IVector3D } from '@octane/api';
-import { GetRenderer } from '@octane/utils';
+﻿import { IAssetPlaneMaskData, IAssetPlaneTextureBitmap, IGraphicAssetCollection, IVector3D } from '@volt/api';
+import { GetRenderer } from '@volt/utils';
 import { Container, Matrix, Point, Sprite, Texture } from 'pixi.js';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';

@@ -1,4 +1,4 @@
-import { Node3D, Vector3d } from '@octane/utils';
+import { Node3D, Vector3d } from '@volt/utils';
 
 export class GeometryItem extends Node3D
 {

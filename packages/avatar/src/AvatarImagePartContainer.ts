@@ -1,4 +1,4 @@
-﻿import { IActionDefinition, IPartColor } from '@octane/api';
+﻿import { IActionDefinition, IPartColor } from '@volt/api';
 import { AvatarAnimationFrame } from './structure';
 
 export class AvatarImagePartContainer

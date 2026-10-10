@@ -1,5 +1,5 @@
-import { RoomObjectVariable, RoomWidgetEnumItemExtradataParameter } from '@octane/api';
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { RoomObjectVariable, RoomWidgetEnumItemExtradataParameter } from '@volt/api';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 

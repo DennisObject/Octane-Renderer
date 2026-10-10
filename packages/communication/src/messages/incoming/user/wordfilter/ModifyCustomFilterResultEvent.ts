@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { ModifyCustomFilterResultParser } from '../../../parser';
 
 export class ModifyCustomFilterResultEvent extends MessageEvent implements IMessageEvent

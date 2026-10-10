@@ -1,4 +1,4 @@
-import { ContextMenuEnum } from '@octane/api';
+import { ContextMenuEnum } from '@volt/api';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureRandomTeleportLogic extends FurnitureMultiStateLogic

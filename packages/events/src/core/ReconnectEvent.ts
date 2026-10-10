@@ -1,6 +1,6 @@
-import { OctaneEvent } from './OctaneEvent';
+import { VoltEvent } from './VoltEvent';
 
-export class ReconnectEvent extends OctaneEvent
+export class ReconnectEvent extends VoltEvent
 {
     private _attempt: number;
     private _maxAttempts: number;

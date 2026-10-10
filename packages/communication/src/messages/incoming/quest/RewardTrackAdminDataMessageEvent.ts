@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { RewardTrackAdminDataMessageParser } from '../../parser';
 
 /** RewardTrackAdminData (10100): every stored reward track for the staff editor. */

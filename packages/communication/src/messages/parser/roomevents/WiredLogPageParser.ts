@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { readWiredLong } from './WiredVariableData';
 
 /** One room-wide wired log line (`package_222.WiredLogEntry`). */

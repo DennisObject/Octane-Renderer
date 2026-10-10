@@ -1,6 +1,6 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
-/** Open wired chest (official Nod / header 806 wire shape, Octane header 9327): [chestItemId]. */
+/** Open wired chest (official Nod / header 806 wire shape, Volt header 9327): [chestItemId]. */
 export class ChestOpenComposer implements IMessageComposer<ConstructorParameters<typeof ChestOpenComposer>>
 {
     private _data: ConstructorParameters<typeof ChestOpenComposer>;

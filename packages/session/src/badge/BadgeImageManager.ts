@@ -1,8 +1,8 @@
-import { GetAssetManager } from '@octane/assets';
-import { GetCommunication, GroupBadgePartsEvent } from '@octane/communication';
-import { GetConfiguration } from '@octane/configuration';
-import { BadgeImageReadyEvent, GetEventDispatcher } from '@octane/events';
-import { OctaneLogger, TextureUtils } from '@octane/utils';
+import { GetAssetManager } from '@volt/assets';
+import { GetCommunication, GroupBadgePartsEvent } from '@volt/communication';
+import { GetConfiguration } from '@volt/configuration';
+import { BadgeImageReadyEvent, GetEventDispatcher } from '@volt/events';
+import { VoltLogger, TextureUtils } from '@volt/utils';
 import { Container, Sprite, Texture } from 'pixi.js';
 import { BadgeInfo } from './BadgeInfo';
 import { GroupBadge } from './GroupBadge';
@@ -76,7 +76,7 @@ export class BadgeImageManager
 
                 catch (err)
                 {
-                    OctaneLogger.error(err);
+                    VoltLogger.error(err);
                 }
             };
 
@@ -140,7 +140,7 @@ export class BadgeImageManager
                 })
                 .catch(err =>
                 {
-                    OctaneLogger.error(err);
+                    VoltLogger.error(err);
 
                     return false;
                 })
@@ -173,7 +173,7 @@ export class BadgeImageManager
                 this._groupBadgesQueue.delete(badgeCode);
                 this._requestedBadges.delete(badgeCode);
 
-                OctaneLogger.warn(`Group badge could not be rendered, giving up: ${badgeCode}`);
+                VoltLogger.warn(`Group badge could not be rendered, giving up: ${badgeCode}`);
             }
             else
             {

@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /** AIR `Game2PlayerStatsData`. */
 export class Game2PlayerStatsData

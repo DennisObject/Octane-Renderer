@@ -1,4 +1,4 @@
-﻿import { IAssetAlias } from '@octane/api';
+﻿import { IAssetAlias } from '@volt/api';
 
 export class AssetAlias
 {

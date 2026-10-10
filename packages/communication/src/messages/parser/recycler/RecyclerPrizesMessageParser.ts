@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 const MAX_LEVELS = 50;
 const MAX_PRODUCTS_PER_LEVEL = 500;

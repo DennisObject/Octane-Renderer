@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `CustomStackHeightWidget.sendAdjacentHeightRequest` (AIR 13, header

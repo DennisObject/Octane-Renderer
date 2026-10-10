@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 /** Official `class_3329`: the hunt refused the find because the level is too low. */
 export class TreasureHuntFailMessageParser implements IMessageParser

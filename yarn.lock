@@ -363,188 +363,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octane/api@npm:1.0.0, @octane/api@workspace:packages/api":
-  version: 0.0.0-use.local
-  resolution: "@octane/api@workspace:packages/api"
-  dependencies:
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/assets@npm:1.0.0, @octane/assets@workspace:packages/assets":
-  version: 0.0.0-use.local
-  resolution: "@octane/assets@workspace:packages/assets"
-  dependencies:
-    "@jsquash/avif": "npm:^2.1.1"
-    "@octane/api": "npm:1.0.0"
-    "@octane/configuration": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    "@pixi/gif": "npm:^3.0.1"
-    apng-js: "npm:^1.1.5"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-    wasm-webp: "npm:^0.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@octane/avatar@npm:1.0.0, @octane/avatar@workspace:packages/avatar":
-  version: 0.0.0-use.local
-  resolution: "@octane/avatar@workspace:packages/avatar"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/assets": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/camera@workspace:packages/camera":
-  version: 0.0.0-use.local
-  resolution: "@octane/camera@workspace:packages/camera"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/assets": "npm:1.0.0"
-    "@octane/configuration": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/communication@npm:1.0.0, @octane/communication@workspace:packages/communication":
-  version: 0.0.0-use.local
-  resolution: "@octane/communication@workspace:packages/communication"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    "@thumbmarkjs/thumbmarkjs": "npm:^1.9.0"
-    pako: "npm:^3.0.1"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/configuration@npm:1.0.0, @octane/configuration@workspace:packages/configuration":
-  version: 0.0.0-use.local
-  resolution: "@octane/configuration@workspace:packages/configuration"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/events@npm:1.0.0, @octane/events@workspace:packages/events":
-  version: 0.0.0-use.local
-  resolution: "@octane/events@workspace:packages/events"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/localization@npm:1.0.0, @octane/localization@workspace:packages/localization":
-  version: 0.0.0-use.local
-  resolution: "@octane/localization@workspace:packages/localization"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/communication": "npm:1.0.0"
-    "@octane/configuration": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/renderer@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@octane/renderer@workspace:."
-  dependencies:
-    "@eslint/js": "npm:^10.0.1"
-    "@rollup/plugin-typescript": "npm:^12.3.0"
-    "@thumbmarkjs/thumbmarkjs": "npm:^1.11.0"
-    "@types/howler": "npm:^2.2.13"
-    "@types/node": "npm:^26.6.2"
-    "@typescript/native-preview": "npm:^7.0.0-dev.20260707.2"
-    "@vitest/coverage-v8": "npm:5.0.1"
-    eslint: "npm:^10.11.0"
-    gifuct-js: "npm:^2.1.2"
-    howler: "npm:^2.2.4"
-    jsdom: "npm:30.1.0"
-    pixi-filters: "npm:^6.1.5"
-    pixi.js: "npm:8.21.0"
-    strip-json-comments: "npm:^5.0.3"
-    tslib: "npm:^2.8.1"
-    typescript: "npm:^6.0.3"
-    typescript-eslint: "npm:^8.70.0"
-    vite: "npm:8.3.0"
-    vitest: "npm:5.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@octane/room@workspace:packages/room":
-  version: 0.0.0-use.local
-  resolution: "@octane/room@workspace:packages/room"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/assets": "npm:1.0.0"
-    "@octane/avatar": "npm:1.0.0"
-    "@octane/communication": "npm:1.0.0"
-    "@octane/configuration": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/session": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/session@npm:1.0.0, @octane/session@workspace:packages/session":
-  version: 0.0.0-use.local
-  resolution: "@octane/session@workspace:packages/session"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/assets": "npm:1.0.0"
-    "@octane/communication": "npm:1.0.0"
-    "@octane/configuration": "npm:1.0.0"
-    "@octane/events": "npm:1.0.0"
-    "@octane/localization": "npm:1.0.0"
-    "@octane/utils": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/sound@workspace:packages/sound":
-  version: 0.0.0-use.local
-  resolution: "@octane/sound@workspace:packages/sound"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    "@octane/communication": "npm:1.0.0"
-    pixi.js: "npm:^8.21.0"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@octane/utils@npm:1.0.0, @octane/utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@octane/utils@workspace:packages/utils"
-  dependencies:
-    "@octane/api": "npm:1.0.0"
-    pako: "npm:^3.0.1"
-    pixi.js: "npm:^8.21.0"
-    strip-json-comments: "npm:^5.0.3"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
 "@oxc-project/types@npm:=0.150.0":
   version: 0.150.0
   resolution: "@oxc-project/types@npm:0.150.0"
@@ -1070,6 +888,188 @@ __metadata:
   checksum: 10c0/88838f6dda5237f0a40c365598ce7112922611e9157b390ca90c11760ae8697c37214f621263bfbe12e2bd27234df577cbbecc93de003ced366d23be24383c37
   languageName: node
   linkType: hard
+
+"@volt/api@npm:1.0.0, @volt/api@workspace:packages/api":
+  version: 0.0.0-use.local
+  resolution: "@volt/api@workspace:packages/api"
+  dependencies:
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/assets@npm:1.0.0, @volt/assets@workspace:packages/assets":
+  version: 0.0.0-use.local
+  resolution: "@volt/assets@workspace:packages/assets"
+  dependencies:
+    "@jsquash/avif": "npm:^2.1.1"
+    "@pixi/gif": "npm:^3.0.1"
+    "@volt/api": "npm:1.0.0"
+    "@volt/configuration": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    apng-js: "npm:^1.1.5"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+    wasm-webp: "npm:^0.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@volt/avatar@npm:1.0.0, @volt/avatar@workspace:packages/avatar":
+  version: 0.0.0-use.local
+  resolution: "@volt/avatar@workspace:packages/avatar"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/assets": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/camera@workspace:packages/camera":
+  version: 0.0.0-use.local
+  resolution: "@volt/camera@workspace:packages/camera"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/assets": "npm:1.0.0"
+    "@volt/configuration": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/communication@npm:1.0.0, @volt/communication@workspace:packages/communication":
+  version: 0.0.0-use.local
+  resolution: "@volt/communication@workspace:packages/communication"
+  dependencies:
+    "@thumbmarkjs/thumbmarkjs": "npm:^1.9.0"
+    "@volt/api": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pako: "npm:^3.0.1"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/configuration@npm:1.0.0, @volt/configuration@workspace:packages/configuration":
+  version: 0.0.0-use.local
+  resolution: "@volt/configuration@workspace:packages/configuration"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/events@npm:1.0.0, @volt/events@workspace:packages/events":
+  version: 0.0.0-use.local
+  resolution: "@volt/events@workspace:packages/events"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/localization@npm:1.0.0, @volt/localization@workspace:packages/localization":
+  version: 0.0.0-use.local
+  resolution: "@volt/localization@workspace:packages/localization"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/communication": "npm:1.0.0"
+    "@volt/configuration": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/renderer@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@volt/renderer@workspace:."
+  dependencies:
+    "@eslint/js": "npm:^10.0.1"
+    "@rollup/plugin-typescript": "npm:^12.3.0"
+    "@thumbmarkjs/thumbmarkjs": "npm:^1.11.0"
+    "@types/howler": "npm:^2.2.13"
+    "@types/node": "npm:^26.6.2"
+    "@typescript/native-preview": "npm:^7.0.0-dev.20260707.2"
+    "@vitest/coverage-v8": "npm:5.0.1"
+    eslint: "npm:^10.11.0"
+    gifuct-js: "npm:^2.1.2"
+    howler: "npm:^2.2.4"
+    jsdom: "npm:30.1.0"
+    pixi-filters: "npm:^6.1.5"
+    pixi.js: "npm:8.21.0"
+    strip-json-comments: "npm:^5.0.3"
+    tslib: "npm:^2.8.1"
+    typescript: "npm:^6.0.3"
+    typescript-eslint: "npm:^8.70.0"
+    vite: "npm:8.3.0"
+    vitest: "npm:5.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@volt/room@workspace:packages/room":
+  version: 0.0.0-use.local
+  resolution: "@volt/room@workspace:packages/room"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/assets": "npm:1.0.0"
+    "@volt/avatar": "npm:1.0.0"
+    "@volt/communication": "npm:1.0.0"
+    "@volt/configuration": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/session": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/session@npm:1.0.0, @volt/session@workspace:packages/session":
+  version: 0.0.0-use.local
+  resolution: "@volt/session@workspace:packages/session"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/assets": "npm:1.0.0"
+    "@volt/communication": "npm:1.0.0"
+    "@volt/configuration": "npm:1.0.0"
+    "@volt/events": "npm:1.0.0"
+    "@volt/localization": "npm:1.0.0"
+    "@volt/utils": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/sound@workspace:packages/sound":
+  version: 0.0.0-use.local
+  resolution: "@volt/sound@workspace:packages/sound"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    "@volt/communication": "npm:1.0.0"
+    pixi.js: "npm:^8.21.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
+"@volt/utils@npm:1.0.0, @volt/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@volt/utils@workspace:packages/utils"
+  dependencies:
+    "@volt/api": "npm:1.0.0"
+    pako: "npm:^3.0.1"
+    pixi.js: "npm:^8.21.0"
+    strip-json-comments: "npm:^5.0.3"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
 
 "@webgpu/types@npm:^0.1.69":
   version: 0.1.72

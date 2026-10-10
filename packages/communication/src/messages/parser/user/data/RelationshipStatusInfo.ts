@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, RelationshipStatusEnum } from '@octane/api';
+import { IMessageDataWrapper, RelationshipStatusEnum } from '@volt/api';
 
 export class RelationshipStatusInfo
 {

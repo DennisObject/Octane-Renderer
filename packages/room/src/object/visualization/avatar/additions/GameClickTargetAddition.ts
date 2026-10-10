@@ -1,5 +1,5 @@
-import { AlphaTolerance, IRoomObjectSprite } from '@octane/api';
-import { GetTexturePool } from '@octane/utils';
+import { AlphaTolerance, IRoomObjectSprite } from '@volt/api';
+import { GetTexturePool } from '@volt/utils';
 import { Texture } from 'pixi.js';
 import { IAvatarAddition } from './IAvatarAddition';
 

@@ -1,5 +1,5 @@
-import { GetRoomEngine } from '@octane/room';
-import { GetDesiredScaleMode, GetRenderer, StartDprRenderingModeWatcher } from '@octane/utils';
+import { GetRoomEngine } from '@volt/room';
+import { GetDesiredScaleMode, GetRenderer, StartDprRenderingModeWatcher } from '@volt/utils';
 import { BrowserAdapter, DOMAdapter, TextureSource } from 'pixi.js';
 import './pixi-augmentations';
 
@@ -8,7 +8,7 @@ DOMAdapter.set(BrowserAdapter);
 
 if(typeof window !== 'undefined')
 {
-    (window as any).__octaneRenderDebug = (): string =>
+    (window as any).__voltRenderDebug = (): string =>
     {
         const out: any = {
             dpr: window.devicePixelRatio,
@@ -32,7 +32,7 @@ if(typeof window !== 'undefined')
 
             for(const source of (renderer?.texture?.managedTextures ?? []))
             {
-                const key = `${ source?.style?.scaleMode ?? '?' }${ source?.octaneFixedScaleMode ? '/fixed' : '' }`;
+                const key = `${ source?.style?.scaleMode ?? '?' }${ source?.voltFixedScaleMode ? '/fixed' : '' }`;
 
                 census[key] = (census[key] ?? 0) + 1;
             }
@@ -60,17 +60,17 @@ if(typeof window !== 'undefined')
     };
 }
 
-export * from '@octane/api';
-export * from '@octane/assets';
-export * from '@octane/avatar';
-export * from '@octane/camera';
-export * from '@octane/communication';
-export * from '@octane/configuration';
-export * from '@octane/events';
-export * from '@octane/localization';
-export * from '@octane/room';
-export * from '@octane/session';
-export * from '@octane/sound';
-export * from '@octane/utils';
+export * from '@volt/api';
+export * from '@volt/assets';
+export * from '@volt/avatar';
+export * from '@volt/camera';
+export * from '@volt/communication';
+export * from '@volt/configuration';
+export * from '@volt/events';
+export * from '@volt/localization';
+export * from '@volt/room';
+export * from '@volt/session';
+export * from '@volt/sound';
+export * from '@volt/utils';
 export * from './DevTools';
 export * from './pixi-proxy';

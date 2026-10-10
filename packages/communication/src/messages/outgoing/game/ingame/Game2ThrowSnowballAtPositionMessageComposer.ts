@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR Game2ThrowSnowballAtPosition: world target (tile * 3200), trajectory, turn, subturn. */
 export class Game2ThrowSnowballAtPositionMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2ThrowSnowballAtPositionMessageComposer>>

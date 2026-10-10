@@ -1,4 +1,4 @@
-import { IRoomObject } from '@octane/api';
+import { IRoomObject } from '@volt/api';
 import { RoomObjectEvent } from './RoomObjectEvent';
 
 export class RoomObjectSamplePlaybackEvent extends RoomObjectEvent

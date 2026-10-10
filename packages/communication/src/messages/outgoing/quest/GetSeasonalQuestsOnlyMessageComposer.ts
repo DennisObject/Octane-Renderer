@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class GetSeasonalQuestsOnlyMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetSeasonalQuestsOnlyMessageComposer>>
 {

@@ -1,4 +1,4 @@
-import { IRoomUserData } from '@octane/api';
+import { IRoomUserData } from '@volt/api';
 
 export class RoomUserData implements IRoomUserData
 {

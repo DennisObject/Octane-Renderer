@@ -1,4 +1,4 @@
-import type { IMessageComposer } from '@octane/api';
+import type { IMessageComposer } from '@volt/api';
 
 export class RoomUnitChatStyleComposer implements IMessageComposer<ConstructorParameters<typeof RoomUnitChatStyleComposer>>
 {

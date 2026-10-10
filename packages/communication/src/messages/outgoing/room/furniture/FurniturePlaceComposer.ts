@@ -1,4 +1,4 @@
-import { IMessageComposer, RoomObjectCategory } from '@octane/api';
+import { IMessageComposer, RoomObjectCategory } from '@volt/api';
 
 export class FurniturePlaceComposer implements IMessageComposer<string[]>
 {

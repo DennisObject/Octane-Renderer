@@ -1,4 +1,4 @@
-﻿import { IMessageDataWrapper } from '@octane/api';
+﻿import { IMessageDataWrapper } from '@volt/api';
 import { PetFigureDataParser } from './PetFigureDataParser';
 
 export class PetData

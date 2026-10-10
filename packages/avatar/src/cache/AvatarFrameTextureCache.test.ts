@@ -1,4 +1,4 @@
-import { AvatarAction, AvatarSetType, IActionDefinition, IPartColor } from '@octane/api';
+import { AvatarAction, AvatarSetType, IActionDefinition, IPartColor } from '@volt/api';
 import { CanvasSource, ColorMatrixFilter, Container, ImageSource, Point, Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AvatarFigureContainer } from '../AvatarFigureContainer';
@@ -21,8 +21,8 @@ const renderer = vi.hoisted(() => ({
     runners: { contextChange: { add: vi.fn(), remove: vi.fn() } }
 }));
 
-vi.mock('@octane/utils', async importOriginal => ({
-    ...await importOriginal<typeof import('@octane/utils')>(),
+vi.mock('@volt/utils', async importOriginal => ({
+    ...await importOriginal<typeof import('@volt/utils')>(),
     GetRenderer: () => renderer,
     GetTexturePool: () => pool,
     GetTickerTime: () => 100000

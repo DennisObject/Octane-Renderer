@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { DailyTaskData } from './DailyTaskData';
 
 /** DailyTaskUpdated (9450): the repeats and status of one task changed. */

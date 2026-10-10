@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `HabboNuxDialogs` composer 2132: the reason the NUX script moves on -

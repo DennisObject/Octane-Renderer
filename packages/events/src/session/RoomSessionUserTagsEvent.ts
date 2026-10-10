@@ -1,6 +1,6 @@
-﻿import { OctaneEvent } from '../core';
+﻿import { VoltEvent } from '../core';
 
-export class RoomSessionUserTagsEvent extends OctaneEvent
+export class RoomSessionUserTagsEvent extends VoltEvent
 {
     public static UTRE_USER_TAGS_RECEIVED: string = 'UTRE_USER_TAGS_RECEIVED';
 

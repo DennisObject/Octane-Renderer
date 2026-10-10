@@ -1,5 +1,5 @@
-import { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@octane/api';
-import { AdvancedMap } from '@octane/utils';
+import { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@volt/api';
+import { AdvancedMap } from '@volt/utils';
 import { RoomObject } from './object';
 
 export class RoomObjectManager implements IRoomObjectManager

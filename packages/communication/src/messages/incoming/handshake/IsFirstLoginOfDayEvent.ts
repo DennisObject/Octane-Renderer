@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { IsFirstLoginOfDayParser } from '../../parser';
 
 export class IsFirstLoginOfDayEvent extends MessageEvent implements IMessageEvent

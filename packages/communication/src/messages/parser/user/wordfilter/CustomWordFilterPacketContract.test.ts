@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from '@octane/utils';
+import { BinaryReader, BinaryWriter } from '@volt/utils';
 import { describe, expect, it } from 'vitest';
-import { OctaneMessages } from '../../../../OctaneMessages';
+import { VoltMessages } from '../../../../VoltMessages';
 import { IncomingHeader } from '../../../incoming/IncomingHeader';
 import { CustomFilterResultEvent, ModifyCustomFilterResultEvent } from '../../../incoming/user/wordfilter';
 import { OutgoingHeader } from '../../../outgoing/OutgoingHeader';
@@ -31,7 +31,7 @@ describe('personal word filter packet contract', () =>
 {
     it('uses the official headers and registers every request and response', () =>
     {
-        const messages = new OctaneMessages();
+        const messages = new VoltMessages();
 
         expect(OutgoingHeader.GET_CUSTOM_FILTER).toBe(2078);
         expect(OutgoingHeader.ADD_CUSTOM_FILTER_WORD).toBe(2171);

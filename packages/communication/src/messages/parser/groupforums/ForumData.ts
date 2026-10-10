@@ -1,4 +1,4 @@
-﻿import { IMessageDataWrapper } from '@octane/api';
+﻿import { IMessageDataWrapper } from '@volt/api';
 import { GuildForumThread } from './GuildForumThread';
 
 export class ForumData

@@ -1,5 +1,5 @@
-import { AvatarScaleType, IAssetData, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IObjectVisualizationData } from '@octane/api';
-import { GetAvatarRenderManager } from '@octane/avatar';
+import { AvatarScaleType, IAssetData, IAvatarEffectListener, IAvatarImage, IAvatarImageListener, IObjectVisualizationData } from '@volt/api';
+import { GetAvatarRenderManager } from '@volt/avatar';
 
 export class AvatarVisualizationData implements IObjectVisualizationData
 {

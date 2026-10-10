@@ -1,4 +1,4 @@
-﻿import { IGraphicAsset, IVector3D } from '@octane/api';
+﻿import { IGraphicAsset, IVector3D } from '@volt/api';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
 export class PlaneMask

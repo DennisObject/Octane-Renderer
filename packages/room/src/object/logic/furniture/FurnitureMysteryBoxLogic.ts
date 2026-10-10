@@ -1,5 +1,5 @@
-import { ContextMenuEnum } from '@octane/api';
-import { RoomObjectWidgetRequestEvent } from '@octane/events';
+import { ContextMenuEnum } from '@volt/api';
+import { RoomObjectWidgetRequestEvent } from '@volt/events';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
 export class FurnitureMysteryBoxLogic extends FurnitureMultiStateLogic

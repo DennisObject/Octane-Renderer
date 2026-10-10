@@ -1,4 +1,4 @@
-import { RoomObjectFurnitureActionEvent } from '@octane/events';
+import { RoomObjectFurnitureActionEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureOneWayDoorLogic extends FurnitureLogic

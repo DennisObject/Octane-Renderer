@@ -1,4 +1,4 @@
-﻿import { IPollQuestion, IRoomSession } from '@octane/api';
+﻿import { IPollQuestion, IRoomSession } from '@volt/api';
 import { RoomSessionEvent } from './RoomSessionEvent';
 
 export class RoomSessionPollEvent extends RoomSessionEvent

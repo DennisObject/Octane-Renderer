@@ -1,5 +1,5 @@
-import { IRoomObjectController, IRoomObjectModel, IVector3D, RoomObjectVariable } from '@octane/api';
-import { Vector3d } from '@octane/utils';
+import { IRoomObjectController, IRoomObjectModel, IVector3D, RoomObjectVariable } from '@volt/api';
+import { Vector3d } from '@volt/utils';
 import { describe, expect, it } from 'vitest';
 import { ObjectMoveUpdateMessage, RoomObjectUpdateMessage } from '../../messages';
 import { MovingObjectLogic } from './MovingObjectLogic';

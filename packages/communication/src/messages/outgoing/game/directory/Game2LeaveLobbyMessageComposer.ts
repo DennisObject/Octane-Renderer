@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR leave lobby / queue (class_3513). */
 export class Game2LeaveLobbyMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2LeaveLobbyMessageComposer>>

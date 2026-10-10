@@ -1,5 +1,5 @@
-import { IAssetData, RoomObjectVariable } from '@octane/api';
-import { RoomToObjectOwnAvatarMoveEvent } from '@octane/events';
+import { IAssetData, RoomObjectVariable } from '@volt/api';
+import { RoomToObjectOwnAvatarMoveEvent } from '@volt/events';
 import { FurnitureLogic } from './FurnitureLogic';
 
 export class FurnitureChangeStateWhenStepOnLogic extends FurnitureLogic

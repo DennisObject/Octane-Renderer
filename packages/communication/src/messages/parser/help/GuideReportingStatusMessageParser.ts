@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { PendingGuideTicketData } from './PendingGuideTicketData';
 
 export class GuideReportingStatusMessageParser implements IMessageParser

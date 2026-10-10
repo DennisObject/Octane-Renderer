@@ -1,4 +1,4 @@
-﻿import { IVector3D } from '@octane/api';
+﻿import { IVector3D } from '@volt/api';
 import { RoomMapMaskData } from './RoomMapMaskData';
 import { RoomPlaneBitmapMaskData } from './RoomPlaneBitmapMaskData';
 

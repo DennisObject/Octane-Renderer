@@ -1,4 +1,4 @@
-import { RoomObjectCategory, RoomObjectOperationType } from '@octane/api';
+import { RoomObjectCategory, RoomObjectOperationType } from '@volt/api';
 import { describe, expect, it, vi } from 'vitest';
 import { RoomObjectEventHandler } from './RoomObjectEventHandler';
 

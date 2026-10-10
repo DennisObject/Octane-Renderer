@@ -1,5 +1,5 @@
 import { Texture } from 'pixi.js';
-import { GetConfiguration } from '@octane/configuration';
+import { GetConfiguration } from '@volt/configuration';
 
 type HabbiconFrameData = { id: number, x: number, y: number, width: number, height: number };
 

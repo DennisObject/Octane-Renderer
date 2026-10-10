@@ -1,4 +1,4 @@
-import { RoomObjectVariable, VoteDataType } from '@octane/api';
+import { RoomObjectVariable, VoteDataType } from '@volt/api';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

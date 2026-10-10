@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { HabbiconData, parseHabbicon } from './HabbiconData';
 
 export class HabbiconInfoParser implements IMessageParser

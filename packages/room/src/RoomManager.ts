@@ -1,6 +1,6 @@
-import { IGraphicAssetCollection, IRoomInstance, IRoomInstanceContainer, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomObjectManager } from '@octane/api';
-import { GetEventDispatcher, RoomContentLoadedEvent } from '@octane/events';
-import { OctaneLogger } from '@octane/utils';
+import { IGraphicAssetCollection, IRoomInstance, IRoomInstanceContainer, IRoomManager, IRoomManagerListener, IRoomObject, IRoomObjectController, IRoomObjectManager } from '@volt/api';
+import { GetEventDispatcher, RoomContentLoadedEvent } from '@volt/events';
+import { VoltLogger } from '@volt/utils';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomObjectLogicFactory } from './GetRoomObjectLogicFactory';
 import { GetRoomObjectVisualizationFactory } from './GetRoomObjectVisualizationFactory';
@@ -294,7 +294,7 @@ export class RoomManager implements IRoomManager, IRoomInstanceContainer
                     this._listener.initalizeTemporaryObjectsByType(type, false);
                 }
 
-                OctaneLogger.log('Invalid Collection', type);
+                VoltLogger.log('Invalid Collection', type);
 
                 continue;
             }

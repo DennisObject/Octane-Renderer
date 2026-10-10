@@ -1,4 +1,4 @@
-import { IMessageDataWrapper, IPetCustomPart, IPetFigureData, PetCustomPart } from '@octane/api';
+import { IMessageDataWrapper, IPetCustomPart, IPetFigureData, PetCustomPart } from '@volt/api';
 
 export class PetFigureDataParser implements IPetFigureData
 {

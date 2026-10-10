@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 
 /**
  * AIR `SnowWarGameEventData` and subclasses (package_233). Fields not carried by

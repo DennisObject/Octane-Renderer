@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 export class HousekeepingDeleteRoomComposer implements IMessageComposer<ConstructorParameters<typeof HousekeepingDeleteRoomComposer>>
 {

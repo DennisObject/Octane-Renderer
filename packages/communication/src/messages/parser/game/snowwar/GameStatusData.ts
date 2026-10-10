@@ -1,4 +1,4 @@
-import { IMessageDataWrapper } from '@octane/api';
+import { IMessageDataWrapper } from '@volt/api';
 import { SnowWarGameEventData } from './SnowWarGameEventData';
 
 /** AIR `GameStatusData`: `events[subturn]` lists the events scheduled for turn + 1. */

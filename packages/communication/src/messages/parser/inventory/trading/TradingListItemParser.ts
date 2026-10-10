@@ -1,4 +1,4 @@
-﻿import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+﻿import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 import { ItemDataStructure } from './ItemDataStructure';
 
 export class TradingListItemParser implements IMessageParser

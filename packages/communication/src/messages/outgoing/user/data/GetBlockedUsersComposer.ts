@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /**
  * Official `BlockedUsersManager.initBlockList()` (composer 485): asks the server for the

@@ -1,6 +1,6 @@
-import { IConnection, IMessageEvent, RoomObjectCategory } from '@octane/api';
-import { GetConfiguration } from '@octane/configuration';
-import { GetEventDispatcher } from '@octane/events';
+import { IConnection, IMessageEvent, RoomObjectCategory } from '@volt/api';
+import { GetConfiguration } from '@volt/configuration';
+import { GetEventDispatcher } from '@volt/events';
 import { RoomSessionManager } from '../../../session/src/RoomSessionManager';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CommunicationManager } from '../CommunicationManager';

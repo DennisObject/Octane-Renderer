@@ -1,4 +1,4 @@
-﻿import { IMessageDataWrapper, IMessageParser } from '@octane/api';
+﻿import { IMessageDataWrapper, IMessageParser } from '@volt/api';
 
 export class _Str_9021 implements IMessageParser
 {

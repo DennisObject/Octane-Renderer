@@ -1,5 +1,5 @@
-import { IAdvancedMap, IMessageDataWrapper, IMessageParser } from '@octane/api';
-import { AdvancedMap } from '@octane/utils';
+import { IAdvancedMap, IMessageDataWrapper, IMessageParser } from '@volt/api';
+import { AdvancedMap } from '@volt/utils';
 
 export class UnseenItemsParser implements IMessageParser
 {

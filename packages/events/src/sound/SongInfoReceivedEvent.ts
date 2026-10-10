@@ -1,6 +1,6 @@
-import { OctaneEvent } from '@octane/events';
+import { VoltEvent } from '@volt/events';
 
-export class SongInfoReceivedEvent extends OctaneEvent
+export class SongInfoReceivedEvent extends VoltEvent
 {
     public static readonly SIR_TRAX_SONG_INFO_RECEIVED = 'SIR_TRAX_SONG_INFO_RECEIVED';
 

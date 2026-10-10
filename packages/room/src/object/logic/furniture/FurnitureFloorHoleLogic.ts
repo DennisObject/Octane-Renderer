@@ -1,6 +1,6 @@
-import { RoomObjectVariable } from '@octane/api';
-import { RoomObjectFloorHoleEvent } from '@octane/events';
-import { Vector3d } from '@octane/utils';
+import { RoomObjectVariable } from '@volt/api';
+import { RoomObjectFloorHoleEvent } from '@volt/events';
+import { Vector3d } from '@volt/utils';
 import { ObjectDataUpdateMessage, RoomObjectUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 

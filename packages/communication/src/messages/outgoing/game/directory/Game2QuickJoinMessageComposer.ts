@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** AIR quick join ("Play", class_2112). */
 export class Game2QuickJoinMessageComposer implements IMessageComposer<ConstructorParameters<typeof Game2QuickJoinMessageComposer>>

@@ -1,6 +1,6 @@
-import { OctaneEvent } from '@octane/events';
+import { VoltEvent } from '@volt/events';
 
-export class SongDiskInventoryReceivedEvent extends OctaneEvent
+export class SongDiskInventoryReceivedEvent extends VoltEvent
 {
     public static readonly SDIR_SONG_DISK_INVENTORY_RECEIVENT_EVENT = 'SDIR_SONG_DISK_INVENTORY_RECEIVENT_EVENT';
 

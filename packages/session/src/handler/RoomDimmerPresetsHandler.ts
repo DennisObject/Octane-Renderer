@@ -1,6 +1,6 @@
-﻿import { IConnection, IRoomHandlerListener } from '@octane/api';
-import { RoomDimmerPresetsEvent } from '@octane/communication';
-import { GetEventDispatcher, RoomSessionDimmerPresetsEvent } from '@octane/events';
+﻿import { IConnection, IRoomHandlerListener } from '@volt/api';
+import { RoomDimmerPresetsEvent } from '@volt/communication';
+import { GetEventDispatcher, RoomSessionDimmerPresetsEvent } from '@volt/events';
 import { BaseHandler } from './BaseHandler';
 
 export class RoomDimmerPresetsHandler extends BaseHandler

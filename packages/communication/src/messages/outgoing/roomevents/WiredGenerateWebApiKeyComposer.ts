@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 /** Asks the server to mint a fresh read or write key for a `wf_xtra_var_web_api` box. */
 export class WiredGenerateWebApiKeyComposer implements IMessageComposer<ConstructorParameters<typeof WiredGenerateWebApiKeyComposer>>

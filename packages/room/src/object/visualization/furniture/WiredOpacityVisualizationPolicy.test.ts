@@ -1,4 +1,4 @@
-import { AlphaTolerance } from '@octane/api';
+import { AlphaTolerance } from '@volt/api';
 import { describe, expect, it } from 'vitest';
 import { composeFurnitureAlphaMultiplier, furnitureAlphaTolerance, normalizeOpacityMultiplier } from './WiredOpacityVisualizationPolicy';
 

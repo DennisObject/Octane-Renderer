@@ -1,5 +1,5 @@
-import { IMessageEvent } from '@octane/api';
-import { MessageEvent } from '@octane/events';
+import { IMessageEvent } from '@volt/api';
+import { MessageEvent } from '@volt/events';
 import { RoomPollResultParser } from '../../parser';
 
 export class RoomPollResultEvent extends MessageEvent implements IMessageEvent

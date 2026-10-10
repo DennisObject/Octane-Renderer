@@ -1,7 +1,7 @@
 import { Texture } from 'pixi.js';
-import { OctaneEvent } from '../core';
+import { VoltEvent } from '../core';
 
-export class BadgeImageReadyEvent extends OctaneEvent
+export class BadgeImageReadyEvent extends VoltEvent
 {
     public static IMAGE_READY: string = 'BIME_BADGE_IMAGE_READY';
 

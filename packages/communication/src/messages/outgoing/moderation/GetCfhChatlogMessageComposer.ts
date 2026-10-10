@@ -1,4 +1,4 @@
-import { IMessageComposer } from '@octane/api';
+import { IMessageComposer } from '@volt/api';
 
 
 export class GetCfhChatlogMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetCfhChatlogMessageComposer>>

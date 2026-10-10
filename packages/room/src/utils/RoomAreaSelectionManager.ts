@@ -1,5 +1,5 @@
-import { IRoomAreaSelectionManager, IRoomEngine, IRoomObject } from '@octane/api';
-import { GetEventDispatcher, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@octane/events';
+import { IRoomAreaSelectionManager, IRoomEngine, IRoomObject } from '@volt/api';
+import { GetEventDispatcher, RoomEngineObjectEvent, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@volt/events';
 import { ColorMatrix, ColorMatrixFilter } from 'pixi.js';
 import { FurnitureVisualization, RoomVisualization } from '../object';
 

@@ -1,4 +1,4 @@
-import { GetRenderer, WiredFilter } from '@octane/utils';
+import { GetRenderer, WiredFilter } from '@volt/utils';
 import { Filter, RenderTexture, Renderer, Sprite, Texture, TextureSource } from 'pixi.js';
 
 // Drawn textures nobody shows any more are kept up to this many pixels, for a mark toggled back on.
