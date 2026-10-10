@@ -2,8 +2,12 @@ import { IMessageDataWrapper, IMessageParser } from '@octane/api';
 
 export class RoomRightsClearParser implements IMessageParser
 {
+    private _roomId: number;
+
     public flush(): boolean
     {
+        this._roomId = 0;
+
         return true;
     }
 
@@ -11,6 +15,13 @@ export class RoomRightsClearParser implements IMessageParser
     {
         if(!wrapper) return false;
 
+        this._roomId = wrapper.readInt();
+
         return true;
+    }
+
+    public get roomId(): number
+    {
+        return this._roomId;
     }
 }
